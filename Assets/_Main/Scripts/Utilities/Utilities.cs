@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace FiberGames.Utilities
+namespace _Main.Scripts.Utilities
 {
     public class Utilities : MonoBehaviour
     {

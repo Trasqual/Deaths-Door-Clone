@@ -1,4 +1,4 @@
-namespace FiberGames.Utilities
+namespace _Main.Scripts.Utilities
 {
     // TODO
 }

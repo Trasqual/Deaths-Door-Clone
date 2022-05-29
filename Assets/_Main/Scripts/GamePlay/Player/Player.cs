@@ -1,10 +1,13 @@
 using UnityEngine;
 
-[RequireComponent(typeof(PlayerController), 
-    typeof(PlayerAnimationController))]
-public class Player : MonoBehaviour
+namespace _Main.Scripts.GamePlay.Player
 {
-    [SerializeField] private PlayerData data;
+    [RequireComponent(typeof(PlayerMovement), 
+        typeof(PlayerAnimation))]
+    public class Player : MonoBehaviour
+    {
+        [SerializeField] private PlayerData data;
 
-    public PlayerData Data => data;
+        public PlayerData Data => data;
+    }
 }
