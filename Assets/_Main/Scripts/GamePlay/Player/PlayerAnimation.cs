@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace _Main.Scripts.GamePlay.Player
 {
-    public class PlayerInput : MonoBehaviour
+    public class PlayerAnimation : MonoBehaviour
     {
         // TODO
     }
