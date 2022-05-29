@@ -66,7 +66,7 @@ public class PlayerInput : MonoBehaviour
         return dir;
     }
 
-    public bool InputEnabled()
+    public bool IsInputEnabled()
     {
         return isInputEnabled;
     }
