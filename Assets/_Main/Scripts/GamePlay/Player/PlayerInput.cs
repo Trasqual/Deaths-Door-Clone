@@ -51,7 +51,17 @@ public class PlayerInput : MonoBehaviour
     {
         var readLookVector = inputActions.PlayerControls.Look.ReadValue<Vector2>();
 
-        lookInput = new Vector3(readLookVector.x, 0f, readLookVector.y);
+        if (inputActions.PlayerControls.Look.activeControl != null)
+        {
+            if (inputActions.PlayerControls.Look.activeControl.device.displayName == "Mouse")
+            {
+                lookInput = GetAxisFromMousePos(readLookVector);
+            }
+            else
+            {
+                lookInput = new Vector3(readLookVector.x, 0f, readLookVector.y);
+            }
+        }
     }
 
     private Vector3 GetAxisFromMousePos(Vector2 mousePosition)
