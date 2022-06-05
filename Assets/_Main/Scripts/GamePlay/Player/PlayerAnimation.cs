@@ -1,11 +1,14 @@
+using System.Collections;
 using UnityEngine;
 
 namespace _Main.Scripts.GamePlay.Player
 {
     public class PlayerAnimation : MonoBehaviour
     {
-        [SerializeField] Animator anim;
-        Player player;
+        [SerializeField] private Animator anim;
+        private Player player;
+
+        private bool canMove = true;
 
         private void Start()
         {
@@ -13,6 +16,8 @@ namespace _Main.Scripts.GamePlay.Player
             anim = GetComponentInChildren<Animator>();
 
             player.Input.OnRollButtonPressed += PlayRollAnim;
+            player.Input.OnAimButtonPressed += StopMovement;
+            player.Input.OnAimButtonReleased += StartMovement;
         }
 
         private void PlayMovementAnim()
@@ -30,10 +35,20 @@ namespace _Main.Scripts.GamePlay.Player
             anim.SetTrigger("roll");
         }
 
+        private void StopMovement()
+        {
+            canMove = false;
+        }
+
+        private void StartMovement()
+        {
+            canMove = true;
+        }
+
         private void Update()
         {
             PlayAimAnim();
-            if (!player.Input.IsAiming)
+            if (canMove)
             {
                 PlayMovementAnim();
             }

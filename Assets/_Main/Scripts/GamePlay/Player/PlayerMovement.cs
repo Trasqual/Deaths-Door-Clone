@@ -4,32 +4,38 @@ namespace _Main.Scripts.GamePlay.Player
 {
     public class PlayerMovement : Movement.Movement
     {
-        [SerializeField] float movementSpeed = 5f;
-        [SerializeField] float rotationSpeed = 5f;
-        Quaternion lastRot;
+        [SerializeField] private float movementSpeed = 5f;
+        [SerializeField] private float rotationSpeed = 5f;
 
-        Player player;
-        CharacterController controller;
+        private Quaternion lastRot;
+
+        private Player player;
+        private CharacterController controller;
+
+        private bool canMove = true;
 
         private void Start()
         {
             player = GetComponent<Player>();
             controller = GetComponent<CharacterController>();
+
+            player.Input.OnAimButtonPressed += StopMovement;
+            player.Input.OnAimButtonReleased += StartMovement;
         }
 
         protected override bool IsMoving()
         {
-            throw new System.NotImplementedException();
+            return controller.velocity.magnitude > 0f;
         }
 
         protected override void StartMovement()
         {
-            throw new System.NotImplementedException();
+            canMove = true;
         }
 
         protected override void StopMovement()
         {
-            throw new System.NotImplementedException();
+            canMove = false;
         }
 
         protected override void ProcessMovement()
@@ -64,13 +70,13 @@ namespace _Main.Scripts.GamePlay.Player
 
         private void Update()
         {
-            if (player.Input.IsAiming)
+            if (canMove)
             {
-                ProcessAimRotation();
+                ProcessMovement();
             }
             else
             {
-                ProcessMovement();
+                ProcessAimRotation();
             }
         }
     }

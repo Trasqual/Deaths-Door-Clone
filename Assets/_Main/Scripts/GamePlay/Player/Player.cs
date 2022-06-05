@@ -7,15 +7,10 @@ namespace _Main.Scripts.GamePlay.Player
     public class Player : MonoBehaviour
     {
         [SerializeField] private PlayerData data;
+        [SerializeField] private PlayerInput input;
 
         public PlayerData Data => data;
 
-        PlayerInput input;
         public PlayerInput Input => input;
-
-        private void Start()
-        {
-            input = GetComponent<PlayerInput>();
-        }
     }
 }

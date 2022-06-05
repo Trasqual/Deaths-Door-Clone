@@ -8,13 +8,13 @@ public class PlayerInput : MonoBehaviour
     public Action OnAimButtonPressed;
     public Action OnAimButtonReleased;
 
-    Camera cam;
-    InputActions inputActions;
+    private Camera cam;
+    private InputActions inputActions;
 
-    Vector3 movementInput;
-    Vector3 lookInput;
+    private Vector3 movementInput;
+    private Vector3 lookInput;
 
-    bool isInputEnabled;
+    private bool isInputEnabled;
 
     public bool IsAiming { get; private set; }
 
@@ -42,12 +42,16 @@ public class PlayerInput : MonoBehaviour
 
     private void AimButtonPressed(InputAction.CallbackContext ctx)
     {
+        if (IsAiming) return;
         IsAiming = true;
+        OnAimButtonPressed?.Invoke();
     }
 
     private void AimButtonReleased(InputAction.CallbackContext ctx)
     {
+        if (!IsAiming) return;
         IsAiming = false;
+        OnAimButtonReleased?.Invoke();
     }
 
     private void Update()
@@ -76,6 +80,10 @@ public class PlayerInput : MonoBehaviour
             {
                 lookInput = new Vector3(readLookVector.x, 0f, readLookVector.y);
             }
+        }
+        else
+        {
+            lookInput = movementInput;
         }
     }
 
