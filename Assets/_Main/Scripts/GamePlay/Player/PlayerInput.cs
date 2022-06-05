@@ -5,6 +5,8 @@ using UnityEngine.InputSystem;
 public class PlayerInput : MonoBehaviour
 {
     public Action OnRollButtonPressed;
+    public Action OnAimButtonPressed;
+    public Action OnAimButtonReleased;
 
     Camera cam;
     InputActions inputActions;
@@ -14,6 +16,7 @@ public class PlayerInput : MonoBehaviour
 
     bool isInputEnabled;
 
+    public bool IsAiming { get; private set; }
 
     private void Awake()
     {
@@ -28,11 +31,23 @@ public class PlayerInput : MonoBehaviour
     private void SubscribeToInputActions()
     {
         inputActions.PlayerControls.Roll.performed += RollButtonPressed;
+        inputActions.PlayerControls.Aim.started += AimButtonPressed;
+        inputActions.PlayerControls.Aim.canceled += AimButtonReleased;
     }
 
     private void RollButtonPressed(InputAction.CallbackContext ctx)
     {
         OnRollButtonPressed?.Invoke();
+    }
+
+    private void AimButtonPressed(InputAction.CallbackContext ctx)
+    {
+        IsAiming = true;
+    }
+
+    private void AimButtonReleased(InputAction.CallbackContext ctx)
+    {
+        IsAiming = false;
     }
 
     private void Update()
