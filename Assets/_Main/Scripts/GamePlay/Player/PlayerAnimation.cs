@@ -18,6 +18,7 @@ namespace _Main.Scripts.GamePlay.Player
             player.Input.OnRollButtonPressed += PlayRollAnim;
             player.Input.OnAimButtonPressed += StopMovement;
             player.Input.OnAimButtonReleased += StartMovement;
+            player.Input.OnAttackButtonPressed += PlayAttackAnim;
         }
 
         private void PlayMovementAnim()
@@ -33,6 +34,11 @@ namespace _Main.Scripts.GamePlay.Player
         private void PlayRollAnim()
         {
             anim.SetTrigger("roll");
+        }
+
+        private void PlayAttackAnim()
+        {
+            anim.SetTrigger("attack");
         }
 
         private void StopMovement()

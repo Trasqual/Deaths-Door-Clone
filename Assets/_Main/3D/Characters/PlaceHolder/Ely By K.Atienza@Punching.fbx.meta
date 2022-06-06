@@ -1,32 +1,12 @@
 fileFormatVersion: 2
-guid: 4973432322083b7439cdcc7948d1974b
+guid: 43bb5c89c8acb3143a18cc065a836993
 ModelImporter:
   serializedVersion: 20200
   internalIDToNameTable:
   - first:
       74: -203655887218126122
     second: mixamo.com
-  externalObjects:
-  - first:
-      type: UnityEngine:Texture2D
-      assembly: UnityEngine.CoreModule
-      name: ely-vanguardsoldier-kerwinatienza_diffuse
-    second: {fileID: 2800000, guid: f35a4e9c98b3df243a89d9152fb865db, type: 3}
-  - first:
-      type: UnityEngine:Texture2D
-      assembly: UnityEngine.CoreModule
-      name: ely-vanguardsoldier-kerwinatienza_glow
-    second: {fileID: 2800000, guid: a5c71bacbbc555c49b97ba6c901c037d, type: 3}
-  - first:
-      type: UnityEngine:Texture2D
-      assembly: UnityEngine.CoreModule
-      name: ely-vanguardsoldier-kerwinatienza_normal
-    second: {fileID: 2800000, guid: 26d906a9cb2f9ec48a674d19c07d915f, type: 3}
-  - first:
-      type: UnityEngine:Texture2D
-      assembly: UnityEngine.CoreModule
-      name: ely-vanguardsoldier-kerwinatienza_specular
-    second: {fileID: 2800000, guid: 2d877219d01448c4381757614accc5ea, type: 3}
+  externalObjects: {}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -95,14 +75,7 @@ ModelImporter:
     legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
     blendShapeNormalImportMode: 1
     normalSmoothingSource: 0
-  referencedClips:
-  - 245123a94b753d64f98f65537fbfa49a
-  - 43bb5c89c8acb3143a18cc065a836993
-  - 7800814cd91d1f44eb6b229abf4f3625
-  - d5ba5dbe12e27064db01ac15c20830f4
-  - 4177f959a0f4f2a4d9dbe7d21c872238
-  - e01aebb054cc9c34185d7076160e9af1
-  - 8f6cc7b74b66df344b2deff899ad42cc
+  referencedClips: []
   importAnimation: 1
   humanDescription:
     serializedVersion: 3

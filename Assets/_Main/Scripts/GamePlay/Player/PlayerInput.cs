@@ -7,6 +7,7 @@ public class PlayerInput : MonoBehaviour
     public Action OnRollButtonPressed;
     public Action OnAimButtonPressed;
     public Action OnAimButtonReleased;
+    public Action OnAttackButtonPressed;
 
     private Camera cam;
     private InputActions inputActions;
@@ -33,6 +34,7 @@ public class PlayerInput : MonoBehaviour
         inputActions.PlayerControls.Roll.performed += RollButtonPressed;
         inputActions.PlayerControls.Aim.started += AimButtonPressed;
         inputActions.PlayerControls.Aim.canceled += AimButtonReleased;
+        inputActions.PlayerControls.Attack.started += AttackButtonPressed;
     }
 
     private void RollButtonPressed(InputAction.CallbackContext ctx)
@@ -52,6 +54,11 @@ public class PlayerInput : MonoBehaviour
         if (!IsAiming) return;
         IsAiming = false;
         OnAimButtonReleased?.Invoke();
+    }
+
+    private void AttackButtonPressed(InputAction.CallbackContext ctx)
+    {
+        OnAttackButtonPressed?.Invoke();
     }
 
     private void Update()
