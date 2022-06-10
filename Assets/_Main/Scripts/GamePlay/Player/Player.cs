@@ -8,9 +8,18 @@ namespace _Main.Scripts.GamePlay.Player
     {
         [SerializeField] private PlayerData data;
         [SerializeField] private PlayerInput input;
+        [SerializeField] private CharacterController controller;
+        [SerializeField] private PlayerAnimation playerAnim;
+        [SerializeField] private RotationHandler rotator;
 
         public PlayerData Data => data;
 
         public PlayerInput Input => input;
+
+        public CharacterController Controller => controller;
+
+        public PlayerAnimation PlayerAnim => playerAnim;
+
+        public RotationHandler Rotator => rotator;
     }
 }

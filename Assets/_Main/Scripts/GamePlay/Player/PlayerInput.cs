@@ -2,13 +2,8 @@ using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerInput : MonoBehaviour
+public class PlayerInput : InputBase
 {
-    public Action OnRollButtonPressed;
-    public Action OnAimButtonPressed;
-    public Action OnAimButtonReleased;
-    public Action OnAttackButtonPressed;
-
     private Camera cam;
     private InputActions inputActions;
 
@@ -39,26 +34,26 @@ public class PlayerInput : MonoBehaviour
 
     private void RollButtonPressed(InputAction.CallbackContext ctx)
     {
-        OnRollButtonPressed?.Invoke();
+        OnRollAction?.Invoke();
     }
 
     private void AimButtonPressed(InputAction.CallbackContext ctx)
     {
         if (IsAiming) return;
         IsAiming = true;
-        OnAimButtonPressed?.Invoke();
+        OnAimActionStarted?.Invoke();
     }
 
     private void AimButtonReleased(InputAction.CallbackContext ctx)
     {
         if (!IsAiming) return;
         IsAiming = false;
-        OnAimButtonReleased?.Invoke();
+        OnAimActionEnded?.Invoke();
     }
 
     private void AttackButtonPressed(InputAction.CallbackContext ctx)
     {
-        OnAttackButtonPressed?.Invoke();
+        OnAttackAction?.Invoke();
     }
 
     private void Update()
@@ -111,12 +106,12 @@ public class PlayerInput : MonoBehaviour
         return isInputEnabled;
     }
 
-    public Vector3 GetMovementInput()
+    public override Vector3 GetMovementInput()
     {
         return movementInput;
     }
 
-    public Vector3 GetLookInput()
+    public override Vector3 GetLookInput()
     {
         return lookInput;
     }
