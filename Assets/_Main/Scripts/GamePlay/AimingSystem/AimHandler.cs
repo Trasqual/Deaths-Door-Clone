@@ -27,20 +27,23 @@ public class AimHandler : MonoBehaviour
 
     private void OnAimStarted()
     {
+        if (isAiming) return;
+        if (movement.IsInSpecialAction) return;
         isAiming = true;
-        movement.StopMovement();
-        movement.StopRotation();
+        movement.IsInSpecialAction = true;
+        movement.StopMovementAndRotation();
         anim.PlayAimAnim(isAiming);
     }
 
     private void OnAimEnded()
     {
+        if (!isAiming) return;
         isAiming = false;
         anim.PlayAimAnim(isAiming);
         DOVirtual.DelayedCall(aimEndDelayForRecoilAnim, () =>
         {
-            movement.StartMovement();
-            movement.StartRotation();
+            movement.IsInSpecialAction = false;
+            movement.StartMovementAndRotation();
         });
     }
 

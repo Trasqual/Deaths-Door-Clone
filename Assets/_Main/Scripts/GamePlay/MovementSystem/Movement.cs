@@ -11,5 +11,20 @@ namespace _Main.Scripts.GamePlay.Movement
         public abstract void StartRotation();
         public abstract void StopRotation();
         protected abstract void ProcessMovement();
+        public abstract void MoveInDirection(Vector3 dir, float speed);
+
+        public void StartMovementAndRotation()
+        {
+            StartMovement();
+            StartRotation();
+        }
+
+        public void StopMovementAndRotation()
+        {
+            StopMovement();
+            StopRotation();
+        }
+
+        public bool IsInSpecialAction;
     }
 }

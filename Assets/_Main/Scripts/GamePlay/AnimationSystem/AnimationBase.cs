@@ -23,4 +23,9 @@ public class AnimationBase : MonoBehaviour
     {
         anim.SetBool("isAiming", isAiming);
     }
+
+    public void PlayRollAnim()
+    {
+        anim.SetTrigger("roll");
+    }
 }

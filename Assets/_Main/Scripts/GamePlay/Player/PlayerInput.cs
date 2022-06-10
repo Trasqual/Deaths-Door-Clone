@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -26,7 +25,7 @@ public class PlayerInput : InputBase
 
     private void SubscribeToInputActions()
     {
-        inputActions.PlayerControls.Roll.performed += RollButtonPressed;
+        inputActions.PlayerControls.Roll.started += RollButtonPressed;
         inputActions.PlayerControls.Aim.started += AimButtonPressed;
         inputActions.PlayerControls.Aim.canceled += AimButtonReleased;
         inputActions.PlayerControls.Attack.started += AttackButtonPressed;

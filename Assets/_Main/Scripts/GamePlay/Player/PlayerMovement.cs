@@ -45,7 +45,12 @@ namespace _Main.Scripts.GamePlay.Player
         protected override void ProcessMovement()
         {
             var movementDirection = player.Input.GetMovementInput();
-            player.Controller.Move(movementDirection * Time.deltaTime * movementSpeed);
+            MoveInDirection(movementDirection, movementSpeed);
+        }
+
+        public override void MoveInDirection(Vector3 dir, float speed)
+        {
+            player.Controller.Move(dir * Time.deltaTime * speed);
         }
 
         private void ProcessRotation()
