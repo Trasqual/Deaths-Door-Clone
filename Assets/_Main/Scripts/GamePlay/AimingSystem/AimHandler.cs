@@ -12,6 +12,7 @@ public class AimHandler : MonoBehaviour
     private AnimationBase anim;
     private RotationHandler rotator;
 
+
     bool isAiming;
 
     private void Awake()
@@ -25,7 +26,7 @@ public class AimHandler : MonoBehaviour
         input.OnAimActionEnded += OnAimEnded;
     }
 
-    private void OnAimStarted()
+    protected virtual void OnAimStarted()
     {
         if (isAiming) return;
         if (movement.IsInSpecialAction) return;
@@ -33,9 +34,10 @@ public class AimHandler : MonoBehaviour
         movement.IsInSpecialAction = true;
         movement.StopMovementAndRotation();
         anim.PlayAimAnim(isAiming);
+
     }
 
-    private void OnAimEnded()
+    protected virtual void OnAimEnded()
     {
         if (!isAiming) return;
         isAiming = false;
@@ -47,7 +49,7 @@ public class AimHandler : MonoBehaviour
         });
     }
 
-    private void ProcessAimRotation()
+    protected virtual void ProcessAimRotation()
     {
         rotator.ProcessRotation(input.GetLookInput(), aimRotationSpeed);
     }

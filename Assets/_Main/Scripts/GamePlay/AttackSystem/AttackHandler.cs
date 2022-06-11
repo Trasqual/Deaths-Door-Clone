@@ -11,6 +11,7 @@ public class AttackHandler : MonoBehaviour
     Movement movement;
 
     bool isAttacking;
+    Vector3 attackDirection;
 
     private void Start()
     {
@@ -26,6 +27,8 @@ public class AttackHandler : MonoBehaviour
         if (isAttacking) return;
         if (movement.IsInSpecialAction) return;
         movement.StopMovementAndRotation();
+        attackDirection = input.GetLookInput();
+        transform.rotation = Quaternion.LookRotation(attackDirection);
 
         isAttacking = true;
         anim.PlayAttackAnim();
