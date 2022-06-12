@@ -15,7 +15,6 @@ public class AimAction : ActionBase, IRotationOverrider, IMovementOverrider
     [SerializeField] private float aimEndDelayForRecoilAnim = 0.2f;
 
     private InputBase input;
-    private AnimationBase anim;
     private IOverrideChecker overrideChecker;
 
     bool isAiming;
@@ -23,7 +22,6 @@ public class AimAction : ActionBase, IRotationOverrider, IMovementOverrider
     private void Awake()
     {
         input = GetComponent<InputBase>();
-        anim = GetComponent<AnimationBase>();
         overrideChecker = GetComponent<IOverrideChecker>();
 
         input.OnAimActionStarted += OnAimStarted;
@@ -35,7 +33,6 @@ public class AimAction : ActionBase, IRotationOverrider, IMovementOverrider
         if (!overrideChecker.CanOverride()) return;
         if (isAiming) return;
         isAiming = true;
-        anim.PlayAimAnim(isAiming);
         OnActionStarted?.Invoke();
         OnRotationOverrideStarted?.Invoke(this);
         OnMovementOverrideStarted?.Invoke(this);
@@ -47,7 +44,6 @@ public class AimAction : ActionBase, IRotationOverrider, IMovementOverrider
     {
         if (!isAiming) return;
         isAiming = false;
-        anim.PlayAimAnim(isAiming);
         OnActionEnded?.Invoke();
         DOVirtual.DelayedCall(aimEndDelayForRecoilAnim, () =>
         {
