@@ -5,7 +5,7 @@ using UnityEngine;
 public class CinemachineTargetGroupHandler : MonoBehaviour
 {
     [SerializeField] CinemachineTargetGroup targetGroup;
-    [SerializeField] AimHandler aimHandler;
+    [SerializeField] AimAction aimHandler;
     [SerializeField] float aimWeightChangeDuration = 2f;
 
     IEnumerator aimWeightCo;
@@ -14,8 +14,8 @@ public class CinemachineTargetGroupHandler : MonoBehaviour
     {
         if (aimHandler)
         {
-            aimHandler.OnAimActionStarted += SetAimingWeights;
-            aimHandler.OnAimActionEnded += ResetAimingWeights;
+            aimHandler.OnActionStarted += SetAimingWeights;
+            aimHandler.OnActionEnded += ResetAimingWeights;
         }
     }
 
@@ -35,7 +35,7 @@ public class CinemachineTargetGroupHandler : MonoBehaviour
         {
             StopCoroutine(aimWeightCo);
         }
-        aimWeightCo = ChangeWeightsCo(new int[2] { 0, 1 }, new float[2] { 1f, 0f }, aimWeightChangeDuration);
+        aimWeightCo = ChangeWeightsCo(new int[2] { 0, 1 }, new float[2] { .75f, 0.5f }, aimWeightChangeDuration);
         StartCoroutine(aimWeightCo);
     }
 
