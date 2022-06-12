@@ -1,10 +1,16 @@
-using _Main.Scripts.GamePlay.Movement;
 using DG.Tweening;
 using System;
 using UnityEngine;
 
-public class AimHandler : MonoBehaviour
+public class AimHandler : MonoBehaviour, IRotationOverrider, IMovementOverrider
 {
+    public event Action<IRotationOverrider> OnRotationOverrideStarted;
+    public event Action OnRotationOverrideEnded;
+    public event Action<Vector3, float> OnRotationOverridePerformed;
+    public event Action<IMovementOverrider> OnMovementOverrideStarted;
+    public event Action OnMovementOverrideEnded;
+    public event Action<Vector3, float> OnMovementOverridePerformed;
+
     public Action OnAimActionStarted;
     public Action OnAimActionEnded;
     public Action OnAimActionPerformed;
@@ -13,19 +19,18 @@ public class AimHandler : MonoBehaviour
     [SerializeField] private float aimEndDelayForRecoilAnim = 0.2f;
 
     private InputBase input;
-    private Movement movement;
     private AnimationBase anim;
-    private RotationHandler rotator;
+    private IOverrideChecker overrideChecker;
 
 
     bool isAiming;
 
+
     private void Awake()
     {
         input = GetComponent<InputBase>();
-        movement = GetComponent<Movement>();
         anim = GetComponent<AnimationBase>();
-        rotator = GetComponent<RotationHandler>();
+        overrideChecker = GetComponent<IOverrideChecker>();
 
         input.OnAimActionStarted += OnAimStarted;
         input.OnAimActionEnded += OnAimEnded;
@@ -33,13 +38,15 @@ public class AimHandler : MonoBehaviour
 
     protected virtual void OnAimStarted()
     {
+        if (!overrideChecker.CanOverride()) return;
         if (isAiming) return;
-        if (movement.IsInSpecialAction) return;
         isAiming = true;
-        movement.IsInSpecialAction = true;
-        movement.StopMovementAndRotation();
         anim.PlayAimAnim(isAiming);
         OnAimActionStarted?.Invoke();
+        OnRotationOverrideStarted?.Invoke(this);
+        OnMovementOverrideStarted?.Invoke(this);
+        OnMovementOverridePerformed?.Invoke(Vector3.zero, 0f);
+
     }
 
     protected virtual void OnAimEnded()
@@ -50,14 +57,14 @@ public class AimHandler : MonoBehaviour
         OnAimActionEnded?.Invoke();
         DOVirtual.DelayedCall(aimEndDelayForRecoilAnim, () =>
         {
-            movement.IsInSpecialAction = false;
-            movement.StartMovementAndRotation();
+            OnRotationOverrideEnded?.Invoke();
+            OnMovementOverrideEnded?.Invoke();
         });
     }
 
     protected virtual void ProcessAimRotation()
     {
-        rotator.ProcessRotation(input.GetLookInput(), aimRotationSpeed);
+        OnRotationOverridePerformed?.Invoke(input.GetLookInput(), aimRotationSpeed);
         OnAimActionPerformed?.Invoke();
     }
 

@@ -10,7 +10,6 @@ namespace _Main.Scripts.GamePlay.Player
         [SerializeField] private PlayerInput input;
         [SerializeField] private CharacterController controller;
         [SerializeField] private PlayerAnimation playerAnim;
-        [SerializeField] private RotationHandler rotator;
 
         public PlayerData Data => data;
 
@@ -19,7 +18,5 @@ namespace _Main.Scripts.GamePlay.Player
         public CharacterController Controller => controller;
 
         public PlayerAnimation PlayerAnim => playerAnim;
-
-        public RotationHandler Rotator => rotator;
     }
 }

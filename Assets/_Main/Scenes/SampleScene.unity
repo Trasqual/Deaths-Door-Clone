@@ -242,7 +242,7 @@ MonoBehaviour:
     weight: 0.75
     radius: 0
   - target: {fileID: 1138824710}
-    weight: 1
+    weight: 0.5
     radius: 0
 --- !u!4 &190050920
 Transform:
@@ -737,9 +737,7 @@ GameObject:
   - component: {fileID: 756532616}
   - component: {fileID: 756532619}
   - component: {fileID: 756532618}
-  - component: {fileID: 756532622}
   - component: {fileID: 756532623}
-  - component: {fileID: 756532624}
   - component: {fileID: 756532621}
   m_Layer: 0
   m_Name: Player
@@ -780,7 +778,6 @@ MonoBehaviour:
   input: {fileID: 756532619}
   controller: {fileID: 756532620}
   playerAnim: {fileID: 756532617}
-  rotator: {fileID: 756532622}
 --- !u!114 &756532617
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -807,8 +804,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsInSpecialAction: 0
-  movementSpeed: 5
-  rotationSpeed: 20
+  baseMovementSpeed: 5
+  baseRotationSpeed: 20
 --- !u!114 &756532619
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -853,18 +850,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   aimRotationSpeed: 20
   aimEndDelayForRecoilAnim: 0.2
---- !u!114 &756532622
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 756532614}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 14d3059ed2750d14c943bb73dfb23da8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &756532623
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -879,19 +864,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rollSpeed: 10
   rollDuration: 0.5
---- !u!114 &756532624
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 756532614}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b495e0dc8d3356142a0c005a150daaec, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  attackSpeed: 0.5
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -944,7 +916,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 50
+  field of view: 60
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -970,7 +942,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   m_LocalRotation: {x: 0.5735764, y: 0, z: 0, w: 0.8191521}
-  m_LocalPosition: {x: 0.00000023841858, y: 6.577848, z: -2.394142}
+  m_LocalPosition: {x: 0.00000023841858, y: 6.5778484, z: -2.394142}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1379,7 +1351,7 @@ MonoBehaviour:
   m_Priority: 10
   m_StandbyUpdate: 2
   m_LookAt: {fileID: 0}
-  m_Follow: {fileID: 190050920}
+  m_Follow: {fileID: 756532615}
   m_Lens:
     FieldOfView: 60
     OrthographicSize: 5
@@ -1403,7 +1375,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1398076056}
   m_LocalRotation: {x: 0.5735764, y: 0, z: 0, w: 0.8191521}
-  m_LocalPosition: {x: 0.00000023841858, y: 6.577848, z: -2.394142}
+  m_LocalPosition: {x: 0.00000023841858, y: 6.5778484, z: -2.394142}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 671808945}
