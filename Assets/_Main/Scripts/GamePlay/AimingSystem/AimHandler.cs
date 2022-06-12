@@ -1,9 +1,14 @@
 using _Main.Scripts.GamePlay.Movement;
 using DG.Tweening;
+using System;
 using UnityEngine;
 
 public class AimHandler : MonoBehaviour
 {
+    public Action OnAimActionStarted;
+    public Action OnAimActionEnded;
+    public Action OnAimActionPerformed;
+
     [SerializeField] private float aimRotationSpeed = 5f;
     [SerializeField] private float aimEndDelayForRecoilAnim = 0.2f;
 
@@ -34,7 +39,7 @@ public class AimHandler : MonoBehaviour
         movement.IsInSpecialAction = true;
         movement.StopMovementAndRotation();
         anim.PlayAimAnim(isAiming);
-
+        OnAimActionStarted?.Invoke();
     }
 
     protected virtual void OnAimEnded()
@@ -42,6 +47,7 @@ public class AimHandler : MonoBehaviour
         if (!isAiming) return;
         isAiming = false;
         anim.PlayAimAnim(isAiming);
+        OnAimActionEnded?.Invoke();
         DOVirtual.DelayedCall(aimEndDelayForRecoilAnim, () =>
         {
             movement.IsInSpecialAction = false;
@@ -52,6 +58,7 @@ public class AimHandler : MonoBehaviour
     protected virtual void ProcessAimRotation()
     {
         rotator.ProcessRotation(input.GetLookInput(), aimRotationSpeed);
+        OnAimActionPerformed?.Invoke();
     }
 
     private void Update()

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641275, b: 0.5748172, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -139,7 +139,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &168955667
 Transform:
   m_ObjectHideFlags: 0
@@ -239,10 +239,10 @@ MonoBehaviour:
   m_UpdateMethod: 2
   m_Targets:
   - target: {fileID: 756532615}
-    weight: 1
+    weight: 0.75
     radius: 0
   - target: {fileID: 1138824710}
-    weight: 0
+    weight: 1
     radius: 0
 --- !u!4 &190050920
 Transform:
@@ -256,7 +256,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &221967472
 GameObject:
@@ -398,9 +398,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_TrackedObjectOffset: {x: 0, y: 0, z: 0}
-  m_LookaheadTime: 0
-  m_LookaheadSmoothing: 0
-  m_LookaheadIgnoreY: 0
+  m_LookaheadTime: 0.1
+  m_LookaheadSmoothing: 0.1
+  m_LookaheadIgnoreY: 1
   m_XDamping: 0.1
   m_YDamping: 0.1
   m_ZDamping: 0.1
@@ -738,9 +738,9 @@ GameObject:
   - component: {fileID: 756532619}
   - component: {fileID: 756532618}
   - component: {fileID: 756532622}
-  - component: {fileID: 756532621}
   - component: {fileID: 756532623}
   - component: {fileID: 756532624}
+  - component: {fileID: 756532621}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -848,13 +848,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 756532614}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f0f1b2f52a17149c2a7f96f350b83d94, type: 3}
+  m_Script: {fileID: 11500000, guid: ddbc780f9237ff143b03d71104faf9b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   aimRotationSpeed: 20
   aimEndDelayForRecoilAnim: 0.2
-  indicator: {fileID: 1138824710}
-  camTargetGroup: {fileID: 1398076059}
 --- !u!114 &756532622
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1211,13 +1209,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1138824710}
+  - component: {fileID: 1138824711}
   m_Layer: 0
   m_Name: AimIndicator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1138824710
 Transform:
   m_ObjectHideFlags: 0
@@ -1233,6 +1232,21 @@ Transform:
   m_Father: {fileID: 756532615}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1138824711
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1138824709}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 261c9cba4b931c347b37b3fbc19ab14b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  indicatorVisual: {fileID: 168955666}
+  indicatorDistance: 7
+  indicatorMoveSpeed: 10
 --- !u!1 &1285597441
 GameObject:
   m_ObjectHideFlags: 0
@@ -1409,6 +1423,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetGroup: {fileID: 190050919}
+  aimHandler: {fileID: 756532621}
+  aimWeightChangeDuration: 2
 --- !u!1 &1460608819
 GameObject:
   m_ObjectHideFlags: 0
@@ -1514,7 +1530,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1688947972}
   m_Layer: 0
-  m_Name: Block
+  m_Name: Blocks
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1539,7 +1555,7 @@ Transform:
   - {fileID: 1285597442}
   - {fileID: 751277160}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1938060196
 GameObject:
