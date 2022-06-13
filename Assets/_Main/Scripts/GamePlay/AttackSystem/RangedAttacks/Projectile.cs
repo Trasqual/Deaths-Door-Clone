@@ -17,7 +17,7 @@ public class Projectile : MonoBehaviour
         StartCoroutine(DestroySelf());
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnCollisionEnter(Collision collision)
     {
         rb.isKinematic = true;
     }
