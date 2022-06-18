@@ -1,18 +1,25 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
-public class MovementState : MonoBehaviour
+public class MovementState : StateBase
 {
-    // Start is called before the first frame update
-    void Start()
+    public MovementState(StateMachine stateMachine) : base(stateMachine) { }
+
+    public override void EnterState()
     {
-        
+        stateMachine.Movement.StartMovementAndRotation();
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void UpdateState()
     {
-        
+        stateMachine.Movement.Move(stateMachine.InputBase.GetMovementInput(), stateMachine.MovementSpeedMultiplier);
+    }
+
+    public override void ExitState()
+    {
+        stateMachine.Movement.StopMovementAndRotation();
+    }
+
+    public override void CancelState()
+    {
+        stateMachine.Movement.StopMovementAndRotation();
     }
 }

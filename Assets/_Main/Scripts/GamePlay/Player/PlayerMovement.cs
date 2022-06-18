@@ -2,47 +2,19 @@ using UnityEngine;
 
 namespace _Main.Scripts.GamePlay.Player
 {
-    public class PlayerMovement : Movement.Movement, IOverrideChecker
+    public class PlayerMovement : Movement.Movement
     {
         [SerializeField] private float baseMovementSpeed = 5f;
-        [SerializeField] private float baseRotationSpeed = 5f;
+        [SerializeField] private float rotationSpeed = 20f;
 
         private Player player;
 
         private bool canMove = true;
         private bool canRotate = true;
-        Vector3 movementDirection;
-        Vector3 rotationDirection;
-        float currentMovementSpeed;
-        float currentRotationSpeed;
-
-
-        #region
-        IMovementOverrider currentMovementOverrider;
-        IRotationOverrider currentRotationOverrider;
-        private bool isMovementOverriden = false;
-        private bool isRotationOverriden = false;
-        private Vector3 movementOverrideDirection;
-        private Vector3 rotationOverrideDirection;
-        private float movementOverrideSpeed = 0f;
-        private float rotationOverrideSpeed = 0f;
-        #endregion
 
         private void Start()
         {
             player = GetComponent<Player>();
-
-            foreach (var movementOverrider in GetComponents<IMovementOverrider>())
-            {
-                movementOverrider.OnMovementOverrideStarted += StartMovementOverride;
-                movementOverrider.OnMovementOverrideEnded += EndMovementOverride;
-            }
-
-            foreach (var rotationOverrider in GetComponents<IRotationOverrider>())
-            {
-                rotationOverrider.OnRotationOverrideStarted += StartRotationOverride;
-                rotationOverrider.OnRotationOverrideEnded += EndRotationOverride;
-            }
         }
 
         protected override bool IsMoving()
@@ -70,54 +42,7 @@ namespace _Main.Scripts.GamePlay.Player
             canRotate = false;
         }
 
-        public bool CanOverride()
-        {
-            return !isMovementOverriden;
-        }
-
-        private void StartMovementOverride(IMovementOverrider currentOverrider)
-        {
-            isMovementOverriden = true;
-            currentMovementOverrider = currentOverrider;
-            currentMovementOverrider.OnMovementOverridePerformed += ProcessMovementOverride;
-        }
-
-        private void EndMovementOverride()
-        {
-            if (!isMovementOverriden) return;
-            isMovementOverriden = false;
-            currentMovementOverrider.OnMovementOverridePerformed -= ProcessMovementOverride;
-            currentMovementOverrider = null;
-        }
-
-        private void ProcessMovementOverride(Vector3 overrideDirection, float overrideSpeed)
-        {
-            movementOverrideDirection = overrideDirection;
-            movementOverrideSpeed = overrideSpeed;
-        }
-
-        private void StartRotationOverride(IRotationOverrider currentOverrider)
-        {
-            isRotationOverriden = true;
-            currentRotationOverrider = currentOverrider;
-            currentRotationOverrider.OnRotationOverridePerformed += ProcessRotationOverride;
-        }
-
-        private void EndRotationOverride()
-        {
-            if (!isRotationOverriden) return;
-            isRotationOverriden = false;
-            currentRotationOverrider.OnRotationOverridePerformed -= ProcessRotationOverride;
-            currentRotationOverrider = null;
-        }
-
-        private void ProcessRotationOverride(Vector3 overrideDirection, float overrideSpeed)
-        {
-            rotationOverrideDirection = overrideDirection;
-            rotationOverrideSpeed = overrideSpeed;
-        }
-
-        public override void MoveInDirection(Vector3 dir, float speed)
+        public void MoveInDirection(Vector3 dir, float speed)
         {
             player.Controller.Move(dir * Time.deltaTime * speed);
         }
@@ -130,46 +55,19 @@ namespace _Main.Scripts.GamePlay.Player
             }
         }
 
-        protected override bool CanMove()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        private void Update()
+        public override void Move(Vector3 dir, float multiplier)
         {
             if (canMove)
             {
-                if (isMovementOverriden)
-                {
-                    movementDirection = movementOverrideDirection;
-                    currentMovementSpeed = movementOverrideSpeed;
-
-                }
-                else
-                {
-                    movementDirection = player.Input.GetMovementInput();
-                    currentMovementSpeed = baseMovementSpeed;
-                }
-                MoveInDirection(movementDirection, currentMovementSpeed);
+                MoveInDirection(dir, baseMovementSpeed * multiplier);
             }
-
 
             if (canRotate)
             {
-                if (isRotationOverriden)
-                {
-                    rotationDirection = rotationOverrideDirection;
-                    currentRotationSpeed = rotationOverrideSpeed;
-                }
-                else
-                {
-                    rotationDirection = player.Input.GetMovementInput();
-                    currentRotationSpeed = baseRotationSpeed;
-                }
-                RotateInDirection(rotationDirection, currentRotationSpeed);
+                RotateInDirection(dir, rotationSpeed);
             }
 
-            player.PlayerAnim.PlayMovementAnim(canMove ? movementDirection : Vector3.zero);
+            player.PlayerAnim.PlayMovementAnim(canMove ? dir : Vector3.zero);
         }
     }
 }
