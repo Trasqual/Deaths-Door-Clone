@@ -15,7 +15,7 @@ public class BowAttack : RangedAttack
     [SerializeField] private Shooter shooter;
 
     [Header("Attack Params")]
-    [SerializeField] private float initialChargeDelay = 1f;
+    [SerializeField] private float initialChargeDelay = 0.5f;
     [SerializeField] private float maxChargeTime = 3f;
     [SerializeField] private float minDmgMultiplier = 1f;
     [SerializeField] private float maxDmgMultiplier = 2f;
@@ -35,6 +35,15 @@ public class BowAttack : RangedAttack
     {
         isActive = false;
         Shoot();
+        chargeDelayDuration = 0f;
+        chargeDuration = 0f;
+        dmgMultiplier = 1f;
+        bow.SetActive(false);
+    }
+
+    public override void DoOnAimCanceled()
+    {
+        isActive = false;
         chargeDelayDuration = 0f;
         chargeDuration = 0f;
         dmgMultiplier = 1f;
@@ -64,6 +73,9 @@ public class BowAttack : RangedAttack
                 dmgMultiplier = Mathf.Lerp(minDmgMultiplier, maxDmgMultiplier, t);
             }
         }
+
+        Debug.Log(chargeDuration);
+        Debug.Log(chargeDelayDuration);
     }
 
     private void Shoot()

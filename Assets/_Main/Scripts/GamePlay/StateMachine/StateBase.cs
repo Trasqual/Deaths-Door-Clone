@@ -1,5 +1,5 @@
-using UnityEngine;
 
+[System.Serializable]
 public abstract class StateBase
 {
     protected StateMachine stateMachine;

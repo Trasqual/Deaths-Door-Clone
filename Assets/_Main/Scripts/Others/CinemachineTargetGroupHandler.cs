@@ -18,6 +18,7 @@ public class CinemachineTargetGroupHandler : MonoBehaviour
     {
         action.OnActionStart += SetAimingWeights;
         action.OnActionEnd += ResetAimingWeights;
+        action.OnActionCanceled += ResetAimingWeights;
     }
 
     public void SetAimingWeights()

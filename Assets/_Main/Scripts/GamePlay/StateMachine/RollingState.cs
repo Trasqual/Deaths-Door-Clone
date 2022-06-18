@@ -51,6 +51,5 @@ public class RollingState : StateBase
 
     public override void CancelState()
     {
-        throw new System.NotImplementedException();
     }
 }

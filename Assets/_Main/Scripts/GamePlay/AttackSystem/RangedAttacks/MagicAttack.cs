@@ -11,4 +11,9 @@ public class MagicAttack : RangedAttack
     {
         Debug.Log("testing magic end");
     }
+
+    public override void DoOnAimCanceled()
+    {
+        Debug.Log("testing magic canceled");
+    }
 }

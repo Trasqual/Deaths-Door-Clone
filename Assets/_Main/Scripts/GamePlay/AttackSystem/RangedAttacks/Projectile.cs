@@ -9,6 +9,7 @@ public class Projectile : MonoBehaviour
     float damage => baseDamage * dmgMultiplier;
 
     Rigidbody rb;
+    public Collider Col => GetComponent<Collider>();
 
     private void Start()
     {
@@ -21,7 +22,7 @@ public class Projectile : MonoBehaviour
     {
         rb.collisionDetectionMode = CollisionDetectionMode.ContinuousSpeculative;
         rb.isKinematic = true;
-        GetComponent<Collider>().enabled = false;
+        Col.enabled = false;
     }
 
     public void SetDmgMultiplier(float amount)

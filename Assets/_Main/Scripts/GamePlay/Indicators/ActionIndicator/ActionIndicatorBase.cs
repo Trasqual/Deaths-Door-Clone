@@ -10,5 +10,6 @@ public abstract class ActionIndicatorBase : MonoBehaviour
     {
         action.OnActionStart += Activate;
         action.OnActionEnd += Deactivate;
+        action.OnActionCanceled += Deactivate;
     }
 }

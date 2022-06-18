@@ -6,8 +6,10 @@ public abstract class RangedAttack : MonoBehaviour
     {
         action.OnActionStart += DoOnAimStart;
         action.OnActionEnd += DoOnAimEnd;
+        action.OnActionCanceled += DoOnAimCanceled;
     }
 
     public abstract void DoOnAimStart();
     public abstract void DoOnAimEnd();
+    public abstract void DoOnAimCanceled();
 }

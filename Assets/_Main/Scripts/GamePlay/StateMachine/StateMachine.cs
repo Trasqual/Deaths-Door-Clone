@@ -27,9 +27,11 @@ public class StateMachine : MonoBehaviour
     [SerializeField] private float aimSpeedMultiplier = 1f;
     [SerializeField] private float recoilDelay = 0.2f;
 
+    [Header("Debugging")]
+    [SerializeField] private string CurrentStateName;
+
     private Dictionary<Type, List<Transition>> transitions = new Dictionary<Type, List<Transition>>();
     private List<Transition> anyTransitions = new List<Transition>();
-    private static List<Transition> emptyTransitions = new List<Transition>(0);
 
     private void Awake()
     {
@@ -72,11 +74,17 @@ public class StateMachine : MonoBehaviour
                 {
                     CurrentState?.ExitState();
                 }
+                CurrentState = state;
+                CurrentState.EnterState();
+                CurrentStateName = CurrentState.ToString();
             }
         }
-        CurrentState = state;
-
-        CurrentState.EnterState();
+        else
+        {
+            CurrentState = state;
+            CurrentState.EnterState();
+            CurrentStateName = CurrentState.ToString();
+        }
     }
 
     public class Transition

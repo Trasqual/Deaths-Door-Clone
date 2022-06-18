@@ -7,6 +7,7 @@ public class AimingState : StateBase, IAction
 {
     public event Action OnActionStart;
     public event Action OnActionEnd;
+    public event Action OnActionCanceled;
 
     public bool IsAiming { get; private set; }
 
@@ -59,7 +60,7 @@ public class AimingState : StateBase, IAction
 
     public override void CancelState()
     {
-        OnActionEnd?.Invoke();
+        OnActionCanceled?.Invoke();
         IsAiming = false;
         recoilDelayTween.Kill();
         anim.PlayAimAnim(false, true);

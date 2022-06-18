@@ -913,6 +913,7 @@ MonoBehaviour:
   rollDuration: 0.5
   aimSpeedMultiplier: 1
   recoilDelay: 0.2
+  CurrentStateName: 
 --- !u!1 &800507648
 GameObject:
   m_ObjectHideFlags: 0
@@ -962,7 +963,7 @@ MonoBehaviour:
   projectilePrefab: {fileID: 5961490733113688068, guid: 6964731e038ee0d40a3250aec92442e7, type: 3}
   chargedProjectilePrefab: {fileID: 1835174666943779962, guid: eff954a0ea67f13409301d2029b90f78, type: 3}
   shooter: {fileID: 1991116917}
-  initialChargeDelay: 1
+  initialChargeDelay: 0.5
   maxChargeTime: 3
   minDmgMultiplier: 1
   maxDmgMultiplier: 2
@@ -1018,7 +1019,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 60
+  field of view: 50
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -1044,7 +1045,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   m_LocalRotation: {x: 0.42261827, y: 0, z: 0, w: 0.9063079}
-  m_LocalPosition: {x: -0.00000035762787, y: 9.958579, z: -8.356239}
+  m_LocalPosition: {x: -0.00000035762787, y: 9.95858, z: -8.356238}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1507,7 +1508,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1398076056}
   m_LocalRotation: {x: 0.42261827, y: 0, z: 0, w: 0.9063079}
-  m_LocalPosition: {x: -0.00000035762787, y: 9.958579, z: -8.356239}
+  m_LocalPosition: {x: -0.00000035762787, y: 9.95858, z: -8.356238}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 671808945}
