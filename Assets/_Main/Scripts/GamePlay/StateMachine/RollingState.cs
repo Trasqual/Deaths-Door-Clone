@@ -1,20 +1,33 @@
+using _Main.Scripts.GamePlay.Movement;
 using DG.Tweening;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class RollingState : StateBase
 {
-    public RollingState(StateMachine stateMachine) : base(stateMachine) { }
+    AnimationBase anim;
+    InputBase input;
+    Movement movement;
+    float rollSpeedMultiplier;
+    float rollDuration;
+
+    public RollingState(StateMachine stateMachine, AnimationBase anim, InputBase input, Movement movement, float rollSpeedMultiplier, float rollDuration) : base(stateMachine)
+    {
+        this.anim = anim;
+        this.input = input;
+        this.movement = movement;
+        this.rollSpeedMultiplier = rollSpeedMultiplier;
+        this.rollDuration = rollDuration;
+    }
 
     private Vector3 direction;
 
     public override void EnterState()
     {
-        stateMachine.Movement.StartMovementAndRotation();
-        stateMachine.Anim.PlayRollAnim();
-        direction = stateMachine.InputBase.GetMovementInput() == Vector3.zero ? stateMachine.transform.forward : stateMachine.InputBase.GetMovementInput().normalized;
-        DOVirtual.DelayedCall(stateMachine.RollDuration, () => StopRoll());
+        movement.StartMovementAndRotation();
+        anim.PlayRollAnim();
+        direction = input.GetMovementInput() == Vector3.zero ? stateMachine.transform.forward : input.GetMovementInput().normalized;
+        stateMachine.transform.forward = direction;
+        DOVirtual.DelayedCall(rollDuration, () => StopRoll());
     }
 
     private void StopRoll()
@@ -24,12 +37,12 @@ public class RollingState : StateBase
 
     public override void UpdateState()
     {
-        stateMachine.Movement.Move(direction, stateMachine.RollingSpeedMultiplier);
+        movement.Move(direction, rollSpeedMultiplier, 0f);
     }
 
     public override void ExitState()
     {
-        stateMachine.Movement.StopMovementAndRotation();
+        movement.StopMovementAndRotation();
         direction = Vector3.zero;
     }
 

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public abstract class StateBase : MonoBehaviour
+public abstract class StateBase
 {
     protected StateMachine stateMachine;
 

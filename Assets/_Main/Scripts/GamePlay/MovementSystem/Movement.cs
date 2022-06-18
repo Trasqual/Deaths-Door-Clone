@@ -22,6 +22,6 @@ namespace _Main.Scripts.GamePlay.Movement
             StopRotation();
         }
 
-        public abstract void Move(Vector3 dir, float speed);
+        public abstract void Move(Vector3 dir, float movementSpeedMultiplier, float rotationSpeedMultiplier);
     }
 }

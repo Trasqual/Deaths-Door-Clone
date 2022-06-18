@@ -2,21 +2,45 @@ using UnityEngine;
 
 namespace _Main.Scripts.GamePlay.Player
 {
-    [RequireComponent(typeof(PlayerMovement), 
+    [RequireComponent(typeof(PlayerMovement),
         typeof(PlayerAnimation))]
     public class Player : MonoBehaviour
     {
-        [SerializeField] private PlayerData data;
-        [SerializeField] private PlayerInput input;
-        [SerializeField] private CharacterController controller;
-        [SerializeField] private PlayerAnimation playerAnim;
+        public PlayerData Data { get; private set; }
+        public InputBase Input { get; private set; }
+        public CharacterController Controller { get; private set; }
+        public AnimationBase PlayerAnim { get; private set; }
 
-        public PlayerData Data => data;
+        StateMachine stateMachine;
 
-        public PlayerInput Input => input;
+        private void Awake()
+        {
+            //Data = GetComponent<PlayerData>();
+            Input = GetComponent<InputBase>();
+            Controller = GetComponent<CharacterController>();
+            PlayerAnim = GetComponent<AnimationBase>();
+            stateMachine = GetComponent<StateMachine>();
 
-        public CharacterController Controller => controller;
 
-        public PlayerAnimation PlayerAnim => playerAnim;
+            Input.OnAimActionStarted += StartAiming;
+            Input.OnAimActionEnded += EndAiming;
+
+            Input.OnRollAction += PerformRoll;
+        }
+
+        private void StartAiming()
+        {
+            stateMachine.ChangeState(stateMachine.AimingState);
+        }
+
+        private void EndAiming()
+        {
+            stateMachine.AimingState.EndAim();
+        }
+
+        private void PerformRoll()
+        {
+            stateMachine.ChangeState(stateMachine.RollingState);
+        }
     }
 }

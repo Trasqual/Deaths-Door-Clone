@@ -1,25 +1,36 @@
 
+using _Main.Scripts.GamePlay.Movement;
+
 public class MovementState : StateBase
 {
-    public MovementState(StateMachine stateMachine) : base(stateMachine) { }
+    InputBase input;
+    Movement movement;
+    float speedMultiplier;
+
+    public MovementState(StateMachine stateMachine, InputBase input, Movement movement, float movementSpeedMultiplier) : base(stateMachine)
+    {
+        this.input = input;
+        this.movement = movement;
+        speedMultiplier = movementSpeedMultiplier;
+    }
 
     public override void EnterState()
     {
-        stateMachine.Movement.StartMovementAndRotation();
+        movement.StartMovementAndRotation();
     }
 
     public override void UpdateState()
     {
-        stateMachine.Movement.Move(stateMachine.InputBase.GetMovementInput(), stateMachine.MovementSpeedMultiplier);
+        movement.Move(input.GetMovementInput(), speedMultiplier, 1f);
     }
 
     public override void ExitState()
     {
-        stateMachine.Movement.StopMovementAndRotation();
+        movement.StopMovementAndRotation();
     }
 
     public override void CancelState()
     {
-        stateMachine.Movement.StopMovementAndRotation();
+        movement.StopMovementAndRotation();
     }
 }

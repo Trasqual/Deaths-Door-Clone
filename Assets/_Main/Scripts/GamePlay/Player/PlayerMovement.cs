@@ -5,7 +5,7 @@ namespace _Main.Scripts.GamePlay.Player
     public class PlayerMovement : Movement.Movement
     {
         [SerializeField] private float baseMovementSpeed = 5f;
-        [SerializeField] private float rotationSpeed = 20f;
+        [SerializeField] private float baseRotationSpeed = 20f;
 
         private Player player;
 
@@ -42,12 +42,12 @@ namespace _Main.Scripts.GamePlay.Player
             canRotate = false;
         }
 
-        public void MoveInDirection(Vector3 dir, float speed)
+        protected void MoveInDirection(Vector3 dir, float speed)
         {
             player.Controller.Move(dir * Time.deltaTime * speed);
         }
 
-        public void RotateInDirection(Vector3 direction, float rotationSpeed)
+        protected void RotateInDirection(Vector3 direction, float rotationSpeed)
         {
             if (direction != Vector3.zero)
             {
@@ -55,16 +55,16 @@ namespace _Main.Scripts.GamePlay.Player
             }
         }
 
-        public override void Move(Vector3 dir, float multiplier)
+        public override void Move(Vector3 dir, float movementSpeedMultiplier, float rotationSpeedMultiplier)
         {
             if (canMove)
             {
-                MoveInDirection(dir, baseMovementSpeed * multiplier);
+                MoveInDirection(dir, baseMovementSpeed * movementSpeedMultiplier);
             }
 
             if (canRotate)
             {
-                RotateInDirection(dir, rotationSpeed);
+                RotateInDirection(dir, baseRotationSpeed * rotationSpeedMultiplier);
             }
 
             player.PlayerAnim.PlayMovementAnim(canMove ? dir : Vector3.zero);

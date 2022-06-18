@@ -10,31 +10,45 @@ public class StateMachine : MonoBehaviour
     public AttackState AttackState { get; private set; }
 
     StateBase currentState;
-    public InputBase InputBase { get; private set; }
-    public Movement Movement { get; private set; }
-    public AnimationBase Anim { get; private set; }
+    InputBase inputBase;
+    Movement movement;
+    AnimationBase anim;
 
     [Header("Movement Params")]
     [SerializeField] float movementSpeedMultiplier = 1f;
-    public float MovementSpeedMultiplier => movementSpeedMultiplier;
 
     [Header("Rolling Params")]
     [SerializeField] float rollingSpeedMultiplier = 2f;
-    public float RollingSpeedMultiplier => rollingSpeedMultiplier;
     [SerializeField] float rollDuration = 1.5f;
-    public float RollDuration => rollDuration;
+
+    [Header("Aiming Params")]
+    [SerializeField] float aimSpeedMultiplier = 1f;
+    [SerializeField] float recoilDelay = 0.2f;
 
     private void Awake()
     {
-        MovementState = new MovementState(this);
-        RollingState = new RollingState(this);
+        inputBase = GetComponent<InputBase>();
+        movement = GetComponent<Movement>();
+        anim = GetComponent<AnimationBase>();
+
+        MovementState = new MovementState(this, inputBase, movement, movementSpeedMultiplier);
+        RollingState = new RollingState(this, anim, inputBase, movement, rollingSpeedMultiplier, rollDuration);
+        AimingState = new AimingState(this, anim, inputBase, movement, aimSpeedMultiplier, recoilDelay);
+
+        ChangeState(MovementState);
+    }
+
+    private void Update()
+    {
+        currentState.UpdateState();
     }
 
     public void ChangeState(StateBase state)
     {
-        if (currentState == state) return;
 
-        currentState.ExitState();
+        if (currentState == state) return;
+        if (currentState != null)
+            currentState.ExitState();
         currentState = state;
         state.EnterState();
     }
