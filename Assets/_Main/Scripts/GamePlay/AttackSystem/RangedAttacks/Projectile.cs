@@ -19,7 +19,9 @@ public class Projectile : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        rb.collisionDetectionMode = CollisionDetectionMode.ContinuousSpeculative;
         rb.isKinematic = true;
+        GetComponent<Collider>().enabled = false;
     }
 
     public void SetDmgMultiplier(float amount)

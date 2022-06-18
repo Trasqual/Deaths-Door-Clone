@@ -1,4 +1,7 @@
 using _Main.Scripts.GamePlay.Movement;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class StateMachine : MonoBehaviour
@@ -7,8 +10,8 @@ public class StateMachine : MonoBehaviour
     public AimingState AimingState { get; private set; }
     public RollingState RollingState { get; private set; }
     public AttackState AttackState { get; private set; }
+    public StateBase CurrentState { get; private set; }
 
-    private StateBase currentState;
     private InputBase inputBase;
     private Movement movement;
     private AnimationBase anim;
@@ -24,6 +27,10 @@ public class StateMachine : MonoBehaviour
     [SerializeField] private float aimSpeedMultiplier = 1f;
     [SerializeField] private float recoilDelay = 0.2f;
 
+    private Dictionary<Type, List<Transition>> transitions = new Dictionary<Type, List<Transition>>();
+    private List<Transition> anyTransitions = new List<Transition>();
+    private static List<Transition> emptyTransitions = new List<Transition>(0);
+
     private void Awake()
     {
         inputBase = GetComponent<InputBase>();
@@ -34,20 +41,88 @@ public class StateMachine : MonoBehaviour
         RollingState = new RollingState(2, this, anim, inputBase, movement, rollingSpeedMultiplier, rollDuration);
         AimingState = new AimingState(1, this, anim, inputBase, movement, aimSpeedMultiplier, recoilDelay);
 
+        AddAnyTransition(RollingState, () => true, () => true);
+        AddTransition(MovementState, AimingState, () => true, () => false);
+        AddTransition(RollingState, AimingState, () => RollingState.IsRollingComplete, () => false);
+        AddTransition(RollingState, MovementState, () => RollingState.IsRollingComplete, () => false);
+        AddTransition(AimingState, MovementState, () => true, () => false);
+
         ChangeState(MovementState);
     }
 
     private void Update()
     {
-        currentState.UpdateState();
+        CurrentState.UpdateState();
     }
 
     public void ChangeState(StateBase state)
     {
-        if (currentState == state) return;
-        if (currentState != null)
-            currentState.ExitState();
-        currentState = state;
-        state.EnterState();
+        if (CurrentState == state) return;
+
+        if (CurrentState != null)
+        {
+            var transition = GetTransition(CurrentState, state);
+            if (transition.Condition())
+            {
+                if (transition.Override())
+                {
+                    CurrentState?.CancelState();
+                }
+                else
+                {
+                    CurrentState?.ExitState();
+                }
+            }
+        }
+        CurrentState = state;
+
+        CurrentState.EnterState();
+    }
+
+    public class Transition
+    {
+        public StateBase To;
+        public Func<bool> Condition;
+        public Func<bool> Override;
+
+        public Transition(StateBase to, Func<bool> condition, Func<bool> shouldOverride)
+        {
+            To = to;
+            Condition = condition;
+            Override = shouldOverride;
+        }
+    }
+
+    public void AddTransition(StateBase from, StateBase to, Func<bool> condition, Func<bool> shouldOverride)
+    {
+        if (!transitions.TryGetValue(from.GetType(), out var setTransitions))
+        {
+            setTransitions = new List<Transition>();
+            transitions[from.GetType()] = setTransitions;
+        }
+
+        setTransitions.Add(new Transition(to, condition, shouldOverride));
+    }
+
+    public void AddAnyTransition(StateBase to, Func<bool> condition, Func<bool> shouldOverride)
+    {
+        anyTransitions.Add(new Transition(to, condition, shouldOverride));
+    }
+
+    private Transition GetTransition(StateBase from, StateBase to)
+    {
+        var anyCheck = anyTransitions.Find(x => x.To == to);
+        if (anyCheck != null)
+        {
+            return anyCheck;
+        }
+
+        var transitionCheck = transitions[from.GetType()].Find(x => x.To == to);
+        if (transitionCheck != null)
+        {
+            return transitionCheck;
+        }
+
+        return null;
     }
 }

@@ -1,11 +1,14 @@
 using _Main.Scripts.GamePlay.Movement;
 using DG.Tweening;
 using System;
+using UnityEngine;
 
 public class AimingState : StateBase, IAction
 {
     public event Action OnActionStart;
     public event Action OnActionEnd;
+
+    public bool IsAiming { get; private set; }
 
     private readonly AnimationBase anim;
     private readonly InputBase input;
@@ -29,6 +32,7 @@ public class AimingState : StateBase, IAction
         anim.PlayAimAnim(true, false);
         movement.StartMovementAndRotation();
         OnActionStart?.Invoke();
+        IsAiming = true;
     }
 
     public override void UpdateState()
@@ -38,9 +42,14 @@ public class AimingState : StateBase, IAction
 
     public void EndAim()
     {
+        if (!IsAiming) return;
         anim.PlayAimAnim(false, false);
         OnActionEnd?.Invoke();
-        recoilDelayTween = DOVirtual.DelayedCall(recoilDelay, () => stateMachine.ChangeState(stateMachine.MovementState));
+        recoilDelayTween = DOVirtual.DelayedCall(recoilDelay, () =>
+        {
+            stateMachine.ChangeState(stateMachine.MovementState);
+            IsAiming = false;
+        });
     }
 
     public override void ExitState()
@@ -50,6 +59,8 @@ public class AimingState : StateBase, IAction
 
     public override void CancelState()
     {
+        OnActionEnd?.Invoke();
+        IsAiming = false;
         recoilDelayTween.Kill();
         anim.PlayAimAnim(false, true);
         movement.StopMovementAndRotation();

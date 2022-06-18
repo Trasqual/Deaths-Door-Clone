@@ -19,6 +19,7 @@ public class RollingState : StateBase
         this.rollDuration = rollDuration;
     }
 
+    public bool IsRollingComplete { get; private set; }
     private Vector3 direction;
 
     public override void EnterState()
@@ -27,11 +28,13 @@ public class RollingState : StateBase
         anim.PlayRollAnim();
         direction = input.GetMovementInput() == Vector3.zero ? stateMachine.transform.forward : input.GetMovementInput().normalized;
         stateMachine.transform.forward = direction;
+        IsRollingComplete = false;
         DOVirtual.DelayedCall(rollDuration, () => StopRoll());
     }
 
     private void StopRoll()
     {
+        IsRollingComplete = true;
         stateMachine.ChangeState(stateMachine.MovementState);
     }
 

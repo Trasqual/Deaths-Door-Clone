@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace _Main.Scripts.GamePlay.Player
@@ -12,9 +15,11 @@ namespace _Main.Scripts.GamePlay.Player
         public AnimationBase PlayerAnim { get; private set; }
 
         private StateMachine stateMachine;
-        private RangedAttack selectedRangedAttack;
         private CinemachineTargetGroupHandler targetGroupHandler;
         private AimActionIndicator aimIndicatior;
+
+        private List<RangedAttack> rangedAttacks = new List<RangedAttack>();
+        private RangedAttack selectedRangedAttack;
 
         private void Awake()
         {
@@ -23,7 +28,7 @@ namespace _Main.Scripts.GamePlay.Player
             Controller = GetComponent<CharacterController>();
             PlayerAnim = GetComponent<AnimationBase>();
             stateMachine = GetComponent<StateMachine>();
-            selectedRangedAttack = GetComponentInChildren<RangedAttack>();
+            rangedAttacks = GetComponentsInChildren<RangedAttack>().ToList();
             targetGroupHandler = GetComponentInChildren<CinemachineTargetGroupHandler>();
             aimIndicatior = GetComponentInChildren<AimActionIndicator>();
 
@@ -34,7 +39,7 @@ namespace _Main.Scripts.GamePlay.Player
 
         private void Start()
         {
-            SetSelectedRangedAttack();
+            SetSelectedRangedAttack(typeof(BowAttack));
             targetGroupHandler.Init(stateMachine.AimingState);
             aimIndicatior.Init(stateMachine.AimingState);
         }
@@ -54,8 +59,15 @@ namespace _Main.Scripts.GamePlay.Player
             stateMachine.ChangeState(stateMachine.RollingState);
         }
 
-        private void SetSelectedRangedAttack()
+        private void SetSelectedRangedAttack(Type rangedAttackType)
         {
+            foreach (var rangedAttack in rangedAttacks)
+            {
+                if (rangedAttack.GetType() == rangedAttackType)
+                {
+                    selectedRangedAttack = rangedAttack;
+                }
+            }
             selectedRangedAttack.Init(stateMachine.AimingState);
         }
     }
