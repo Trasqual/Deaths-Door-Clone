@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class RollingState : StateBase
 {
-    AnimationBase anim;
-    InputBase input;
-    Movement movement;
-    float rollSpeedMultiplier;
-    float rollDuration;
+    private readonly AnimationBase anim;
+    private readonly InputBase input;
+    private readonly Movement movement;
+    private readonly float rollSpeedMultiplier;
+    private readonly float rollDuration;
 
-    public RollingState(StateMachine stateMachine, AnimationBase anim, InputBase input, Movement movement, float rollSpeedMultiplier, float rollDuration) : base(stateMachine)
+    public RollingState(int priority, StateMachine stateMachine, AnimationBase anim, InputBase input, Movement movement, float rollSpeedMultiplier, float rollDuration) : base(priority, stateMachine)
     {
         this.anim = anim;
         this.input = input;

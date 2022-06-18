@@ -19,9 +19,10 @@ public class AnimationBase : MonoBehaviour
         anim.SetTrigger("attack");
     }
 
-    public void PlayAimAnim(bool isAiming)
+    public void PlayAimAnim(bool isAiming, bool isCanceled)
     {
         anim.SetBool("isAiming", isAiming);
+        anim.SetBool("isCanceled", isCanceled);
     }
 
     public void PlayRollAnim()

@@ -11,7 +11,10 @@ namespace _Main.Scripts.GamePlay.Player
         public CharacterController Controller { get; private set; }
         public AnimationBase PlayerAnim { get; private set; }
 
-        StateMachine stateMachine;
+        private StateMachine stateMachine;
+        private RangedAttack selectedRangedAttack;
+        private CinemachineTargetGroupHandler targetGroupHandler;
+        private AimActionIndicator aimIndicatior;
 
         private void Awake()
         {
@@ -20,12 +23,20 @@ namespace _Main.Scripts.GamePlay.Player
             Controller = GetComponent<CharacterController>();
             PlayerAnim = GetComponent<AnimationBase>();
             stateMachine = GetComponent<StateMachine>();
-
+            selectedRangedAttack = GetComponentInChildren<RangedAttack>();
+            targetGroupHandler = GetComponentInChildren<CinemachineTargetGroupHandler>();
+            aimIndicatior = GetComponentInChildren<AimActionIndicator>();
 
             Input.OnAimActionStarted += StartAiming;
             Input.OnAimActionEnded += EndAiming;
-
             Input.OnRollAction += PerformRoll;
+        }
+
+        private void Start()
+        {
+            SetSelectedRangedAttack();
+            targetGroupHandler.Init(stateMachine.AimingState);
+            aimIndicatior.Init(stateMachine.AimingState);
         }
 
         private void StartAiming()
@@ -41,6 +52,11 @@ namespace _Main.Scripts.GamePlay.Player
         private void PerformRoll()
         {
             stateMachine.ChangeState(stateMachine.RollingState);
+        }
+
+        private void SetSelectedRangedAttack()
+        {
+            selectedRangedAttack.Init(stateMachine.AimingState);
         }
     }
 }

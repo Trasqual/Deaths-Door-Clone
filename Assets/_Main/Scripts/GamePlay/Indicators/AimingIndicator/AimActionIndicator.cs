@@ -3,11 +3,11 @@ using UnityEngine;
 
 public class AimActionIndicator : ActionIndicatorBase
 {
-    [SerializeField] GameObject indicatorVisual;
-    [SerializeField] float indicatorDistance = 7f;
-    [SerializeField] float indicatorMoveSpeed = 10f;
+    [SerializeField] private GameObject indicatorVisual;
+    [SerializeField] private float indicatorDistance = 7f;
+    [SerializeField] private float indicatorMoveSpeed = 10f;
 
-    Tweener resetTween;
+    private Tweener resetTween;
 
     protected override void Activate()
     {
@@ -22,15 +22,24 @@ public class AimActionIndicator : ActionIndicatorBase
         resetTween = transform.DOLocalMove(Vector3.zero, 0.5f);
     }
 
+    private void Update()
+    {
+        if (indicatorVisual.activeSelf)
+        {
+            DoOnActionPerformed();
+        }
+    }
+
     protected override void DoOnActionPerformed()
     {
         SetPositionAndRotation();
     }
 
+
     private void SetPositionAndRotation()
     {
-        var target = action.transform.position + (action.transform.forward * indicatorDistance);
+        var target = transform.parent.position + (transform.parent.forward * indicatorDistance);
         transform.position = Vector3.Lerp(transform.position, target, Time.deltaTime * indicatorMoveSpeed);
-        transform.rotation = action.transform.rotation;
+        transform.rotation = transform.parent.rotation;
     }
 }

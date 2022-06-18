@@ -1,4 +1,3 @@
-
 using _Main.Scripts.GamePlay.Movement;
 
 public class MovementState : StateBase
@@ -7,7 +6,7 @@ public class MovementState : StateBase
     Movement movement;
     float speedMultiplier;
 
-    public MovementState(StateMachine stateMachine, InputBase input, Movement movement, float movementSpeedMultiplier) : base(stateMachine)
+    public MovementState(int priority, StateMachine stateMachine, InputBase input, Movement movement, float movementSpeedMultiplier) : base(priority, stateMachine)
     {
         this.input = input;
         this.movement = movement;

@@ -4,19 +4,20 @@ using UnityEngine;
 
 public class CinemachineTargetGroupHandler : MonoBehaviour
 {
-    [SerializeField] CinemachineTargetGroup targetGroup;
-    [SerializeField] AimAction aimHandler;
     [SerializeField] float aimWeightChangeDuration = 2f;
 
+    CinemachineTargetGroup targetGroup;
     IEnumerator aimWeightCo;
 
-    private void OnEnable()
+    private void Start()
     {
-        if (aimHandler)
-        {
-            aimHandler.OnActionStarted += SetAimingWeights;
-            aimHandler.OnActionEnded += ResetAimingWeights;
-        }
+        targetGroup = GetComponent<CinemachineTargetGroup>();
+    }
+
+    public void Init(IAction action)
+    {
+        action.OnActionStart += SetAimingWeights;
+        action.OnActionEnd += ResetAimingWeights;
     }
 
     public void SetAimingWeights()

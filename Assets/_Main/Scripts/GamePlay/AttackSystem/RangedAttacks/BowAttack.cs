@@ -1,59 +1,52 @@
 using UnityEngine;
 
-public class BowAttack : MonoBehaviour
+public class BowAttack : RangedAttack
 {
     [Header("Animations//TODO")]
-    [SerializeField] Animation bowAnim;
-    [SerializeField] Animation bowRecoilAnim;
+    [SerializeField] private Animation bowAnim;
+    [SerializeField] private Animation bowRecoilAnim;
 
     [Header("Visuals")]
-    [SerializeField] GameObject bow;
-    [SerializeField] Projectile projectilePrefab;
-    [SerializeField] Projectile chargedProjectilePrefab;
+    [SerializeField] private GameObject bow;
+    [SerializeField] private Projectile projectilePrefab;
+    [SerializeField] private Projectile chargedProjectilePrefab;
 
     [Header("Shooters")]
-    [SerializeField] Shooter shooter;
+    [SerializeField] private Shooter shooter;
 
     [Header("Attack Params")]
-    [SerializeField] float initialChargeDelay = 1f;
-    [SerializeField] float maxChargeTime = 3f;
-    [SerializeField] float minDmgMultiplier = 1f;
-    [SerializeField] float maxDmgMultiplier = 2f;
-    float chargeDelayDuration;
-    float chargeDuration;
-    float dmgMultiplier;
+    [SerializeField] private float initialChargeDelay = 1f;
+    [SerializeField] private float maxChargeTime = 3f;
+    [SerializeField] private float minDmgMultiplier = 1f;
+    [SerializeField] private float maxDmgMultiplier = 2f;
+    private float chargeDelayDuration;
+    private float chargeDuration;
+    private float dmgMultiplier;
 
+    private bool isActive;
 
-    AimAction aimAction;
-    AnimationBase anim;
-
-    private void Start()
+    public override void DoOnAimStart()
     {
-        aimAction = GetComponentInParent<AimAction>();
-        anim = GetComponentInParent<AnimationBase>();
-
-        if (aimAction)
-        {
-            aimAction.OnActionStarted += PlayBowAnim;
-            aimAction.OnActionEnded += PlayRecoilAnim;
-            aimAction.OnActionPerformed += ChargeAttack;
-        }
-    }
-
-    private void PlayBowAnim()
-    {
-        anim.PlayAimAnim(true);
         bow.SetActive(true);
+        isActive = true;
     }
 
-    private void PlayRecoilAnim()
+    public override void DoOnAimEnd()
     {
-        anim.PlayAimAnim(false);
+        isActive = false;
         Shoot();
         chargeDelayDuration = 0f;
         chargeDuration = 0f;
         dmgMultiplier = 1f;
         bow.SetActive(false);
+    }
+
+    private void Update()
+    {
+        if (isActive)
+        {
+            ChargeAttack();
+        }
     }
 
     private void ChargeAttack()
