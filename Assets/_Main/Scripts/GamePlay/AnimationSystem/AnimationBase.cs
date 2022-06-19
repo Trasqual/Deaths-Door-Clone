@@ -20,7 +20,7 @@ public class AnimationBase : MonoBehaviour
         anim.SetFloat(movementHash, transform.InverseTransformDirection(dir).magnitude, 0.1f, Time.deltaTime);
     }
 
-    public virtual void PlayAttackAnim()
+    public virtual void PlayAttackAnim(int comboCount)
     {
         anim.SetTrigger(attackHash);
     }

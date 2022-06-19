@@ -1,19 +1,21 @@
 using UnityEngine;
 
-public class MagicAttack : AttackBase
+public class UnarmedAttack : AttackBase
 {
+    [SerializeField] ParticleSystem unarmedParticle;
+
     public override void DoOnActionStart()
     {
-        Debug.Log("testing magic start");
+        //play particle
     }
 
     public override void DoOnActionEnd()
     {
-        Debug.Log("testing magic end");
+        //damage?
     }
 
     public override void DoOnActionCanceled()
     {
-        Debug.Log("testing magic canceled");
+
     }
 }

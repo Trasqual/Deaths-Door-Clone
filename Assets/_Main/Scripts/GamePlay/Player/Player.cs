@@ -14,12 +14,15 @@ namespace _Main.Scripts.GamePlay.Player
         public CharacterController Controller { get; private set; }
         public AnimationBase PlayerAnim { get; private set; }
 
+        [SerializeField] List<AttackBase> rangedAttacks = new List<AttackBase>();
+        [SerializeField] List<AttackBase> meleeAttacks = new List<AttackBase>();
+
         private StateMachine stateMachine;
         private CinemachineTargetGroupHandler targetGroupHandler;
         private AimActionIndicator aimIndicatior;
 
-        private List<RangedAttack> rangedAttacks = new List<RangedAttack>();
-        private RangedAttack selectedRangedAttack;
+        private AttackBase selectedRangedAttack;
+        private AttackBase selectedMeleeAttack;
 
         private void Awake()
         {
@@ -28,17 +31,18 @@ namespace _Main.Scripts.GamePlay.Player
             Controller = GetComponent<CharacterController>();
             PlayerAnim = GetComponent<AnimationBase>();
             stateMachine = GetComponent<StateMachine>();
-            rangedAttacks = GetComponentsInChildren<RangedAttack>().ToList();
             targetGroupHandler = GetComponentInChildren<CinemachineTargetGroupHandler>();
             aimIndicatior = GetComponentInChildren<AimActionIndicator>();
 
             Input.OnAimActionStarted += StartAiming;
             Input.OnAimActionEnded += EndAiming;
             Input.OnRollAction += PerformRoll;
+            Input.OnAttackAction += Attack;
         }
 
         private void Start()
         {
+            SetSelectedMeleeAttack(typeof(UnarmedAttack));
             SetSelectedRangedAttack(typeof(BowAttack));
             targetGroupHandler.Init(stateMachine.AimingState);
             aimIndicatior.Init(stateMachine.AimingState);
@@ -61,14 +65,31 @@ namespace _Main.Scripts.GamePlay.Player
 
         private void SetSelectedRangedAttack(Type rangedAttackType)
         {
-            foreach (var rangedAttack in rangedAttacks)
+            selectedRangedAttack = SelectAttackFromList(rangedAttackType, rangedAttacks);
+            selectedRangedAttack.Init(stateMachine.AimingState);
+        }
+
+        private void SetSelectedMeleeAttack(Type meleeAttackType)
+        {
+            selectedMeleeAttack = SelectAttackFromList(meleeAttackType, meleeAttacks);
+            selectedMeleeAttack.Init(stateMachine.AttackState);
+        }
+
+        private AttackBase SelectAttackFromList(Type attackType, List<AttackBase> attacks)
+        {
+            foreach (var attack in attacks)
             {
-                if (rangedAttack.GetType() == rangedAttackType)
+                if (attack.GetType() == attackType)
                 {
-                    selectedRangedAttack = rangedAttack;
+                    return attack;
                 }
             }
-            selectedRangedAttack.Init(stateMachine.AimingState);
+            return null;
+        }
+
+        private void Attack()
+        {
+            stateMachine.ChangeState(stateMachine.AttackState);
         }
     }
 }

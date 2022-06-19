@@ -1,11 +1,7 @@
 using UnityEngine;
 
-public class BowAttack : RangedAttack
+public class BowAttack : AttackBase
 {
-    [Header("Animations//TODO")]
-    [SerializeField] private Animation bowAnim;
-    [SerializeField] private Animation bowRecoilAnim;
-
     [Header("Visuals")]
     [SerializeField] private GameObject bow;
     [SerializeField] private Projectile projectilePrefab;
@@ -25,13 +21,13 @@ public class BowAttack : RangedAttack
 
     private bool isActive;
 
-    public override void DoOnAimStart()
+    public override void DoOnActionStart()
     {
         bow.SetActive(true);
         isActive = true;
     }
 
-    public override void DoOnAimEnd()
+    public override void DoOnActionEnd()
     {
         isActive = false;
         Shoot();
@@ -41,7 +37,7 @@ public class BowAttack : RangedAttack
         bow.SetActive(false);
     }
 
-    public override void DoOnAimCanceled()
+    public override void DoOnActionCanceled()
     {
         isActive = false;
         chargeDelayDuration = 0f;
@@ -73,9 +69,6 @@ public class BowAttack : RangedAttack
                 dmgMultiplier = Mathf.Lerp(minDmgMultiplier, maxDmgMultiplier, t);
             }
         }
-
-        Debug.Log(chargeDuration);
-        Debug.Log(chargeDelayDuration);
     }
 
     private void Shoot()

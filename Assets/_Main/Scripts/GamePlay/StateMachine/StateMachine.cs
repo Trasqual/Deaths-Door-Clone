@@ -27,6 +27,9 @@ public class StateMachine : MonoBehaviour
     [SerializeField] private float aimSpeedMultiplier = 1f;
     [SerializeField] private float recoilDelay = 0.2f;
 
+    [Header("Attack Params")]
+    [SerializeField] private float comboTimer = 0.5f;
+
     [Header("Debugging")]
     [SerializeField] private string CurrentStateName;
 
@@ -42,12 +45,17 @@ public class StateMachine : MonoBehaviour
         MovementState = new MovementState(0, this, inputBase, movement, movementSpeedMultiplier);
         RollingState = new RollingState(2, this, anim, inputBase, movement, rollingSpeedMultiplier, rollDuration);
         AimingState = new AimingState(1, this, anim, inputBase, movement, aimSpeedMultiplier, recoilDelay);
+        AttackState = new AttackState(1, this, anim, inputBase, movement, comboTimer);
 
         AddAnyTransition(RollingState, () => true, () => true);
         AddTransition(MovementState, AimingState, () => true, () => false);
         AddTransition(RollingState, AimingState, () => RollingState.IsRollingComplete, () => false);
         AddTransition(RollingState, MovementState, () => RollingState.IsRollingComplete, () => false);
+        AddTransition(RollingState, AttackState, () => RollingState.IsRollingComplete, () => false);
+        AddTransition(RollingState, AttackState, () => RollingState.IsRollingComplete, () => false);
+        AddTransition(MovementState, AttackState, () => true, () => true);
         AddTransition(AimingState, MovementState, () => true, () => false);
+        AddTransition(AttackState, MovementState, () => AttackState.IsAttackComplete, () => false);
 
         ChangeState(MovementState);
     }
