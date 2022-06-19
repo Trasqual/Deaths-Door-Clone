@@ -52,7 +52,6 @@ public class StateMachine : MonoBehaviour
         AddTransition(RollingState, AimingState, () => RollingState.IsRollingComplete, () => false);
         AddTransition(RollingState, MovementState, () => RollingState.IsRollingComplete, () => false);
         AddTransition(RollingState, AttackState, () => RollingState.IsRollingComplete, () => false);
-        AddTransition(RollingState, AttackState, () => RollingState.IsRollingComplete, () => false);
         AddTransition(MovementState, AttackState, () => true, () => true);
         AddTransition(AimingState, MovementState, () => true, () => false);
         AddTransition(AttackState, MovementState, () => AttackState.IsAttackComplete, () => false);

@@ -1,7 +1,6 @@
 using _Main.Scripts.GamePlay.Movement;
 using DG.Tweening;
 using System;
-using UnityEngine;
 
 public class AimingState : StateBase, IAction
 {
