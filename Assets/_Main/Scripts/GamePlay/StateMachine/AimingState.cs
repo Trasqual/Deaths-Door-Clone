@@ -1,68 +1,74 @@
-using _Main.Scripts.GamePlay.Movement;
-using DG.Tweening;
 using System;
+using _Main.Scripts.GamePlay.ActionSystem;
+using _Main.Scripts.GamePlay.AnimationSystem;
+using _Main.Scripts.GamePlay.InputSystem;
+using _Main.Scripts.GamePlay.MovementSystem;
+using DG.Tweening;
 
-public class AimingState : StateBase, IAction
+namespace _Main.Scripts.GamePlay.StateMachine
 {
-    public event Action OnActionStart;
-    public event Action OnActionEnd;
-    public event Action OnActionCanceled;
-
-    public bool IsAiming { get; private set; }
-
-    private readonly AnimationBase anim;
-    private readonly InputBase input;
-    private readonly Movement movement;
-    private readonly float aimSpeedMultiplier = 1f;
-    private readonly float recoilDelay = 0.2f;
-
-    private Tween recoilDelayTween;
-
-    public AimingState(int priority, StateMachine stateMachine, AnimationBase anim, InputBase input, Movement movement, float aimSpeedMultiplier, float recoilDelay) : base(priority, stateMachine)
+    public class AimingState : StateBase, IAction
     {
-        this.anim = anim;
-        this.input = input;
-        this.movement = movement;
-        this.aimSpeedMultiplier = aimSpeedMultiplier;
-        this.recoilDelay = recoilDelay;
-    }
+        public event Action OnActionStart;
+        public event Action OnActionEnd;
+        public event Action OnActionCanceled;
 
-    public override void EnterState()
-    {
-        anim.PlayAimAnim(true, false);
-        movement.StartMovementAndRotation();
-        OnActionStart?.Invoke();
-        IsAiming = true;
-    }
+        public bool IsAiming { get; private set; }
 
-    public override void UpdateState()
-    {
-        movement.Move(input.GetLookInput(), 0f, aimSpeedMultiplier);
-    }
+        private readonly AnimationBase anim;
+        private readonly InputBase input;
+        private readonly Movement movement;
+        private readonly float aimSpeedMultiplier = 1f;
+        private readonly float recoilDelay = 0.2f;
 
-    public void EndAim()
-    {
-        if (!IsAiming) return;
-        anim.PlayAimAnim(false, false);
-        OnActionEnd?.Invoke();
-        recoilDelayTween = DOVirtual.DelayedCall(recoilDelay, () =>
+        private Tween recoilDelayTween;
+
+        public AimingState(int priority, StateMachine stateMachine, AnimationBase anim, InputBase input, Movement movement, float aimSpeedMultiplier, float recoilDelay) : base(priority, stateMachine)
         {
-            stateMachine.ChangeState(stateMachine.MovementState);
+            this.anim = anim;
+            this.input = input;
+            this.movement = movement;
+            this.aimSpeedMultiplier = aimSpeedMultiplier;
+            this.recoilDelay = recoilDelay;
+        }
+
+        public override void EnterState()
+        {
+            anim.PlayAimAnim(true, false);
+            movement.StartMovementAndRotation();
+            OnActionStart?.Invoke();
+            IsAiming = true;
+        }
+
+        public override void UpdateState()
+        {
+            movement.Move(input.GetLookInput(), 0f, aimSpeedMultiplier);
+        }
+
+        public void EndAim()
+        {
+            if (!IsAiming) return;
+            anim.PlayAimAnim(false, false);
+            OnActionEnd?.Invoke();
+            recoilDelayTween = DOVirtual.DelayedCall(recoilDelay, () =>
+            {
+                StateMachine.ChangeState(StateMachine.MovementState);
+                IsAiming = false;
+            });
+        }
+
+        public override void ExitState()
+        {
+            movement.StopMovementAndRotation();
+        }
+
+        public override void CancelState()
+        {
+            OnActionCanceled?.Invoke();
             IsAiming = false;
-        });
-    }
-
-    public override void ExitState()
-    {
-        movement.StopMovementAndRotation();
-    }
-
-    public override void CancelState()
-    {
-        OnActionCanceled?.Invoke();
-        IsAiming = false;
-        recoilDelayTween.Kill();
-        anim.PlayAimAnim(false, true);
-        movement.StopMovementAndRotation();
+            recoilDelayTween.Kill();
+            anim.PlayAimAnim(false, true);
+            movement.StopMovementAndRotation();
+        }
     }
 }

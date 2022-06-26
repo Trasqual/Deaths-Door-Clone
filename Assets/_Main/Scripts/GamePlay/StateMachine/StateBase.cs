@@ -1,19 +1,12 @@
+using UnityEngine;
 
-[System.Serializable]
-public abstract class StateBase
+namespace _Main.Scripts.GamePlay.StateMachine
 {
-    protected StateMachine stateMachine;
-    protected int priority;
-
-    public StateBase(int priority, StateMachine stateMachine)
+    public abstract class StateBase : MonoBehaviour
     {
-        this.stateMachine = stateMachine;
-        this.priority = priority;
+        public abstract void EnterState();
+        public abstract void UpdateState();
+        public abstract void ExitState();
+        public abstract void CancelState();
     }
-
-    public int GetPriority() => priority;
-    public abstract void EnterState();
-    public abstract void UpdateState();
-    public abstract void ExitState();
-    public abstract void CancelState();
 }

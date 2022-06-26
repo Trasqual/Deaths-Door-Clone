@@ -1,19 +1,22 @@
 using UnityEngine;
 
-public class MagicAttack : AttackBase
+namespace _Main.Scripts.GamePlay.AttackSystem.RangedAttacks
 {
-    public override void DoOnActionStart()
+    public class MagicAttack : AttackBase
     {
-        Debug.Log("testing magic start");
-    }
+        public override void DoOnActionStart()
+        {
+            Debug.Log("testing magic start");
+        }
 
-    public override void DoOnActionEnd()
-    {
-        Debug.Log("testing magic end");
-    }
+        public override void DoOnActionEnd()
+        {
+            Debug.Log("testing magic end");
+        }
 
-    public override void DoOnActionCanceled()
-    {
-        Debug.Log("testing magic canceled");
+        public override void DoOnActionCanceled()
+        {
+            Debug.Log("testing magic canceled");
+        }
     }
 }

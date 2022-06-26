@@ -1,8 +1,11 @@
 using System;
 
-public interface IAction
+namespace _Main.Scripts.GamePlay.ActionSystem
 {
-    public event Action OnActionStart;
-    public event Action OnActionEnd;
-    public event Action OnActionCanceled;
+    public interface IAction
+    {
+        public event Action OnActionStart;
+        public event Action OnActionEnd;
+        public event Action OnActionCanceled;
+    }
 }

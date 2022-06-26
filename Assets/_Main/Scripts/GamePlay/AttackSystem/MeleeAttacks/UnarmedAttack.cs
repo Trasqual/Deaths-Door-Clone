@@ -1,21 +1,24 @@
 using UnityEngine;
 
-public class UnarmedAttack : AttackBase
+namespace _Main.Scripts.GamePlay.AttackSystem.MeleeAttacks
 {
-    [SerializeField] ParticleSystem unarmedParticle;
-
-    public override void DoOnActionStart()
+    public class UnarmedAttack : AttackBase
     {
-        //play particle
-    }
+        [SerializeField] ParticleSystem unarmedParticle;
 
-    public override void DoOnActionEnd()
-    {
-        //damage?
-    }
+        public override void DoOnActionStart()
+        {
+            //play particle
+        }
 
-    public override void DoOnActionCanceled()
-    {
+        public override void DoOnActionEnd()
+        {
+            //damage?
+        }
 
+        public override void DoOnActionCanceled()
+        {
+
+        }
     }
 }

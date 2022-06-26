@@ -1,5 +1,8 @@
 
-public interface IOverrideChecker
+namespace _Main.Scripts.GamePlay.MovementSystem
 {
-    public bool CanOverride();
+    public interface IOverrideChecker
+    {
+        public bool CanOverride();
+    }
 }

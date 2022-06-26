@@ -1,35 +1,71 @@
-using _Main.Scripts.GamePlay.Movement;
+using System.Collections.Generic;
+using _Main.Scripts.GamePlay.InputSystem;
+using _Main.Scripts.GamePlay.MovementSystem;
+using UnityEngine;
 
-public class MovementState : StateBase
+namespace _Main.Scripts.GamePlay.StateMachine
 {
-    InputBase input;
-    Movement movement;
-    float speedMultiplier;
-
-    public MovementState(int priority, StateMachine stateMachine, InputBase input, Movement movement, float movementSpeedMultiplier) : base(priority, stateMachine)
+    public class MovementState : StateBase, ITransition, IAnimation
     {
-        this.input = input;
-        this.movement = movement;
-        speedMultiplier = movementSpeedMultiplier;
-    }
+        private InputBase _input = null;
+        private Movement _movement = null;
+        
+        #region Transition
 
-    public override void EnterState()
-    {
-        movement.StartMovementAndRotation();
-    }
+        private ITransition _transition = null;
+        public List<Transition> Transitions { get; private set; } =  new();
 
-    public override void UpdateState()
-    {
-        movement.Move(input.GetMovementInput(), speedMultiplier, 1f);
-    }
+        #endregion
 
-    public override void ExitState()
-    {
-        movement.StopMovementAndRotation();
-    }
+        public void Initialize(InputBase input, Movement movement, Animator animator)
+        {
+            _input = input;
+            _movement = movement;
+            Animator = animator;
+            _transition = this;
+            
+            _transition.AddTransition(typeof(AttackState), () => true, () => true);
+            _transition.AddTransition(typeof(AimingState), () => true, () => false);
+        }
+        
+        public override void EnterState()
+        {
+            _movement.StartMovementAndRotation();
+        }
 
-    public override void CancelState()
-    {
-        movement.StopMovementAndRotation();
+        public override void UpdateState()
+        {
+            _movement.Move(_input.GetMovementInput(), 1F, 1F);
+            PlayAnimation();
+        }
+
+        public override void ExitState()
+        {
+            _movement.StopMovementAndRotation();
+            StopAnimation();
+        }
+
+        public override void CancelState()
+        {
+            _movement.StopMovementAndRotation();
+            StopAnimation();
+        }
+
+        #region Animation
+
+        public int HashCode { get; private set; } = Animator.StringToHash("movement");
+        public Animator Animator { get; private set; } = null;
+        public void PlayAnimation()
+        {
+            var value = transform.InverseTransformDirection(_input.GetMovementInput()).magnitude;
+            
+            Animator.SetFloat(HashCode, value, 0.1f, Time.deltaTime);
+        }
+        public void StopAnimation()
+        {
+            Animator.SetFloat(HashCode, 0F, 0.1f, Time.deltaTime);
+        }
+
+        #endregion
     }
 }

@@ -1,38 +1,41 @@
 using System.Collections;
 using UnityEngine;
 
-public class Projectile : MonoBehaviour
+namespace _Main.Scripts.GamePlay.AttackSystem.RangedAttacks
 {
-    [SerializeField] float projectileSpeed = 5f;
-    [SerializeField] float baseDamage = 1f;
-    float dmgMultiplier = 1f;
-    float damage => baseDamage * dmgMultiplier;
-
-    Rigidbody rb;
-    public Collider Col => GetComponent<Collider>();
-
-    private void Start()
+    public class Projectile : MonoBehaviour
     {
-        rb = GetComponent<Rigidbody>();
-        rb.AddForce(transform.forward * projectileSpeed, ForceMode.Impulse);
-        StartCoroutine(DestroySelf());
-    }
+        [SerializeField] float projectileSpeed = 5f;
+        [SerializeField] float baseDamage = 1f;
+        float dmgMultiplier = 1f;
+        float damage => baseDamage * dmgMultiplier;
 
-    private void OnCollisionEnter(Collision collision)
-    {
-        rb.collisionDetectionMode = CollisionDetectionMode.ContinuousSpeculative;
-        rb.isKinematic = true;
-        Col.enabled = false;
-    }
+        Rigidbody rb;
+        public Collider Col => GetComponent<Collider>();
 
-    public void SetDmgMultiplier(float amount)
-    {
-        dmgMultiplier = amount;
-    }
+        private void Start()
+        {
+            rb = GetComponent<Rigidbody>();
+            rb.AddForce(transform.forward * projectileSpeed, ForceMode.Impulse);
+            StartCoroutine(DestroySelf());
+        }
 
-    IEnumerator DestroySelf()
-    {
-        yield return new WaitForSeconds(3f);
-        Destroy(gameObject);
+        private void OnCollisionEnter(Collision collision)
+        {
+            rb.collisionDetectionMode = CollisionDetectionMode.ContinuousSpeculative;
+            rb.isKinematic = true;
+            Col.enabled = false;
+        }
+
+        public void SetDmgMultiplier(float amount)
+        {
+            dmgMultiplier = amount;
+        }
+
+        IEnumerator DestroySelf()
+        {
+            yield return new WaitForSeconds(3f);
+            Destroy(gameObject);
+        }
     }
 }

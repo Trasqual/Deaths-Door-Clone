@@ -1,8 +1,9 @@
+using _Main.Scripts.GamePlay.MovementSystem;
 using UnityEngine;
 
 namespace _Main.Scripts.GamePlay.Player
 {
-    public class PlayerMovement : Movement.Movement
+    public class PlayerMovement : Movement
     {
         [SerializeField] private float baseMovementSpeed = 5f;
         [SerializeField] private float baseRotationSpeed = 20f;
@@ -66,8 +67,6 @@ namespace _Main.Scripts.GamePlay.Player
             {
                 RotateInDirection(dir, baseRotationSpeed * rotationSpeedMultiplier);
             }
-
-            player.PlayerAnim.PlayMovementAnim(canMove ? dir : Vector3.zero);
         }
     }
 }

@@ -1,57 +1,61 @@
-using Cinemachine;
 using System.Collections;
+using _Main.Scripts.GamePlay.ActionSystem;
+using Cinemachine;
 using UnityEngine;
 
-public class CinemachineTargetGroupHandler : MonoBehaviour
+namespace _Main.Scripts.Others
 {
-    [SerializeField] float aimWeightChangeDuration = 2f;
-
-    CinemachineTargetGroup targetGroup;
-    IEnumerator aimWeightCo;
-
-    private void Start()
+    public class CinemachineTargetGroupHandler : MonoBehaviour
     {
-        targetGroup = GetComponent<CinemachineTargetGroup>();
-    }
+        [SerializeField] float aimWeightChangeDuration = 2f;
 
-    public void Init(IAction action)
-    {
-        action.OnActionStart += SetAimingWeights;
-        action.OnActionEnd += ResetAimingWeights;
-        action.OnActionCanceled += ResetAimingWeights;
-    }
+        CinemachineTargetGroup targetGroup;
+        IEnumerator aimWeightCo;
 
-    public void SetAimingWeights()
-    {
-        if (aimWeightCo != null)
+        private void Start()
         {
-            StopCoroutine(aimWeightCo);
+            targetGroup = GetComponent<CinemachineTargetGroup>();
         }
-        aimWeightCo = ChangeWeightsCo(new int[2] { 0, 1 }, new float[2] { .75f, 1f }, aimWeightChangeDuration);
-        StartCoroutine(aimWeightCo);
-    }
 
-    public void ResetAimingWeights()
-    {
-        if (aimWeightCo != null)
+        public void Init(IAction action)
         {
-            StopCoroutine(aimWeightCo);
+            action.OnActionStart += SetAimingWeights;
+            action.OnActionEnd += ResetAimingWeights;
+            action.OnActionCanceled += ResetAimingWeights;
         }
-        aimWeightCo = ChangeWeightsCo(new int[2] { 0, 1 }, new float[2] { .75f, 0.5f }, aimWeightChangeDuration);
-        StartCoroutine(aimWeightCo);
-    }
 
-    IEnumerator ChangeWeightsCo(int[] targetsToChange, float[] newWeights, float duration)
-    {
-        var t = 0f;
-        while (t < duration)
+        public void SetAimingWeights()
         {
-            t += Time.deltaTime;
-            for (int i = 0; i < targetsToChange.Length; i++)
+            if (aimWeightCo != null)
             {
-                targetGroup.m_Targets[targetsToChange[i]].weight = Mathf.Lerp(targetGroup.m_Targets[targetsToChange[i]].weight, newWeights[i], t / duration);
+                StopCoroutine(aimWeightCo);
             }
-            yield return null;
+            aimWeightCo = ChangeWeightsCo(new int[2] { 0, 1 }, new float[2] { .75f, 1f }, aimWeightChangeDuration);
+            StartCoroutine(aimWeightCo);
+        }
+
+        public void ResetAimingWeights()
+        {
+            if (aimWeightCo != null)
+            {
+                StopCoroutine(aimWeightCo);
+            }
+            aimWeightCo = ChangeWeightsCo(new int[2] { 0, 1 }, new float[2] { .75f, 0.5f }, aimWeightChangeDuration);
+            StartCoroutine(aimWeightCo);
+        }
+
+        IEnumerator ChangeWeightsCo(int[] targetsToChange, float[] newWeights, float duration)
+        {
+            var t = 0f;
+            while (t < duration)
+            {
+                t += Time.deltaTime;
+                for (int i = 0; i < targetsToChange.Length; i++)
+                {
+                    targetGroup.m_Targets[targetsToChange[i]].weight = Mathf.Lerp(targetGroup.m_Targets[targetsToChange[i]].weight, newWeights[i], t / duration);
+                }
+                yield return null;
+            }
         }
     }
 }

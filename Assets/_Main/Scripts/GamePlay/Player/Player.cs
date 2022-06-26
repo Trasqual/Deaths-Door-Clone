@@ -1,5 +1,11 @@
 using System;
 using System.Collections.Generic;
+using _Main.Scripts.GamePlay.AttackSystem;
+using _Main.Scripts.GamePlay.AttackSystem.MeleeAttacks;
+using _Main.Scripts.GamePlay.AttackSystem.RangedAttacks;
+using _Main.Scripts.GamePlay.Indicators.AimingIndicator;
+using _Main.Scripts.GamePlay.InputSystem;
+using _Main.Scripts.Others;
 using UnityEngine;
 
 namespace _Main.Scripts.GamePlay.Player
@@ -11,12 +17,12 @@ namespace _Main.Scripts.GamePlay.Player
         public PlayerData Data { get; private set; }
         public InputBase Input { get; private set; }
         public CharacterController Controller { get; private set; }
-        public AnimationBase PlayerAnim { get; private set; }
+        public PlayerAnimation PlayerAnim { get; private set; }
 
         [SerializeField] List<AttackBase> rangedAttacks = new List<AttackBase>();
         [SerializeField] List<AttackBase> meleeAttacks = new List<AttackBase>();
 
-        private StateMachine stateMachine;
+        private StateMachine.StateMachine stateMachine;
         private CinemachineTargetGroupHandler targetGroupHandler;
         private AimActionIndicator aimIndicatior;
 
@@ -28,8 +34,8 @@ namespace _Main.Scripts.GamePlay.Player
             //Data = GetComponent<PlayerData>();
             Input = GetComponent<InputBase>();
             Controller = GetComponent<CharacterController>();
-            PlayerAnim = GetComponent<AnimationBase>();
-            stateMachine = GetComponent<StateMachine>();
+            PlayerAnim = GetComponent<PlayerAnimation>();
+            stateMachine = GetComponent<StateMachine.StateMachine>();
             targetGroupHandler = GetComponentInChildren<CinemachineTargetGroupHandler>();
             aimIndicatior = GetComponentInChildren<AimActionIndicator>();
 
@@ -59,7 +65,7 @@ namespace _Main.Scripts.GamePlay.Player
 
         private void PerformRoll()
         {
-            stateMachine.ChangeState(stateMachine.RollingState);
+            stateMachine.ChangeState(stateMachine.DodgeState);
         }
 
         private void SetSelectedRangedAttack(Type rangedAttackType)

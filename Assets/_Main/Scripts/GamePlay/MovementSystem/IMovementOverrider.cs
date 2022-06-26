@@ -1,9 +1,12 @@
 using System;
 using UnityEngine;
 
-public interface IMovementOverrider
+namespace _Main.Scripts.GamePlay.MovementSystem
 {
-    public event Action<IMovementOverrider> OnMovementOverrideStarted;
-    public event Action OnMovementOverrideEnded;
-    public event Action<Vector3, float> OnMovementOverridePerformed;
+    public interface IMovementOverrider
+    {
+        public event Action<IMovementOverrider> OnMovementOverrideStarted;
+        public event Action OnMovementOverrideEnded;
+        public event Action<Vector3, float> OnMovementOverridePerformed;
+    }
 }

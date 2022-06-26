@@ -1,18 +1,21 @@
 using UnityEngine;
 
-public class Shooter : MonoBehaviour
+namespace _Main.Scripts.GamePlay.AttackSystem.RangedAttacks
 {
-    Collider col;
-
-    private void Awake()
+    public class Shooter : MonoBehaviour
     {
-        col = GetComponentInParent<Collider>();
-    }
+        Collider col;
 
-    public void Shoot(Projectile projectilePrefab, float dmgMultiplier)
-    {
-        var projectile = Instantiate(projectilePrefab, transform.position, transform.rotation);
-        projectile.SetDmgMultiplier(dmgMultiplier);
-        Physics.IgnoreCollision(col, projectile.Col);
+        private void Awake()
+        {
+            col = GetComponentInParent<Collider>();
+        }
+
+        public void Shoot(Projectile projectilePrefab, float dmgMultiplier)
+        {
+            var projectile = Instantiate(projectilePrefab, transform.position, transform.rotation);
+            projectile.SetDmgMultiplier(dmgMultiplier);
+            Physics.IgnoreCollision(col, projectile.Col);
+        }
     }
 }

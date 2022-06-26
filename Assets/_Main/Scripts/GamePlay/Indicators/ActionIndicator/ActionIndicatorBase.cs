@@ -1,15 +1,19 @@
+using _Main.Scripts.GamePlay.ActionSystem;
 using UnityEngine;
 
-public abstract class ActionIndicatorBase : MonoBehaviour
+namespace _Main.Scripts.GamePlay.Indicators.ActionIndicator
 {
-    protected abstract void Activate();
-    protected abstract void Deactivate();
-    protected abstract void DoOnActionPerformed();
-
-    public void Init(IAction action)
+    public abstract class ActionIndicatorBase : MonoBehaviour
     {
-        action.OnActionStart += Activate;
-        action.OnActionEnd += Deactivate;
-        action.OnActionCanceled += Deactivate;
+        protected abstract void Activate();
+        protected abstract void Deactivate();
+        protected abstract void DoOnActionPerformed();
+
+        public void Init(IAction action)
+        {
+            action.OnActionStart += Activate;
+            action.OnActionEnd += Deactivate;
+            action.OnActionCanceled += Deactivate;
+        }
     }
 }

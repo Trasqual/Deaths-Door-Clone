@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace _Main.Scripts.GamePlay.Movement
+namespace _Main.Scripts.GamePlay.MovementSystem
 {
     public abstract class Movement : MonoBehaviour
     {
