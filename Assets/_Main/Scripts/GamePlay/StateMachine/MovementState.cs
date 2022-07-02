@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using _Main.Scripts.GamePlay.InputSystem;
 using _Main.Scripts.GamePlay.MovementSystem;
@@ -8,46 +9,61 @@ namespace _Main.Scripts.GamePlay.StateMachine
     public class MovementState : StateBase, ITransition, IAnimation
     {
         private InputBase _input = null;
-        private Movement _movement = null;
+        private MovementBase _movementBase = null;
         
         #region Transition
 
         private ITransition _transition = null;
         public List<Transition> Transitions { get; private set; } =  new();
+        public bool TryGetTransition(Type to, out Transition targetTransition)
+        {
+            foreach (var transition in Transitions)
+            {
+                if (transition.To == to)
+                {
+                    targetTransition = transition;
+                    return true;
+                }
+            }
+
+            targetTransition = null;
+            return false;
+        }
 
         #endregion
 
-        public void Initialize(InputBase input, Movement movement, Animator animator)
+        public void Initialize(InputBase input, MovementBase movementBase, Animator animator)
         {
             _input = input;
-            _movement = movement;
+            _movementBase = movementBase;
             Animator = animator;
             _transition = this;
             
             _transition.AddTransition(typeof(AttackState), () => true, () => true);
             _transition.AddTransition(typeof(AimingState), () => true, () => false);
+            _transition.AddTransition(typeof(DodgeState), () => true, () => true);
         }
         
         public override void EnterState()
         {
-            _movement.StartMovementAndRotation();
+            _movementBase.StartMovementAndRotation();
         }
 
         public override void UpdateState()
         {
-            _movement.Move(_input.GetMovementInput(), 1F, 1F);
+            _movementBase.Move(_input.GetMovementInput(), 1F, 1F);
             PlayAnimation();
         }
 
         public override void ExitState()
         {
-            _movement.StopMovementAndRotation();
+            _movementBase.StopMovementAndRotation();
             StopAnimation();
         }
 
         public override void CancelState()
         {
-            _movement.StopMovementAndRotation();
+            _movementBase.StopMovementAndRotation();
             StopAnimation();
         }
 

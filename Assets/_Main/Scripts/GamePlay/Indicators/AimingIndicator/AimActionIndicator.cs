@@ -38,7 +38,6 @@ namespace _Main.Scripts.GamePlay.Indicators.AimingIndicator
             SetPositionAndRotation();
         }
 
-
         private void SetPositionAndRotation()
         {
             var target = transform.parent.position + (transform.parent.forward * indicatorDistance);

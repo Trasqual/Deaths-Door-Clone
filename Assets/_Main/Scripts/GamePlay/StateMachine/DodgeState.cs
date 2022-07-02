@@ -10,17 +10,17 @@ namespace _Main.Scripts.GamePlay.StateMachine
     public class DodgeState : StateBase, ITransition, IAnimation
     {
         private InputBase _input = null;
-        private Movement _movement = null;
+        private MovementBase _movementBase = null;
         private float _speedMultiplier = 0F;
         private float _duration = 0F;
         private Vector3 _direction;
         private bool _isDodgeComplete = false;
         public Action OnComplete;
 
-        public void Initialize(InputBase inputBase, Movement movement, Animator animator, float speedMultiplier, float duration)
+        public void Initialize(InputBase inputBase, MovementBase movementBase, Animator animator, float speedMultiplier, float duration)
         {
             _input = inputBase;
-            _movement = movement;
+            _movementBase = movementBase;
             Animator = animator;
             _speedMultiplier = speedMultiplier;
             _duration = duration;
@@ -34,7 +34,7 @@ namespace _Main.Scripts.GamePlay.StateMachine
 
         public override void EnterState()
         {
-            _movement.StartMovementAndRotation();
+            _movementBase.StartMovementAndRotation();
             PlayAnimation();
             _direction = _input.GetMovementInput() == Vector3.zero ? transform.forward : _input.GetMovementInput().normalized;
             transform.forward = _direction;
@@ -50,11 +50,11 @@ namespace _Main.Scripts.GamePlay.StateMachine
 
         public override void UpdateState()
         {
-            _movement.Move(_direction, _speedMultiplier, 0f);
+            _movementBase.Move(_direction, _speedMultiplier, 0f);
         }
         public override void ExitState()
         {
-            _movement.StopMovementAndRotation();
+            _movementBase.StopMovementAndRotation();
             _direction = Vector3.zero;
         }
         public override void CancelState()
@@ -83,6 +83,20 @@ namespace _Main.Scripts.GamePlay.StateMachine
 
         private ITransition _transition = null;
         public List<Transition> Transitions { get; private set; } =  new();
+        public bool TryGetTransition(Type to, out Transition targetTransition)
+        {
+            foreach (var transition in Transitions)
+            {
+                if (transition.To == to)
+                {
+                    targetTransition = transition;
+                    return true;
+                }
+            }
+
+            targetTransition = null;
+            return false;
+        }
 
         #endregion
     }

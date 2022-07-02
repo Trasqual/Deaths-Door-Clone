@@ -1,3 +1,5 @@
+using _Main.Scripts.GamePlay.Indicators.AimingIndicator;
+using _Main.Scripts.Others;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -16,5 +18,8 @@ namespace _Main.Scripts.GamePlay.Player
 
         [TitleGroup("Others")]
         [SerializeField] private int health = 5;
+        
+        public AimActionIndicator aimingIndicator;
+        public CameraTargetGroup cameraTargetGroup;
     }
 }

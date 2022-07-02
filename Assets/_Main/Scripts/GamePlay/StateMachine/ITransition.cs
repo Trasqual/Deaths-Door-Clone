@@ -20,5 +20,6 @@ namespace _Main.Scripts.GamePlay.StateMachine
             var targetTransition = Transitions.FirstOrDefault(elem => elem.To == to);
             Transitions.Remove(targetTransition);
         }
+        public bool TryGetTransition(Type to, out Transition targetTransition);
     }
 }

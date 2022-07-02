@@ -5,14 +5,14 @@ using UnityEngine;
 
 namespace _Main.Scripts.Others
 {
-    public class CinemachineTargetGroupHandler : MonoBehaviour
+    public class CameraTargetGroup : MonoBehaviour
     {
         [SerializeField] float aimWeightChangeDuration = 2f;
 
         CinemachineTargetGroup targetGroup;
         IEnumerator aimWeightCo;
 
-        private void Start()
+        private void Awake()
         {
             targetGroup = GetComponent<CinemachineTargetGroup>();
         }
@@ -22,6 +22,11 @@ namespace _Main.Scripts.Others
             action.OnActionStart += SetAimingWeights;
             action.OnActionEnd += ResetAimingWeights;
             action.OnActionCanceled += ResetAimingWeights;
+        }
+
+        public void AddTarget(Transform target, float weight)
+        {
+            targetGroup.AddMember(target, weight, 0F);
         }
 
         public void SetAimingWeights()

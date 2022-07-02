@@ -1,74 +1,121 @@
 using System;
+using System.Collections.Generic;
 using _Main.Scripts.GamePlay.ActionSystem;
-using _Main.Scripts.GamePlay.AnimationSystem;
 using _Main.Scripts.GamePlay.InputSystem;
 using _Main.Scripts.GamePlay.MovementSystem;
 using DG.Tweening;
+using UnityEngine;
 
 namespace _Main.Scripts.GamePlay.StateMachine
 {
-    public class AimingState : StateBase, IAction
+    public class AimingState : StateBase, IAction, ITransition, IAnimation
     {
-        public event Action OnActionStart;
-        public event Action OnActionEnd;
-        public event Action OnActionCanceled;
-
         public bool IsAiming { get; private set; }
 
-        private readonly AnimationBase anim;
-        private readonly InputBase input;
-        private readonly Movement movement;
-        private readonly float aimSpeedMultiplier = 1f;
-        private readonly float recoilDelay = 0.2f;
-
-        private Tween recoilDelayTween;
-
-        public AimingState(int priority, StateMachine stateMachine, AnimationBase anim, InputBase input, Movement movement, float aimSpeedMultiplier, float recoilDelay) : base(priority, stateMachine)
+        private InputBase _input;
+        private MovementBase _movementBase;
+        private float _aimSpeedMultiplier;
+        private float _recoilDelay;
+        private Tween _recoilDelayTween;
+        public Action OnComplete;
+        
+        public void Initialize(InputBase input, MovementBase movementBase, Animator animator, float aimSpeedMultiplier, float recoilDelay)
         {
-            this.anim = anim;
-            this.input = input;
-            this.movement = movement;
-            this.aimSpeedMultiplier = aimSpeedMultiplier;
-            this.recoilDelay = recoilDelay;
+            _input = input;
+            _movementBase = movementBase;
+            Animator = animator;
+            _aimSpeedMultiplier = aimSpeedMultiplier;
+            _recoilDelay = recoilDelay;
+            _transition = this;
+            
+            _input.OnAimActionEnded += EndAim;
+            _transition.AddTransition(typeof(MovementState), () => !IsAiming, () => false);
+            _transition.AddTransition(typeof(DodgeState), () => true, () => true);
         }
 
         public override void EnterState()
         {
-            anim.PlayAimAnim(true, false);
-            movement.StartMovementAndRotation();
+            PlayAnimation();
+            _movementBase.StartMovementAndRotation();
             OnActionStart?.Invoke();
             IsAiming = true;
         }
 
         public override void UpdateState()
         {
-            movement.Move(input.GetLookInput(), 0f, aimSpeedMultiplier);
+            _movementBase.Move(_input.GetLookInput(), 0f, _aimSpeedMultiplier);
         }
 
         public void EndAim()
         {
             if (!IsAiming) return;
-            anim.PlayAimAnim(false, false);
+            StopAnimation();
             OnActionEnd?.Invoke();
-            recoilDelayTween = DOVirtual.DelayedCall(recoilDelay, () =>
+            _recoilDelayTween = DOVirtual.DelayedCall(_recoilDelay, () =>
             {
-                StateMachine.ChangeState(StateMachine.MovementState);
                 IsAiming = false;
+                OnComplete?.Invoke();
             });
         }
 
         public override void ExitState()
         {
-            movement.StopMovementAndRotation();
+            _movementBase.StopMovementAndRotation();
         }
 
         public override void CancelState()
         {
-            OnActionCanceled?.Invoke();
-            IsAiming = false;
-            recoilDelayTween.Kill();
-            anim.PlayAimAnim(false, true);
-            movement.StopMovementAndRotation();
+             OnActionCanceled?.Invoke();
+             IsAiming = false;
+             _recoilDelayTween.Kill();
+             StopAnimation();
+             _movementBase.StopMovementAndRotation();
         }
+
+        #region Actions
+
+        public event Action OnActionStart;
+        public event Action OnActionEnd;
+        public event Action OnActionCanceled;
+
+        #endregion
+
+        #region Transition
+
+        private ITransition _transition = null;
+        public List<Transition> Transitions { get; private set; } =  new();
+        public bool TryGetTransition(Type to, out Transition targetTransition)
+        {
+            foreach (var transition in Transitions)
+            {
+                if (transition.To == to)
+                {
+                    targetTransition = transition;
+                    return true;
+                }
+            }
+
+            targetTransition = null;
+            return false;
+        }
+
+        #endregion
+
+        #region Animation
+
+        public int HashCode { get; private set; } = Animator.StringToHash("isAiming");
+        public Animator Animator { get; private set; } = null;
+        
+        public void PlayAnimation()
+        {
+            Animator.SetBool(HashCode, true);
+        }
+
+        public void StopAnimation()
+        {
+            Animator.SetBool(HashCode, false);
+        }
+        
+        #endregion
     }
 }

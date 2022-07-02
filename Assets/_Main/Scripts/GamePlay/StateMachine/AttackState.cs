@@ -16,16 +16,16 @@ namespace _Main.Scripts.GamePlay.StateMachine
 
         private readonly AnimationBase anim;
         private readonly InputBase input;
-        private readonly Movement movement;
+        private readonly MovementBase _movementBase;
         private readonly float comboTimer = 0.3f;
 
-        public AttackState(int priority, StateMachine stateMachine, AnimationBase anim, InputBase input, Movement movement, float comboTimer) : base(priority, stateMachine)
-        {
-            this.anim = anim;
-            this.input = input;
-            this.movement = movement;
-            this.comboTimer = comboTimer;
-        }
+        // public AttackState(int priority, StateMachine stateMachine, AnimationBase anim, InputBase input, Movement movement, float comboTimer) : base(priority, stateMachine)
+        // {
+        //     this.anim = anim;
+        //     this.input = input;
+        //     this.movement = movement;
+        //     this.comboTimer = comboTimer;
+        // }
 
         private float comboCountdown = 0f;
         private bool canCombo;
@@ -39,14 +39,14 @@ namespace _Main.Scripts.GamePlay.StateMachine
         {
             IsAttackComplete = false;
             input.OnAttackAction += Combo;
-            movement.StartMovementAndRotation();
+            _movementBase.StartMovementAndRotation();
             PerformAttack();
         }
 
         private void ExitIfNoCombo()
         {
             IsAttackComplete = true;
-            StateMachine.ChangeState(StateMachine.MovementState);
+            //StateMachine.ChangeState(StateMachine.MovementState);
         }
 
         private void Combo()
@@ -62,9 +62,9 @@ namespace _Main.Scripts.GamePlay.StateMachine
         {
             if (exitDelayTween != null) exitDelayTween.Kill();
             OnActionStart?.Invoke();
-            anim.PlayAttackAnim(comboCount);
-            direction = input.GetMovementInput() == Vector3.zero ? StateMachine.transform.forward : input.GetMovementInput().normalized;
-            StateMachine.transform.forward = direction;
+            //anim.PlayAttackAnim(comboCount);
+            //direction = input.GetMovementInput() == Vector3.zero ? StateMachine.transform.forward : input.GetMovementInput().normalized;
+            //StateMachine.transform.forward = direction;
             exitDelayTween = DOVirtual.DelayedCall(comboTimer + 0.1f, () => ExitIfNoCombo());
             comboCount--;
             comboCountdown = 0f;

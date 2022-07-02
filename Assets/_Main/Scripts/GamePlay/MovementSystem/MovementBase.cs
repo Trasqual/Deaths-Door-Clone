@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace _Main.Scripts.GamePlay.MovementSystem
 {
-    public abstract class Movement : MonoBehaviour
+    public abstract class MovementBase : MonoBehaviour
     {
         protected abstract bool IsMoving();
         public abstract void StartMovement();
