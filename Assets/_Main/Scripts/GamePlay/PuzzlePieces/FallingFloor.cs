@@ -34,8 +34,9 @@ namespace _Main.Scripts.GamePlay.Puzzles
 
             Sequence s = DOTween.Sequence();
             s.Append(_visual.DOShakePosition(timeBeforeFall, 0.05f, 10, 60).OnComplete(() => _col.enabled = false));
-            s.Append(_visual.DOMoveY(-30f, 3f).SetRelative().OnComplete(() => _visual.gameObject.SetActive(false)));
-            s.AppendInterval(3f);
+            s.Append(_visual.DOMoveY(-30f, 3f).SetRelative());
+            s.Join(DOVirtual.Float(0f, 1f, 1f, (x) => _visual.GetComponent<MeshRenderer>().material.SetFloat("_DissolveValue", x)));
+            s.AppendInterval(2.5f);
             s.OnComplete(() =>
             {
                 ResetFloor();
@@ -45,7 +46,7 @@ namespace _Main.Scripts.GamePlay.Puzzles
         private void ResetFloor()
         {
             _visual.localPosition = _visualStartPos;
-            _visual.gameObject.SetActive(true);
+            DOVirtual.Float(1f, 0f, 1f, (x) => _visual.GetComponent<MeshRenderer>().material.SetFloat("_DissolveValue", x));
             _col.enabled = true;
             _isActive = false;
         }
