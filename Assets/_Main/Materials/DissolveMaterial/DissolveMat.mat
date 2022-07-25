@@ -83,6 +83,7 @@ Material:
     - _Color: {r: 0.764151, g: 0.764151, b: 0.764151, a: 1}
     - _EdgeColor: {r: 0, g: 216.84706, b: 766.9961, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _Vector2: {r: 0.73, g: 0.37, b: 0, a: 0}
   m_BuildTextureStacks: []
 --- !u!114 &6609046841851541559
 MonoBehaviour:

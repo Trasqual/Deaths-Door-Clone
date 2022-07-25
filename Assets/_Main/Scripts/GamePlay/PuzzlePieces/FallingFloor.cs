@@ -6,7 +6,12 @@ namespace _Main.Scripts.GamePlay.Puzzles
     [SelectionBase]
     public class FallingFloor : MonoBehaviour
     {
-        [SerializeField] private float timeBeforeFall = 0.5f;
+        [SerializeField] private float timeBeforeFall = 1f;
+        [SerializeField] private float fallDuration = 3f;
+        [SerializeField] private float resetTime = 2f;
+        [SerializeField] private float shakeIntensity = 0.05f;
+        [SerializeField] private float fallDistance = 30f;
+        [SerializeField] private float dissolveTime = 1f;
 
         [SerializeField] private Transform _visual;
         [SerializeField] private BoxCollider _col;
@@ -33,10 +38,10 @@ namespace _Main.Scripts.GamePlay.Puzzles
             _isActive = true;
 
             Sequence s = DOTween.Sequence();
-            s.Append(_visual.DOShakePosition(timeBeforeFall, 0.05f, 10, 60).OnComplete(() => _col.enabled = false));
-            s.Append(_visual.DOMoveY(-30f, 3f).SetRelative());
-            s.Join(DOVirtual.Float(0f, 1f, 1f, (x) => _visual.GetComponent<MeshRenderer>().material.SetFloat("_DissolveValue", x)));
-            s.AppendInterval(2.5f);
+            s.Append(_visual.DOShakePosition(timeBeforeFall, shakeIntensity, 10, 60).OnComplete(() => _col.enabled = false));
+            s.Append(_visual.DOMoveY(-fallDistance, fallDuration).SetRelative());
+            s.Join(DOVirtual.Float(0f, 1f, dissolveTime, (x) => _visual.GetComponent<MeshRenderer>().material.SetFloat("_DissolveValue", x)));
+            s.AppendInterval(resetTime);
             s.OnComplete(() =>
             {
                 ResetFloor();
@@ -46,7 +51,7 @@ namespace _Main.Scripts.GamePlay.Puzzles
         private void ResetFloor()
         {
             _visual.localPosition = _visualStartPos;
-            DOVirtual.Float(1f, 0f, 1f, (x) => _visual.GetComponent<MeshRenderer>().material.SetFloat("_DissolveValue", x));
+            DOVirtual.Float(1f, 0f, dissolveTime, (x) => _visual.GetComponent<MeshRenderer>().material.SetFloat("_DissolveValue", x));
             _col.enabled = true;
             _isActive = false;
         }
