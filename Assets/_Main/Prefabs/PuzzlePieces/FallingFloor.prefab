@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 8098773219686908090}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -0.25, z: 0}
-  m_LocalScale: {x: 2, y: 0.5, z: 2}
+  m_LocalScale: {x: 2.5, y: 0.5, z: 2.5}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8098773220420147597}
@@ -174,5 +174,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeBeforeFall: 0.5
+  fallDuration: 3
+  resetTime: 2
+  shakeIntensity: 0.05
+  fallDistance: 30
+  dissolveTime: 1
   _visual: {fileID: 8098773219686908089}
   _col: {fileID: 8098773220420147593}

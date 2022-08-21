@@ -13,6 +13,7 @@ namespace _Main.Scripts.GamePlay.AttackSystem.RangedAttacks
         [SerializeField] private Shooter shooter;
 
         [Header("Attack Params")]
+        [SerializeField] DamageDealerType damageDealerType;
         [SerializeField] private float initialChargeDelay = 0.5f;
         [SerializeField] private float maxChargeTime = 3f;
         [SerializeField] private float minDmgMultiplier = 1f;
@@ -77,7 +78,7 @@ namespace _Main.Scripts.GamePlay.AttackSystem.RangedAttacks
         {
             shooter.transform.position = bow.transform.position;
             shooter.transform.forward = transform.forward;
-            shooter.Shoot(chargeDuration > 0 ? chargedProjectilePrefab : projectilePrefab, dmgMultiplier);
+            shooter.Shoot(chargeDuration > 0 ? chargedProjectilePrefab : projectilePrefab, dmgMultiplier, damageDealerType);
         }
     }
 }

@@ -1,4 +1,5 @@
 using _Main.Scripts.GamePlay.MovementSystem;
+using DG.Tweening;
 using UnityEngine;
 
 namespace _Main.Scripts.GamePlay.Player
@@ -7,15 +8,36 @@ namespace _Main.Scripts.GamePlay.Player
     {
         [SerializeField] private float baseMovementSpeed = 5f;
         [SerializeField] private float baseRotationSpeed = 20f;
+        [SerializeField] private float fallToDeathTime = 2f;
 
         private Player player;
 
         private bool canMove = true;
         private bool canRotate = true;
+        private bool applyGravity = true;
+
+        private float fallTimer = 0f;
 
         private void Start()
         {
             player = GetComponent<Player>();
+        }
+
+        private void Update()
+        {
+            if (!player.Controller.isGrounded)
+            {
+                Debug.Log("not grounded");
+                fallTimer += Time.deltaTime;
+                if (fallTimer >= fallToDeathTime)
+                {
+                    canMove = false;
+                    applyGravity = false;
+                    transform.position = new Vector3(-13f, 1f, 0f);
+                    fallTimer = 0f;
+                    DOVirtual.DelayedCall(1f, () => { canMove = true; applyGravity = true; });
+                }
+            }
         }
 
         protected override bool IsMoving()
@@ -56,6 +78,11 @@ namespace _Main.Scripts.GamePlay.Player
             }
         }
 
+        private void ApplyGravity()
+        {
+            player.Controller.Move(Physics.gravity * Time.deltaTime);
+        }
+
         public override void Move(Vector3 dir, float movementSpeedMultiplier, float rotationSpeedMultiplier)
         {
             if (canMove)
@@ -66,6 +93,11 @@ namespace _Main.Scripts.GamePlay.Player
             if (canRotate)
             {
                 RotateInDirection(dir, baseRotationSpeed * rotationSpeedMultiplier);
+            }
+
+            if (applyGravity)
+            {
+                ApplyGravity();
             }
         }
     }
