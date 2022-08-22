@@ -73,7 +73,7 @@ namespace _Main.Scripts.GamePlay.Player
         private void ReadLookInput()
         {
             var readLookVector = inputActions.PlayerControls.Look.ReadValue<Vector2>();
-
+            Debug.Log(readLookVector);
             if (inputActions.PlayerControls.Look.activeControl != null)
             {
                 if (inputActions.PlayerControls.Look.activeControl.device.displayName == "Mouse")

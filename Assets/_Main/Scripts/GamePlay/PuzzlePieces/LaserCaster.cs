@@ -44,5 +44,6 @@ public class LaserCaster : MonoBehaviour
     public void DeActivate()
     {
         isActive = false;
+        _spawnedBeam.UpdateBeam(new Vector3[] { transform.position, transform.position });
     }
 }
