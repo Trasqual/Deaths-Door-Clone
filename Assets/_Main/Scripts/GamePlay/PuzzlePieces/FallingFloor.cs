@@ -14,6 +14,7 @@ namespace _Main.Scripts.GamePlay.Puzzles
         [SerializeField] private float dissolveTime = 1f;
 
         [SerializeField] private Transform _visual;
+        private MeshRenderer _visualRenderer;
         [SerializeField] private BoxCollider _col;
 
         private Vector3 _visualStartPos;
@@ -22,6 +23,7 @@ namespace _Main.Scripts.GamePlay.Puzzles
         private void Start()
         {
             _visualStartPos = _visual.localPosition;
+            _visualRenderer = _visual.GetComponent<MeshRenderer>();
         }
 
         private void OnTriggerEnter(Collider other)
@@ -40,7 +42,8 @@ namespace _Main.Scripts.GamePlay.Puzzles
             Sequence s = DOTween.Sequence();
             s.Append(_visual.DOShakePosition(timeBeforeFall, shakeIntensity, 10, 60).OnComplete(() => _col.enabled = false));
             s.Append(_visual.DOMoveY(-fallDistance, fallDuration).SetRelative());
-            s.Join(DOVirtual.Float(0f, 1f, dissolveTime, (x) => _visual.GetComponent<MeshRenderer>().material.SetFloat("_DissolveValue", x)));
+            _visualRenderer.material.SetFloat("_EdgeThickness", 0f);
+            s.Join(DOVirtual.Float(0f, 1f, dissolveTime, (x) => _visualRenderer.material.SetFloat("_DissolveValue", x)));
             s.AppendInterval(resetTime);
             s.OnComplete(() =>
             {
@@ -51,7 +54,8 @@ namespace _Main.Scripts.GamePlay.Puzzles
         private void ResetFloor()
         {
             _visual.localPosition = _visualStartPos;
-            DOVirtual.Float(1f, 0f, dissolveTime, (x) => _visual.GetComponent<MeshRenderer>().material.SetFloat("_DissolveValue", x));
+            _visualRenderer.material.SetFloat("_EdgeThickness", 0.02f);
+            DOVirtual.Float(1f, 0f, dissolveTime, (x) => _visualRenderer.material.SetFloat("_DissolveValue", x)).OnComplete(() => _visualRenderer.material.SetFloat("_EdgeThickness", 0f));
             _col.enabled = true;
             _isActive = false;
         }
