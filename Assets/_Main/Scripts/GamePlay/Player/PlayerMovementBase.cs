@@ -12,8 +12,6 @@ namespace _Main.Scripts.GamePlay.Player
 
         private Player player;
 
-        private bool canMove = true;
-        private bool canRotate = true;
         private bool applyGravity = true;
 
         private float fallTimer = 0f;
@@ -44,25 +42,7 @@ namespace _Main.Scripts.GamePlay.Player
             return player.Controller.velocity.magnitude > 0f;
         }
 
-        public override void StartMovement()
-        {
-            canMove = true;
-        }
 
-        public override void StopMovement()
-        {
-            canMove = false;
-        }
-
-        public override void StartRotation()
-        {
-            canRotate = true;
-        }
-
-        public override void StopRotation()
-        {
-            canRotate = false;
-        }
 
         protected void MoveInDirection(Vector3 dir, float speed)
         {

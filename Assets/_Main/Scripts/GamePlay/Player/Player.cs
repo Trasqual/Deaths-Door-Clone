@@ -15,7 +15,7 @@ namespace _Main.Scripts.GamePlay.Player
 {
     [RequireComponent(typeof(PlayerMovementBase),
         typeof(PlayerAnimation))]
-    public class Player : MonoBehaviour
+    public class Player : CharacterBase
     {
         [SerializeField] private PlayerData data = null;
         public InputBase Input { get; private set; }
@@ -25,20 +25,18 @@ namespace _Main.Scripts.GamePlay.Player
         [SerializeField] List<AttackBase> rangedAttacks = new List<AttackBase>();
         [SerializeField] List<AttackBase> meleeAttacks = new List<AttackBase>();
 
-        private StateMachine.StateMachine stateMachine;
-
         private PlayerMovementBase _playerMovementBase = null;
         private HealthManagerBase _playerHealthManager = null;
 
         private AttackBase selectedRangedAttack;
         private AttackBase selectedMeleeAttack;
 
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
             Input = GetComponent<InputBase>();
             Controller = GetComponent<CharacterController>();
             PlayerAnim = GetComponent<PlayerAnimation>();
-            stateMachine = GetComponent<StateMachine.StateMachine>();
             _playerMovementBase = GetComponent<PlayerMovementBase>();
             _playerHealthManager = GetComponent<HealthManagerBase>();
             stateMachine.Initialize(Input, _playerMovementBase, PlayerAnim.Animator);
@@ -145,7 +143,7 @@ namespace _Main.Scripts.GamePlay.Player
             //stateMachine.ChangeState(stateMachine.AttackState);
         }
 
-        private void Die()
+        protected override void Die()
         {
             Controller.enabled = false;
             stateMachine.ChangeState(typeof(DeathState));

@@ -1,4 +1,5 @@
 using _Main.Scripts.GamePlay.ActionSystem;
+using _Main.Scripts.GamePlay.Player;
 using UnityEngine;
 
 namespace _Main.Scripts.GamePlay.AttackSystem

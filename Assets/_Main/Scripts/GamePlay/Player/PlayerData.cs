@@ -10,7 +10,7 @@ namespace _Main.Scripts.GamePlay.Player
     {
         [TitleGroup("Base")]
         [SerializeField] private string name = "";
-    
+
         [TitleGroup("Locomotion")]
         [SerializeField] private float movementSpeed = 5F;
         [SerializeField] private float rotationSpeed = 5F;
@@ -18,7 +18,7 @@ namespace _Main.Scripts.GamePlay.Player
 
         [TitleGroup("Others")]
         [SerializeField] private int health = 5;
-        
+
         public AimActionIndicator aimingIndicator;
         public CameraTargetGroup cameraTargetGroup;
     }
