@@ -6,7 +6,9 @@ public class LockPiece : MonoBehaviour, IDamagable
 {
     public Action<LockPiece> OnLockPieceBroken;
 
-    public void TakeDamage(int amount, DamageDealerType damageDealerType)
+    [SerializeField] DamageDealerType _effectedByType;
+
+    public void TakeDamage(float amount, DamageDealerType damageDealerType)
     {
         if (damageDealerType == DamageDealerType.Player)
         {

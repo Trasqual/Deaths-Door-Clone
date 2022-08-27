@@ -2,12 +2,12 @@ using UnityEngine;
 
 public class LaserCaster : MonoBehaviour
 {
-    [SerializeField] private float _distance = 10f;
-    [SerializeField] private LaserBeam _laserBeam;
-    [SerializeField] private LayerMask _mask;
+    [SerializeField] protected float _distance = 10f;
+    [SerializeField] protected LaserBeam _laserBeam;
+    [SerializeField] protected LayerMask _mask;
 
-    LaserBeam _spawnedBeam;
-    bool isActive = true;
+    protected LaserBeam _spawnedBeam;
+    protected bool isActive = true;
 
     private void Start()
     {
@@ -22,7 +22,7 @@ public class LaserCaster : MonoBehaviour
         }
     }
 
-    public void CastLaser()
+    public virtual void CastLaser()
     {
         Ray ray = new Ray(transform.position, transform.forward);
         Physics.Raycast(ray, out RaycastHit hit, _distance, _mask, QueryTriggerInteraction.Ignore);

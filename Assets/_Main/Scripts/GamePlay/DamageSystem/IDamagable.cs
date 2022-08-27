@@ -1,5 +1,5 @@
 
 public interface IDamagable
 {
-    public void TakeDamage(int amount, DamageDealerType damageDealerType);
+    public void TakeDamage(float amount, DamageDealerType damageDealerType);
 }

@@ -1,20 +1,21 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class HealthManagerBase : MonoBehaviour, IDamagable
 {
     public Action<float> OnDamageTaken;
     public Action OnDeath;
-    [SerializeField] private DamageDealerType _effectedByType;
+    [SerializeField] public DamageDealerType _effectedByType;
     [SerializeField] private float _maxHealth = 100f;
 
     private float _currentHealth = 100f;
 
-    public void TakeDamage(int amount, DamageDealerType damageDealerType)
+    private bool _isDead;
+
+    public void TakeDamage(float amount, DamageDealerType damageDealerType)
     {
-        if (damageDealerType != _effectedByType) return;
+        if (_isDead) return;
+        if (!CompareEnums(damageDealerType, _effectedByType)) return;
 
         _currentHealth -= amount;
 
@@ -29,6 +30,22 @@ public class HealthManagerBase : MonoBehaviour, IDamagable
 
     private void Die()
     {
+        _isDead = true;
         OnDeath?.Invoke();
+    }
+
+    private bool CompareEnums(DamageDealerType effector, DamageDealerType effected)
+    {
+        int commonBitmask = (int)effector & (int)effected;
+
+        foreach (DamageDealerType currentEnum in Enum.GetValues(typeof(DamageDealerType)))
+        {
+            if ((commonBitmask & (int)currentEnum) != 0)
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

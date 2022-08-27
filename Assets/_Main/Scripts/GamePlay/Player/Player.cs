@@ -9,6 +9,7 @@ using _Main.Scripts.GamePlay.InputSystem;
 using _Main.Scripts.GamePlay.StateMachine;
 using _Main.Scripts.Others;
 using UnityEngine;
+using UnityEngine.InputSystem.XR;
 
 namespace _Main.Scripts.GamePlay.Player
 {
@@ -25,9 +26,10 @@ namespace _Main.Scripts.GamePlay.Player
         [SerializeField] List<AttackBase> meleeAttacks = new List<AttackBase>();
 
         private StateMachine.StateMachine stateMachine;
-        
+
         private PlayerMovementBase _playerMovementBase = null;
-        
+        private HealthManagerBase _playerHealthManager = null;
+
         private AttackBase selectedRangedAttack;
         private AttackBase selectedMeleeAttack;
 
@@ -38,6 +40,7 @@ namespace _Main.Scripts.GamePlay.Player
             PlayerAnim = GetComponent<PlayerAnimation>();
             stateMachine = GetComponent<StateMachine.StateMachine>();
             _playerMovementBase = GetComponent<PlayerMovementBase>();
+            _playerHealthManager = GetComponent<HealthManagerBase>();
             stateMachine.Initialize(Input, _playerMovementBase, PlayerAnim.Animator);
         }
 
@@ -46,8 +49,9 @@ namespace _Main.Scripts.GamePlay.Player
             GainMovementBehaviour();
             GainDodgeBehaviour();
             GainAimingBehaviour();
+            GainDeathBehaviour();
             stateMachine.SetInitialState(typeof(MovementState));
-            
+
             SetSelectedMeleeAttack(typeof(UnarmedAttack));
             SetSelectedRangedAttack(typeof(BowAttack));
         }
@@ -66,12 +70,12 @@ namespace _Main.Scripts.GamePlay.Player
         {
             stateMachine.AddDodgeState(2F, .5F);
         }
-        
+
         public void LoseDodgeBehaviour()
         {
             stateMachine.RemoveState(typeof(DodgeState));
         }
-        
+
         public void GainAimingBehaviour()
         {
             stateMachine.AddAimingState(1F, .2F);
@@ -84,17 +88,22 @@ namespace _Main.Scripts.GamePlay.Player
                 var aimBehaviourAction = aimingBehaviour.GetComponent<IAction>();
                 targetGroupHandler.Init(aimBehaviourAction);
                 aimIndicator.Init(aimBehaviourAction);
-                
+
                 targetGroupHandler.AddTarget(transform, .5F);
                 targetGroupHandler.AddTarget(aimIndicator.transform, .75F);
             }
         }
-        
+
         public void LoseAimingBehaviour()
         {
             stateMachine.RemoveState(typeof(AimingState));
             Destroy(GetComponentInChildren<CameraTargetGroup>().gameObject);
             Destroy(GetComponentInChildren<AimActionIndicator>().gameObject);
+        }
+
+        public void GainDeathBehaviour()
+        {
+            stateMachine.AddDeathState();
         }
 
         private void StartAiming()
@@ -136,11 +145,19 @@ namespace _Main.Scripts.GamePlay.Player
             //stateMachine.ChangeState(stateMachine.AttackState);
         }
 
+        private void Die()
+        {
+            Controller.enabled = false;
+            stateMachine.ChangeState(typeof(DeathState));
+        }
+
         private void OnEnable()
         {
             Input.OnAimActionStarted += StartAiming;
             Input.OnRollAction += PerformRoll;
             Input.OnAttackAction += Attack;
+
+            _playerHealthManager.OnDeath += Die;
         }
     }
 }

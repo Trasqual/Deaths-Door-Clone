@@ -54,7 +54,7 @@ namespace _Main.Scripts.GamePlay.AttackSystem.RangedAttacks
             Destroy(gameObject);
         }
 
-        public void DealDamage(int damage, IDamagable damagable, DamageDealerType damageDealerType)
+        public void DealDamage(float damage, IDamagable damagable, DamageDealerType damageDealerType)
         {
             damagable.TakeDamage(damage, damageDealerType);
         }

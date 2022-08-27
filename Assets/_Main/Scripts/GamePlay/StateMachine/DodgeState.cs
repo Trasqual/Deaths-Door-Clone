@@ -25,10 +25,11 @@ namespace _Main.Scripts.GamePlay.StateMachine
             _speedMultiplier = speedMultiplier;
             _duration = duration;
             _transition = this;
-            
+
             _transition.AddTransition(typeof(AimingState), () => _isDodgeComplete, () => false);
             _transition.AddTransition(typeof(MovementState), () => _isDodgeComplete, () => false);
             _transition.AddTransition(typeof(AttackState), () => _isDodgeComplete, () => false);
+            _transition.AddTransition(typeof(DeathState), () => true, () => false);
         }
 
 
@@ -61,12 +62,12 @@ namespace _Main.Scripts.GamePlay.StateMachine
         {
             // no-op
         }
-        
+
         #region Animation
 
         public int HashCode { get; private set; } = Animator.StringToHash("roll");
         public Animator Animator { get; private set; } = null;
-        
+
         public void PlayAnimation()
         {
             Animator.SetTrigger(HashCode);
@@ -76,13 +77,13 @@ namespace _Main.Scripts.GamePlay.StateMachine
         {
             // no-op
         }
-        
+
         #endregion
-        
+
         #region Transition
 
         private ITransition _transition = null;
-        public List<Transition> Transitions { get; private set; } =  new();
+        public List<Transition> Transitions { get; private set; } = new();
         public bool TryGetTransition(Type to, out Transition targetTransition)
         {
             foreach (var transition in Transitions)

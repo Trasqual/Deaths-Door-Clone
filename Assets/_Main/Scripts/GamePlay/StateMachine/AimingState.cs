@@ -31,6 +31,7 @@ namespace _Main.Scripts.GamePlay.StateMachine
             _input.OnAimActionEnded += EndAim;
             _transition.AddTransition(typeof(MovementState), () => !IsAiming, () => false);
             _transition.AddTransition(typeof(DodgeState), () => true, () => true);
+            _transition.AddTransition(typeof(DeathState), () => true, () => true);
         }
 
         public override void EnterState()

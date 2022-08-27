@@ -1,8 +1,9 @@
 
+[System.Flags]
 public enum DamageDealerType
 {
-    Player,
-    AI,
-    Environment,
-    Null
+    None = 0,
+    Player = 1,
+    AI = 1 << 1,
+    Environment = 1 << 2,
 }

@@ -86,6 +86,15 @@ namespace _Main.Scripts.GamePlay.StateMachine
             aimingState.OnComplete += OnCompleteState;
         }
 
+        public void AddDeathState()
+        {
+            if(GetState(typeof(DeathState))) return;
+
+            var deathState = gameObject.AddComponent<DeathState>();
+            deathState.Initialize(_movementBase, _animator);
+            states.Add(deathState);
+        }
+
         public void RemoveState(Type targetState)
         {
             if (states.Count == 1)

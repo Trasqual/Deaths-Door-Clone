@@ -27,7 +27,6 @@ namespace _Main.Scripts.GamePlay.Player
         {
             if (!player.Controller.isGrounded)
             {
-                Debug.Log("not grounded");
                 fallTimer += Time.deltaTime;
                 if (fallTimer >= fallToDeathTime)
                 {
