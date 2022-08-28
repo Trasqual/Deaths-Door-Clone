@@ -1,3 +1,4 @@
+using _Main.Scripts.Utilities;
 using System;
 using UnityEngine;
 
@@ -15,7 +16,7 @@ public class HealthManagerBase : MonoBehaviour, IDamagable
     public void TakeDamage(float amount, DamageDealerType damageDealerType)
     {
         if (_isDead) return;
-        if (!CompareEnums(damageDealerType, _effectedByType)) return;
+        if (!Enums.CompareEnums(damageDealerType, _effectedByType)) return;
 
         _currentHealth -= amount;
 
@@ -32,20 +33,5 @@ public class HealthManagerBase : MonoBehaviour, IDamagable
     {
         _isDead = true;
         OnDeath?.Invoke();
-    }
-
-    private bool CompareEnums(DamageDealerType effector, DamageDealerType effected)
-    {
-        int commonBitmask = (int)effector & (int)effected;
-
-        foreach (DamageDealerType currentEnum in Enum.GetValues(typeof(DamageDealerType)))
-        {
-            if ((commonBitmask & (int)currentEnum) != 0)
-            {
-                return true;
-            }
-        }
-
-        return false;
     }
 }

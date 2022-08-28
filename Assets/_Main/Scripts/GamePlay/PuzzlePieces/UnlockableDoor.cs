@@ -36,6 +36,7 @@ public class UnlockableDoor : MonoBehaviour
 
     private void ProcessBrokenLockPiece(LockPiece lockPiece)
     {
+        if (brokenLockPieces.Contains(lockPiece)) return;
         brokenLockPieces.Add(lockPiece);
         lockPiecesAndIndicators[lockPiece].material.SetColor("_Color", Color.green);
         lockPiece.OnLockPieceBroken -= ProcessBrokenLockPiece;
@@ -54,13 +55,13 @@ public class UnlockableDoor : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
         if (isClosed) return;
-        if(other.TryGetComponent(out Player player))
+        if (other.TryGetComponent(out Player player))
         {
             CloseDoor();
         }
     }
 
-    private  void CloseDoor()
+    private void CloseDoor()
     {
         _anim.SetBool("character_nearby", false);
     }
