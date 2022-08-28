@@ -76,8 +76,8 @@ namespace _Main.Scripts.GamePlay.AttackSystem.RangedAttacks
 
         private void Shoot()
         {
-            shooter.transform.position = bow.transform.position;
-            shooter.transform.forward = transform.forward;
+            //shooter.transform.position = bow.transform.position;
+            //shooter.transform.forward = transform.forward;
             shooter.Shoot(chargeDuration > 0 ? chargedProjectilePrefab : projectilePrefab, dmgMultiplier, damageDealerType);
         }
     }
