@@ -1,3 +1,4 @@
+using _Main.Scripts.GamePlay.Player;
 using DG.Tweening;
 using System;
 using System.Collections.Generic;
@@ -7,14 +8,15 @@ public class UnlockableDoor : MonoBehaviour
 {
     public Action OnDoorOpened;
 
-    [SerializeField] Transform _doorRight;
-    [SerializeField] Transform _doorLeft;
+    [SerializeField] Animator _anim;
 
     [SerializeField] List<Renderer> indicators = new List<Renderer>();
 
     Dictionary<LockPiece, Renderer> lockPiecesAndIndicators = new Dictionary<LockPiece, Renderer>();
 
     List<LockPiece> brokenLockPieces = new List<LockPiece>();
+
+    bool isClosed;
 
     public void Initialize(List<LockPiece> lockPieces)
     {
@@ -45,8 +47,21 @@ public class UnlockableDoor : MonoBehaviour
 
     private void OpenDoor()
     {
-        _doorRight.DORotate(new Vector3(0f, 90f, 0f), 2f).SetEase(Ease.InCubic);
-        _doorLeft.DORotate(new Vector3(0f, -90f, 0f), 2f).SetEase(Ease.InCubic);
+        _anim.SetBool("character_nearby", true);
         OnDoorOpened?.Invoke();
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (isClosed) return;
+        if(other.TryGetComponent(out Player player))
+        {
+            CloseDoor();
+        }
+    }
+
+    private  void CloseDoor()
+    {
+        _anim.SetBool("character_nearby", false);
     }
 }
