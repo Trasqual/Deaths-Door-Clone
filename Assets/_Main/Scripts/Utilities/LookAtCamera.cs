@@ -14,7 +14,7 @@ public class LookAtCamera : MonoBehaviour
     private void Update()
     {
         var dir = (transform.position - cam.transform.position);
-        transform.rotation = Quaternion.LookRotation(dir);
+        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dir), Time.deltaTime * 50f);
         var angles = transform.eulerAngles;
         angles.z = 0f;
         transform.eulerAngles = angles;
