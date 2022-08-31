@@ -11,7 +11,7 @@ public class LockPiece : MonoBehaviour, IDamagable
 
     private bool _isUnlocked;
 
-    public void TakeDamage(float amount, DamageDealerType damageDealerType)
+    public void TakeDamage(int amount, DamageDealerType damageDealerType)
     {
         if (Enums.CompareEnums(damageDealerType, _effectedByType))
         {

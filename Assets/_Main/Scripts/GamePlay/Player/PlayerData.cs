@@ -16,8 +16,9 @@ namespace _Main.Scripts.GamePlay.Player
         [SerializeField] private float rotationSpeed = 5F;
         [SerializeField] private float dodgeSpeed = 5F;
 
-        [TitleGroup("Others")]
-        [SerializeField] private int health = 5;
+        [TitleGroup("Health")]
+        [SerializeField] private int health = 4;
+        [SerializeField] public float damageTakenDuration = 0.5f;
 
         public AimActionIndicator aimingIndicator;
         public CameraTargetGroup cameraTargetGroup;

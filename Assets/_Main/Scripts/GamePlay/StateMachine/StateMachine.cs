@@ -13,23 +13,28 @@ namespace _Main.Scripts.GamePlay.StateMachine
         // public AttackState AttackState { get; private set; }
         public StateBase CurrentState { get; private set; }
         public StateBase DefaultState { get; private set; }
-        
+
         private InputBase _inputBase = null;
         private MovementBase _movementBase = null;
         private Animator _animator = null;
+        private HealthManagerBase _healthManager = null;
 
         [Header("Attack Params")]
         [SerializeField] private float comboTimer = 0.5f;
+
+        [Header("Damage Taken Params")]
+        [SerializeField] private float _damageTakenDuration = 0.5f;
 
         [Header("Debugging")]
         [SerializeField] private string currentStateName;
         [SerializeField] private List<StateBase> states = new List<StateBase>();
 
-        public void Initialize(InputBase input, MovementBase movementBase, Animator animator)
+        public void Initialize(InputBase input, MovementBase movementBase, Animator animator, HealthManagerBase healthManager)
         {
             _inputBase = input;
             _movementBase = movementBase;
             _animator = animator;
+            _healthManager = healthManager;
 
             // MovementState = new MovementState(0, this, inputBase, movement, movementSpeedMultiplier);
             // RollingState = new RollingState(2, this, anim, inputBase, movement, rollingSpeedMultiplier, rollDuration);
@@ -47,9 +52,9 @@ namespace _Main.Scripts.GamePlay.StateMachine
 
         public void SetInitialState(Type state)
         {
-            if(CurrentState != null) return;
-            if(states.Count == 0) return;
-            
+            if (CurrentState != null) return;
+            if (states.Count == 0) return;
+
             var foundState = GetState(state);
             DefaultState = foundState ? foundState : states[0];
             CurrentState = DefaultState;
@@ -59,8 +64,8 @@ namespace _Main.Scripts.GamePlay.StateMachine
 
         public void AddMovementState()
         {
-            if(GetState(typeof(MovementState))) return;
-            
+            if (GetState(typeof(MovementState))) return;
+
             var movementState = gameObject.AddComponent<MovementState>();
             movementState.Initialize(_inputBase, _movementBase, _animator);
             states.Add(movementState);
@@ -68,7 +73,7 @@ namespace _Main.Scripts.GamePlay.StateMachine
 
         public void AddDodgeState(float speedMultiplier, float duration)
         {
-            if(GetState(typeof(DodgeState))) return;
+            if (GetState(typeof(DodgeState))) return;
 
             var dodgeState = gameObject.AddComponent<DodgeState>();
             dodgeState.Initialize(_inputBase, _movementBase, _animator, speedMultiplier, duration);
@@ -78,7 +83,7 @@ namespace _Main.Scripts.GamePlay.StateMachine
 
         public void AddAimingState(float aimSpeedMultiplier, float recoilDelay)
         {
-            if(GetState(typeof(AimingState))) return;
+            if (GetState(typeof(AimingState))) return;
 
             var aimingState = gameObject.AddComponent<AimingState>();
             aimingState.Initialize(_inputBase, _movementBase, _animator, aimSpeedMultiplier, recoilDelay);
@@ -86,9 +91,19 @@ namespace _Main.Scripts.GamePlay.StateMachine
             aimingState.OnComplete += OnCompleteState;
         }
 
+        public void AddDamageTakenState(float duration)
+        {
+            if (GetState(typeof(DamageTakenState))) return;
+
+            var damageTaken = gameObject.AddComponent<DamageTakenState>();
+            damageTaken.Initialize(_movementBase, _animator, _healthManager, duration);
+            states.Add(damageTaken);
+            damageTaken.OnComplete += OnCompleteState;
+        }
+
         public void AddDeathState()
         {
-            if(GetState(typeof(DeathState))) return;
+            if (GetState(typeof(DeathState))) return;
 
             var deathState = gameObject.AddComponent<DeathState>();
             deathState.Initialize(_movementBase, _animator);
@@ -100,30 +115,30 @@ namespace _Main.Scripts.GamePlay.StateMachine
             if (states.Count == 1)
             {
                 Debug.LogWarning($"The operation is blocked! : StateMachine doesn't have more than one state.");
-                
+
                 return;
             }
-            
+
             var foundState = GetState(targetState);
 
             if (foundState)
             {
                 states.Remove(foundState);
-                
+
                 if (foundState == DefaultState)
                 {
                     DefaultState = states[0];
                 }
-                
+
                 if (foundState == CurrentState)
                 {
                     ChangeState(DefaultState.GetType());
                 }
-                
+
                 Destroy(foundState);
-                
+
                 // TODO
-                
+
                 // Unsubscribe removed states
             }
         }
@@ -131,18 +146,19 @@ namespace _Main.Scripts.GamePlay.StateMachine
         private void OnCompleteState(Type requestedState)
         {
             var targetState = GetState(requestedState);
-            ChangeState(targetState ? 
-                targetState.GetType() : 
+            ChangeState(targetState ?
+                targetState.GetType() :
                 DefaultState.GetType());
         }
         private void OnCompleteState()
         {
+            Debug.Log("stateComplete");
             ChangeState(DefaultState.GetType());
         }
-        
+
         private void Update()
         {
-            if(CurrentState != null)
+            if (CurrentState != null)
                 CurrentState.UpdateState();
         }
 
@@ -152,11 +168,11 @@ namespace _Main.Scripts.GamePlay.StateMachine
         }
         public void ChangeState(Type to)
         {
-            if(CurrentState == null) return;
+            if (CurrentState == null) return;
             if (CurrentState.GetType() == to) return;
 
             var toState = GetState(to);
-            
+
             if (toState)
             {
                 if (CurrentState is ITransition stateTransition)
@@ -173,7 +189,7 @@ namespace _Main.Scripts.GamePlay.StateMachine
                             {
                                 CurrentState.ExitState();
                             }
-                            
+
                             CurrentState = toState;
                             CurrentState.EnterState();
                             currentStateName = CurrentState.ToString();

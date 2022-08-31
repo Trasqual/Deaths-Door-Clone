@@ -4,7 +4,7 @@ using UnityEngine;
 public class DamageDealingLaserCaster : LaserCaster, IDamageDealer
 {
     [SerializeField] DamageDealerType _damageDealerType;
-    [SerializeField] float _damage = 10;
+    [SerializeField] int _damage = 1;
     [SerializeField] float _dotTimer = 0.5f;
 
     Transform prevHitTarget;
@@ -43,13 +43,9 @@ public class DamageDealingLaserCaster : LaserCaster, IDamageDealer
 
     private IEnumerator DotCo(IDamagable damagable)
     {
-        float startDamage = _damage;
-        var incrementalValue = 0f;
         while (true)
         {
-            incrementalValue += 0.1f;
-            startDamage *= (1 + incrementalValue);
-            DealDamage(startDamage, damagable, _damageDealerType);
+            DealDamage(_damage, damagable, _damageDealerType);
             yield return new WaitForSeconds(_dotTimer);
         }
     }
@@ -62,7 +58,7 @@ public class DamageDealingLaserCaster : LaserCaster, IDamageDealer
         }
     }
 
-    public void DealDamage(float damage, IDamagable damagable, DamageDealerType damageDealerType)
+    public void DealDamage(int damage, IDamagable damagable, DamageDealerType damageDealerType)
     {
         damagable.TakeDamage(damage, _damageDealerType);
     }

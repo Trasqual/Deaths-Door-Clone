@@ -9,6 +9,6 @@ public class CharacterBase : MonoBehaviour
     {
         stateMachine = GetComponent<StateMachine>();
     }
-
+    protected virtual void TakeDamage(int i) { }
     protected virtual void Die() { }
 }

@@ -43,6 +43,7 @@ namespace _Main.Scripts.GamePlay.StateMachine
             _transition.AddTransition(typeof(AimingState), () => true, () => false);
             _transition.AddTransition(typeof(DodgeState), () => true, () => true);
             _transition.AddTransition(typeof(DeathState), () => true, () => true);
+            _transition.AddTransition(typeof(DamageTakenState), () => true, () => true);
         }
         
         public override void EnterState()

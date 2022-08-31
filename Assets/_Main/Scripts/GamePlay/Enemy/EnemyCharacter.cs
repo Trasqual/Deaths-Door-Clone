@@ -22,7 +22,7 @@ public class EnemyCharacter : CharacterBase
         _anim = GetComponentInChildren<Animator>();
         _input = GetComponent<InputBase>();
 
-        stateMachine.Initialize(_input, _movementBase, _anim);
+        stateMachine.Initialize(_input, _movementBase, _anim, _healthManager);
     }
 
     private void Start()

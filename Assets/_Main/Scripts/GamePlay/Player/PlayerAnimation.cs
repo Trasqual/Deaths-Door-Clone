@@ -23,5 +23,10 @@ namespace _Main.Scripts.GamePlay.Player
         {
             animator.SetTrigger(RollHash);
         }
+
+        public void PlayDamageTakenAnim()
+        {
+            animator.SetTrigger("takeDamage");
+        }
     }
 }

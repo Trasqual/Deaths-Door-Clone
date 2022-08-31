@@ -39,7 +39,7 @@ namespace _Main.Scripts.GamePlay.Player
             PlayerAnim = GetComponent<PlayerAnimation>();
             _playerMovementBase = GetComponent<PlayerMovementBase>();
             _playerHealthManager = GetComponent<HealthManagerBase>();
-            stateMachine.Initialize(Input, _playerMovementBase, PlayerAnim.Animator);
+            stateMachine.Initialize(Input, _playerMovementBase, PlayerAnim.Animator, _playerHealthManager);
         }
 
         private void Start()
@@ -47,6 +47,7 @@ namespace _Main.Scripts.GamePlay.Player
             GainMovementBehaviour();
             GainDodgeBehaviour();
             GainAimingBehaviour();
+            GainDamageTakingBehaviour();
             GainDeathBehaviour();
             stateMachine.SetInitialState(typeof(MovementState));
 
@@ -99,6 +100,11 @@ namespace _Main.Scripts.GamePlay.Player
             Destroy(GetComponentInChildren<AimActionIndicator>().gameObject);
         }
 
+        public void GainDamageTakingBehaviour()
+        {
+            stateMachine.AddDamageTakenState(data.damageTakenDuration);
+        }
+
         public void GainDeathBehaviour()
         {
             stateMachine.AddDeathState();
@@ -143,6 +149,11 @@ namespace _Main.Scripts.GamePlay.Player
             //stateMachine.ChangeState(stateMachine.AttackState);
         }
 
+        protected override void TakeDamage(int i)
+        {
+            stateMachine.ChangeState(typeof(DamageTakenState));
+        }
+
         protected override void Die()
         {
             Controller.enabled = false;
@@ -155,6 +166,7 @@ namespace _Main.Scripts.GamePlay.Player
             Input.OnRollAction += PerformRoll;
             Input.OnAttackAction += Attack;
 
+            _playerHealthManager.OnDamageTaken += TakeDamage;
             _playerHealthManager.OnDeath += Die;
         }
     }
