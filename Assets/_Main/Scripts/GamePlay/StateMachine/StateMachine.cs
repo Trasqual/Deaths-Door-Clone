@@ -9,8 +9,6 @@ namespace _Main.Scripts.GamePlay.StateMachine
 {
     public class StateMachine : MonoBehaviour
     {
-        // public AimingState AimingState { get; private set; }
-        // public AttackState AttackState { get; private set; }
         public StateBase CurrentState { get; private set; }
         public StateBase DefaultState { get; private set; }
 
@@ -35,19 +33,6 @@ namespace _Main.Scripts.GamePlay.StateMachine
             _movementBase = movementBase;
             _animator = animator;
             _healthManager = healthManager;
-
-            // MovementState = new MovementState(0, this, inputBase, movement, movementSpeedMultiplier);
-            // RollingState = new RollingState(2, this, anim, inputBase, movement, rollingSpeedMultiplier, rollDuration);
-            // AimingState = new AimingState(1, this, anim, inputBase, movement, aimSpeedMultiplier, recoilDelay);
-            // AttackState = new AttackState(1, this, anim, inputBase, movement, comboTimer);
-            //
-            // AddAnyTransition(RollingState, () => true, () => true);
-            // AddTransition(RollingState, AimingState, () => RollingState.IsRollingComplete, () => false);
-            // AddTransition(RollingState, MovementState, () => RollingState.IsRollingComplete, () => false);
-            // AddTransition(RollingState, AttackState, () => RollingState.IsRollingComplete, () => false);
-            // AddTransition(AttackState, MovementState, () => AttackState.IsAttackComplete, () => false);
-            //
-            // ChangeState(MovementState);
         }
 
         public void SetInitialState(Type state)
@@ -150,6 +135,7 @@ namespace _Main.Scripts.GamePlay.StateMachine
                 targetState.GetType() :
                 DefaultState.GetType());
         }
+
         private void OnCompleteState()
         {
             Debug.Log("stateComplete");
@@ -166,6 +152,7 @@ namespace _Main.Scripts.GamePlay.StateMachine
         {
             return states.FirstOrDefault(state => state.GetType() == type);
         }
+
         public void ChangeState(Type to)
         {
             if (CurrentState == null) return;
