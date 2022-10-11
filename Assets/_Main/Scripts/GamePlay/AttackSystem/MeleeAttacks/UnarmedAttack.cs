@@ -1,3 +1,4 @@
+using DG.Tweening;
 using UnityEngine;
 
 namespace _Main.Scripts.GamePlay.AttackSystem.MeleeAttacks
@@ -12,27 +13,31 @@ namespace _Main.Scripts.GamePlay.AttackSystem.MeleeAttacks
 
         int currentComboCount;
 
+        bool canAttack = true;
         bool isActive;
         bool canCombo;
 
         protected override void DoOnActionStart()
         {
+            if (!canAttack) return;
             currentComboCount++;
             CurrentAttackAnimationData = attackAnimationDatas[currentComboCount - 1];
             comboTimer = 0f;
             isActive = true;
-            Debug.Log(currentComboCount);
         }
 
         protected override void DoOnActionEnd()
         {
+            if (!canAttack) return;
             if (currentComboCount >= attackAnimationDatas.Length)
             {
                 comboTimer = 0;
                 currentComboCount = 0;
                 canCombo = false;
-                OnAttackEnded?.Invoke();
+                OnAttackCompleted?.Invoke();
                 isActive = false;
+                canAttack = false;
+                DOVirtual.DelayedCall(1f, () => canAttack = true);
             }
         }
 
@@ -53,7 +58,7 @@ namespace _Main.Scripts.GamePlay.AttackSystem.MeleeAttacks
                     comboTimer = 0;
                     currentComboCount = 0;
                     canCombo = false;
-                    OnAttackEnded?.Invoke();
+                    OnAttackCompleted?.Invoke();
                     isActive = false;
                 }
             }

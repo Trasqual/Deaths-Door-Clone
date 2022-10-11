@@ -23,8 +23,8 @@ namespace _Main.Scripts.GamePlay.StateMachine
             _character = character;
             Animator = animator;
             _transition = this;
-            _input.OnAttackActionStarted += OnAttackStart;
-            _input.OnAttackActionEnded += ActionEnd;
+            _input.OnAttackActionStarted += OnAttackButtonPressed;
+            _input.OnAttackActionEnded += OnAttackButtonReleased;
 
             _transition.AddTransition(typeof(MovementState), () => !IsAttacking, () => false);
             _transition.AddTransition(typeof(DodgeState), () => true, () => true);
@@ -37,12 +37,12 @@ namespace _Main.Scripts.GamePlay.StateMachine
 
         }
 
-        private void OnAttackStart()
+        private void OnAttackButtonPressed()
         {
             OnActionStart?.Invoke();
             _movementBase.StartMovementAndRotation();
             _movementBase.Move(_input.GetLookInput(), 0f, 1f);
-            _character.SelectedMeleeAttack.OnAttackEnded += OnAttackEnd;
+            _character.SelectedMeleeAttack.OnAttackCompleted += OnAttackCompleted;
         }
 
         public override void UpdateState()
@@ -52,8 +52,10 @@ namespace _Main.Scripts.GamePlay.StateMachine
 
         public override void ExitState()
         {
+            IsAttacking = false;
+            StopAnimation();
             _movementBase.StopMovementAndRotation();
-            _character.SelectedMeleeAttack.OnAttackEnded -= OnAttackEnd;
+            _character.SelectedMeleeAttack.OnAttackCompleted -= OnAttackCompleted;
         }
 
         public override void CancelState()
@@ -62,16 +64,15 @@ namespace _Main.Scripts.GamePlay.StateMachine
             IsAttacking = false;
             StopAnimation();
             _movementBase.StopMovementAndRotation();
-            _character.SelectedMeleeAttack.OnAttackEnded -= OnAttackEnd;
+            _character.SelectedMeleeAttack.OnAttackCompleted -= OnAttackCompleted;
         }
 
-        private void OnAttackEnd()
+        private void OnAttackCompleted()
         {
-            IsAttacking = false;
             OnComplete?.Invoke();
         }
 
-        private void ActionEnd()
+        private void OnAttackButtonReleased()
         {
             OnActionEnd?.Invoke();
             PlayAnimation();
@@ -127,13 +128,12 @@ namespace _Main.Scripts.GamePlay.StateMachine
         public void PlayAnimation()
         {
             SetAnimatorOverrideController();
-            Animator.SetBool(HashCode, true);
+            Animator.SetTrigger(HashCode);
         }
 
         public void StopAnimation()
         {
             ResetAnimatorController();
-            Animator.SetBool(HashCode, false);
         }
 
         #endregion
