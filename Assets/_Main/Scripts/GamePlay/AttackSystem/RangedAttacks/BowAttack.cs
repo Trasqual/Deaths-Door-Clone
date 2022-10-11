@@ -24,13 +24,13 @@ namespace _Main.Scripts.GamePlay.AttackSystem.RangedAttacks
 
         private bool isActive;
 
-        public override void DoOnActionStart()
+        protected override void DoOnActionStart()
         {
             bow.SetActive(true);
             isActive = true;
         }
 
-        public override void DoOnActionEnd()
+        protected override void DoOnActionEnd()
         {
             isActive = false;
             Shoot();
@@ -40,7 +40,7 @@ namespace _Main.Scripts.GamePlay.AttackSystem.RangedAttacks
             bow.SetActive(false);
         }
 
-        public override void DoOnActionCanceled()
+        protected override void DoOnActionCanceled()
         {
             isActive = false;
             chargeDelayDuration = 0f;

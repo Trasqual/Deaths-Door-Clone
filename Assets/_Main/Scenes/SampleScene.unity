@@ -8203,60 +8203,22 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 458864, guid: 6c7bfc57a0f70db46b9b83dddca510e1, type: 3}
   m_PrefabInstance: {fileID: 798542680}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &800507648
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 800507649}
-  - component: {fileID: 800507650}
-  m_Layer: 0
-  m_Name: BowAttack
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &800507649
+--- !u!4 &800507649 stripped
 Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 5838724912294293134, guid: 20ade7b9f75916a4e82d8df79c8b612c, type: 3}
+  m_PrefabInstance: {fileID: 5838724911936350607}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 800507648}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 615536457}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &800507650
+--- !u!114 &800507650 stripped
 MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 5838724912294293133, guid: 20ade7b9f75916a4e82d8df79c8b612c, type: 3}
+  m_PrefabInstance: {fileID: 5838724911936350607}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 800507648}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e16b5a3419ae0ef44ac87b2c01cf461a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  overrideController: {fileID: 0}
-  bow: {fileID: 1347074738}
-  projectilePrefab: {fileID: 5961490733113688068, guid: 6964731e038ee0d40a3250aec92442e7, type: 3}
-  chargedProjectilePrefab: {fileID: 1835174666943779962, guid: eff954a0ea67f13409301d2029b90f78, type: 3}
-  shooter: {fileID: 1991116917}
-  damageDealerType: 1
-  initialChargeDelay: 0.5
-  maxChargeTime: 3
-  minDmgMultiplier: 1
-  maxDmgMultiplier: 2
 --- !u!1001 &802075258
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -19453,13 +19415,7 @@ Animator:
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
-  m_WarningMessage: "\nBinding warning: Some generic clip(s) animate transforms that
-    are already bound by a Humanoid avatar. These transforms can only be changed
-    by Humanoid clips.\n\tTransform 'mixamorig:Hips'\n\tTransform 'mixamorig:LeftFoot'\n\tTransform
-    'mixamorig:Spine1'\n\tTransform 'mixamorig:LeftToeBase'\n\tTransform 'mixamorig:RightArm'\n\tTransform
-    'mixamorig:LeftLeg'\n\tTransform 'mixamorig:LeftShoulder'\n\tTransform 'mixamorig:RightFoot'\n\tTransform
-    'mixamorig:Head'\n\tTransform 'mixamorig:LeftUpLeg'\n\tand more ...\n\tFrom animation
-    clip 'Big Hit To Head'"
+  m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
@@ -20626,6 +20582,71 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d6ad84e1c30e36441a5b66f65cbcf002, type: 3}
+--- !u!1001 &5838724911936350607
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 615536457}
+    m_Modifications:
+    - target: {fileID: 5838724912294293133, guid: 20ade7b9f75916a4e82d8df79c8b612c, type: 3}
+      propertyPath: bow
+      value: 
+      objectReference: {fileID: 1347074738}
+    - target: {fileID: 5838724912294293133, guid: 20ade7b9f75916a4e82d8df79c8b612c, type: 3}
+      propertyPath: shooter
+      value: 
+      objectReference: {fileID: 1991116917}
+    - target: {fileID: 5838724912294293134, guid: 20ade7b9f75916a4e82d8df79c8b612c, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5838724912294293134, guid: 20ade7b9f75916a4e82d8df79c8b612c, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5838724912294293134, guid: 20ade7b9f75916a4e82d8df79c8b612c, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5838724912294293134, guid: 20ade7b9f75916a4e82d8df79c8b612c, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5838724912294293134, guid: 20ade7b9f75916a4e82d8df79c8b612c, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5838724912294293134, guid: 20ade7b9f75916a4e82d8df79c8b612c, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5838724912294293134, guid: 20ade7b9f75916a4e82d8df79c8b612c, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5838724912294293134, guid: 20ade7b9f75916a4e82d8df79c8b612c, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5838724912294293134, guid: 20ade7b9f75916a4e82d8df79c8b612c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5838724912294293134, guid: 20ade7b9f75916a4e82d8df79c8b612c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5838724912294293134, guid: 20ade7b9f75916a4e82d8df79c8b612c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5838724912294293135, guid: 20ade7b9f75916a4e82d8df79c8b612c, type: 3}
+      propertyPath: m_Name
+      value: BowAttack
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 20ade7b9f75916a4e82d8df79c8b612c, type: 3}
 --- !u!114 &6191091658042027924 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8673095944616492434, guid: 8dafa34d14480004982b6806ba96c81a, type: 3}

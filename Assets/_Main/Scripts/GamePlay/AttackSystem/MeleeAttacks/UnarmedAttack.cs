@@ -6,17 +6,17 @@ namespace _Main.Scripts.GamePlay.AttackSystem.MeleeAttacks
     {
         [SerializeField] ParticleSystem unarmedParticle;
 
-        public override void DoOnActionStart()
+        protected override void DoOnActionStart()
         {
             //play particle
         }
 
-        public override void DoOnActionEnd()
+        protected override void DoOnActionEnd()
         {
             //damage?
         }
 
-        public override void DoOnActionCanceled()
+        protected override void DoOnActionCanceled()
         {
 
         }

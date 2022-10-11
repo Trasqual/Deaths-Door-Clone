@@ -9,7 +9,6 @@ using _Main.Scripts.GamePlay.InputSystem;
 using _Main.Scripts.GamePlay.StateMachine;
 using _Main.Scripts.Others;
 using UnityEngine;
-using UnityEngine.InputSystem.XR;
 
 namespace _Main.Scripts.GamePlay.Player
 {
@@ -75,6 +74,16 @@ namespace _Main.Scripts.GamePlay.Player
             stateMachine.RemoveState(typeof(DodgeState));
         }
 
+        public void GainAttackingBehaviour()
+        {
+            stateMachine.AddAttackState();
+        }
+
+        public void LoseAttackBehaviour()
+        {
+            stateMachine.RemoveState(typeof(AttackState));
+        }
+
         public void GainAimingBehaviour()
         {
             stateMachine.AddAimingState(10F, .2F);
@@ -128,8 +137,8 @@ namespace _Main.Scripts.GamePlay.Player
 
         private void SetSelectedMeleeAttack(Type meleeAttackType)
         {
-            //selectedMeleeAttack = SelectAttackFromList(meleeAttackType, meleeAttacks);
-            //selectedMeleeAttack.Init(stateMachine.AttackState);
+            selectedMeleeAttack = SelectAttackFromList(meleeAttackType, meleeAttacks);
+            selectedMeleeAttack.Init(stateMachine.GetState(typeof(AttackState)) as IAction);
         }
 
         private AttackBase SelectAttackFromList(Type attackType, List<AttackBase> attacks)
@@ -146,7 +155,7 @@ namespace _Main.Scripts.GamePlay.Player
 
         private void Attack()
         {
-            //stateMachine.ChangeState(stateMachine.AttackState);
+            stateMachine.ChangeState(typeof(AttackState));
         }
 
         protected override void TakeDamage(int i)
@@ -168,6 +177,16 @@ namespace _Main.Scripts.GamePlay.Player
 
             _playerHealthManager.OnDamageTaken += TakeDamage;
             _playerHealthManager.OnDeath += Die;
+        }
+
+        private void OnDisable()
+        {
+            Input.OnAimActionStarted -= StartAiming;
+            Input.OnRollAction -= PerformRoll;
+            Input.OnAttackAction -= Attack;
+
+            _playerHealthManager.OnDamageTaken -= TakeDamage;
+            _playerHealthManager.OnDeath -= Die;
         }
     }
 }

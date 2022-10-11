@@ -4,17 +4,17 @@ namespace _Main.Scripts.GamePlay.AttackSystem.RangedAttacks
 {
     public class MagicAttack : AttackBase
     {
-        public override void DoOnActionStart()
+        protected override void DoOnActionStart()
         {
             Debug.Log("testing magic start");
         }
 
-        public override void DoOnActionEnd()
+        protected override void DoOnActionEnd()
         {
             Debug.Log("testing magic end");
         }
 
-        public override void DoOnActionCanceled()
+        protected override void DoOnActionCanceled()
         {
             Debug.Log("testing magic canceled");
         }

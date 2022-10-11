@@ -1,5 +1,4 @@
 using _Main.Scripts.GamePlay.ActionSystem;
-using _Main.Scripts.GamePlay.Player;
 using UnityEngine;
 
 namespace _Main.Scripts.GamePlay.AttackSystem
@@ -15,9 +14,9 @@ namespace _Main.Scripts.GamePlay.AttackSystem
             action.OnActionCanceled += DoOnActionCanceled;
         }
 
-        public abstract void DoOnActionStart();
-        public abstract void DoOnActionEnd();
-        public abstract void DoOnActionCanceled();
+        protected abstract void DoOnActionStart();
+        protected abstract void DoOnActionEnd();
+        protected abstract void DoOnActionCanceled();
         public virtual AnimatorOverrideController GetOverrideController()
         {
             return overrideController;

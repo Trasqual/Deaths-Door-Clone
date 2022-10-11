@@ -66,6 +66,16 @@ namespace _Main.Scripts.GamePlay.StateMachine
             dodgeState.OnComplete += OnCompleteState;
         }
 
+        public void AddAttackState()
+        {
+            if (GetState(typeof(AttackState))) return;
+
+            var attackState = gameObject.AddComponent<AttackState>();
+            attackState.Initialize(_inputBase, _movementBase, _animator);
+            states.Add(attackState);
+            attackState.OnComplete += OnCompleteState;
+        }
+
         public void AddAimingState(float aimSpeedMultiplier, float recoilDelay)
         {
             if (GetState(typeof(AimingState))) return;
