@@ -1,6 +1,7 @@
 using UnityEngine;
 
+[System.Serializable]
 public class AttackAnimationDataBase : ScriptableObject
 {
-    [SerializeField] protected AnimatorOverrideController overrideController;
+    public AnimatorOverrideController overrideController;
 }

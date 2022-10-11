@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using _Main.Scripts.GamePlay.Player;
+using _Main.Scripts.GamePlay.AttackSystem;
 using _Main.Scripts.GamePlay.InputSystem;
 using _Main.Scripts.GamePlay.MovementSystem;
 using UnityEngine;
@@ -76,12 +78,11 @@ namespace _Main.Scripts.GamePlay.StateMachine
             attackState.OnComplete += OnCompleteState;
         }
 
-        public void AddAimingState(float aimSpeedMultiplier, float recoilDelay)
+        public void AddAimingState(float aimSpeedMultiplier, float recoilDelay, CharacterBase character)
         {
             if (GetState(typeof(AimingState))) return;
-
             var aimingState = gameObject.AddComponent<AimingState>();
-            aimingState.Initialize(_inputBase, _movementBase, _animator, aimSpeedMultiplier, recoilDelay);
+            aimingState.Initialize(_inputBase, _movementBase, _animator, aimSpeedMultiplier, recoilDelay, character);
             states.Add(aimingState);
             aimingState.OnComplete += OnCompleteState;
         }

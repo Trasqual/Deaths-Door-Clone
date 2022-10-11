@@ -27,6 +27,7 @@ namespace _Main.Scripts.GamePlay.AttackSystem.RangedAttacks
         protected override void DoOnActionStart()
         {
             bow.SetActive(true);
+            CurrentAttackAnimationData = attackAnimationDatas[0];
             isActive = true;
         }
 

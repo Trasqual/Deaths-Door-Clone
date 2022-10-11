@@ -1,11 +1,13 @@
 using _Main.Scripts.GamePlay.ActionSystem;
+using _Main.Scripts.GamePlay.StateMachine;
 using UnityEngine;
 
 namespace _Main.Scripts.GamePlay.AttackSystem
 {
     public abstract class AttackBase : MonoBehaviour
     {
-        [SerializeField] AnimatorOverrideController overrideController;
+        public AttackAnimationDataBase CurrentAttackAnimationData { get; protected set; }
+        [SerializeField] protected AttackAnimationDataBase[] attackAnimationDatas;
 
         public virtual void Init(IAction action)
         {
@@ -17,9 +19,5 @@ namespace _Main.Scripts.GamePlay.AttackSystem
         protected abstract void DoOnActionStart();
         protected abstract void DoOnActionEnd();
         protected abstract void DoOnActionCanceled();
-        public virtual AnimatorOverrideController GetOverrideController()
-        {
-            return overrideController;
-        }
     }
 }

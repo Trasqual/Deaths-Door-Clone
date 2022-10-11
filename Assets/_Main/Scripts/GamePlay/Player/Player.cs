@@ -27,7 +27,6 @@ namespace _Main.Scripts.GamePlay.Player
         private PlayerMovementBase _playerMovementBase = null;
         private HealthManagerBase _playerHealthManager = null;
 
-        private AttackBase selectedRangedAttack;
         private AttackBase selectedMeleeAttack;
 
         protected override void Awake()
@@ -86,7 +85,7 @@ namespace _Main.Scripts.GamePlay.Player
 
         public void GainAimingBehaviour()
         {
-            stateMachine.AddAimingState(10F, .2F);
+            stateMachine.AddAimingState(10F, .2F, this);
             var aimingBehaviour = stateMachine.GetState(typeof(AimingState));
 
             if (aimingBehaviour)
@@ -131,14 +130,14 @@ namespace _Main.Scripts.GamePlay.Player
 
         private void SetSelectedRangedAttack(Type rangedAttackType)
         {
-            selectedRangedAttack = SelectAttackFromList(rangedAttackType, rangedAttacks);
-            selectedRangedAttack.Init(stateMachine.GetState(typeof(AimingState)) as IAction);
+            SelectedRangedAttack = SelectAttackFromList(rangedAttackType, rangedAttacks);
+            SelectedRangedAttack.Init(stateMachine.GetState(typeof(AimingState)) as IAction);
         }
 
         private void SetSelectedMeleeAttack(Type meleeAttackType)
         {
-            selectedMeleeAttack = SelectAttackFromList(meleeAttackType, meleeAttacks);
-            selectedMeleeAttack.Init(stateMachine.GetState(typeof(AttackState)) as IAction);
+            //selectedMeleeAttack = SelectAttackFromList(meleeAttackType, meleeAttacks);
+            //selectedMeleeAttack.Init(stateMachine.GetState(typeof(AttackState)) as IAction);
         }
 
         private AttackBase SelectAttackFromList(Type attackType, List<AttackBase> attacks)

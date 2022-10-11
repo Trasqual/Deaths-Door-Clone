@@ -44,7 +44,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e16b5a3419ae0ef44ac87b2c01cf461a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  overrideController: {fileID: 0}
+  attackAnimationDatas:
+  - {fileID: 11400000, guid: b7d21024a0a156c4989f58e7e1874788, type: 2}
   bow: {fileID: 0}
   projectilePrefab: {fileID: 5961490733113688068, guid: 6964731e038ee0d40a3250aec92442e7, type: 3}
   chargedProjectilePrefab: {fileID: 1835174666943779962, guid: eff954a0ea67f13409301d2029b90f78, type: 3}
