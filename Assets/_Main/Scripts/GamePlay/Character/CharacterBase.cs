@@ -6,6 +6,7 @@ public class CharacterBase : MonoBehaviour
 {
     protected StateMachine stateMachine;
     public AttackBase SelectedRangedAttack { get; protected set; }
+    public AttackBase SelectedMeleeAttack { get; protected set; }
 
     protected virtual void Awake()
     {

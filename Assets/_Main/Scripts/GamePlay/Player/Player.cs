@@ -27,8 +27,6 @@ namespace _Main.Scripts.GamePlay.Player
         private PlayerMovementBase _playerMovementBase = null;
         private HealthManagerBase _playerHealthManager = null;
 
-        private AttackBase selectedMeleeAttack;
-
         protected override void Awake()
         {
             base.Awake();
@@ -44,6 +42,7 @@ namespace _Main.Scripts.GamePlay.Player
         {
             GainMovementBehaviour();
             GainDodgeBehaviour();
+            GainAttackingBehaviour();
             GainAimingBehaviour();
             GainDamageTakingBehaviour();
             GainDeathBehaviour();
@@ -75,7 +74,7 @@ namespace _Main.Scripts.GamePlay.Player
 
         public void GainAttackingBehaviour()
         {
-            stateMachine.AddAttackState();
+            stateMachine.AddAttackState(this);
         }
 
         public void LoseAttackBehaviour()
@@ -136,8 +135,8 @@ namespace _Main.Scripts.GamePlay.Player
 
         private void SetSelectedMeleeAttack(Type meleeAttackType)
         {
-            //selectedMeleeAttack = SelectAttackFromList(meleeAttackType, meleeAttacks);
-            //selectedMeleeAttack.Init(stateMachine.GetState(typeof(AttackState)) as IAction);
+            SelectedMeleeAttack = SelectAttackFromList(meleeAttackType, meleeAttacks);
+            SelectedMeleeAttack.Init(stateMachine.GetState(typeof(AttackState)) as IAction);
         }
 
         private AttackBase SelectAttackFromList(Type attackType, List<AttackBase> attacks)
@@ -172,7 +171,7 @@ namespace _Main.Scripts.GamePlay.Player
         {
             Input.OnAimActionStarted += StartAiming;
             Input.OnRollAction += PerformRoll;
-            Input.OnAttackAction += Attack;
+            Input.OnAttackActionStarted += Attack;
 
             _playerHealthManager.OnDamageTaken += TakeDamage;
             _playerHealthManager.OnDeath += Die;
@@ -182,7 +181,7 @@ namespace _Main.Scripts.GamePlay.Player
         {
             Input.OnAimActionStarted -= StartAiming;
             Input.OnRollAction -= PerformRoll;
-            Input.OnAttackAction -= Attack;
+            Input.OnAttackActionStarted -= Attack;
 
             _playerHealthManager.OnDamageTaken -= TakeDamage;
             _playerHealthManager.OnDeath -= Die;

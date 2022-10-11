@@ -8,7 +8,8 @@ namespace _Main.Scripts.GamePlay.InputSystem
         public Action OnRollAction;
         public Action OnAimActionStarted;
         public Action OnAimActionEnded;
-        public Action OnAttackAction;
+        public Action OnAttackActionStarted;
+        public Action OnAttackActionEnded;
 
         public abstract Vector3 GetMovementInput();
 

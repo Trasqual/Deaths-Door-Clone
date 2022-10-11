@@ -68,12 +68,12 @@ namespace _Main.Scripts.GamePlay.StateMachine
             dodgeState.OnComplete += OnCompleteState;
         }
 
-        public void AddAttackState()
+        public void AddAttackState(CharacterBase character)
         {
             if (GetState(typeof(AttackState))) return;
 
             var attackState = gameObject.AddComponent<AttackState>();
-            attackState.Initialize(_inputBase, _movementBase, _animator);
+            attackState.Initialize(_inputBase, _movementBase, _animator, character);
             states.Add(attackState);
             attackState.OnComplete += OnCompleteState;
         }

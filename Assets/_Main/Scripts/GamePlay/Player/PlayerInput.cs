@@ -32,6 +32,7 @@ namespace _Main.Scripts.GamePlay.Player
             inputActions.PlayerControls.Aim.started += AimButtonPressed;
             inputActions.PlayerControls.Aim.canceled += AimButtonReleased;
             inputActions.PlayerControls.Attack.started += AttackButtonPressed;
+            inputActions.PlayerControls.Attack.canceled += AttackButtonReleased;
         }
 
         private void RollButtonPressed(InputAction.CallbackContext ctx)
@@ -55,7 +56,12 @@ namespace _Main.Scripts.GamePlay.Player
 
         private void AttackButtonPressed(InputAction.CallbackContext ctx)
         {
-            OnAttackAction?.Invoke();
+            OnAttackActionStarted?.Invoke();
+        }
+
+        private void AttackButtonReleased(InputAction.CallbackContext ctx)
+        {
+            OnAttackActionEnded?.Invoke();
         }
 
         private void Update()
