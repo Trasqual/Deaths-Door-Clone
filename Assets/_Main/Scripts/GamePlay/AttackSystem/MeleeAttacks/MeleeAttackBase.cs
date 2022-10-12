@@ -72,6 +72,7 @@ public class MeleeAttackBase : AttackBase
     {
         canCombo = false;
         currentComboCount = 0;
+        AssignAnimationData();
         OnAttackCompleted?.Invoke();
     }
 
