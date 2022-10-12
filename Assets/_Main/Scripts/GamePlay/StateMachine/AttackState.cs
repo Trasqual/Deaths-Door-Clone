@@ -39,9 +39,10 @@ namespace _Main.Scripts.GamePlay.StateMachine
 
         private void OnAttackButtonPressed()
         {
+            PlayAnimation();
             OnActionStart?.Invoke();
             _movementBase.StartMovementAndRotation();
-            _movementBase.Move(_input.GetLookInput(), 0f, 1f);
+            transform.rotation = Quaternion.LookRotation(_input.GetLookInput());
             _character.SelectedMeleeAttack.OnAttackCompleted += OnAttackCompleted;
         }
 
@@ -75,7 +76,6 @@ namespace _Main.Scripts.GamePlay.StateMachine
         private void OnAttackButtonReleased()
         {
             OnActionEnd?.Invoke();
-            PlayAnimation();
         }
 
         #region Actions
