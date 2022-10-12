@@ -15,3 +15,4 @@ MonoBehaviour:
   overrideController: {fileID: 22100000, guid: ad8681525adff40c7a9bae91c7a1f31f, type: 2}
   attackMovementAmount: 1
   attackMovementDuration: 1
+  attackCD: 1.2

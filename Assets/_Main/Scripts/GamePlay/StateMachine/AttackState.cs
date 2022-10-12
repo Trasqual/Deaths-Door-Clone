@@ -57,7 +57,6 @@ namespace _Main.Scripts.GamePlay.StateMachine
             IsAttacking = false;
             StopAnimation();
             _movementBase.StopMovementAndRotation();
-            _character.SelectedMeleeAttack.OnAttackCompleted -= OnAttackCompleted;
         }
 
         public override void CancelState()
@@ -66,7 +65,6 @@ namespace _Main.Scripts.GamePlay.StateMachine
             IsAttacking = false;
             StopAnimation();
             _movementBase.StopMovementAndRotation();
-            _character.SelectedMeleeAttack.OnAttackCompleted -= OnAttackCompleted;
         }
 
         private void OnAttackPerformed()
@@ -89,7 +87,7 @@ namespace _Main.Scripts.GamePlay.StateMachine
         {
             if (_selectedMeleeAttack != null)
             {
-                _selectedMeleeAttack.OnAttackCompleted -= OnAttackPerformed;
+                _selectedMeleeAttack.OnAttackPerformed -= OnAttackPerformed;
                 _selectedMeleeAttack.OnAttackCompleted -= OnAttackCompleted;
             }
             _selectedMeleeAttack = selectedAttack;

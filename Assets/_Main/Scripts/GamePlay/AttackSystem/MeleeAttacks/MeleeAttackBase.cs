@@ -102,7 +102,7 @@ public class MeleeAttackBase : AttackBase
                 EndAttack();
             }
         });
-        if(currentComboCount != 0)
+        if (currentComboCount != 0)
         {
             comboDelay = DOVirtual.DelayedCall(info.attackCD + 0.5f, () => //this should be as long as the attack animation
             {
