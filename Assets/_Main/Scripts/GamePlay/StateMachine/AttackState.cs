@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using _Main.Scripts.GamePlay.ActionSystem;
+using _Main.Scripts.GamePlay.AttackSystem;
 using _Main.Scripts.GamePlay.InputSystem;
 using _Main.Scripts.GamePlay.MovementSystem;
 using UnityEngine;
@@ -14,6 +15,7 @@ namespace _Main.Scripts.GamePlay.StateMachine
         private InputBase _input;
         private MovementBase _movementBase;
         private CharacterBase _character;
+        private AttackBase _selectedMeleeAttack;
         public Action OnComplete;
 
         public void Initialize(InputBase input, MovementBase movementBase, Animator animator, CharacterBase character)
@@ -25,6 +27,7 @@ namespace _Main.Scripts.GamePlay.StateMachine
             _transition = this;
             _input.OnAttackActionStarted += OnAttackButtonPressed;
             _input.OnAttackActionEnded += OnAttackButtonReleased;
+            _character.OnSelectedMeleeAttackChanged += OnMeleeAttackChanged;
 
             _transition.AddTransition(typeof(MovementState), () => !IsAttacking, () => false);
             _transition.AddTransition(typeof(DodgeState), () => true, () => true);
@@ -34,16 +37,14 @@ namespace _Main.Scripts.GamePlay.StateMachine
 
         public override void EnterState()
         {
-
+            _movementBase.StopMovementAndRotation();
         }
 
         private void OnAttackButtonPressed()
         {
-            PlayAnimation();
             OnActionStart?.Invoke();
             _movementBase.StartMovementAndRotation();
             transform.rotation = Quaternion.LookRotation(_input.GetLookInput());
-            _character.SelectedMeleeAttack.OnAttackCompleted += OnAttackCompleted;
         }
 
         public override void UpdateState()
@@ -68,14 +69,32 @@ namespace _Main.Scripts.GamePlay.StateMachine
             _character.SelectedMeleeAttack.OnAttackCompleted -= OnAttackCompleted;
         }
 
+        private void OnAttackPerformed()
+        {
+            PlayAnimation();
+        }
+
         private void OnAttackCompleted()
         {
+            StopAnimation();
             OnComplete?.Invoke();
         }
 
         private void OnAttackButtonReleased()
         {
             OnActionEnd?.Invoke();
+        }
+
+        private void OnMeleeAttackChanged(AttackBase selectedAttack)
+        {
+            if (_selectedMeleeAttack != null)
+            {
+                _selectedMeleeAttack.OnAttackCompleted -= OnAttackPerformed;
+                _selectedMeleeAttack.OnAttackCompleted -= OnAttackCompleted;
+            }
+            _selectedMeleeAttack = selectedAttack;
+            _selectedMeleeAttack.OnAttackPerformed += OnAttackPerformed;
+            _selectedMeleeAttack.OnAttackCompleted += OnAttackCompleted;
         }
 
         #region Actions

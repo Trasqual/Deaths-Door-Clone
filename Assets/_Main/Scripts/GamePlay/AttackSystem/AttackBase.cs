@@ -7,6 +7,7 @@ namespace _Main.Scripts.GamePlay.AttackSystem
 {
     public abstract class AttackBase : MonoBehaviour
     {
+        public Action OnAttackPerformed;
         public Action OnAttackCompleted;
         public AttackAnimationDataBase CurrentAttackAnimationData { get; protected set; }
         [SerializeField] protected AttackAnimationDataBase[] attackAnimationDatas;

@@ -131,12 +131,14 @@ namespace _Main.Scripts.GamePlay.Player
         {
             SelectedRangedAttack = SelectAttackFromList(rangedAttackType, rangedAttacks);
             SelectedRangedAttack.Init(stateMachine.GetState(typeof(AimingState)) as IAction);
+            OnSelectedRangedAttackChanged?.Invoke(SelectedRangedAttack);
         }
 
         private void SetSelectedMeleeAttack(Type meleeAttackType)
         {
             SelectedMeleeAttack = SelectAttackFromList(meleeAttackType, meleeAttacks);
             SelectedMeleeAttack.Init(stateMachine.GetState(typeof(AttackState)) as IAction);
+            OnSelectedMeleeAttackChanged?.Invoke(SelectedMeleeAttack);
         }
 
         private AttackBase SelectAttackFromList(Type attackType, List<AttackBase> attacks)

@@ -15,45 +15,39 @@ public class MeleeAttackBase : AttackBase
 
     private void Awake()
     {
-        AssignAnimationData();
+        CurrentAttackAnimationData = attackAnimationDatas[0];
     }
 
     //Called when attack button is down
     protected override void DoOnActionStart()
     {
-        if (!canAttack)
+        if (!canAttack && !canCombo) //if the attack is on CD exit attack state
         {
             EndAttack();
             return;
         }
-
-        if (canCombo)
+        else if (!canAttack)
         {
-            comboDelay?.Kill();
+            return;
         }
         if (hasCombo)
         {
-            if (currentComboCount < comboCount - 1)
+            if (canCombo)
             {
-                var data = (MeleeAttackAnimationData)CurrentAttackAnimationData;
-                canCombo = true;
-                currentComboCount++;
-                AssignAnimationData();
-                comboDelay = DOVirtual.DelayedCall(data.attackCD, () =>
-                {
-                    canCombo = false;
-                    currentComboCount = 0;
-                    AssignAnimationData();
-                    EndAttack();
-                });
+                comboDelay?.Kill();
             }
             else
             {
-                EndAttack();
+                canCombo = true;
             }
+            OnAttackPerformed?.Invoke();
+            SetCurrentComboCount();
+            StartCooldownCountDowns();
+            AssignAnimationData();
         }
-        else
+        else //if this attack doesn't have combo attack once and exit attack state
         {
+            OnAttackPerformed?.Invoke();
             EndAttack();
         }
     }
@@ -71,23 +65,48 @@ public class MeleeAttackBase : AttackBase
         attackDelay?.Kill();
         canAttack = true;
         canCombo = false;
-        currentComboCount = 0;
     }
 
     //Called when final attack is used
     private void EndAttack()
     {
-        if (canAttack)
-        {
-            var data = (MeleeAttackAnimationData)CurrentAttackAnimationData;
-            attackDelay = DOVirtual.DelayedCall(data.attackCD, () => canAttack = true);
-        }
-        canAttack = false;
+        canCombo = false;
+        currentComboCount = 0;
         OnAttackCompleted?.Invoke();
+    }
+
+    private void SetCurrentComboCount()
+    {
+        currentComboCount++;
+        if (currentComboCount >= comboCount)
+        {
+            currentComboCount = 0;
+        }
     }
 
     private void AssignAnimationData()
     {
         CurrentAttackAnimationData = attackAnimationDatas[currentComboCount];
+    }
+
+    private void StartCooldownCountDowns()
+    {
+        canAttack = false;
+        var info = (MeleeAttackAnimationData)CurrentAttackAnimationData;
+        attackDelay = DOVirtual.DelayedCall(info.attackCD, () => //this should be slightly shorter than attack animation
+        {
+            canAttack = true;
+            if (currentComboCount == 0)
+            {
+                EndAttack();
+            }
+        });
+        if(currentComboCount != 0)
+        {
+            comboDelay = DOVirtual.DelayedCall(info.attackCD + 0.5f, () => //this should be as long as the attack animation
+            {
+                EndAttack();
+            });
+        }
     }
 }
