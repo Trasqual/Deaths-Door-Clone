@@ -6,10 +6,10 @@ AnimatorOverrideController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: UnarmedAttackOverrideControllerCombo2
+  m_Name: UnarmedAttackOverrideControllerCombo3
   m_Controller: {fileID: 9100000, guid: 3b903a866eedbdf4fa29b32edcbfbe1b, type: 2}
   m_Clips:
   - m_OriginalClip: {fileID: 7400000, guid: 90c5f7c547aeca54bbe88c0f64099fd8, type: 2}
-    m_OverrideClip: {fileID: 7400000, guid: 2a56b81056e65de4fb47880d87c9b876, type: 2}
+    m_OverrideClip: {fileID: -4718014774121227590, guid: b986dcf43e2dfba408eba46d59a30b49, type: 3}
   - m_OriginalClip: {fileID: 7400000, guid: 708431a3c8618cc4d9877102ff5bfcec, type: 2}
     m_OverrideClip: {fileID: 7400000, guid: 185e5fd2cfd853f46802c41f499bde8f, type: 2}

@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 46b1d65c0912f9649a6e317348ae1b21, type: 3}
-  m_Name: UnarmedAttackDataCombo2
+  m_Name: UnarmedAttackDataCombo3
   m_EditorClassIdentifier: 
-  overrideController: {fileID: 22100000, guid: ad8681525adff40c7a9bae91c7a1f31f, type: 2}
-  fadeToAnimationName: MeleeAttack2
-  attackMovementDelay: 0.1
+  overrideController: {fileID: 22100000, guid: 047e15f276b0f0b40867c4d43e6e6de3, type: 2}
+  fadeToAnimationName: MeleeAttack
+  attackMovementDelay: 0.2
   attackMovementAmount: 0.5
   attackMovementDuration: 0.1
-  attackCD: 0.3
+  attackCD: 1

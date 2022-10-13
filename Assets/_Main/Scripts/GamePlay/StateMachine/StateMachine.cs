@@ -149,7 +149,6 @@ namespace _Main.Scripts.GamePlay.StateMachine
 
         private void OnCompleteState()
         {
-            Debug.Log("stateComplete");
             ChangeState(DefaultState.GetType());
         }
 

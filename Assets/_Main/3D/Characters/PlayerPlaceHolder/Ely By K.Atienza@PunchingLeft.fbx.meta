@@ -39,8 +39,8 @@ ModelImporter:
       name: PunchingLeft
       takeName: mixamo.com
       internalID: 0
-      firstFrame: 0
-      lastFrame: 34
+      firstFrame: 17.3
+      lastFrame: 24.7
       wrapMode: 0
       orientationOffsetY: 0
       level: 0

@@ -9,5 +9,5 @@ AnimatorOverrideController:
   m_Name: UnarmedAttackOverrideControllerCombo1
   m_Controller: {fileID: 9100000, guid: 3b903a866eedbdf4fa29b32edcbfbe1b, type: 2}
   m_Clips:
-  - m_OriginalClip: {fileID: -203655887218126122, guid: 43bb5c89c8acb3143a18cc065a836993, type: 3}
+  - m_OriginalClip: {fileID: 7400000, guid: 90c5f7c547aeca54bbe88c0f64099fd8, type: 2}
     m_OverrideClip: {fileID: 7400000, guid: 2a56b81056e65de4fb47880d87c9b876, type: 2}

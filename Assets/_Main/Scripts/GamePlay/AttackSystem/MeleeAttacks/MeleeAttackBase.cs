@@ -65,6 +65,8 @@ public class MeleeAttackBase : AttackBase
         attackDelay?.Kill();
         canAttack = true;
         canCombo = false;
+        currentComboCount = 0;
+        AssignAnimationData();
     }
 
     //Called when final attack is used

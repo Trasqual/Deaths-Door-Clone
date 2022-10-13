@@ -4,6 +4,7 @@ using _Main.Scripts.GamePlay.ActionSystem;
 using _Main.Scripts.GamePlay.AttackSystem;
 using _Main.Scripts.GamePlay.InputSystem;
 using _Main.Scripts.GamePlay.MovementSystem;
+using DG.Tweening;
 using UnityEngine;
 
 namespace _Main.Scripts.GamePlay.StateMachine
@@ -17,6 +18,7 @@ namespace _Main.Scripts.GamePlay.StateMachine
         private CharacterBase _character;
         private AttackBase _selectedMeleeAttack;
         public Action OnComplete;
+        private Tweener attackMovementTween;
 
         public void Initialize(InputBase input, MovementBase movementBase, Animator animator, CharacterBase character)
         {
@@ -25,8 +27,6 @@ namespace _Main.Scripts.GamePlay.StateMachine
             _character = character;
             Animator = animator;
             _transition = this;
-            _input.OnAttackActionStarted += OnAttackButtonPressed;
-            _input.OnAttackActionEnded += OnAttackButtonReleased;
             _character.OnSelectedMeleeAttackChanged += OnMeleeAttackChanged;
 
             _transition.AddTransition(typeof(MovementState), () => !IsAttacking, () => false);
@@ -37,7 +37,10 @@ namespace _Main.Scripts.GamePlay.StateMachine
 
         public override void EnterState()
         {
+            SubscribeToInputActions();
+            SubscribeToCurrentAttack();
             _movementBase.StopMovementAndRotation();
+            OnAttackButtonPressed();
         }
 
         private void OnAttackButtonPressed()
@@ -54,6 +57,9 @@ namespace _Main.Scripts.GamePlay.StateMachine
 
         public override void ExitState()
         {
+            attackMovementTween?.Kill();
+            UnSubscribeToInputActions();
+            UnSubscribeToCurrentAttack();
             IsAttacking = false;
             StopAnimation();
             _movementBase.StopMovementAndRotation();
@@ -61,6 +67,9 @@ namespace _Main.Scripts.GamePlay.StateMachine
 
         public override void CancelState()
         {
+            attackMovementTween?.Kill();
+            UnSubscribeToInputActions();
+            UnSubscribeToCurrentAttack();
             OnActionCanceled?.Invoke();
             IsAttacking = false;
             StopAnimation();
@@ -69,7 +78,10 @@ namespace _Main.Scripts.GamePlay.StateMachine
 
         private void OnAttackPerformed()
         {
+            attackMovementTween?.Kill();
             PlayAnimation();
+            var info = (MeleeAttackAnimationData)_selectedMeleeAttack.CurrentAttackAnimationData;
+            attackMovementTween = transform.DOMove(transform.forward * info.attackMovementAmount, info.attackMovementDuration).SetRelative().SetEase(Ease.Linear).SetDelay(info.attackMovementDelay);
         }
 
         private void OnAttackCompleted()
@@ -85,14 +97,36 @@ namespace _Main.Scripts.GamePlay.StateMachine
 
         private void OnMeleeAttackChanged(AttackBase selectedAttack)
         {
+            UnSubscribeToCurrentAttack();
+            _selectedMeleeAttack = selectedAttack;
+            SubscribeToCurrentAttack();
+        }
+
+        private void SubscribeToCurrentAttack()
+        {
+            _selectedMeleeAttack.OnAttackPerformed += OnAttackPerformed;
+            _selectedMeleeAttack.OnAttackCompleted += OnAttackCompleted;
+        }
+
+        private void UnSubscribeToCurrentAttack()
+        {
             if (_selectedMeleeAttack != null)
             {
                 _selectedMeleeAttack.OnAttackPerformed -= OnAttackPerformed;
                 _selectedMeleeAttack.OnAttackCompleted -= OnAttackCompleted;
             }
-            _selectedMeleeAttack = selectedAttack;
-            _selectedMeleeAttack.OnAttackPerformed += OnAttackPerformed;
-            _selectedMeleeAttack.OnAttackCompleted += OnAttackCompleted;
+        }
+
+        private void SubscribeToInputActions()
+        {
+            _input.OnAttackActionStarted += OnAttackButtonPressed;
+            _input.OnAttackActionEnded += OnAttackButtonReleased;
+        }
+
+        private void UnSubscribeToInputActions()
+        {
+            _input.OnAttackActionStarted -= OnAttackButtonPressed;
+            _input.OnAttackActionEnded -= OnAttackButtonReleased;
         }
 
         #region Actions
@@ -126,7 +160,7 @@ namespace _Main.Scripts.GamePlay.StateMachine
 
         #region Animation
 
-        public int HashCode { get; private set; } = Animator.StringToHash("attack");
+        public int HashCode { get; private set; } = Animator.StringToHash("Locomotion");
         public Animator Animator { get; private set; } = null;
 
         public RuntimeAnimatorController OriginalController { get; private set; } = null;
@@ -145,12 +179,14 @@ namespace _Main.Scripts.GamePlay.StateMachine
         public void PlayAnimation()
         {
             SetAnimatorOverrideController();
-            Animator.SetTrigger(HashCode);
+            var info = (MeleeAttackAnimationData)_selectedMeleeAttack.CurrentAttackAnimationData;
+            Animator.CrossFadeInFixedTime(info.fadeToAnimationName, 0.05f);
         }
 
         public void StopAnimation()
         {
-            ResetAnimatorController();
+            Animator.CrossFadeInFixedTime(HashCode, 0.1f);
+            DOVirtual.DelayedCall(0.15f, () => ResetAnimatorController());
         }
 
         #endregion
