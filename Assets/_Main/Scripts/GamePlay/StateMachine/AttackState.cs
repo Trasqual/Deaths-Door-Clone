@@ -45,9 +45,8 @@ namespace _Main.Scripts.GamePlay.StateMachine
 
         private void OnAttackButtonPressed()
         {
-            OnActionStart?.Invoke();
             _movementBase.StartMovementAndRotation();
-            transform.rotation = Quaternion.LookRotation(_input.GetLookInput());
+            OnActionStart?.Invoke();
         }
 
         public override void UpdateState()
@@ -80,6 +79,7 @@ namespace _Main.Scripts.GamePlay.StateMachine
         {
             attackMovementTween?.Kill();
             PlayAnimation();
+            transform.rotation = Quaternion.LookRotation(_input.GetLookInput());
             var info = (MeleeAttackAnimationData)_selectedMeleeAttack.CurrentAttackAnimationData;
             attackMovementTween = transform.DOMove(transform.forward * info.attackMovementAmount, info.attackMovementDuration).SetRelative().SetEase(Ease.Linear).SetDelay(info.attackMovementDelay);
         }

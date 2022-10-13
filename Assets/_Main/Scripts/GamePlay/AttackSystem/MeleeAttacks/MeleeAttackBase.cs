@@ -44,6 +44,7 @@ public class MeleeAttackBase : AttackBase
             SetCurrentComboCount();
             StartCooldownCountDowns();
             AssignAnimationData();
+            new SphereCastCollider(transform.position, 2f, transform.forward, 2, 1, DamageDealerType.Player);
         }
         else //if this attack doesn't have combo attack once and exit attack state
         {
