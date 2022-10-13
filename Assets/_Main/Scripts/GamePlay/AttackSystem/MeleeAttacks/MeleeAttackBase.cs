@@ -1,21 +1,20 @@
 using _Main.Scripts.GamePlay.AttackSystem;
 using DG.Tweening;
-using UnityEngine;
 
 public class MeleeAttackBase : AttackBase
 {
     bool canAttack = true;
     Tween attackDelay;
 
-    int comboCount => attackAnimationDatas.Length;
+    int comboCount => attackDatas.Count;
     int currentComboCount;
-    bool hasCombo => attackAnimationDatas.Length > 1;
+    bool hasCombo => attackDatas.Count > 1;
     bool canCombo;
     Tween comboDelay;
 
     private void Awake()
     {
-        CurrentAttackAnimationData = attackAnimationDatas[0];
+        CurrentAttackAnimationData = attackDatas[0].AttackAnimationData;
     }
 
     //Called when attack button is down
@@ -44,7 +43,8 @@ public class MeleeAttackBase : AttackBase
             SetCurrentComboCount();
             StartCooldownCountDowns();
             AssignAnimationData();
-            new SphereCastCollider(transform.position, 2f, transform.forward, 2, 1, DamageDealerType.Player);
+            var damageData = (SphereAttackDamageData)attackDatas[currentComboCount].AttackDamageData;
+            new SphereCastDamager(transform.position, damageData.radius, transform.forward, damageData.range, damageData.damage, damageData.dmgDealerType);
         }
         else //if this attack doesn't have combo attack once and exit attack state
         {
@@ -90,7 +90,7 @@ public class MeleeAttackBase : AttackBase
 
     private void AssignAnimationData()
     {
-        CurrentAttackAnimationData = attackAnimationDatas[currentComboCount];
+        CurrentAttackAnimationData = attackDatas[currentComboCount].AttackAnimationData;
     }
 
     private void StartCooldownCountDowns()

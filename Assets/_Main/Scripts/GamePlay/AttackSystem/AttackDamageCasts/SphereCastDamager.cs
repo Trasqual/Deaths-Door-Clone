@@ -1,8 +1,8 @@
 using UnityEngine;
 
-public class SphereCastCollider
+public class SphereCastDamager
 {
-    public SphereCastCollider(Vector3 startPos, float radius, Vector3 direction, float range, int damage, DamageDealerType dmgDealerType)
+    public SphereCastDamager(Vector3 startPos, float radius, Vector3 direction, float range, int damage, DamageDealerType dmgDealerType)
     {
         CastCollider(startPos, radius, direction, range, damage, dmgDealerType);
     }
