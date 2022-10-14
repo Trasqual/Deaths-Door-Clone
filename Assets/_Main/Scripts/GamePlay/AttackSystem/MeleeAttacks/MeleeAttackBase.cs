@@ -21,12 +21,12 @@ public class MeleeAttackBase : AttackBase
     //Called when attack button is down
     protected override void DoOnActionStart() //can move everything to DoOnActionEnd for charge attacks
     {
-        if (!canAttack && !canCombo) //if the attack is on CD and can't combo exit attack state
-        {
-            EndAttack();
-            return;
-        }
-        else if (!canAttack) //if the attack is on CD but can combo don't do anything
+        //if (!canAttack && !canCombo) //if the attack is on CD and can't combo exit attack state
+        //{
+        //    EndAttack();
+        //    return;
+        //}
+        if (!canAttack) //if the attack is on CD but can combo don't do anything
         {
             return;
         }
@@ -118,8 +118,12 @@ public class MeleeAttackBase : AttackBase
 
     private void DealDamage()
     {
-        var damageData = (SphereAttackDamageData)attackDatas[currentComboCount].AttackDamageData;
-        new SphereCastDamager(transform.position + transform.up, damageData.radius, transform.forward, damageData.range, damageData.damage, damageData.dmgDealerType);
+        var animData = (MeleeAttackAnimationData)attackDatas[currentComboCount].AttackAnimationData;
+        DOVirtual.DelayedCall(animData.attackDamageDelay, () =>
+        {
+            var damageData = (SphereAttackDamageData)attackDatas[currentComboCount].AttackDamageData;
+            new SphereCastDamager(transform.position + transform.up, damageData.radius, transform.forward, damageData.range, damageData.damage, damageData.dmgDealerType);
+        });
     }
 
     private void OnDrawGizmosSelected()
