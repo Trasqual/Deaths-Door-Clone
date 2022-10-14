@@ -67,7 +67,7 @@ namespace _Main.Scripts.GamePlay.Player
 
         private void OnWeaponSwitchButtonPressed(InputAction.CallbackContext ctx)
         {
-            OnMeleeWeaponSwitched?.Invoke(ctx.control.name);
+            OnMeleeWeaponSwitched?.Invoke(ctx.ReadValue<Vector2>().y);
         }
 
         private void Update()

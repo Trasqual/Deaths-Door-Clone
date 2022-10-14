@@ -52,12 +52,12 @@
                 },
                 {
                     "name": "SwitchMeleeWeapon",
-                    "type": "Button",
+                    "type": "Value",
                     "id": "aafc65d6-e8bb-434b-bb69-659b862d5629",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "Vector2",
                     "processors": "",
-                    "interactions": "Press",
-                    "initialStateCheck": false
+                    "interactions": "",
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -217,9 +217,9 @@
                 },
                 {
                     "name": "",
-                    "id": "246d4672-f28a-48a6-a6f9-99bd7286cf75",
-                    "path": "<Keyboard>/1",
-                    "interactions": "Press",
+                    "id": "1bdcc5ba-0e7d-45cf-9ee8-1099bb0be583",
+                    "path": "<Mouse>/scroll",
+                    "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "SwitchMeleeWeapon",
@@ -227,15 +227,37 @@
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "",
-                    "id": "6c9d7954-42dc-4197-bc79-0380e1a5e60b",
-                    "path": "<Keyboard>/2",
-                    "interactions": "Press",
+                    "name": "2D Vector",
+                    "id": "7794eb2d-b602-4a57-9555-3859dca6fe23",
+                    "path": "2DVector",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SwitchMeleeWeapon",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "up",
+                    "id": "e6a61313-0062-48b4-b65a-02d08cf2cb30",
+                    "path": "<Gamepad>/dpad/up",
+                    "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "SwitchMeleeWeapon",
                     "isComposite": false,
-                    "isPartOfComposite": false
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "down",
+                    "id": "04a96c99-c172-4aff-92e7-39c13d74e995",
+                    "path": "<Gamepad>/dpad/down",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SwitchMeleeWeapon",
+                    "isComposite": false,
+                    "isPartOfComposite": true
                 }
             ]
         }

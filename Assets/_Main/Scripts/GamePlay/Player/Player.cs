@@ -27,6 +27,8 @@ namespace _Main.Scripts.GamePlay.Player
         private PlayerMovementBase _playerMovementBase = null;
         private HealthManagerBase _playerHealthManager = null;
 
+        int selectedAttackIndex;
+
         protected override void Awake()
         {
             base.Awake();
@@ -48,7 +50,8 @@ namespace _Main.Scripts.GamePlay.Player
             GainDeathBehaviour();
             stateMachine.SetInitialState(typeof(MovementState));
 
-            SetSelectedMeleeAttack(typeof(UnarmedAttack));
+            SelectedMeleeAttack = meleeAttacks[0];
+            //SetSelectedMeleeAttack(typeof(UnarmedAttack));
             SetSelectedRangedAttack(typeof(BowAttack));
         }
 
@@ -138,19 +141,21 @@ namespace _Main.Scripts.GamePlay.Player
 
         #region WeaponSelection(Melee/Ranged)
 
-        private void SwitchMeleeWeapon(string buttonName)
+        private void SwitchMeleeWeapon(float switchInput)
         {
             if (stateMachine.CurrentState is AttackState) return;
-            switch (buttonName)
+            selectedAttackIndex += (int)Mathf.Sign(switchInput);
+            if (selectedAttackIndex > meleeAttacks.Count - 1)
             {
-                case "1":
-                    SetSelectedMeleeAttack(typeof(UnarmedAttack));
-                    break;
-
-                case "2":
-                    SetSelectedMeleeAttack(typeof(ManifestWeaponAttack));
-                    break;
+                selectedAttackIndex = 0;
             }
+            if (selectedAttackIndex < 0)
+            {
+                selectedAttackIndex = meleeAttacks.Count - 1;
+            }
+            SelectedMeleeAttack = meleeAttacks[selectedAttackIndex];
+            SelectedMeleeAttack.Init(stateMachine.GetState(typeof(AttackState)) as IAction);
+            OnSelectedMeleeAttackChanged?.Invoke(SelectedMeleeAttack);
         }
 
         private void SetSelectedRangedAttack(Type rangedAttackType)
