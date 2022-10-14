@@ -48,7 +48,7 @@ namespace _Main.Scripts.GamePlay.Player
             GainDeathBehaviour();
             stateMachine.SetInitialState(typeof(MovementState));
 
-            SetSelectedMeleeAttack(typeof(UnarmedAttack));
+            SetSelectedMeleeAttack(typeof(SwordAttack));
             SetSelectedRangedAttack(typeof(BowAttack));
         }
 

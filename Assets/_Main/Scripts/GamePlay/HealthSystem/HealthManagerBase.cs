@@ -19,10 +19,14 @@ public class HealthManagerBase : MonoBehaviour, IDamagable
 
     public int MaxHealth => _maxHealth;
 
+    IEnumerator invulnerabilityCo;
+
     public virtual void TakeDamage(int amount, DamageDealerType damageDealerType)
     {
         if (_isInvulnerable) return;
-        StartCoroutine(SetInvulnerableForDuration(_invulnerablityTimeAfterDamage));
+        StopInvulnerabilityCo();
+        invulnerabilityCo = SetInvulnerableForDuration(_invulnerablityTimeAfterDamage);
+        StartCoroutine(invulnerabilityCo);
         if (!Enums.CompareEnums(damageDealerType, _effectedByType)) return;
 
         _currentHealth -= amount;
@@ -44,6 +48,7 @@ public class HealthManagerBase : MonoBehaviour, IDamagable
 
     public void SetInvulnerable()
     {
+        StopInvulnerabilityCo();
         _isInvulnerable = true;
     }
 
@@ -57,5 +62,13 @@ public class HealthManagerBase : MonoBehaviour, IDamagable
         _isInvulnerable = true;
         yield return new WaitForSeconds(invulTime);
         _isInvulnerable = false;
+    }
+
+    private void StopInvulnerabilityCo()
+    {
+        if (invulnerabilityCo != null)
+        {
+            StopCoroutine(invulnerabilityCo);
+        }
     }
 }

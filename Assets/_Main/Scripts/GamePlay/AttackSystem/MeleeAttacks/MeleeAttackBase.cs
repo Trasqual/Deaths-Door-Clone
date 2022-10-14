@@ -1,5 +1,6 @@
 using _Main.Scripts.GamePlay.AttackSystem;
 using DG.Tweening;
+using UnityEngine;
 
 public class MeleeAttackBase : AttackBase
 {
@@ -18,38 +19,39 @@ public class MeleeAttackBase : AttackBase
     }
 
     //Called when attack button is down
-    protected override void DoOnActionStart()
+    protected override void DoOnActionStart() //can move everything to DoOnActionEnd for charge attacks
     {
-        if (!canAttack && !canCombo) //if the attack is on CD exit attack state
+        if (!canAttack && !canCombo) //if the attack is on CD and can't combo exit attack state
         {
             EndAttack();
             return;
         }
-        else if (!canAttack)
+        else if (!canAttack) //if the attack is on CD but can combo don't do anything
         {
             return;
         }
-        if (hasCombo)
+        if (hasCombo) //check if the attack has any combo attacks as in the combo list has more than 1 nested attacks
         {
-            if (canCombo)
+            if (canCombo) //if the this isn't the first attack
             {
                 comboDelay?.Kill();
             }
-            else
+            else //if this is the first attack
             {
                 canCombo = true;
             }
             OnAttackPerformed?.Invoke();
             SetCurrentComboCount();
-            StartCooldownCountDowns();
+            StartCooldownCountdowns();
             AssignAnimationData();
-            var damageData = (SphereAttackDamageData)attackDatas[currentComboCount].AttackDamageData;
-            new SphereCastDamager(transform.position, damageData.radius, transform.forward, damageData.range, damageData.damage, damageData.dmgDealerType);
+            DealDamage();
         }
-        else //if this attack doesn't have combo attack once and exit attack state
+        else //if this attack doesn't have any combo, attack once and exit attack state
         {
             OnAttackPerformed?.Invoke();
-            EndAttack();
+            StartCooldownCountdowns();
+            AssignAnimationData();
+            DealDamage();
         }
     }
 
@@ -70,7 +72,7 @@ public class MeleeAttackBase : AttackBase
         AssignAnimationData();
     }
 
-    //Called when final attack is used
+    //Called when current attack state should end
     private void EndAttack()
     {
         canCombo = false;
@@ -93,7 +95,7 @@ public class MeleeAttackBase : AttackBase
         CurrentAttackAnimationData = attackDatas[currentComboCount].AttackAnimationData;
     }
 
-    private void StartCooldownCountDowns()
+    private void StartCooldownCountdowns()
     {
         canAttack = false;
         var info = (MeleeAttackAnimationData)CurrentAttackAnimationData;
@@ -112,5 +114,18 @@ public class MeleeAttackBase : AttackBase
                 EndAttack();
             });
         }
+    }
+
+    private void DealDamage()
+    {
+        var damageData = (SphereAttackDamageData)attackDatas[currentComboCount].AttackDamageData;
+        new SphereCastDamager(transform.position + transform.up, damageData.radius, transform.forward, damageData.range, damageData.damage, damageData.dmgDealerType);
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        var damageData = (SphereAttackDamageData)attackDatas[0].AttackDamageData;
+        Gizmos.DrawWireSphere(transform.position + transform.up, damageData.radius);
+        Gizmos.DrawWireSphere(transform.position + transform.up + (transform.forward * damageData.range), damageData.radius);
     }
 }
