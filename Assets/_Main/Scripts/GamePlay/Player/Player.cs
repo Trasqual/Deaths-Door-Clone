@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using _Main.Scripts.GamePlay.ActionSystem;
 using _Main.Scripts.GamePlay.AttackSystem;
+using _Main.Scripts.GamePlay.AttackSystem.MeleeAttacks;
 using _Main.Scripts.GamePlay.AttackSystem.RangedAttacks;
 using _Main.Scripts.GamePlay.Indicators.AimingIndicator;
 using _Main.Scripts.GamePlay.InputSystem;
@@ -47,7 +48,7 @@ namespace _Main.Scripts.GamePlay.Player
             GainDeathBehaviour();
             stateMachine.SetInitialState(typeof(MovementState));
 
-            SetSelectedMeleeAttack(typeof(ManifestWeaponAttack));
+            SetSelectedMeleeAttack(typeof(UnarmedAttack));
             SetSelectedRangedAttack(typeof(BowAttack));
         }
 

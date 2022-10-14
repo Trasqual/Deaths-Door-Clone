@@ -122,14 +122,14 @@ public class MeleeAttackBase : AttackBase
         DOVirtual.DelayedCall(animData.attackDamageDelay, () =>
         {
             var damageData = (SphereAttackDamageData)attackDatas[currentComboCount].AttackDamageData;
-            new SphereCastDamager(transform.position + transform.up, damageData.radius, transform.forward, damageData.range, damageData.damage, damageData.dmgDealerType);
+            new SphereCastDamager(transform.root.position + transform.root.up, damageData.radius, transform.root.forward, damageData.range, damageData.damage, damageData.dmgDealerType);
         });
     }
 
     private void OnDrawGizmosSelected()
     {
         var damageData = (SphereAttackDamageData)attackDatas[0].AttackDamageData;
-        Gizmos.DrawWireSphere(transform.position + transform.up, damageData.radius);
-        Gizmos.DrawWireSphere(transform.position + transform.up + (transform.forward * damageData.range), damageData.radius);
+        Gizmos.DrawWireSphere(transform.root.position + transform.root.up, damageData.radius);
+        Gizmos.DrawWireSphere(transform.root.position + transform.root.up + (transform.root.forward * damageData.range), damageData.radius);
     }
 }
