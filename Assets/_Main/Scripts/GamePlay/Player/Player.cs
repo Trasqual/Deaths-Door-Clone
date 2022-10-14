@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using _Main.Scripts.GamePlay.ActionSystem;
 using _Main.Scripts.GamePlay.AttackSystem;
-using _Main.Scripts.GamePlay.AttackSystem.MeleeAttacks;
 using _Main.Scripts.GamePlay.AttackSystem.RangedAttacks;
 using _Main.Scripts.GamePlay.Indicators.AimingIndicator;
 using _Main.Scripts.GamePlay.InputSystem;
@@ -48,10 +47,11 @@ namespace _Main.Scripts.GamePlay.Player
             GainDeathBehaviour();
             stateMachine.SetInitialState(typeof(MovementState));
 
-            SetSelectedMeleeAttack(typeof(SwordAttack));
+            SetSelectedMeleeAttack(typeof(ManifestWeaponAttack));
             SetSelectedRangedAttack(typeof(BowAttack));
         }
 
+        #region Behaviours
         public void GainMovementBehaviour()
         {
             stateMachine.AddMovementState();
@@ -116,6 +116,13 @@ namespace _Main.Scripts.GamePlay.Player
         {
             stateMachine.AddDeathState();
         }
+        #endregion
+
+        #region Actions(Melee/Ranged/Roll)
+        private void Attack()
+        {
+            stateMachine.ChangeState(typeof(AttackState));
+        }
 
         private void StartAiming()
         {
@@ -126,7 +133,9 @@ namespace _Main.Scripts.GamePlay.Player
         {
             stateMachine.ChangeState(typeof(DodgeState));
         }
+        #endregion
 
+        #region WeaponSelection(Melee/Ranged)
         private void SetSelectedRangedAttack(Type rangedAttackType)
         {
             SelectedRangedAttack = SelectAttackFromList(rangedAttackType, rangedAttacks);
@@ -152,12 +161,9 @@ namespace _Main.Scripts.GamePlay.Player
             }
             return null;
         }
+        #endregion
 
-        private void Attack()
-        {
-            stateMachine.ChangeState(typeof(AttackState));
-        }
-
+        #region Health(TakeDamage/Death)
         protected override void TakeDamage(int i)
         {
             stateMachine.ChangeState(typeof(DamageTakenState));
@@ -168,6 +174,7 @@ namespace _Main.Scripts.GamePlay.Player
             Controller.enabled = false;
             stateMachine.ChangeState(typeof(DeathState));
         }
+        #endregion
 
         private void OnEnable()
         {

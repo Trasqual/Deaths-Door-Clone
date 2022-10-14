@@ -13,7 +13,7 @@ public class MeleeAttackBase : AttackBase
     bool canCombo;
     Tween comboDelay;
 
-    private void Awake()
+    protected virtual void Awake()
     {
         CurrentAttackAnimationData = attackDatas[0].AttackAnimationData;
     }
@@ -73,7 +73,7 @@ public class MeleeAttackBase : AttackBase
     }
 
     //Called when current attack state should end
-    private void EndAttack()
+    protected virtual void EndAttack()
     {
         canCombo = false;
         currentComboCount = 0;
@@ -81,7 +81,7 @@ public class MeleeAttackBase : AttackBase
         OnAttackCompleted?.Invoke();
     }
 
-    private void SetCurrentComboCount()
+    protected virtual void SetCurrentComboCount()
     {
         currentComboCount++;
         if (currentComboCount >= comboCount)
@@ -90,12 +90,12 @@ public class MeleeAttackBase : AttackBase
         }
     }
 
-    private void AssignAnimationData()
+    protected virtual void AssignAnimationData()
     {
         CurrentAttackAnimationData = attackDatas[currentComboCount].AttackAnimationData;
     }
 
-    private void StartCooldownCountdowns()
+    protected virtual void StartCooldownCountdowns()
     {
         canAttack = false;
         var info = (MeleeAttackAnimationData)CurrentAttackAnimationData;
@@ -116,7 +116,7 @@ public class MeleeAttackBase : AttackBase
         }
     }
 
-    private void DealDamage()
+    protected virtual void DealDamage()
     {
         var animData = (MeleeAttackAnimationData)attackDatas[currentComboCount].AttackAnimationData;
         DOVirtual.DelayedCall(animData.attackDamageDelay, () =>

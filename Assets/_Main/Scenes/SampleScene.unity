@@ -28791,7 +28791,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8719883805134122465, guid: 8fd7662b61deb9349830764942129da3, type: 3}
       propertyPath: m_Name
-      value: SwordAttack
+      value: ManifestWeaponAttack
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8fd7662b61deb9349830764942129da3, type: 3}
