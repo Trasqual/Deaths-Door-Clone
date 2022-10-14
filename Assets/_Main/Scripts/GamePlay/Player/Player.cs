@@ -137,6 +137,22 @@ namespace _Main.Scripts.GamePlay.Player
         #endregion
 
         #region WeaponSelection(Melee/Ranged)
+
+        private void SwitchMeleeWeapon(string buttonName)
+        {
+            if (stateMachine.CurrentState is AttackState) return;
+            switch (buttonName)
+            {
+                case "1":
+                    SetSelectedMeleeAttack(typeof(UnarmedAttack));
+                    break;
+
+                case "2":
+                    SetSelectedMeleeAttack(typeof(ManifestWeaponAttack));
+                    break;
+            }
+        }
+
         private void SetSelectedRangedAttack(Type rangedAttackType)
         {
             SelectedRangedAttack = SelectAttackFromList(rangedAttackType, rangedAttacks);
@@ -182,6 +198,7 @@ namespace _Main.Scripts.GamePlay.Player
             Input.OnAimActionStarted += StartAiming;
             Input.OnRollAction += PerformRoll;
             Input.OnAttackActionStarted += Attack;
+            Input.OnMeleeWeaponSwitched += SwitchMeleeWeapon;
 
             _playerHealthManager.OnDamageTaken += TakeDamage;
             _playerHealthManager.OnDeath += Die;

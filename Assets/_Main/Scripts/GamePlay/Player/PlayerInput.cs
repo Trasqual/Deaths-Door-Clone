@@ -33,6 +33,7 @@ namespace _Main.Scripts.GamePlay.Player
             inputActions.PlayerControls.Aim.canceled += AimButtonReleased;
             inputActions.PlayerControls.Attack.started += AttackButtonPressed;
             inputActions.PlayerControls.Attack.canceled += AttackButtonReleased;
+            inputActions.PlayerControls.SwitchMeleeWeapon.performed += OnWeaponSwitchButtonPressed;
         }
 
         private void RollButtonPressed(InputAction.CallbackContext ctx)
@@ -62,6 +63,11 @@ namespace _Main.Scripts.GamePlay.Player
         private void AttackButtonReleased(InputAction.CallbackContext ctx)
         {
             OnAttackActionEnded?.Invoke();
+        }
+
+        private void OnWeaponSwitchButtonPressed(InputAction.CallbackContext ctx)
+        {
+            OnMeleeWeaponSwitched?.Invoke(ctx.control.name);
         }
 
         private void Update()

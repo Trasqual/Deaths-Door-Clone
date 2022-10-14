@@ -71,6 +71,15 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": ""Tap"",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SwitchMeleeWeapon"",
+                    ""type"": ""Button"",
+                    ""id"": ""aafc65d6-e8bb-434b-bb69-659b862d5629"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Press"",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -227,6 +236,28 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
                     ""action"": ""Attack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""246d4672-f28a-48a6-a6f9-99bd7286cf75"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SwitchMeleeWeapon"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6c9d7954-42dc-4197-bc79-0380e1a5e60b"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SwitchMeleeWeapon"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -268,6 +299,7 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
         m_PlayerControls_Roll = m_PlayerControls.FindAction("Roll", throwIfNotFound: true);
         m_PlayerControls_Aim = m_PlayerControls.FindAction("Aim", throwIfNotFound: true);
         m_PlayerControls_Attack = m_PlayerControls.FindAction("Attack", throwIfNotFound: true);
+        m_PlayerControls_SwitchMeleeWeapon = m_PlayerControls.FindAction("SwitchMeleeWeapon", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -332,6 +364,7 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayerControls_Roll;
     private readonly InputAction m_PlayerControls_Aim;
     private readonly InputAction m_PlayerControls_Attack;
+    private readonly InputAction m_PlayerControls_SwitchMeleeWeapon;
     public struct PlayerControlsActions
     {
         private @InputActions m_Wrapper;
@@ -341,6 +374,7 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
         public InputAction @Roll => m_Wrapper.m_PlayerControls_Roll;
         public InputAction @Aim => m_Wrapper.m_PlayerControls_Aim;
         public InputAction @Attack => m_Wrapper.m_PlayerControls_Attack;
+        public InputAction @SwitchMeleeWeapon => m_Wrapper.m_PlayerControls_SwitchMeleeWeapon;
         public InputActionMap Get() { return m_Wrapper.m_PlayerControls; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -365,6 +399,9 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
                 @Attack.started -= m_Wrapper.m_PlayerControlsActionsCallbackInterface.OnAttack;
                 @Attack.performed -= m_Wrapper.m_PlayerControlsActionsCallbackInterface.OnAttack;
                 @Attack.canceled -= m_Wrapper.m_PlayerControlsActionsCallbackInterface.OnAttack;
+                @SwitchMeleeWeapon.started -= m_Wrapper.m_PlayerControlsActionsCallbackInterface.OnSwitchMeleeWeapon;
+                @SwitchMeleeWeapon.performed -= m_Wrapper.m_PlayerControlsActionsCallbackInterface.OnSwitchMeleeWeapon;
+                @SwitchMeleeWeapon.canceled -= m_Wrapper.m_PlayerControlsActionsCallbackInterface.OnSwitchMeleeWeapon;
             }
             m_Wrapper.m_PlayerControlsActionsCallbackInterface = instance;
             if (instance != null)
@@ -384,6 +421,9 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
                 @Attack.started += instance.OnAttack;
                 @Attack.performed += instance.OnAttack;
                 @Attack.canceled += instance.OnAttack;
+                @SwitchMeleeWeapon.started += instance.OnSwitchMeleeWeapon;
+                @SwitchMeleeWeapon.performed += instance.OnSwitchMeleeWeapon;
+                @SwitchMeleeWeapon.canceled += instance.OnSwitchMeleeWeapon;
             }
         }
     }
@@ -413,5 +453,6 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
         void OnRoll(InputAction.CallbackContext context);
         void OnAim(InputAction.CallbackContext context);
         void OnAttack(InputAction.CallbackContext context);
+        void OnSwitchMeleeWeapon(InputAction.CallbackContext context);
     }
 }
