@@ -66,13 +66,8 @@ namespace _Main.Scripts.GamePlay.StateMachine
 
         public override void CancelState()
         {
-            attackMovementTween?.Kill();
-            UnSubscribeToInputActions();
-            UnSubscribeToCurrentAttack();
+            ExitState();
             OnActionCanceled?.Invoke();
-            IsAttacking = false;
-            StopAnimation();
-            _movementBase.StopMovementAndRotation();
         }
 
         private void OnAttackPerformed()

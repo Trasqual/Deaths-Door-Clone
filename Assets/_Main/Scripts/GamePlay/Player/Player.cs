@@ -91,7 +91,7 @@ namespace _Main.Scripts.GamePlay.Player
             {
                 var targetGroupHandler = Instantiate(data.cameraTargetGroup, transform);
                 var aimIndicator = Instantiate(data.aimingIndicator, transform);
-                var aimBehaviourAction = aimingBehaviour.GetComponent<IAction>();
+                var aimBehaviourAction = (IAction)aimingBehaviour;
                 targetGroupHandler.Init(aimBehaviourAction);
                 aimIndicator.Init(aimBehaviourAction);
 
