@@ -6,13 +6,13 @@ public class HealthBarHandler : MonoBehaviour
     [SerializeField] GameObject healthBarGroup;
     [SerializeField] HealthBarSet healthBar;
 
-    HealthManagerBase healthManager;
+    HealthComponentBase healthManager;
 
     List<HealthBarSet> barSets = new List<HealthBarSet>();
 
     private void Start()
     {
-        healthManager = GetComponentInParent<HealthManagerBase>();
+        healthManager = GetComponentInParent<HealthComponentBase>();
         healthManager.OnDamageTaken += UpdateHealthBar;
         healthManager.OnDeath += DisableHealthBar;
         Initialize();

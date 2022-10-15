@@ -17,7 +17,7 @@ namespace _Main.Scripts.GamePlay.StateMachine
         private InputBase _inputBase = null;
         private MovementBase _movementBase = null;
         private Animator _animator = null;
-        private HealthManagerBase _healthManager = null;
+        private HealthComponentBase _healthManager = null;
 
         [Header("Attack Params")]
         [SerializeField] private float comboTimer = 0.5f;
@@ -29,7 +29,7 @@ namespace _Main.Scripts.GamePlay.StateMachine
         [SerializeField] private string currentStateName;
         [SerializeField] private List<StateBase> states = new List<StateBase>();
 
-        public void Initialize(InputBase input, MovementBase movementBase, Animator animator, HealthManagerBase healthManager)
+        public void Initialize(InputBase input, MovementBase movementBase, Animator animator, HealthComponentBase healthManager)
         {
             _inputBase = input;
             _movementBase = movementBase;
@@ -68,21 +68,21 @@ namespace _Main.Scripts.GamePlay.StateMachine
             dodgeState.OnComplete += OnCompleteState;
         }
 
-        public void AddAttackState(CharacterBase character)
+        public void AddAttackState(BehaviourBase behaviour)
         {
             if (GetState(typeof(AttackState))) return;
 
             var attackState = gameObject.AddComponent<AttackState>();
-            attackState.Initialize(_inputBase, _movementBase, _animator, character);
+            attackState.Initialize(_inputBase, _movementBase, _animator, behaviour);
             states.Add(attackState);
             attackState.OnComplete += OnCompleteState;
         }
 
-        public void AddAimingState(float aimSpeedMultiplier, float recoilDelay, CharacterBase character)
+        public void AddAimingState(float aimSpeedMultiplier, float recoilDelay, BehaviourBase behaviour)
         {
             if (GetState(typeof(AimingState))) return;
             var aimingState = gameObject.AddComponent<AimingState>();
-            aimingState.Initialize(_inputBase, _movementBase, _animator, aimSpeedMultiplier, recoilDelay, character);
+            aimingState.Initialize(_inputBase, _movementBase, _animator, aimSpeedMultiplier, recoilDelay, behaviour);
             states.Add(aimingState);
             aimingState.OnComplete += OnCompleteState;
         }
@@ -92,7 +92,7 @@ namespace _Main.Scripts.GamePlay.StateMachine
             if (GetState(typeof(DamageTakenState))) return;
 
             var damageTaken = gameObject.AddComponent<DamageTakenState>();
-            damageTaken.Initialize(_movementBase, _animator, _healthManager, duration);
+            damageTaken.Initialize(_movementBase, _animator, duration);
             states.Add(damageTaken);
             damageTaken.OnComplete += OnCompleteState;
         }

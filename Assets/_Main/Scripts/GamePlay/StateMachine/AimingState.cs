@@ -19,17 +19,17 @@ namespace _Main.Scripts.GamePlay.StateMachine
         private float _aimSpeedMultiplier;
         private float _recoilDelay;
         private Tween _recoilDelayTween;
-        private CharacterBase _character;
+        private BehaviourBase _behaviour;
         public Action OnComplete;
 
-        public void Initialize(InputBase input, MovementBase movementBase, Animator animator, float aimSpeedMultiplier, float recoilDelay, CharacterBase character)
+        public void Initialize(InputBase input, MovementBase movementBase, Animator animator, float aimSpeedMultiplier, float recoilDelay, BehaviourBase behaviour)
         {
             _input = input;
             _movementBase = movementBase;
             Animator = animator;
             _aimSpeedMultiplier = aimSpeedMultiplier;
             _recoilDelay = recoilDelay;
-            _character = character;
+            _behaviour = behaviour;
             _transition = this;
 
             _input.OnAimActionEnded += EndAim;
@@ -116,7 +116,7 @@ namespace _Main.Scripts.GamePlay.StateMachine
         public void SetAnimatorOverrideController()
         {
             OriginalController = Animator.runtimeAnimatorController;
-            Animator.runtimeAnimatorController = _character.SelectedRangedAttack.CurrentAttackAnimationData.overrideController;
+            Animator.runtimeAnimatorController = _behaviour.SelectedRangedAttack.CurrentAttackAnimationData.overrideController;
         }
 
         public void ResetAnimatorController()

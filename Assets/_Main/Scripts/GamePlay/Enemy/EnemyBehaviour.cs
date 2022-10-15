@@ -3,12 +3,11 @@ using _Main.Scripts.GamePlay.MovementSystem;
 using _Main.Scripts.GamePlay.StateMachine;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.Windows;
 
-public class EnemyCharacter : CharacterBase
+public class EnemyBehaviour : BehaviourBase
 {
     NavMeshAgent _agent;
-    HealthManagerBase _healthManager;
+    HealthComponentBase _healthManager;
     MovementBase _movementBase;
     Animator _anim;
     InputBase _input;
@@ -16,7 +15,7 @@ public class EnemyCharacter : CharacterBase
     protected override void Awake()
     {
         base.Awake();
-        _healthManager = GetComponent<HealthManagerBase>();
+        _healthManager = GetComponent<HealthComponentBase>();
         _agent = GetComponent<NavMeshAgent>();
         _movementBase = GetComponent<MovementBase>();
         _anim = GetComponentInChildren<Animator>();
@@ -48,7 +47,7 @@ public class EnemyCharacter : CharacterBase
         stateMachine.AddDeathState();
     }
 
-    protected override void Die()
+    protected void Die()
     {
         _agent.isStopped = true;
         stateMachine.ChangeState(typeof(DeathState));

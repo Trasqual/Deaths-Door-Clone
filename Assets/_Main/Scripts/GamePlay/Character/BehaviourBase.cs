@@ -3,12 +3,13 @@ using _Main.Scripts.GamePlay.AttackSystem;
 using _Main.Scripts.GamePlay.StateMachine;
 using UnityEngine;
 
-public class CharacterBase : MonoBehaviour
+[RequireComponent(typeof(StateMachine))]
+public abstract class BehaviourBase : MonoBehaviour
 {
+    protected StateMachine stateMachine;
+    
     public Action<AttackBase> OnSelectedMeleeAttackChanged;
     public Action<AttackBase> OnSelectedRangedAttackChanged;
-
-    protected StateMachine stateMachine;
     public AttackBase SelectedRangedAttack { get; protected set; }
     public AttackBase SelectedMeleeAttack { get; protected set; }
 
@@ -16,6 +17,4 @@ public class CharacterBase : MonoBehaviour
     {
         stateMachine = GetComponent<StateMachine>();
     }
-    protected virtual void TakeDamage(int i) { }
-    protected virtual void Die() { }
 }

@@ -15,11 +15,11 @@ public class LockPiece : MonoBehaviour, IDamagable
     {
         if (Enums.CompareEnums(damageDealerType, _effectedByType))
         {
-            BreakLock();
+            Die();
         }
     }
 
-    private void BreakLock()
+    public void Die()
     {
         transform.DOShakeScale(0.5f, 0.2f, 30, 60).OnComplete(() => transform.localScale = Vector3.one);
         if (_isUnlocked) return;

@@ -15,19 +15,19 @@ namespace _Main.Scripts.GamePlay.StateMachine
 
         private InputBase _input;
         private MovementBase _movementBase;
-        private CharacterBase _character;
+        private BehaviourBase _behaviour;
         private AttackBase _selectedMeleeAttack;
         public Action OnComplete;
         private Tweener attackMovementTween;
 
-        public void Initialize(InputBase input, MovementBase movementBase, Animator animator, CharacterBase character)
+        public void Initialize(InputBase input, MovementBase movementBase, Animator animator, BehaviourBase behaviour)
         {
             _input = input;
             _movementBase = movementBase;
-            _character = character;
+            _behaviour = behaviour;
             Animator = animator;
             _transition = this;
-            _character.OnSelectedMeleeAttackChanged += OnMeleeAttackChanged;
+            _behaviour.OnSelectedMeleeAttackChanged += OnMeleeAttackChanged;
 
             _transition.AddTransition(typeof(MovementState), () => !IsAttacking, () => false);
             _transition.AddTransition(typeof(DodgeState), () => true, () => true);
@@ -165,7 +165,7 @@ namespace _Main.Scripts.GamePlay.StateMachine
         public void SetAnimatorOverrideController()
         {
             OriginalController = Animator.runtimeAnimatorController;
-            Animator.runtimeAnimatorController = _character.SelectedMeleeAttack.CurrentAttackAnimationData.overrideController;
+            Animator.runtimeAnimatorController = _behaviour.SelectedMeleeAttack.CurrentAttackAnimationData.overrideController;
             var animData = (MeleeAttackAnimationData)_selectedMeleeAttack.CurrentAttackAnimationData;
             Animator.SetFloat(SpeedMultHashCode, animData.animationSpeedMultiplier);
         }

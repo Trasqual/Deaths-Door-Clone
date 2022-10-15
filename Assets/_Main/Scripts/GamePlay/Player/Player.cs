@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using _Main.Scripts.GamePlay.ActionSystem;
 using _Main.Scripts.GamePlay.AttackSystem;
-using _Main.Scripts.GamePlay.AttackSystem.MeleeAttacks;
 using _Main.Scripts.GamePlay.AttackSystem.RangedAttacks;
 using _Main.Scripts.GamePlay.Indicators.AimingIndicator;
 using _Main.Scripts.GamePlay.InputSystem;
@@ -14,7 +13,7 @@ namespace _Main.Scripts.GamePlay.Player
 {
     [RequireComponent(typeof(PlayerMovementBase),
         typeof(PlayerAnimation))]
-    public class Player : CharacterBase
+    public class Player : BehaviourBase
     {
         [SerializeField] private PlayerData data = null;
         public InputBase Input { get; private set; }
@@ -25,7 +24,7 @@ namespace _Main.Scripts.GamePlay.Player
         [SerializeField] List<AttackBase> meleeAttacks = new List<AttackBase>();
 
         private PlayerMovementBase _playerMovementBase = null;
-        private HealthManagerBase _playerHealthManager = null;
+        private HealthComponentBase _playerHealthManager = null;
 
         int selectedAttackIndex;
 
@@ -36,7 +35,7 @@ namespace _Main.Scripts.GamePlay.Player
             Controller = GetComponent<CharacterController>();
             PlayerAnim = GetComponent<PlayerAnimation>();
             _playerMovementBase = GetComponent<PlayerMovementBase>();
-            _playerHealthManager = GetComponent<HealthManagerBase>();
+            _playerHealthManager = GetComponent<HealthComponentBase>();
             stateMachine.Initialize(Input, _playerMovementBase, PlayerAnim.Animator, _playerHealthManager);
         }
 
@@ -195,12 +194,12 @@ namespace _Main.Scripts.GamePlay.Player
         #endregion
 
         #region Health(TakeDamage/Death)
-        protected override void TakeDamage(int i)
+        protected void TakeDamage(int i)
         {
             stateMachine.ChangeState(typeof(DamageTakenState));
         }
 
-        protected override void Die()
+        protected void Die()
         {
             Controller.enabled = false;
             stateMachine.ChangeState(typeof(DeathState));
