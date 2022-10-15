@@ -42,5 +42,7 @@ namespace _Main.Scripts.GamePlay.MovementSystem
         }
 
         public abstract void Move(Vector3 dir, float movementSpeedMultiplier, float rotationSpeedMultiplier);
+
+        public abstract void MoveOverTime(Vector3 endPos, float duration, float setDelay = 0f, bool useGravity = true);
     }
 }

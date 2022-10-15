@@ -8,6 +8,11 @@ public class EnemyMovementBase : MovementBase
 
     }
 
+    public override void MoveOverTime(Vector3 endPos, float duration, float setDelay = 0f, bool useGravity = true)
+    {
+        
+    }
+
     protected override bool IsMoving()
     {
         return false;

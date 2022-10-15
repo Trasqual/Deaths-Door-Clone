@@ -1,5 +1,6 @@
 using _Main.Scripts.GamePlay.MovementSystem;
 using DG.Tweening;
+using System.Collections;
 using UnityEngine;
 
 namespace _Main.Scripts.GamePlay.Player
@@ -16,6 +17,8 @@ namespace _Main.Scripts.GamePlay.Player
 
         private float fallTimer = 0f;
 
+        private IEnumerator moveOverTimeCo;
+
         private void Start()
         {
             player = GetComponent<Player>();
@@ -23,7 +26,7 @@ namespace _Main.Scripts.GamePlay.Player
 
         private void Update()
         {
-            if (!player.Controller.isGrounded)
+            if (!player.Controller.isGrounded && applyGravity)
             {
                 fallTimer += Time.deltaTime;
                 if (fallTimer >= fallToDeathTime)
@@ -34,6 +37,10 @@ namespace _Main.Scripts.GamePlay.Player
                     fallTimer = 0f;
                     DOVirtual.DelayedCall(1f, () => { canMove = true; applyGravity = true; });
                 }
+            }
+            else
+            {
+                fallTimer = 0f;
             }
         }
 
@@ -78,6 +85,37 @@ namespace _Main.Scripts.GamePlay.Player
             {
                 ApplyGravity();
             }
+        }
+
+        public override void MoveOverTime(Vector3 endPos, float duration, float setDelay = 0f, bool useGravity = true)
+        {
+            if (moveOverTimeCo != null)
+            {
+                StopCoroutine(moveOverTimeCo);
+            }
+            moveOverTimeCo = MoveOverTimeCo(endPos, duration, setDelay, useGravity);
+            StartCoroutine(moveOverTimeCo);
+        }
+
+        private IEnumerator MoveOverTimeCo(Vector3 endPos, float duration, float setDelay = 0f, bool useGravity = true)
+        {
+            yield return new WaitForSeconds(setDelay);
+            var startPos = transform.position;
+            var dir = endPos - startPos;
+            var timePassed = 0f;
+
+            while (timePassed < duration)
+            {
+                timePassed += Time.deltaTime;
+                MoveInDirection(dir.normalized, (dir.magnitude / duration));
+                if (applyGravity || useGravity)
+                {
+                    ApplyGravity();
+                }
+                yield return null;
+            }
+
+            transform.position = endPos;
         }
     }
 }

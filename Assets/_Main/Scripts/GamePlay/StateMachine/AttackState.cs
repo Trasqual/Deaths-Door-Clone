@@ -76,7 +76,8 @@ namespace _Main.Scripts.GamePlay.StateMachine
             PlayAnimation();
             transform.rotation = Quaternion.LookRotation(_input.GetLookInput());
             var info = (MeleeAttackAnimationData)_selectedMeleeAttack.CurrentAttackAnimationData;
-            attackMovementTween = transform.DOMove(transform.forward * info.attackMovementAmount, info.attackMovementDuration).SetRelative().SetEase(Ease.Linear).SetDelay(info.attackMovementDelay);
+            //attackMovementTween = transform.DOMove(transform.forward * info.attackMovementAmount, info.attackMovementDuration).SetRelative().SetEase(Ease.Linear).SetDelay(info.attackMovementDelay);
+            _movementBase.MoveOverTime(transform.position + transform.forward * info.attackMovementAmount, info.attackMovementDuration, info.attackMovementDelay, info.useGravity);
         }
 
         private void OnAttackCompleted()
@@ -156,6 +157,7 @@ namespace _Main.Scripts.GamePlay.StateMachine
         #region Animation
 
         public int HashCode { get; private set; } = Animator.StringToHash("Locomotion");
+        public int SpeedMultHashCode { get; private set; } = Animator.StringToHash("AnimationSpeedMultiplier");
         public Animator Animator { get; private set; } = null;
 
         public RuntimeAnimatorController OriginalController { get; private set; } = null;
@@ -164,6 +166,8 @@ namespace _Main.Scripts.GamePlay.StateMachine
         {
             OriginalController = Animator.runtimeAnimatorController;
             Animator.runtimeAnimatorController = _character.SelectedMeleeAttack.CurrentAttackAnimationData.overrideController;
+            var animData = (MeleeAttackAnimationData)_selectedMeleeAttack.CurrentAttackAnimationData;
+            Animator.SetFloat(SpeedMultHashCode, animData.animationSpeedMultiplier);
         }
 
         public void ResetAnimatorController()

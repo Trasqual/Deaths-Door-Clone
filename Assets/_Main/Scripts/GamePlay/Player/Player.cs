@@ -50,7 +50,7 @@ namespace _Main.Scripts.GamePlay.Player
             GainDeathBehaviour();
             stateMachine.SetInitialState(typeof(MovementState));
 
-            SelectedMeleeAttack = meleeAttacks[0];
+            SetSelectedMeleeAttack();
             //SetSelectedMeleeAttack(typeof(UnarmedAttack));
             SetSelectedRangedAttack(typeof(BowAttack));
         }
@@ -153,6 +153,11 @@ namespace _Main.Scripts.GamePlay.Player
             {
                 selectedAttackIndex = meleeAttacks.Count - 1;
             }
+            SetSelectedMeleeAttack();
+        }
+
+        private void SetSelectedMeleeAttack()
+        {
             SelectedMeleeAttack = meleeAttacks[selectedAttackIndex];
             SelectedMeleeAttack.Init(stateMachine.GetState(typeof(AttackState)) as IAction);
             OnSelectedMeleeAttackChanged?.Invoke(SelectedMeleeAttack);
