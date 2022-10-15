@@ -1,8 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using _Main.Scripts.GamePlay.Player;
-using _Main.Scripts.GamePlay.AttackSystem;
 using _Main.Scripts.GamePlay.InputSystem;
 using _Main.Scripts.GamePlay.MovementSystem;
 using UnityEngine;
@@ -18,12 +16,6 @@ namespace _Main.Scripts.GamePlay.StateMachine
         private MovementBase _movementBase = null;
         private Animator _animator = null;
         private HealthComponentBase _healthManager = null;
-
-        [Header("Attack Params")]
-        [SerializeField] private float comboTimer = 0.5f;
-
-        [Header("Damage Taken Params")]
-        [SerializeField] private float _damageTakenDuration = 0.5f;
 
         [Header("Debugging")]
         [SerializeField] private string currentStateName;
@@ -68,21 +60,21 @@ namespace _Main.Scripts.GamePlay.StateMachine
             dodgeState.OnComplete += OnCompleteState;
         }
 
-        public void AddAttackState(BehaviourBase behaviour)
+        public void AddAttackState(AttackControllerBase attackController)
         {
             if (GetState(typeof(AttackState))) return;
 
             var attackState = gameObject.AddComponent<AttackState>();
-            attackState.Initialize(_inputBase, _movementBase, _animator, behaviour);
+            attackState.Initialize(_inputBase, _movementBase, _animator, attackController);
             states.Add(attackState);
             attackState.OnComplete += OnCompleteState;
         }
 
-        public void AddAimingState(float aimSpeedMultiplier, float recoilDelay, BehaviourBase behaviour)
+        public void AddAimingState(float aimSpeedMultiplier, float recoilDelay, AttackControllerBase attackController)
         {
             if (GetState(typeof(AimingState))) return;
             var aimingState = gameObject.AddComponent<AimingState>();
-            aimingState.Initialize(_inputBase, _movementBase, _animator, aimSpeedMultiplier, recoilDelay, behaviour);
+            aimingState.Initialize(_inputBase, _movementBase, _animator, aimSpeedMultiplier, recoilDelay, attackController);
             states.Add(aimingState);
             aimingState.OnComplete += OnCompleteState;
         }

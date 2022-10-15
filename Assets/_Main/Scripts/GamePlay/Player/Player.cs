@@ -12,7 +12,8 @@ using UnityEngine;
 namespace _Main.Scripts.GamePlay.Player
 {
     [RequireComponent(typeof(PlayerMovementBase),
-        typeof(PlayerAnimation))]
+        typeof(PlayerAnimation), 
+        typeof(HealthComponentBase))]
     public class Player : BehaviourBase
     {
         [SerializeField] private PlayerData data = null;
@@ -20,23 +21,20 @@ namespace _Main.Scripts.GamePlay.Player
         public CharacterController Controller { get; private set; }
         public PlayerAnimation PlayerAnim { get; private set; }
 
-        [SerializeField] List<AttackBase> rangedAttacks = new List<AttackBase>();
-        [SerializeField] List<AttackBase> meleeAttacks = new List<AttackBase>();
-
-        private PlayerMovementBase _playerMovementBase = null;
+        private PlayerMovementBase _playerMovement = null;
         private HealthComponentBase _playerHealthManager = null;
-
-        int selectedAttackIndex;
-
+        private AttackControllerBase _attackController = null;
+        
         protected override void Awake()
         {
             base.Awake();
             Input = GetComponent<InputBase>();
             Controller = GetComponent<CharacterController>();
             PlayerAnim = GetComponent<PlayerAnimation>();
-            _playerMovementBase = GetComponent<PlayerMovementBase>();
+            _playerMovement = GetComponent<PlayerMovementBase>();
             _playerHealthManager = GetComponent<HealthComponentBase>();
-            stateMachine.Initialize(Input, _playerMovementBase, PlayerAnim.Animator, _playerHealthManager);
+            _attackController = GetComponent<AttackControllerBase>();
+            stateMachine.Initialize(Input, _playerMovement, PlayerAnim.Animator, _playerHealthManager);
         }
 
         private void Start()
@@ -49,9 +47,8 @@ namespace _Main.Scripts.GamePlay.Player
             GainDeathBehaviour();
             stateMachine.SetInitialState(typeof(MovementState));
 
-            SetSelectedMeleeAttack();
-            //SetSelectedMeleeAttack(typeof(UnarmedAttack));
-            SetSelectedRangedAttack(typeof(BowAttack));
+            _attackController.SetSelectedMeleeAttack(stateMachine);
+            _attackController.SetSelectedRangedAttack(typeof(BowAttack), stateMachine);
         }
 
         #region Behaviours
@@ -77,7 +74,7 @@ namespace _Main.Scripts.GamePlay.Player
 
         public void GainAttackingBehaviour()
         {
-            stateMachine.AddAttackState(this);
+            stateMachine.AddAttackState(_attackController);
         }
 
         public void LoseAttackBehaviour()
@@ -87,7 +84,7 @@ namespace _Main.Scripts.GamePlay.Player
 
         public void GainAimingBehaviour()
         {
-            stateMachine.AddAimingState(10F, .2F, this);
+            stateMachine.AddAimingState(10F, .2F, _attackController);
             var aimingBehaviour = stateMachine.GetState(typeof(AimingState));
 
             if (aimingBehaviour)
@@ -139,58 +136,12 @@ namespace _Main.Scripts.GamePlay.Player
         #endregion
 
         #region WeaponSelection(Melee/Ranged)
-
+        
         private void SwitchMeleeWeapon(float switchInput)
         {
-            if (stateMachine.CurrentState is AttackState) return;
-            selectedAttackIndex += (int)Mathf.Sign(switchInput);
-            if (selectedAttackIndex > meleeAttacks.Count - 1)
-            {
-                selectedAttackIndex = 0;
-            }
-            if (selectedAttackIndex < 0)
-            {
-                selectedAttackIndex = meleeAttacks.Count - 1;
-            }
-            SetSelectedMeleeAttack();
+            _attackController.SwitchMeleeWeapon(switchInput, stateMachine);
         }
 
-        private void SetSelectedMeleeAttack()
-        {
-            if(SelectedMeleeAttack != null)
-            {
-                SelectedMeleeAttack.Release(stateMachine.GetState(typeof(AttackState)) as IAction);
-            }
-            SelectedMeleeAttack = meleeAttacks[selectedAttackIndex];
-            SelectedMeleeAttack.Init(stateMachine.GetState(typeof(AttackState)) as IAction);
-            OnSelectedMeleeAttackChanged?.Invoke(SelectedMeleeAttack);
-        }
-
-        private void SetSelectedRangedAttack(Type rangedAttackType)
-        {
-            SelectedRangedAttack = SelectAttackFromList(rangedAttackType, rangedAttacks);
-            SelectedRangedAttack.Init(stateMachine.GetState(typeof(AimingState)) as IAction);
-            OnSelectedRangedAttackChanged?.Invoke(SelectedRangedAttack);
-        }
-
-        private void SetSelectedMeleeAttack(Type meleeAttackType)
-        {
-            SelectedMeleeAttack = SelectAttackFromList(meleeAttackType, meleeAttacks);
-            SelectedMeleeAttack.Init(stateMachine.GetState(typeof(AttackState)) as IAction);
-            OnSelectedMeleeAttackChanged?.Invoke(SelectedMeleeAttack);
-        }
-
-        private AttackBase SelectAttackFromList(Type attackType, List<AttackBase> attacks)
-        {
-            foreach (var attack in attacks)
-            {
-                if (attack.GetType() == attackType)
-                {
-                    return attack;
-                }
-            }
-            return null;
-        }
         #endregion
 
         #region Health(TakeDamage/Death)

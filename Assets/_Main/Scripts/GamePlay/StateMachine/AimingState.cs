@@ -1,8 +1,6 @@
 using System;
 using System.Collections.Generic;
-using _Main.Scripts.GamePlay.Player;
 using _Main.Scripts.GamePlay.ActionSystem;
-using _Main.Scripts.GamePlay.AttackSystem;
 using _Main.Scripts.GamePlay.InputSystem;
 using _Main.Scripts.GamePlay.MovementSystem;
 using DG.Tweening;
@@ -19,17 +17,17 @@ namespace _Main.Scripts.GamePlay.StateMachine
         private float _aimSpeedMultiplier;
         private float _recoilDelay;
         private Tween _recoilDelayTween;
-        private BehaviourBase _behaviour;
+        private AttackControllerBase _attackController;
         public Action OnComplete;
 
-        public void Initialize(InputBase input, MovementBase movementBase, Animator animator, float aimSpeedMultiplier, float recoilDelay, BehaviourBase behaviour)
+        public void Initialize(InputBase input, MovementBase movementBase, Animator animator, float aimSpeedMultiplier, float recoilDelay, AttackControllerBase attackController)
         {
             _input = input;
             _movementBase = movementBase;
             Animator = animator;
             _aimSpeedMultiplier = aimSpeedMultiplier;
             _recoilDelay = recoilDelay;
-            _behaviour = behaviour;
+            _attackController = attackController;
             _transition = this;
 
             _input.OnAimActionEnded += EndAim;
@@ -116,7 +114,7 @@ namespace _Main.Scripts.GamePlay.StateMachine
         public void SetAnimatorOverrideController()
         {
             OriginalController = Animator.runtimeAnimatorController;
-            Animator.runtimeAnimatorController = _behaviour.SelectedRangedAttack.CurrentAttackAnimationData.overrideController;
+            Animator.runtimeAnimatorController = _attackController.SelectedRangedAttack.CurrentAttackAnimationData.overrideController;
         }
 
         public void ResetAnimatorController()

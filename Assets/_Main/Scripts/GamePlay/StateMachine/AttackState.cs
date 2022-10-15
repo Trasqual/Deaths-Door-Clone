@@ -15,19 +15,19 @@ namespace _Main.Scripts.GamePlay.StateMachine
 
         private InputBase _input;
         private MovementBase _movementBase;
-        private BehaviourBase _behaviour;
+        private AttackControllerBase _attackController;
         private AttackBase _selectedMeleeAttack;
         public Action OnComplete;
         private Tweener attackMovementTween;
 
-        public void Initialize(InputBase input, MovementBase movementBase, Animator animator, BehaviourBase behaviour)
+        public void Initialize(InputBase input, MovementBase movementBase, Animator animator, AttackControllerBase attackController)
         {
             _input = input;
             _movementBase = movementBase;
-            _behaviour = behaviour;
+            _attackController = attackController;
             Animator = animator;
             _transition = this;
-            _behaviour.OnSelectedMeleeAttackChanged += OnMeleeAttackChanged;
+            _attackController.OnSelectedMeleeAttackChanged += OnMeleeAttackChanged;
 
             _transition.AddTransition(typeof(MovementState), () => !IsAttacking, () => false);
             _transition.AddTransition(typeof(DodgeState), () => true, () => true);
@@ -165,7 +165,7 @@ namespace _Main.Scripts.GamePlay.StateMachine
         public void SetAnimatorOverrideController()
         {
             OriginalController = Animator.runtimeAnimatorController;
-            Animator.runtimeAnimatorController = _behaviour.SelectedMeleeAttack.CurrentAttackAnimationData.overrideController;
+            Animator.runtimeAnimatorController = _attackController.SelectedMeleeAttack.CurrentAttackAnimationData.overrideController;
             var animData = (MeleeAttackAnimationData)_selectedMeleeAttack.CurrentAttackAnimationData;
             Animator.SetFloat(SpeedMultHashCode, animData.animationSpeedMultiplier);
         }
@@ -185,7 +185,7 @@ namespace _Main.Scripts.GamePlay.StateMachine
         public void StopAnimation()
         {
             Animator.CrossFadeInFixedTime(HashCode, 0.1f);
-            DOVirtual.DelayedCall(0.15f, () => ResetAnimatorController());
+            DOVirtual.DelayedCall(0.15f, ResetAnimatorController);
         }
 
         #endregion

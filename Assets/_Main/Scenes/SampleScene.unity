@@ -4435,8 +4435,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a057e1b4e8ebeb543b3dcb1941a649b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  comboTimer: 0.5
-  _damageTakenDuration: 0.5
   currentStateName: 
   states: []
 --- !u!114 &350725525
@@ -6733,8 +6731,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a057e1b4e8ebeb543b3dcb1941a649b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  comboTimer: 0.5
-  _damageTakenDuration: 0.5
   currentStateName: 
   states: []
 --- !u!114 &540573466
@@ -6940,8 +6936,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a057e1b4e8ebeb543b3dcb1941a649b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  comboTimer: 0.5
-  _damageTakenDuration: 0.5
   currentStateName: 
   states: []
 --- !u!114 &541327901
@@ -8685,8 +8679,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a057e1b4e8ebeb543b3dcb1941a649b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  comboTimer: 0.5
-  _damageTakenDuration: 0.5
   currentStateName: 
   states: []
 --- !u!114 &726271830
@@ -9130,6 +9122,7 @@ GameObject:
   - component: {fileID: 756532618}
   - component: {fileID: 756532622}
   - component: {fileID: 756532623}
+  - component: {fileID: 756532624}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -9168,13 +9161,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: 9c63c65c2fd07624490cf4138a20e368, type: 2}
-  rangedAttacks:
-  - {fileID: 800507650}
-  - {fileID: 0}
-  meleeAttacks:
-  - {fileID: 141875472}
-  - {fileID: 5315199939093624148}
-  - {fileID: 1029100033438565236}
 --- !u!114 &756532617
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9245,8 +9231,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a057e1b4e8ebeb543b3dcb1941a649b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  comboTimer: 0.5
-  _damageTakenDuration: 0.5
   currentStateName: 
   states: []
 --- !u!114 &756532623
@@ -9263,6 +9247,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   effectedByType: 6
   maxHealth: 4
+--- !u!114 &756532624
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 756532614}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0d0e34baea94d10a3bab791fe4d3a24, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rangedAttacks:
+  - {fileID: 800507650}
+  meleeAttacks:
+  - {fileID: 141875472}
+  - {fileID: 5315199939093624148}
+  - {fileID: 1029100033438565236}
 --- !u!1001 &762514341
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10756,8 +10758,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a057e1b4e8ebeb543b3dcb1941a649b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  comboTimer: 0.5
-  _damageTakenDuration: 0.5
   currentStateName: 
   states: []
 --- !u!114 &909258792
@@ -13343,8 +13343,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a057e1b4e8ebeb543b3dcb1941a649b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  comboTimer: 0.5
-  _damageTakenDuration: 0.5
   currentStateName: 
   states: []
 --- !u!114 &1132015861
@@ -17152,8 +17150,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a057e1b4e8ebeb543b3dcb1941a649b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  comboTimer: 0.5
-  _damageTakenDuration: 0.5
   currentStateName: 
   states: []
 --- !u!114 &1459430900
