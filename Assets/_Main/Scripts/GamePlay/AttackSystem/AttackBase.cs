@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using _Main.Scripts.GamePlay.ActionSystem;
-using _Main.Scripts.GamePlay.StateMachine;
 using UnityEngine;
 
 namespace _Main.Scripts.GamePlay.AttackSystem
@@ -19,6 +18,13 @@ namespace _Main.Scripts.GamePlay.AttackSystem
             action.OnActionStart += DoOnActionStart;
             action.OnActionEnd += DoOnActionEnd;
             action.OnActionCanceled += DoOnActionCanceled;
+        }
+
+        public virtual void Release(IAction action)
+        {
+            action.OnActionStart -= DoOnActionStart;
+            action.OnActionEnd -= DoOnActionEnd;
+            action.OnActionCanceled -= DoOnActionCanceled;
         }
 
         protected abstract void DoOnActionStart();

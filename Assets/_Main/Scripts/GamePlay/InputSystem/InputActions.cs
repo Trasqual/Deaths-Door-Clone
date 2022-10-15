@@ -69,7 +69,7 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
                     ""id"": ""4f26f073-81e4-4430-bfc3-9da3fbee8417"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": ""Tap"",
+                    ""interactions"": """",
                     ""initialStateCheck"": false
                 },
                 {
@@ -219,7 +219,7 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
                     ""name"": """",
                     ""id"": ""60a83db4-d5c4-4293-ab8c-cfeeabc48737"",
                     ""path"": ""<Mouse>/leftButton"",
-                    ""interactions"": ""Press(behavior=2)"",
+                    ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""KeyboardAndMouse"",
                     ""action"": ""Attack"",
@@ -230,7 +230,7 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
                     ""name"": """",
                     ""id"": ""0792cc83-6be1-4497-88da-d2256fe08306"",
                     ""path"": ""<Gamepad>/buttonWest"",
-                    ""interactions"": ""Press(behavior=2)"",
+                    ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
                     ""action"": ""Attack"",

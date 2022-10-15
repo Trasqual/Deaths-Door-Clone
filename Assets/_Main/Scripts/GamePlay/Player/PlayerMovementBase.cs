@@ -114,8 +114,7 @@ namespace _Main.Scripts.GamePlay.Player
                 }
                 yield return null;
             }
-
-            transform.position = endPos;
+            //transform.position = endPos;
         }
     }
 }

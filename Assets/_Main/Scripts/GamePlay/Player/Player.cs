@@ -158,6 +158,10 @@ namespace _Main.Scripts.GamePlay.Player
 
         private void SetSelectedMeleeAttack()
         {
+            if(SelectedMeleeAttack != null)
+            {
+                SelectedMeleeAttack.Release(stateMachine.GetState(typeof(AttackState)) as IAction);
+            }
             SelectedMeleeAttack = meleeAttacks[selectedAttackIndex];
             SelectedMeleeAttack.Init(stateMachine.GetState(typeof(AttackState)) as IAction);
             OnSelectedMeleeAttackChanged?.Invoke(SelectedMeleeAttack);

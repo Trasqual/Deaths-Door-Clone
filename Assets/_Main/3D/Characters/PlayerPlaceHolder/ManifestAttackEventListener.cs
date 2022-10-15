@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class SwordManifester : MonoBehaviour
+public class ManifestAttackEventListener : MonoBehaviour
 {
     [SerializeField] GameObject swordManifest;
 

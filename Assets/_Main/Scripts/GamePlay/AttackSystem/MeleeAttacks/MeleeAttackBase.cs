@@ -40,6 +40,7 @@ public class MeleeAttackBase : AttackBase
             {
                 canCombo = true;
             }
+            Debug.Log(gameObject.name);
             OnAttackPerformed?.Invoke();
             SetCurrentComboCount();
             StartCooldownCountdowns();
@@ -52,6 +53,7 @@ public class MeleeAttackBase : AttackBase
             StartCooldownCountdowns();
             AssignAnimationData();
             DealDamage();
+            Debug.Log(gameObject.name);
         }
     }
 
