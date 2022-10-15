@@ -77,7 +77,7 @@ namespace _Main.Scripts.GamePlay.StateMachine
             transform.rotation = Quaternion.LookRotation(_input.GetLookInput());
             var info = (MeleeAttackAnimationData)_selectedMeleeAttack.CurrentAttackAnimationData;
             //attackMovementTween = transform.DOMove(transform.forward * info.attackMovementAmount, info.attackMovementDuration).SetRelative().SetEase(Ease.Linear).SetDelay(info.attackMovementDelay);
-            _movementBase.MoveOverTime(transform.position + transform.forward * info.attackMovementAmount, info.attackMovementDuration, info.attackMovementDelay, info.useGravity);
+            _movementBase.MoveOverTime(transform.position + transform.forward * info.attackMovementAmount, info.attackMovementDuration, info.attackMovementDelay, info.useGravity, info.useAnimationMovement);
         }
 
         private void OnAttackCompleted()

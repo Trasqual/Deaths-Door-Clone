@@ -11,4 +11,5 @@ public class MeleeAttackAnimationData : AttackAnimationDataBase
     public float attackCD = 1f;
     public float animationSpeedMultiplier = 1f;
     public bool useGravity = true;
+    public bool useAnimationMovement = false;
 }

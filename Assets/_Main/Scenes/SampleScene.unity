@@ -23233,6 +23233,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   swordManifest: {fileID: 284166152}
+--- !u!114 &2051527933
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2051527930}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6176da95de8ff634ba829cfcc44dcf13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &2053970887 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: c7848bc7ee038d043a57c0a669115993, type: 3}

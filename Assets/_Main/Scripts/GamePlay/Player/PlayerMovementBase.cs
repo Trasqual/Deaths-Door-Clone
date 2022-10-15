@@ -12,6 +12,7 @@ namespace _Main.Scripts.GamePlay.Player
         [SerializeField] private float fallToDeathTime = 2f;
 
         private Player player;
+        private AnimationMovement animationMovement;
 
         private bool applyGravity = true;
 
@@ -22,6 +23,7 @@ namespace _Main.Scripts.GamePlay.Player
         private void Start()
         {
             player = GetComponent<Player>();
+            animationMovement = GetComponentInChildren<AnimationMovement>();
         }
 
         private void Update()
@@ -87,18 +89,27 @@ namespace _Main.Scripts.GamePlay.Player
             }
         }
 
-        public override void MoveOverTime(Vector3 endPos, float duration, float setDelay = 0f, bool useGravity = true)
+        public override void MoveOverTime(Vector3 endPos, float duration, float setDelay = 0f, bool useGravity = true, bool useAnimationMovement = false)
         {
             if (moveOverTimeCo != null)
             {
                 StopCoroutine(moveOverTimeCo);
             }
-            moveOverTimeCo = MoveOverTimeCo(endPos, duration, setDelay, useGravity);
-            StartCoroutine(moveOverTimeCo);
+            if (useAnimationMovement)
+            {
+                moveOverTimeCo = MoveOverTimeWithAnimationCo(duration, useGravity);
+                StartCoroutine(moveOverTimeCo);
+            }
+            else
+            {
+                moveOverTimeCo = MoveOverTimeCo(endPos, duration, setDelay, useGravity);
+                StartCoroutine(moveOverTimeCo);
+            }
         }
 
         private IEnumerator MoveOverTimeCo(Vector3 endPos, float duration, float setDelay = 0f, bool useGravity = true)
         {
+            applyGravity = useGravity;
             yield return new WaitForSeconds(setDelay);
             var startPos = transform.position;
             var dir = endPos - startPos;
@@ -108,13 +119,22 @@ namespace _Main.Scripts.GamePlay.Player
             {
                 timePassed += Time.deltaTime;
                 MoveInDirection(dir.normalized, (dir.magnitude / duration));
-                if (applyGravity || useGravity)
+                if (useGravity)
                 {
                     ApplyGravity();
                 }
                 yield return null;
             }
-            //transform.position = endPos;
+            applyGravity = true;
+        }
+
+        private IEnumerator MoveOverTimeWithAnimationCo(float duration, bool useGravity)
+        {
+            applyGravity = useGravity;
+            animationMovement.Activate();
+            yield return new WaitForSeconds(duration);
+            animationMovement.DeActivate();
+            applyGravity = true;
         }
     }
 }
