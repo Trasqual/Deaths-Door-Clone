@@ -12,13 +12,15 @@ namespace _Main.Scripts.GamePlay.StateMachine
     public class AttackState : StateBase, IAction, ITransition, IAnimationOverridable
     {
         public bool IsAttacking { get; private set; }
+        public bool IsStateLocked { get; private set; }
+
+        private Tween stateLockTween;
 
         private InputBase _input;
         private MovementBase _movementBase;
         private AttackControllerBase _attackController;
         private AttackBase _selectedMeleeAttack;
         public Action OnComplete;
-        private Tweener attackMovementTween;
 
         public void Initialize(InputBase input, MovementBase movementBase, Animator animator, AttackControllerBase attackController)
         {
@@ -30,7 +32,7 @@ namespace _Main.Scripts.GamePlay.StateMachine
             _attackController.OnSelectedMeleeAttackChanged += OnMeleeAttackChanged;
 
             _transition.AddTransition(typeof(MovementState), () => !IsAttacking, () => false);
-            _transition.AddTransition(typeof(DodgeState), () => true, () => true);
+            _transition.AddTransition(typeof(DodgeState), () => !IsStateLocked, () => true);
             _transition.AddTransition(typeof(DeathState), () => true, () => true);
             _transition.AddTransition(typeof(DamageTakenState), () => true, () => true);
         }
@@ -56,7 +58,6 @@ namespace _Main.Scripts.GamePlay.StateMachine
 
         public override void ExitState()
         {
-            attackMovementTween?.Kill();
             UnSubscribeToInputActions();
             UnSubscribeToCurrentAttack();
             IsAttacking = false;
@@ -72,12 +73,14 @@ namespace _Main.Scripts.GamePlay.StateMachine
 
         private void OnAttackPerformed()
         {
-            attackMovementTween?.Kill();
+            stateLockTween?.Kill();
+            IsStateLocked = false;
             PlayAnimation();
             transform.rotation = Quaternion.LookRotation(_input.GetLookInput());
             var info = (MeleeAttackAnimationData)_selectedMeleeAttack.CurrentAttackAnimationData;
-            //attackMovementTween = transform.DOMove(transform.forward * info.attackMovementAmount, info.attackMovementDuration).SetRelative().SetEase(Ease.Linear).SetDelay(info.attackMovementDelay);
             _movementBase.MoveOverTime(transform.position + transform.forward * info.attackMovementAmount, info.attackMovementDuration, info.attackMovementDelay, info.useGravity, info.useAnimationMovement);
+            IsStateLocked = info.useAnimationMovement;
+            stateLockTween = DOVirtual.DelayedCall(info.attackCD, () => IsStateLocked = false);
         }
 
         private void OnAttackCompleted()
