@@ -75,10 +75,12 @@ namespace _Main.Scripts.GamePlay.StateMachine
         {
             stateLockTween?.Kill();
             IsStateLocked = false;
+
             PlayAnimation();
             transform.rotation = Quaternion.LookRotation(_input.GetLookInput());
             var info = (MeleeAttackAnimationData)_selectedMeleeAttack.CurrentAttackAnimationData;
             _movementBase.MoveOverTime(transform.position + transform.forward * info.attackMovementAmount, info.attackMovementDuration, info.attackMovementDelay, info.useGravity, info.useAnimationMovement);
+
             IsStateLocked = info.useAnimationMovement;
             stateLockTween = DOVirtual.DelayedCall(info.attackCD, () => IsStateLocked = false);
         }

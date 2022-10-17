@@ -4,6 +4,7 @@ using UnityEngine;
 public class ManifestAttackEventListener : MonoBehaviour
 {
     [SerializeField] GameObject swordManifest;
+    [SerializeField] GameObject earthShatterParticle;
 
     public void ActivateSword()
     {
@@ -15,5 +16,6 @@ public class ManifestAttackEventListener : MonoBehaviour
     {
         swordManifest.GetComponent<Animator>().Play("SwordManifestDeactivate");
         DOVirtual.DelayedCall(0.5f, () => swordManifest.SetActive(false));
+        Instantiate(earthShatterParticle, transform.position + transform.forward, transform.rotation);
     }
 }

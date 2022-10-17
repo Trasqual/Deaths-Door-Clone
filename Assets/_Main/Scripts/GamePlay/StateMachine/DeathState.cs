@@ -19,6 +19,7 @@ public class DeathState : StateBase, ITransition, IAnimation
     {
         _movementBase.StopMovementAndRotation();
         Animator.SetTrigger("die");
+        GetComponent<Collider>().enabled = false;
     }
 
     public override void ExitState()

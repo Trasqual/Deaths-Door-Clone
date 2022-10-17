@@ -23233,6 +23233,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   swordManifest: {fileID: 284166152}
+  earthShatterParticle: {fileID: 1314945738539566, guid: 32c9fd11a72259d45aa26ae41c34c5aa, type: 3}
 --- !u!114 &2051527933
 MonoBehaviour:
   m_ObjectHideFlags: 0
