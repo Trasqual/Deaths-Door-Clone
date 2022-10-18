@@ -4,13 +4,13 @@ namespace _Main.Scripts.Utilities
 {
     public class Enums
     {
-        public static bool CompareEnums(DamageDealerType effector, DamageDealerType effected)
+        public static bool CompareEnums<T>(T effector, T effected) where T : IConvertible
         {
-            int commonBitmask = (int)effector & (int)effected;
+            int commonBitmask = Convert.ToInt32(effector) & Convert.ToInt32(effected);
 
-            foreach (DamageDealerType currentEnum in Enum.GetValues(typeof(DamageDealerType)))
+            foreach (T currentEnum in Enum.GetValues(typeof(T)))
             {
-                if ((commonBitmask & (int)currentEnum) != 0)
+                if ((commonBitmask & Convert.ToInt32(currentEnum)) != 0)
                 {
                     return true;
                 }
