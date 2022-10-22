@@ -29,6 +29,7 @@ namespace _Main.Scripts.GamePlay.StateMachine
             _recoilDelay = recoilDelay;
             _attackController = attackController;
             _transition = this;
+            OriginalController = Animator.runtimeAnimatorController;
 
             _input.OnAimActionEnded += EndAim;
             _transition.AddTransition(typeof(MovementState), () => !IsAiming, () => false);
@@ -113,7 +114,6 @@ namespace _Main.Scripts.GamePlay.StateMachine
 
         public void SetAnimatorOverrideController()
         {
-            OriginalController = Animator.runtimeAnimatorController;
             Animator.runtimeAnimatorController = _attackController.SelectedRangedAttack.CurrentAttackAnimationData.overrideController;
         }
 

@@ -30,6 +30,7 @@ namespace _Main.Scripts.GamePlay.StateMachine
             Animator = animator;
             _transition = this;
             _attackController.OnSelectedMeleeAttackChanged += OnMeleeAttackChanged;
+            OriginalController = Animator.runtimeAnimatorController;
 
             _transition.AddTransition(typeof(MovementState), () => !IsAttacking, () => false);
             _transition.AddTransition(typeof(DodgeState), () => !IsStateLocked, () => true);
@@ -61,13 +62,17 @@ namespace _Main.Scripts.GamePlay.StateMachine
             UnSubscribeToInputActions();
             UnSubscribeToCurrentAttack();
             IsAttacking = false;
-            StopAnimation();
             _movementBase.StopMovementAndRotation();
+            StopAnimation();
         }
 
         public override void CancelState()
         {
-            ExitState();
+            UnSubscribeToInputActions();
+            UnSubscribeToCurrentAttack();
+            ResetAnimatorController();  
+            IsAttacking = false;
+            _movementBase.StopMovementAndRotation();
             OnActionCanceled?.Invoke();
         }
 
@@ -169,7 +174,6 @@ namespace _Main.Scripts.GamePlay.StateMachine
 
         public void SetAnimatorOverrideController()
         {
-            OriginalController = Animator.runtimeAnimatorController;
             Animator.runtimeAnimatorController = _attackController.SelectedMeleeAttack.CurrentAttackAnimationData.overrideController;
             var animData = (MeleeAttackAnimationData)_selectedMeleeAttack.CurrentAttackAnimationData;
             Animator.SetFloat(SpeedMultHashCode, animData.animationSpeedMultiplier);
