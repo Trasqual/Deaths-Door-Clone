@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46b1d65c0912f9649a6e317348ae1b21, type: 3}
+  m_Name: MuttantAttackAnimationDataCombo2
+  m_EditorClassIdentifier: 
+  overrideController: {fileID: 22100000, guid: e15c7de7b952bc347b72e2364bb01a51, type: 2}
+  fadeToAnimationName: MeleeAttack2
+  attackDamageDelay: 0.3
+  attackMovementDelay: 1
+  attackMovementAmount: 0.5
+  attackMovementDuration: 0.1
+  attackCD: 1.5
+  animationSpeedMultiplier: 0.5
+  useGravity: 1
+  useAnimationMovement: 0

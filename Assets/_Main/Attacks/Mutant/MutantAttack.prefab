@@ -47,3 +47,7 @@ MonoBehaviour:
   attackDatas:
   - AttackAnimationData: {fileID: 11400000, guid: dd6a607a915345646ad6abb58b93d2ed, type: 2}
     AttackDamageData: {fileID: 11400000, guid: 9de529776aa0b924091a6f534794bf1e, type: 2}
+  - AttackAnimationData: {fileID: 11400000, guid: 2840223b4aee92944b177ba5e7e55d62, type: 2}
+    AttackDamageData: {fileID: 11400000, guid: 9de529776aa0b924091a6f534794bf1e, type: 2}
+  - AttackAnimationData: {fileID: 11400000, guid: 310a9f0a6171c0a4683eb1c98a3bf672, type: 2}
+    AttackDamageData: {fileID: 11400000, guid: 9de529776aa0b924091a6f534794bf1e, type: 2}

@@ -1,11 +1,11 @@
 fileFormatVersion: 2
-guid: 856c7adb8ddbd794d819b4499bf3ef06
+guid: a0a469d78fdc49449b9b737d2f1d3518
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable:
   - first:
       74: -203655887218126122
-    second: Mutant Run
+    second: Mutant Punch
   externalObjects: {}
   materials:
     materialImportMode: 2
@@ -36,18 +36,18 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Mutant Run
+      name: Mutant Punch
       takeName: mixamo.com
       internalID: 0
       firstFrame: 0
-      lastFrame: 26
+      lastFrame: 33
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 1
+      loopTime: 0
       loopBlend: 0
       loopBlendOrientation: 1
       loopBlendPositionY: 1

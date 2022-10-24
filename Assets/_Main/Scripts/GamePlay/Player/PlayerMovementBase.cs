@@ -12,7 +12,7 @@ namespace _Main.Scripts.GamePlay.Player
         [SerializeField] private float fallToDeathTime = 2f;
 
         private Player player;
-        private AnimationMovement animationMovement;
+        private AnimationMovementBase animationMovement;
 
         private bool applyGravity = true;
 
@@ -23,7 +23,7 @@ namespace _Main.Scripts.GamePlay.Player
         private void Start()
         {
             player = GetComponent<Player>();
-            animationMovement = GetComponentInChildren<AnimationMovement>();
+            animationMovement = GetComponentInChildren<AnimationMovementBase>();
         }
 
         private void Update()

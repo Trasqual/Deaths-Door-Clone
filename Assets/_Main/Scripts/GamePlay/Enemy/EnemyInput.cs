@@ -1,24 +1,20 @@
 using _Main.Scripts.GamePlay.InputSystem;
 using _Main.Scripts.GamePlay.Player;
-using DG.Tweening;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class EnemyInput : InputBase
 {
     [SerializeField] private EnemyTriggerDetector detecterPrefab;
-    private EnemyBehaviour enemyBehaviour;
     private EnemyTriggerDetector detector;
     private NavMeshAgent agent;
 
     private Player player;
     private Vector3 startPos;
-    private bool isAttacking;
 
     private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
-        enemyBehaviour = GetComponent<EnemyBehaviour>();
 
         if (detector == null)
         {
@@ -74,16 +70,7 @@ public class EnemyInput : InputBase
         {
             if (Vector3.Distance(transform.position, player.transform.position) <= agent.stoppingDistance)
             {
-                if (!isAttacking)
-                {
-                    isAttacking = true;
-                    OnAttackActionStarted?.Invoke();
-                    var curAttack = (MeleeAttackAnimationData)enemyBehaviour.AttackController.SelectedMeleeAttack.CurrentAttackAnimationData;
-                    DOVirtual.DelayedCall(curAttack.attackCD + 0.5f, () =>
-                    {
-                        isAttacking = false;
-                    });
-                }
+                OnAttackActionStarted?.Invoke();
             }
         }
     }
