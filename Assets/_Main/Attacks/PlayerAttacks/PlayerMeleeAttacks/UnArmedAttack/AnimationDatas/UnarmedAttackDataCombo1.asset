@@ -21,3 +21,4 @@ MonoBehaviour:
   attackCD: 0.3
   animationSpeedMultiplier: 1
   useGravity: 1
+  useAnimationMovement: 0

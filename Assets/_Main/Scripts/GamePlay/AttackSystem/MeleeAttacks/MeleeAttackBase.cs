@@ -40,20 +40,18 @@ public class MeleeAttackBase : AttackBase
             {
                 canCombo = true;
             }
-            Debug.Log(gameObject.name);
             OnAttackPerformed?.Invoke();
+            DealDamage();
             SetCurrentComboCount();
             StartCooldownCountdowns();
             AssignAnimationData();
-            DealDamage();
         }
         else //if this attack doesn't have any combo, attack once and exit attack state
         {
             OnAttackPerformed?.Invoke();
+            DealDamage();
             StartCooldownCountdowns();
             AssignAnimationData();
-            DealDamage();
-            Debug.Log(gameObject.name);
         }
     }
 

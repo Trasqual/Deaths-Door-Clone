@@ -41,7 +41,7 @@ public class DamageTakenState : StateBase, ITransition, IAnimation
 
     public override void CancelState()
     {
-        throw new System.NotImplementedException();
+
     }
 
     #region Transition

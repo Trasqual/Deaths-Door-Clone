@@ -26,4 +26,8 @@ public class LockPiece : MonoBehaviour, IDamagable
         _isUnlocked = true;
         OnLockPieceBroken?.Invoke(this);
     }
+
+    public Transform GetTransform() => transform;
+
+    public DamageDealerType GetEffectedByType() => _effectedByType;
 }

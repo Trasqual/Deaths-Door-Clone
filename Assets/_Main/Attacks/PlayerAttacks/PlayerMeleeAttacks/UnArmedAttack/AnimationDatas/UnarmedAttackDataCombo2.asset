@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   overrideController: {fileID: 22100000, guid: ad8681525adff40c7a9bae91c7a1f31f, type: 2}
   fadeToAnimationName: MeleeAttack2
-  attackDamageDelay: 1
+  attackDamageDelay: 0.1
   attackMovementDelay: 0.1
   attackMovementAmount: 0.5
   attackMovementDuration: 0.1
