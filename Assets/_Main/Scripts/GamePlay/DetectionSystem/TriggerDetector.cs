@@ -12,7 +12,7 @@ public class TriggerDetectorBase<T> : DetectorBase<T>
         GetComponent<SphereCollider>().radius = range;
     }
 
-    protected virtual void OnTriggerEnter(Collider other)
+    protected virtual void OnTriggerStay(Collider other)
     {
         if (_target == null)
         {

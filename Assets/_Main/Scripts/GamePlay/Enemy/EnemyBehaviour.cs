@@ -6,10 +6,11 @@ using UnityEngine.AI;
 public class EnemyBehaviour : BehaviourBase
 {
     private NavMeshAgent _agent;
-    private AttackControllerBase _attackController;
     private HealthComponentBase _healthManager;
     private MovementBase _movementBase;
     private Animator _anim;
+
+    public AttackControllerBase AttackController { get; private set; }
 
     protected override void Awake()
     {
@@ -18,7 +19,7 @@ public class EnemyBehaviour : BehaviourBase
         _agent = GetComponent<NavMeshAgent>();
         _movementBase = GetComponent<MovementBase>();
         _anim = GetComponentInChildren<Animator>();
-        _attackController = GetComponent<AttackControllerBase>();
+        AttackController = GetComponent<AttackControllerBase>();
 
         stateMachine.Initialize(_input, _movementBase, _anim);
 
@@ -32,7 +33,7 @@ public class EnemyBehaviour : BehaviourBase
         GainDeathBehaviour();
 
         stateMachine.SetInitialState(typeof(MovementState));
-        _attackController.SetSelectedMeleeAttack(stateMachine);
+        AttackController.SetSelectedMeleeAttack(stateMachine);
     }
 
     public void GainMovementBehaviour()
@@ -47,7 +48,7 @@ public class EnemyBehaviour : BehaviourBase
 
     public void GainAttackBehaviour()
     {
-        stateMachine.AddAttackState(_attackController);
+        stateMachine.AddAttackState(AttackController);
     }
 
     public void GainDeathBehaviour()
@@ -57,7 +58,6 @@ public class EnemyBehaviour : BehaviourBase
 
     private void Attack()
     {
-        Debug.Log("attacking");
         stateMachine.ChangeState(typeof(AttackState));
     }
 
@@ -68,6 +68,7 @@ public class EnemyBehaviour : BehaviourBase
 
     protected void Die()
     {
+        _input.enabled = false;
         _agent.isStopped = true;
         stateMachine.ChangeState(typeof(DeathState));
     }

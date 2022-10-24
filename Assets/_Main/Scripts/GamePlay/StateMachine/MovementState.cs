@@ -39,7 +39,7 @@ namespace _Main.Scripts.GamePlay.StateMachine
             Animator = animator;
             _transition = this;
             
-            _transition.AddTransition(typeof(AttackState), () => true, () => true);
+            _transition.AddTransition(typeof(AttackState), () => true, () => false);
             _transition.AddTransition(typeof(AimingState), () => true, () => false);
             _transition.AddTransition(typeof(DodgeState), () => true, () => true);
             _transition.AddTransition(typeof(DeathState), () => true, () => true);
@@ -75,7 +75,7 @@ namespace _Main.Scripts.GamePlay.StateMachine
         public Animator Animator { get; private set; } = null;
         public void PlayAnimation()
         {
-            var value = transform.InverseTransformDirection(_input.GetMovementInput()).magnitude;
+            var value = transform.InverseTransformDirection(_input.GetMovementInput().normalized).magnitude;
             
             Animator.SetFloat(HashCode, value, 0.1f, Time.deltaTime);
         }

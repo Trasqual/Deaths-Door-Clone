@@ -12,11 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36be51c8b4740c44ba6926d9830e9421, type: 3}
   m_Name: PlayerData
   m_EditorClassIdentifier: 
-  name: Player
-  movementSpeed: 10
-  rotationSpeed: 10
-  dodgeSpeed: 5
-  health: 5
-  damageTakenDuration: 1
+  Name: Player
+  MovementSpeed: 5
+  RotationSpeed: 5
+  DodgeSpeed: 5
+  Health: 4
+  DamageTakenDuration: 0.5
+  AttackRange: 1.5
   aimingIndicator: {fileID: 766457008102004453, guid: c85acef4ee7050c4f92572b141c43a76, type: 3}
   cameraTargetGroup: {fileID: 154761681683377330, guid: dd8e39e5339a27d448e5c30c11251d63, type: 3}

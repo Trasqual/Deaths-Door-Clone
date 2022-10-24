@@ -1,22 +1,26 @@
 using _Main.Scripts.GamePlay.InputSystem;
 using _Main.Scripts.GamePlay.Player;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class EnemyInput : InputBase
 {
     [SerializeField] private EnemyTriggerDetector detecterPrefab;
+    private EnemyBehaviour enemyBehaviour;
     private EnemyTriggerDetector detector;
     private NavMeshAgent agent;
-    private Player player;
 
+    private Player player;
     private Vector3 startPos;
+    private bool isAttacking;
 
     private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
+        enemyBehaviour = GetComponent<EnemyBehaviour>();
 
-        if(detector == null)
+        if (detector == null)
         {
             detector = Instantiate(detecterPrefab, transform.position, Quaternion.identity, transform);
             detector.OnTargetFound += OnTargetDetectedCallback;
@@ -30,18 +34,11 @@ public class EnemyInput : InputBase
     {
         if (player != null)
         {
-            return player.transform.position;
+            return (player.transform.position - transform.position).normalized;
         }
         else
         {
-            if (Vector3.Distance(transform.position,startPos) > agent.stoppingDistance)
-            {
-                return startPos;
-            }
-            else
-            {
-                return Vector3.zero;
-            }
+            return (startPos - transform.position).normalized;
         }
     }
 
@@ -49,11 +46,18 @@ public class EnemyInput : InputBase
     {
         if (player != null)
         {
-            return player.transform.position;
+            if (Vector3.Distance(transform.position, player.transform.position) > agent.stoppingDistance)
+            {
+                return player.transform.position;
+            }
+            else
+            {
+                return Vector3.zero;
+            }
         }
         else
         {
-            if(Vector3.Distance(transform.position, startPos) > agent.stoppingDistance)
+            if (Vector3.Distance(transform.position, startPos) > agent.stoppingDistance)
             {
                 return startPos;
             }
@@ -61,16 +65,25 @@ public class EnemyInput : InputBase
             {
                 return Vector3.zero;
             }
-        }       
+        }
     }
 
     private void Update()
     {
-        if(player != null)
+        if (player != null)
         {
             if (Vector3.Distance(transform.position, player.transform.position) <= agent.stoppingDistance)
             {
-                OnAttackActionStarted?.Invoke();
+                if (!isAttacking)
+                {
+                    isAttacking = true;
+                    OnAttackActionStarted?.Invoke();
+                    var curAttack = (MeleeAttackAnimationData)enemyBehaviour.AttackController.SelectedMeleeAttack.CurrentAttackAnimationData;
+                    DOVirtual.DelayedCall(curAttack.attackCD + 0.5f, () =>
+                    {
+                        isAttacking = false;
+                    });
+                }
             }
         }
     }

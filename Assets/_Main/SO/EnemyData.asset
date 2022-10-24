@@ -18,4 +18,4 @@ MonoBehaviour:
   DodgeSpeed: 5
   Health: 4
   DamageTakenDuration: 0.5
-  AttackRange: 3
+  AttackRange: 2

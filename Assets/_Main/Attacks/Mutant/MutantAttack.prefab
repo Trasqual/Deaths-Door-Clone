@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7909131335176812136}
-  - component: {fileID: 7909131335176812151}
+  - component: {fileID: 1533516701862259769}
   m_Layer: 0
   m_Name: MutantAttack
   m_TagString: Untagged
@@ -24,7 +24,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7909131335176812137}
-  m_LocalRotation: {x: 0.5172531, y: 0.44209102, z: -0.47794977, w: -0.5554897}
+  m_LocalRotation: {x: -0.51725787, y: -0.44208884, z: 0.47794735, w: 0.55548906}
   m_LocalPosition: {x: 0.008, y: 0.11, z: 0.058}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -32,7 +32,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -8.747, y: -85.706, z: 89.535}
---- !u!114 &7909131335176812151
+--- !u!114 &1533516701862259769
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,7 +41,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7909131335176812137}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 99beb85e151961848a4a16bfcae22543, type: 3}
+  m_Script: {fileID: 11500000, guid: 090bd67a5891d2d44a68f2a76997e033, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   attackDatas:
