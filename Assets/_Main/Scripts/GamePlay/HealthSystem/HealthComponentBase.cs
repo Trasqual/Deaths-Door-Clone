@@ -12,12 +12,17 @@ public abstract class HealthComponentBase : MonoBehaviour, IDamagable
     public bool IsDead { protected set; get; } = false;
 
     public int MaxHealth => maxHealth;
-    
+
     #region Damageable Feature
-    
+
     public Action<int> OnDamageTaken;
     public Action OnDeath;
-    
+
+    public Transform GetTransform() => transform;
+
+    public DamageDealerType GetEffectedByType() => effectedByType;
+
+
     public virtual void TakeDamage(int amount, DamageDealerType damageDealerType)
     {
         if (!Enums.CompareEnums(damageDealerType, effectedByType)) return;

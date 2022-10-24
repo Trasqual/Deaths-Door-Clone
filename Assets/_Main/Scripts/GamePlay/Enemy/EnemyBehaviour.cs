@@ -11,6 +11,7 @@ public class EnemyBehaviour : BehaviourBase
     MovementBase _movementBase;
     Animator _anim;
     InputBase _input;
+    TriggerDetector _detector;
 
     protected override void Awake()
     {
@@ -20,6 +21,9 @@ public class EnemyBehaviour : BehaviourBase
         _movementBase = GetComponent<MovementBase>();
         _anim = GetComponentInChildren<Animator>();
         _input = GetComponent<InputBase>();
+        _detector = GetComponentInChildren<TriggerDetector>();
+        _detector.OnTargetFound += OnTargetDetectedCallback;
+        _detector.OnTargetLost += OnTargetLostCallback;
 
         stateMachine.Initialize(_input, _movementBase, _anim, _healthManager);
     }
@@ -45,6 +49,16 @@ public class EnemyBehaviour : BehaviourBase
     public void GainDeathBehaviour()
     {
         stateMachine.AddDeathState();
+    }
+
+    private void OnTargetDetectedCallback(IDamagable target)
+    {
+        Debug.Log($"Detected {target.GetTransform().name}");
+    }
+
+    private void OnTargetLostCallback()
+    {
+        Debug.Log("Target lost.");
     }
 
     protected void Die()
