@@ -1,4 +1,3 @@
-using _Main.Scripts.GamePlay.InputSystem;
 using _Main.Scripts.GamePlay.MovementSystem;
 using _Main.Scripts.GamePlay.StateMachine;
 using UnityEngine;
@@ -6,12 +5,11 @@ using UnityEngine.AI;
 
 public class EnemyBehaviour : BehaviourBase
 {
-    NavMeshAgent _agent;
-    HealthComponentBase _healthManager;
-    MovementBase _movementBase;
-    Animator _anim;
-    InputBase _input;
-    TriggerDetector _detector;
+    private NavMeshAgent _agent;
+    private AttackControllerBase _attackController;
+    private HealthComponentBase _healthManager;
+    private MovementBase _movementBase;
+    private Animator _anim;
 
     protected override void Awake()
     {
@@ -20,20 +18,21 @@ public class EnemyBehaviour : BehaviourBase
         _agent = GetComponent<NavMeshAgent>();
         _movementBase = GetComponent<MovementBase>();
         _anim = GetComponentInChildren<Animator>();
-        _input = GetComponent<InputBase>();
-        _detector = GetComponentInChildren<TriggerDetector>();
-        _detector.OnTargetFound += OnTargetDetectedCallback;
-        _detector.OnTargetLost += OnTargetLostCallback;
+        _attackController = GetComponent<AttackControllerBase>();
 
-        stateMachine.Initialize(_input, _movementBase, _anim, _healthManager);
+        stateMachine.Initialize(_input, _movementBase, _anim);
+
+        _agent.stoppingDistance = data.AttackRange;
     }
 
     private void Start()
     {
         GainMovementBehaviour();
-
+        GainAttackBehaviour();
         GainDeathBehaviour();
+
         stateMachine.SetInitialState(typeof(MovementState));
+        _attackController.SetSelectedMeleeAttack(stateMachine);
     }
 
     public void GainMovementBehaviour()
@@ -46,19 +45,25 @@ public class EnemyBehaviour : BehaviourBase
         stateMachine.RemoveState(typeof(MovementState));
     }
 
+    public void GainAttackBehaviour()
+    {
+        stateMachine.AddAttackState(_attackController);
+    }
+
     public void GainDeathBehaviour()
     {
         stateMachine.AddDeathState();
     }
 
-    private void OnTargetDetectedCallback(IDamagable target)
+    private void Attack()
     {
-        Debug.Log($"Detected {target.GetTransform().name}");
+        Debug.Log("attacking");
+        stateMachine.ChangeState(typeof(AttackState));
     }
 
-    private void OnTargetLostCallback()
+    protected void TakeDamage(int i)
     {
-        Debug.Log("Target lost.");
+        stateMachine.ChangeState(typeof(DamageTakenState));
     }
 
     protected void Die()
@@ -69,6 +74,17 @@ public class EnemyBehaviour : BehaviourBase
 
     private void OnEnable()
     {
+        _input.OnAttackActionStarted += Attack;
+
+        _healthManager.OnDamageTaken += TakeDamage;
         _healthManager.OnDeath += Die;
+    }
+
+    private void OnDisable()
+    {
+        _input.OnAttackActionStarted -= Attack;
+
+        _healthManager.OnDamageTaken -= TakeDamage;
+        _healthManager.OnDeath -= Die;
     }
 }

@@ -15,18 +15,16 @@ namespace _Main.Scripts.GamePlay.StateMachine
         private InputBase _inputBase = null;
         private MovementBase _movementBase = null;
         private Animator _animator = null;
-        private HealthComponentBase _healthManager = null;
 
         [Header("Debugging")]
         [SerializeField] private string currentStateName;
         [SerializeField] private List<StateBase> states = new List<StateBase>();
 
-        public void Initialize(InputBase input, MovementBase movementBase, Animator animator, HealthComponentBase healthManager)
+        public void Initialize(InputBase input, MovementBase movementBase, Animator animator)
         {
             _inputBase = input;
             _movementBase = movementBase;
             _animator = animator;
-            _healthManager = healthManager;
         }
 
         public void SetInitialState(Type state)

@@ -1,0 +1,49 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &7909131335176812137
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7909131335176812136}
+  - component: {fileID: 7909131335176812151}
+  m_Layer: 0
+  m_Name: MutantAttack
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7909131335176812136
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7909131335176812137}
+  m_LocalRotation: {x: 0.5172531, y: 0.44209102, z: -0.47794977, w: -0.5554897}
+  m_LocalPosition: {x: 0.008, y: 0.11, z: 0.058}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: -8.747, y: -85.706, z: 89.535}
+--- !u!114 &7909131335176812151
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7909131335176812137}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99beb85e151961848a4a16bfcae22543, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackDatas:
+  - AttackAnimationData: {fileID: 11400000, guid: dd6a607a915345646ad6abb58b93d2ed, type: 2}
+    AttackDamageData: {fileID: 11400000, guid: 9de529776aa0b924091a6f534794bf1e, type: 2}

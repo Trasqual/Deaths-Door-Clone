@@ -13,8 +13,6 @@ namespace _Main.Scripts.GamePlay.Player
         typeof(HealthComponentBase))]
     public class Player : BehaviourBase
     {
-        [SerializeField] private PlayerData data = null;
-        public InputBase Input { get; private set; }
         public CharacterController Controller { get; private set; }
         public PlayerAnimation PlayerAnim { get; private set; }
 
@@ -25,13 +23,12 @@ namespace _Main.Scripts.GamePlay.Player
         protected override void Awake()
         {
             base.Awake();
-            Input = GetComponent<InputBase>();
             Controller = GetComponent<CharacterController>();
             PlayerAnim = GetComponent<PlayerAnimation>();
             _playerMovement = GetComponent<PlayerMovementBase>();
             _playerHealthManager = GetComponent<HealthComponentBase>();
             _attackController = GetComponent<AttackControllerBase>();
-            stateMachine.Initialize(Input, _playerMovement, PlayerAnim.Animator, _playerHealthManager);
+            stateMachine.Initialize(_input, _playerMovement, PlayerAnim.Animator);
         }
 
         private void Start()
@@ -86,8 +83,9 @@ namespace _Main.Scripts.GamePlay.Player
 
             if (aimingBehaviour)
             {
-                var targetGroupHandler = Instantiate(data.cameraTargetGroup, transform);
-                var aimIndicator = Instantiate(data.aimingIndicator, transform);
+                var playerData = (PlayerBehaviourData) data;
+                var targetGroupHandler = Instantiate(playerData.cameraTargetGroup, transform);
+                var aimIndicator = Instantiate(playerData.aimingIndicator, transform);
                 var aimBehaviourAction = (IAction)aimingBehaviour;
                 targetGroupHandler.Init(aimBehaviourAction);
                 aimIndicator.Init(aimBehaviourAction);
@@ -106,7 +104,7 @@ namespace _Main.Scripts.GamePlay.Player
 
         public void GainDamageTakingBehaviour()
         {
-            stateMachine.AddDamageTakenState(data.damageTakenDuration);
+            stateMachine.AddDamageTakenState(data.DamageTakenDuration);
         }
 
         public void GainDeathBehaviour()
@@ -156,10 +154,10 @@ namespace _Main.Scripts.GamePlay.Player
 
         private void OnEnable()
         {
-            Input.OnAimActionStarted += StartAiming;
-            Input.OnRollAction += PerformRoll;
-            Input.OnAttackActionStarted += Attack;
-            Input.OnMeleeWeaponSwitched += SwitchMeleeWeapon;
+            _input.OnAimActionStarted += StartAiming;
+            _input.OnRollAction += PerformRoll;
+            _input.OnAttackActionStarted += Attack;
+            _input.OnMeleeWeaponSwitched += SwitchMeleeWeapon;
 
             _playerHealthManager.OnDamageTaken += TakeDamage;
             _playerHealthManager.OnDeath += Die;
@@ -167,9 +165,9 @@ namespace _Main.Scripts.GamePlay.Player
 
         private void OnDisable()
         {
-            Input.OnAimActionStarted -= StartAiming;
-            Input.OnRollAction -= PerformRoll;
-            Input.OnAttackActionStarted -= Attack;
+            _input.OnAimActionStarted -= StartAiming;
+            _input.OnRollAction -= PerformRoll;
+            _input.OnAttackActionStarted -= Attack;
 
             _playerHealthManager.OnDamageTaken -= TakeDamage;
             _playerHealthManager.OnDeath -= Die;

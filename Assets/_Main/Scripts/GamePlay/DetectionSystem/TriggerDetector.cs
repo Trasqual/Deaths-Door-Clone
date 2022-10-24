@@ -1,48 +1,39 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using _Main.Scripts.Utilities;
 using UnityEngine;
 
-public class TriggerDetector : MonoBehaviour
+public class TriggerDetectorBase<T> : DetectorBase<T>
 {
-    public Action<IDamagable> OnTargetFound;
-    public Action OnTargetLost;
+    [SerializeField] protected float range = 8f;
+    [SerializeField] protected float resetRange = 15f;
 
-    [SerializeField] DamageDealerType triggerType; //should be the same as behaviourbase type
-    [SerializeField] float range = 8f;
-    [SerializeField] float resetRange = 15f;
+    protected T _target;
 
-    IDamagable target;
-
-    private void Awake()
+    protected virtual void Awake()
     {
         GetComponent<SphereCollider>().radius = range;
     }
 
-    private void OnTriggerEnter(Collider other)
+    protected virtual void OnTriggerEnter(Collider other)
     {
-        if (target != null) return;
-
-        if (other.TryGetComponent(out IDamagable damagable))
+        if (_target == null)
         {
-            if (Enums.CompareEnums(triggerType, damagable.GetEffectedByType()))
+            if (other.TryGetComponent(out T target))
             {
-                target = damagable;
-                OnTargetFound?.Invoke(target);
+                _target = target;
+                OnTargetFound?.Invoke(_target);
             }
         }
     }
 
-    private void FixedUpdate()
+    protected virtual void LoseTarget()
     {
-        if(target != null)
-        {
-            if(Vector3.Distance(transform.position, target.GetTransform().transform.position) > resetRange)
-            {
-                target = null;
-                OnTargetLost?.Invoke();
-            }
-        }
+        OnTargetLost?.Invoke();
+        _target = default;
     }
+
+#if UNITY_EDITOR
+    private void OnValidate()
+    {
+        GetComponent<SphereCollider>().radius = range;
+    }
+#endif
 }
