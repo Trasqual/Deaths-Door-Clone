@@ -26,6 +26,7 @@ namespace _Main.Scripts.GamePlay.AttackSystem.RangedAttacks
             rb.collisionDetectionMode = CollisionDetectionMode.ContinuousSpeculative;
             rb.isKinematic = true;
             Col.enabled = false;
+            transform.SetParent(collision.transform);
             if (collision.collider.TryGetComponent(out IDamagable damagable))
             {
                 DealDamage(Mathf.RoundToInt(_damage), damagable, _damageDealerType);
