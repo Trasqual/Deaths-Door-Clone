@@ -13,6 +13,7 @@ public class MeleeAttackBase : AttackBase
     bool hasCombo => attackDatas.Count > 1;
     bool canCombo;
     Tween comboDelay;
+    Tween damageDelay;
 
     protected virtual void Awake()
     {
@@ -67,6 +68,7 @@ public class MeleeAttackBase : AttackBase
     {
         comboDelay?.Kill();
         attackDelay?.Kill();
+        damageDelay?.Kill();
         canAttack = true;
         canCombo = false;
         currentComboCount = 0;
@@ -122,7 +124,7 @@ public class MeleeAttackBase : AttackBase
     protected virtual void DealDamage()
     {
         var animData = (MeleeAttackAnimationData)attackDatas[currentComboCount].AttackAnimationData;
-        DOVirtual.DelayedCall(animData.attackDamageDelay, () =>
+        damageDelay = DOVirtual.DelayedCall(animData.attackDamageDelay, () =>
         {
             var damageData = (SphereAttackDamageData)attackDatas[currentComboCount].AttackDamageData;
             new SphereCastDamager(transform.root.position + transform.root.up + transform.root.forward, damageData.radius, transform.root.forward, damageData.range, damageData.damage, damageData.dmgDealerType);

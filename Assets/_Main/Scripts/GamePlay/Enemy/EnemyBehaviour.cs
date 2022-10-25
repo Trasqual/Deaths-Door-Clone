@@ -30,6 +30,7 @@ public class EnemyBehaviour : BehaviourBase
     {
         GainMovementBehaviour();
         GainAttackBehaviour();
+        GainDamageTakenBehaviour();
         GainDeathBehaviour();
 
         stateMachine.SetInitialState(typeof(MovementState));
