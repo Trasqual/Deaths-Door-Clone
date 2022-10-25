@@ -3,24 +3,36 @@ using UnityEngine;
 
 public class EnemyTriggerDetector : TriggerDetectorBase<Player>
 {
+    protected override void OnTriggerStay(Collider other)
+    {
+        if (_target == null)
+        {
+            if (other.TryGetComponent(out Player target) && InLineOfSight(target))
+            {
+                _target = target;
+                OnTargetFound?.Invoke(_target);
+            }
+        }
+    }
+
     private void FixedUpdate()
     {
-        if(_target != null)
+        if (_target != null)
         {
-            if ( Vector3.Distance(transform.position, _target.transform.position) > resetRange || !InLineOfSight())
+            if (Vector3.Distance(transform.position, _target.transform.position) > resetRange)
             {
                 LoseTarget();
             }
         }
     }
 
-    private bool InLineOfSight()
+    private bool InLineOfSight(Player target)
     {
         RaycastHit hit;
-        var dir = _target.transform.position - transform.position;
-        if(Physics.Raycast(transform.position+transform.up, dir, out hit, resetRange))
+        var dir = target.transform.position - transform.position;
+        if (Physics.Raycast(transform.position + transform.up, dir, out hit, resetRange))
         {
-            if(hit.transform != _target.transform)
+            if (hit.transform != target.transform)
             {
                 return false;
             }
