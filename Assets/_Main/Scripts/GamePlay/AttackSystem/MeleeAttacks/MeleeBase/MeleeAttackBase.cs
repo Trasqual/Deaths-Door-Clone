@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class MeleeAttackBase : AttackBase
 {
+    public float GeneralAttackCooldown = 0.5f;
     bool canAttack = true;
     Tween attackDelay;
 
@@ -75,6 +76,8 @@ public class MeleeAttackBase : AttackBase
     //Called when current attack state should end
     protected virtual void EndAttack()
     {
+        comboDelay?.Kill();
+        attackDelay?.Kill();
         canCombo = false;
         currentComboCount = 0;
         AssignAnimationData();
@@ -122,14 +125,14 @@ public class MeleeAttackBase : AttackBase
         DOVirtual.DelayedCall(animData.attackDamageDelay, () =>
         {
             var damageData = (SphereAttackDamageData)attackDatas[currentComboCount].AttackDamageData;
-            new SphereCastDamager(transform.root.position + transform.root.up, damageData.radius, transform.root.forward, damageData.range, damageData.damage, damageData.dmgDealerType);
+            new SphereCastDamager(transform.root.position + transform.root.up + transform.root.forward, damageData.radius, transform.root.forward, damageData.range, damageData.damage, damageData.dmgDealerType);
         });
     }
 
     private void OnDrawGizmosSelected()
     {
         var damageData = (SphereAttackDamageData)attackDatas[0].AttackDamageData;
-        Gizmos.DrawWireSphere(transform.root.position + transform.root.up, damageData.radius);
+        Gizmos.DrawWireSphere(transform.root.position + transform.root.up + transform.root.forward, damageData.radius);
         Gizmos.DrawWireSphere(transform.root.position + transform.root.up + (transform.root.forward * damageData.range), damageData.radius);
     }
 }

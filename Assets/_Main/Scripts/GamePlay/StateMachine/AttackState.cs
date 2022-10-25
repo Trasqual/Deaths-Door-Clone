@@ -22,6 +22,9 @@ namespace _Main.Scripts.GamePlay.StateMachine
         private AttackBase _selectedMeleeAttack;
         public Action OnComplete;
 
+        private bool IsOnAttackCooldown;
+        private float lastAttackCooldown = 0.5f;
+
         public void Initialize(InputBase input, MovementBase movementBase, Animator animator, AttackControllerBase attackController)
         {
             _input = input;
@@ -40,6 +43,11 @@ namespace _Main.Scripts.GamePlay.StateMachine
 
         public override void EnterState()
         {
+            if (IsOnAttackCooldown)
+            {
+                OnComplete?.Invoke();
+                return;
+            }
             SubscribeToInputActions();
             SubscribeToCurrentAttack();
             _movementBase.StopMovementAndRotation();
@@ -63,7 +71,13 @@ namespace _Main.Scripts.GamePlay.StateMachine
             UnSubscribeToCurrentAttack();
             IsAttacking = false;
             _movementBase.StopMovementAndRotation();
-            StopAnimation();
+            if (!IsOnAttackCooldown)
+            {
+                IsOnAttackCooldown = true;
+                var meleeAttack = (MeleeAttackBase)_selectedMeleeAttack;
+                DOVirtual.DelayedCall(meleeAttack.GeneralAttackCooldown, () => IsOnAttackCooldown = false);
+                StopAnimation();
+            }
         }
 
         public override void CancelState()
@@ -73,6 +87,7 @@ namespace _Main.Scripts.GamePlay.StateMachine
             ResetAnimatorController();  
             IsAttacking = false;
             _movementBase.StopMovementAndRotation();
+            StopAnimation();
             OnActionCanceled?.Invoke();
         }
 
@@ -92,7 +107,6 @@ namespace _Main.Scripts.GamePlay.StateMachine
 
         private void OnAttackCompleted()
         {
-            StopAnimation();
             OnComplete?.Invoke();
         }
 

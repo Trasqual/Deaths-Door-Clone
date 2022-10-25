@@ -56,6 +56,11 @@ public class EnemyBehaviour : BehaviourBase
         stateMachine.AddDeathState();
     }
 
+    public void GainDamageTakenBehaviour()
+    {
+        stateMachine.AddDamageTakenState(data.DamageTakenDuration);
+    }
+
     private void Attack()
     {
         stateMachine.ChangeState(typeof(AttackState));
@@ -69,7 +74,7 @@ public class EnemyBehaviour : BehaviourBase
     protected void Die()
     {
         _input.enabled = false;
-        _agent.isStopped = true;
+        _agent.enabled = false;
         stateMachine.ChangeState(typeof(DeathState));
     }
 

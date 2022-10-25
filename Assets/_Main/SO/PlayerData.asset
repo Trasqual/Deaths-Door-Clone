@@ -17,7 +17,7 @@ MonoBehaviour:
   RotationSpeed: 5
   DodgeSpeed: 5
   Health: 4
-  DamageTakenDuration: 0.5
+  DamageTakenDuration: 0.6
   AttackRange: 1.5
   aimingIndicator: {fileID: 766457008102004453, guid: c85acef4ee7050c4f92572b141c43a76, type: 3}
   cameraTargetGroup: {fileID: 154761681683377330, guid: dd8e39e5339a27d448e5c30c11251d63, type: 3}

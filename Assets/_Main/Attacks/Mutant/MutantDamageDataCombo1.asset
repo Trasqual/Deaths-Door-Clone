@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c488f67d8698f54384e9555943a234b, type: 3}
   m_Name: MutantDamageDataCombo1
   m_EditorClassIdentifier: 
-  radius: 2
-  range: 2
+  radius: 1
+  range: 1
   damage: 1
   dmgDealerType: 2
