@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class EnemyTriggerDetector : TriggerDetectorBase<Player>
 {
+    [SerializeField] LayerMask lineOfSightCheckMask;
     protected override void OnTriggerStay(Collider other)
     {
         if (_target == null)
@@ -30,7 +31,7 @@ public class EnemyTriggerDetector : TriggerDetectorBase<Player>
     {
         RaycastHit hit;
         var dir = target.transform.position - transform.position;
-        if (Physics.Raycast(transform.position + transform.up, dir, out hit, resetRange))
+        if (Physics.Raycast(transform.position + transform.up, dir, out hit, resetRange, lineOfSightCheckMask, QueryTriggerInteraction.Ignore))
         {
             if (hit.transform != target.transform)
             {

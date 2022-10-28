@@ -60,3 +60,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   range: 8
   resetRange: 20
+  lineOfSightCheckMask:
+    serializedVersion: 2
+    m_Bits: 63

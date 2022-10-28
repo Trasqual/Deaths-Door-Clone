@@ -26,7 +26,16 @@ namespace _Main.Scripts.GamePlay.AttackSystem.RangedAttacks
             rb.collisionDetectionMode = CollisionDetectionMode.ContinuousSpeculative;
             rb.isKinematic = true;
             Col.enabled = false;
-            transform.SetParent(collision.transform);
+            if(collision.collider.TryGetComponent(out ProjectileBoneStickingHandler boneStickHandler))
+            {
+                var newParent = boneStickHandler.GetClosestBone(collision.contacts[0].point);
+                transform.SetParent(newParent);
+                transform.position = newParent.position;
+            }
+            else
+            {
+                transform.SetParent(collision.transform);
+            }            
             if (collision.collider.TryGetComponent(out IDamagable damagable))
             {
                 DealDamage(Mathf.RoundToInt(_damage), damagable, _damageDealerType);
