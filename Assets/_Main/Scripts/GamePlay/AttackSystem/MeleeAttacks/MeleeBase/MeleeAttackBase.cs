@@ -8,18 +8,19 @@ public class MeleeAttackBase : AttackBase
     bool canAttack = true;
     Tween attackDelay;
 
-    int comboCount => attackDatas.Count;
+    int comboCount => comboDatas.Count;
     int currentComboCount;
-    bool hasCombo => attackDatas.Count > 1;
+    bool hasCombo => comboDatas.Count > 1;
     bool canCombo;
     Tween comboDelay;
     Tween damageDelay;
 
     protected virtual void Awake()
     {
-        CurrentAttackAnimationData = attackDatas[0].AttackAnimationData;
+        CurrentComboAnimationData = comboDatas[0].AttackAnimationData;
     }
 
+    #region IActionCallbacks(FromMeleeAttackState)
     //Called when attack button is down
     protected override void DoOnActionStart() //can move everything to DoOnActionEnd for charge attacks
     {
@@ -45,15 +46,15 @@ public class MeleeAttackBase : AttackBase
             OnAttackPerformed?.Invoke();
             DealDamage();
             SetCurrentComboCount();
-            StartCooldownCountdowns();
-            AssignAnimationData();
+            StartCountdowns();
+            AssignComboAnimationData();
         }
         else //if this attack doesn't have any combo, attack once and exit attack state
         {
             OnAttackPerformed?.Invoke();
             DealDamage();
-            StartCooldownCountdowns();
-            AssignAnimationData();
+            StartCountdowns();
+            AssignComboAnimationData();
         }
     }
 
@@ -72,20 +73,11 @@ public class MeleeAttackBase : AttackBase
         canAttack = true;
         canCombo = false;
         currentComboCount = 0;
-        AssignAnimationData();
+        AssignComboAnimationData();
     }
+    #endregion
 
-    //Called when current attack state should end
-    protected virtual void EndAttack()
-    {
-        comboDelay?.Kill();
-        attackDelay?.Kill();
-        canCombo = false;
-        currentComboCount = 0;
-        AssignAnimationData();
-        OnAttackCompleted?.Invoke();
-    }
-
+    //Set which Combo should be used next
     protected virtual void SetCurrentComboCount()
     {
         currentComboCount++;
@@ -95,15 +87,17 @@ public class MeleeAttackBase : AttackBase
         }
     }
 
-    protected virtual void AssignAnimationData()
+    //Setup Current Combo's animation data
+    protected virtual void AssignComboAnimationData()
     {
-        CurrentAttackAnimationData = attackDatas[currentComboCount].AttackAnimationData;
+        CurrentComboAnimationData = comboDatas[currentComboCount].AttackAnimationData;
     }
 
-    protected virtual void StartCooldownCountdowns()
+    //Setup cooldown timer for next combo attack and countdown timer for possible combo duration
+    protected virtual void StartCountdowns()
     {
         canAttack = false;
-        var info = (MeleeAttackAnimationData)CurrentAttackAnimationData;
+        var info = (MeleeAttackAnimationData)CurrentComboAnimationData;
         attackDelay = DOVirtual.DelayedCall(info.attackCD, () => //this should be slightly shorter than attack animation
         {
             canAttack = true;
@@ -123,17 +117,28 @@ public class MeleeAttackBase : AttackBase
 
     protected virtual void DealDamage()
     {
-        var animData = (MeleeAttackAnimationData)attackDatas[currentComboCount].AttackAnimationData;
+        var animData = (MeleeAttackAnimationData)comboDatas[currentComboCount].AttackAnimationData;
         damageDelay = DOVirtual.DelayedCall(animData.attackDamageDelay, () =>
         {
-            var damageData = (SphereAttackDamageData)attackDatas[currentComboCount].AttackDamageData;
+            var damageData = (SphereAttackDamageData)comboDatas[currentComboCount].AttackDamageData;
             new SphereCastDamager(transform.root.position + transform.root.up + transform.root.forward, damageData.radius, transform.root.forward, damageData.range, damageData.damage, damageData.dmgDealerType);
         });
     }
 
+    //Called when current attack state should end
+    protected virtual void EndAttack()
+    {
+        comboDelay?.Kill();
+        attackDelay?.Kill();
+        canCombo = false;
+        currentComboCount = 0;
+        AssignComboAnimationData();
+        OnAttackCompleted?.Invoke();
+    }
+
     private void OnDrawGizmosSelected()
     {
-        var damageData = (SphereAttackDamageData)attackDatas[0].AttackDamageData;
+        var damageData = (SphereAttackDamageData)comboDatas[0].AttackDamageData;
         Gizmos.DrawWireSphere(transform.root.position + transform.root.up + transform.root.forward, damageData.radius);
         Gizmos.DrawWireSphere(transform.root.position + transform.root.up + (transform.root.forward * damageData.range), damageData.radius);
     }

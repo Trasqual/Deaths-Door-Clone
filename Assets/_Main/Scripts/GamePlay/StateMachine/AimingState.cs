@@ -114,7 +114,7 @@ namespace _Main.Scripts.GamePlay.StateMachine
 
         public void SetAnimatorOverrideController()
         {
-            Animator.runtimeAnimatorController = _attackController.SelectedRangedAttack.CurrentAttackAnimationData.overrideController;
+            Animator.runtimeAnimatorController = _attackController.SelectedRangedAttack.CurrentComboAnimationData.overrideController;
         }
 
         public void ResetAnimatorController()

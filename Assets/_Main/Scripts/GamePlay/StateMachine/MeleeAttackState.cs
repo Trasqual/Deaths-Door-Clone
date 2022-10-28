@@ -40,6 +40,7 @@ namespace _Main.Scripts.GamePlay.StateMachine
             _transition.AddTransition(typeof(DamageTakenState), () => true, () => true);
         }
 
+        #region StateMethods
         public override void EnterState()
         {
             if (IsOnAttackCooldown)
@@ -51,12 +52,6 @@ namespace _Main.Scripts.GamePlay.StateMachine
             SubscribeToCurrentAttack();
             _movementBase.StopMovementAndRotation();
             OnAttackButtonPressed();
-        }
-
-        private void OnAttackButtonPressed()
-        {
-            _movementBase.StartMovementAndRotation();
-            OnActionStart?.Invoke();
         }
 
         public override void UpdateState()
@@ -89,24 +84,25 @@ namespace _Main.Scripts.GamePlay.StateMachine
             StopAnimation();
             OnActionCanceled?.Invoke();
         }
+        #endregion
 
-        private void OnAttackPerformed()
+        #region InputCallbacks
+        private void SubscribeToInputActions()
         {
-            stateLockTween?.Kill();
-            IsStateLocked = false;
-
-            PlayAnimation();
-            transform.rotation = Quaternion.LookRotation(_input.GetLookInput());
-            var info = (MeleeAttackAnimationData)_selectedMeleeAttack.CurrentAttackAnimationData;
-            _movementBase.MoveOverTime(transform.position + transform.forward * info.attackMovementAmount, info.attackMovementDuration, info.attackMovementDelay, info.useGravity, info.useAnimationMovement);
-
-            IsStateLocked = info.useAnimationMovement;
-            stateLockTween = DOVirtual.DelayedCall(info.attackCD, () => IsStateLocked = false);
+            _input.OnAttackActionStarted += OnAttackButtonPressed;
+            _input.OnAttackActionEnded += OnAttackButtonReleased;
         }
 
-        private void OnAttackCompleted()
+        private void UnSubscribeToInputActions()
         {
-            OnComplete?.Invoke();
+            _input.OnAttackActionStarted -= OnAttackButtonPressed;
+            _input.OnAttackActionEnded -= OnAttackButtonReleased;
+        }
+
+        private void OnAttackButtonPressed()
+        {
+            _movementBase.StartMovementAndRotation();
+            OnActionStart?.Invoke();
         }
 
         private void OnAttackButtonReleased()
@@ -120,6 +116,10 @@ namespace _Main.Scripts.GamePlay.StateMachine
             _selectedMeleeAttack = selectedAttack;
             SubscribeToCurrentAttack();
         }
+
+        #endregion
+
+        #region CurrentAttackCallbacks
 
         private void SubscribeToCurrentAttack()
         {
@@ -136,19 +136,28 @@ namespace _Main.Scripts.GamePlay.StateMachine
             }
         }
 
-        private void SubscribeToInputActions()
+        private void OnAttackPerformed()
         {
-            _input.OnAttackActionStarted += OnAttackButtonPressed;
-            _input.OnAttackActionEnded += OnAttackButtonReleased;
+            stateLockTween?.Kill();
+            IsStateLocked = false;
+
+            PlayAnimation();
+            transform.rotation = Quaternion.LookRotation(_input.GetLookInput());
+            var info = (MeleeAttackAnimationData)_selectedMeleeAttack.CurrentComboAnimationData;
+            _movementBase.MoveOverTime(transform.position + transform.forward * info.attackMovementAmount, info.attackMovementDuration, info.attackMovementDelay, info.useGravity, info.useAnimationMovement);
+
+            IsStateLocked = info.useAnimationMovement;
+            stateLockTween = DOVirtual.DelayedCall(info.attackCD, () => IsStateLocked = false);
         }
 
-        private void UnSubscribeToInputActions()
+        private void OnAttackCompleted()
         {
-            _input.OnAttackActionStarted -= OnAttackButtonPressed;
-            _input.OnAttackActionEnded -= OnAttackButtonReleased;
+            OnComplete?.Invoke();
         }
 
-        #region Actions
+        #endregion
+
+        #region Actions(IAction)
 
         public event Action OnActionStart;
         public event Action OnActionEnd;
@@ -187,8 +196,8 @@ namespace _Main.Scripts.GamePlay.StateMachine
 
         public void SetAnimatorOverrideController()
         {
-            Animator.runtimeAnimatorController = _attackController.SelectedMeleeAttack.CurrentAttackAnimationData.overrideController;
-            var animData = (MeleeAttackAnimationData)_selectedMeleeAttack.CurrentAttackAnimationData;
+            Animator.runtimeAnimatorController = _attackController.SelectedMeleeAttack.CurrentComboAnimationData.overrideController;
+            var animData = (MeleeAttackAnimationData)_selectedMeleeAttack.CurrentComboAnimationData;
             Animator.SetFloat(SpeedMultHashCode, animData.animationSpeedMultiplier);
         }
 
@@ -200,7 +209,7 @@ namespace _Main.Scripts.GamePlay.StateMachine
         public void PlayAnimation()
         {
             SetAnimatorOverrideController();
-            var info = (MeleeAttackAnimationData)_selectedMeleeAttack.CurrentAttackAnimationData;
+            var info = (MeleeAttackAnimationData)_selectedMeleeAttack.CurrentComboAnimationData;
             Animator.CrossFadeInFixedTime(info.fadeToAnimationName, 0.05f);
         }
 
