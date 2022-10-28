@@ -28,7 +28,7 @@ namespace _Main.Scripts.GamePlay.StateMachine
 
             _transition.AddTransition(typeof(AimingState), () => _isDodgeComplete, () => false);
             _transition.AddTransition(typeof(MovementState), () => _isDodgeComplete, () => false);
-            _transition.AddTransition(typeof(AttackState), () => _isDodgeComplete, () => false);
+            _transition.AddTransition(typeof(MeleeAttackState), () => _isDodgeComplete, () => false);
             _transition.AddTransition(typeof(DeathState), () => true, () => false);
         }
 

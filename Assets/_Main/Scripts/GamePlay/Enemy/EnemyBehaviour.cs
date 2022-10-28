@@ -64,7 +64,7 @@ public class EnemyBehaviour : BehaviourBase
 
     private void Attack()
     {
-        stateMachine.ChangeState(typeof(AttackState));
+        stateMachine.ChangeState(typeof(MeleeAttackState));
     }
 
     protected void TakeDamage(int i)

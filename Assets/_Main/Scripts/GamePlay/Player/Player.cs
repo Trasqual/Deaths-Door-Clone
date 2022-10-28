@@ -73,7 +73,7 @@ namespace _Main.Scripts.GamePlay.Player
 
         public void LoseAttackBehaviour()
         {
-            stateMachine.RemoveState(typeof(AttackState));
+            stateMachine.RemoveState(typeof(MeleeAttackState));
         }
 
         public void GainAimingBehaviour()
@@ -116,7 +116,7 @@ namespace _Main.Scripts.GamePlay.Player
         #region Actions(Melee/Ranged/Roll)
         private void Attack()
         {
-            stateMachine.ChangeState(typeof(AttackState));
+            stateMachine.ChangeState(typeof(MeleeAttackState));
         }
 
         private void StartAiming()

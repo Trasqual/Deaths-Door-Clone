@@ -39,7 +39,7 @@ namespace _Main.Scripts.GamePlay.StateMachine
             Animator = animator;
             _transition = this;
             
-            _transition.AddTransition(typeof(AttackState), () => true, () => false);
+            _transition.AddTransition(typeof(MeleeAttackState), () => true, () => false);
             _transition.AddTransition(typeof(AimingState), () => true, () => false);
             _transition.AddTransition(typeof(DodgeState), () => true, () => true);
             _transition.AddTransition(typeof(DeathState), () => true, () => true);

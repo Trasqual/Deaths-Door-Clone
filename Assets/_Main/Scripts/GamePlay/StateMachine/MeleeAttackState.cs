@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace _Main.Scripts.GamePlay.StateMachine
 {
-    public class AttackState : StateBase, IAction, ITransition, IAnimationOverridable
+    public class MeleeAttackState : StateBase, IAction, ITransition, IAnimationOverridable
     {
         public bool IsAttacking { get; private set; }
         public bool IsStateLocked { get; private set; }
@@ -23,7 +23,6 @@ namespace _Main.Scripts.GamePlay.StateMachine
         public Action OnComplete;
 
         private bool IsOnAttackCooldown;
-        private float lastAttackCooldown = 0.5f;
 
         public void Initialize(InputBase input, MovementBase movementBase, Animator animator, AttackControllerBase attackController)
         {

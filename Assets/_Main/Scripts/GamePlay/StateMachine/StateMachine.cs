@@ -60,9 +60,9 @@ namespace _Main.Scripts.GamePlay.StateMachine
 
         public void AddAttackState(AttackControllerBase attackController)
         {
-            if (GetState(typeof(AttackState))) return;
+            if (GetState(typeof(MeleeAttackState))) return;
 
-            var attackState = gameObject.AddComponent<AttackState>();
+            var attackState = gameObject.AddComponent<MeleeAttackState>();
             attackState.Initialize(_inputBase, _movementBase, _animator, attackController);
             states.Add(attackState);
             attackState.OnComplete += OnCompleteState;

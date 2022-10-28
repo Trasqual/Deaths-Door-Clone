@@ -9,7 +9,7 @@ public class AttackController : AttackControllerBase
 {
     public override void SwitchMeleeWeapon(float switchInput, StateMachine stateMachine)
     {
-        if (stateMachine.CurrentState is AttackState) return;
+        if (stateMachine.CurrentState is MeleeAttackState) return;
         SelectedAttackIndex += (int)Mathf.Sign(switchInput);
         if (SelectedAttackIndex > meleeAttacks.Count - 1)
         {
@@ -26,10 +26,10 @@ public class AttackController : AttackControllerBase
     {
         if(SelectedMeleeAttack != null)
         {
-            SelectedMeleeAttack.Release(stateMachine.GetState(typeof(AttackState)) as IAction);
+            SelectedMeleeAttack.Release(stateMachine.GetState(typeof(MeleeAttackState)) as IAction);
         }
         SelectedMeleeAttack = meleeAttacks[SelectedAttackIndex];
-        SelectedMeleeAttack.Init(stateMachine.GetState(typeof(AttackState)) as IAction);
+        SelectedMeleeAttack.Init(stateMachine.GetState(typeof(MeleeAttackState)) as IAction);
         OnSelectedMeleeAttackChanged?.Invoke(SelectedMeleeAttack);
     }
 
@@ -43,7 +43,7 @@ public class AttackController : AttackControllerBase
     public override void SetSelectedMeleeAttack(Type meleeAttackType, StateMachine stateMachine)
     {
         SelectedMeleeAttack = SelectAttackFromList(meleeAttackType, meleeAttacks);
-        SelectedMeleeAttack.Init(stateMachine.GetState(typeof(AttackState)) as IAction);
+        SelectedMeleeAttack.Init(stateMachine.GetState(typeof(MeleeAttackState)) as IAction);
         OnSelectedMeleeAttackChanged?.Invoke(SelectedMeleeAttack);
     }
     
