@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace _Main.Scripts.GamePlay.StateMachine
 {
-    public class MeleeAttackState : StateBase, IAction, ITransition, IAnimationOverridable
+    public class AttackState : StateBase, IAction, ITransition, IAnimationOverridable
     {
         public bool IsAttacking { get; private set; }
         public bool IsStateLocked { get; private set; }
