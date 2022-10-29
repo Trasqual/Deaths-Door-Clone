@@ -195,6 +195,34 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5962585494358442489}
     m_Modifications:
+    - target: {fileID: 1533516701862259769, guid: c5c8e8edccd931148a751cb8033fd159, type: 3}
+      propertyPath: comboDatas.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1533516701862259769, guid: c5c8e8edccd931148a751cb8033fd159, type: 3}
+      propertyPath: comboDatas.Array.data[0].AttackDamageData
+      value: 
+      objectReference: {fileID: 11400000, guid: 9de529776aa0b924091a6f534794bf1e, type: 2}
+    - target: {fileID: 1533516701862259769, guid: c5c8e8edccd931148a751cb8033fd159, type: 3}
+      propertyPath: comboDatas.Array.data[1].AttackDamageData
+      value: 
+      objectReference: {fileID: 11400000, guid: 9de529776aa0b924091a6f534794bf1e, type: 2}
+    - target: {fileID: 1533516701862259769, guid: c5c8e8edccd931148a751cb8033fd159, type: 3}
+      propertyPath: comboDatas.Array.data[2].AttackDamageData
+      value: 
+      objectReference: {fileID: 11400000, guid: 9de529776aa0b924091a6f534794bf1e, type: 2}
+    - target: {fileID: 1533516701862259769, guid: c5c8e8edccd931148a751cb8033fd159, type: 3}
+      propertyPath: comboDatas.Array.data[0].AttackAnimationData
+      value: 
+      objectReference: {fileID: 11400000, guid: dd6a607a915345646ad6abb58b93d2ed, type: 2}
+    - target: {fileID: 1533516701862259769, guid: c5c8e8edccd931148a751cb8033fd159, type: 3}
+      propertyPath: comboDatas.Array.data[1].AttackAnimationData
+      value: 
+      objectReference: {fileID: 11400000, guid: 2840223b4aee92944b177ba5e7e55d62, type: 2}
+    - target: {fileID: 1533516701862259769, guid: c5c8e8edccd931148a751cb8033fd159, type: 3}
+      propertyPath: comboDatas.Array.data[2].AttackAnimationData
+      value: 
+      objectReference: {fileID: 11400000, guid: 310a9f0a6171c0a4683eb1c98a3bf672, type: 2}
     - target: {fileID: 7909131335176812136, guid: c5c8e8edccd931148a751cb8033fd159, type: 3}
       propertyPath: m_RootOrder
       value: 1

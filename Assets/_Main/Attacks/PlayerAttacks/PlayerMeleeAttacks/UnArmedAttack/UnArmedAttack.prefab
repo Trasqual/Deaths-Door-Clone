@@ -44,10 +44,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99beb85e151961848a4a16bfcae22543, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackDatas:
+  comboDatas:
   - AttackAnimationData: {fileID: 11400000, guid: f233235e998ca4b9899f3f25a305303f, type: 2}
     AttackDamageData: {fileID: 11400000, guid: 32217f2637a263949aa52741b96b680b, type: 2}
   - AttackAnimationData: {fileID: 11400000, guid: 302a4f009be6841958d270cf5af9f3d6, type: 2}
     AttackDamageData: {fileID: 11400000, guid: 583fc430cc1039645bde23631f80cbce, type: 2}
   - AttackAnimationData: {fileID: 11400000, guid: 5601d1d77c1eb08408771d221a59e05e, type: 2}
     AttackDamageData: {fileID: 11400000, guid: c128d09893286a049bb1894a2ff802b0, type: 2}
+  GeneralAttackCooldown: 0.5

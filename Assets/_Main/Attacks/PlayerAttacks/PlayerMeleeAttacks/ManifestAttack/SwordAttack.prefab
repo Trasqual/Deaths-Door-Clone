@@ -4343,8 +4343,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b87e9b8e37f5f948a49856fb8327749, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackDatas:
+  comboDatas:
   - AttackAnimationData: {fileID: 11400000, guid: 86004817fd4b6c947860ddfa3371cd6e, type: 2}
     AttackDamageData: {fileID: 11400000, guid: 91ef64f7049d52e49812bfea81e421cc, type: 2}
-  - AttackAnimationData: {fileID: 11400000, guid: 9c933bd0c16290e44a526e2d52863597, type: 2}
-    AttackDamageData: {fileID: 11400000, guid: 91ef64f7049d52e49812bfea81e421cc, type: 2}
+  GeneralAttackCooldown: 0.5

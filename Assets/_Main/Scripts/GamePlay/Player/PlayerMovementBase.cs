@@ -35,7 +35,7 @@ namespace _Main.Scripts.GamePlay.Player
                 {
                     canMove = false;
                     applyGravity = false;
-                    transform.position = new Vector3(-13f, 1f, 0f);
+                    transform.position = new Vector3(-10f, 1f, 3.35f);
                     fallTimer = 0f;
                     DOVirtual.DelayedCall(1f, () => { canMove = true; applyGravity = true; });
                 }

@@ -45,9 +45,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a03f931c102f40e4a9735cdbf47a71ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackDatas:
+  comboDatas:
   - AttackAnimationData: {fileID: 11400000, guid: 9c933bd0c16290e44a526e2d52863597, type: 2}
     AttackDamageData: {fileID: 11400000, guid: 7797fcd65944b2a4383071b9750c6d86, type: 2}
+  GeneralAttackCooldown: 0.5
 --- !u!1 &8209032664343286225
 GameObject:
   m_ObjectHideFlags: 0
