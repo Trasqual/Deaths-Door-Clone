@@ -2,15 +2,15 @@ using UnityEngine;
 
 public class HealthBarSet : MonoBehaviour
 {
-    [SerializeField] GameObject bar;
+    [SerializeField] private GameObject _bar;
 
     public void CloseBar()
     {
-        bar.SetActive(false);
+        _bar.SetActive(false);
     }
 
     public void ActivateBar()
     {
-        bar.SetActive(true);
+        _bar.SetActive(true);
     }
 }

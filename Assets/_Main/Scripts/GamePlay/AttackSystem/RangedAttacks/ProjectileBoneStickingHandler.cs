@@ -4,20 +4,20 @@ using UnityEngine;
 
 public class ProjectileBoneStickingHandler : MonoBehaviour
 {
-    [SerializeField] Transform[] bones;
+    [SerializeField] private Transform[] _bones;
 
     public Transform GetClosestBone(Vector3 pointOfImpact)
     {
         Transform closestBone = null;
         var closestDist = float.MaxValue;
 
-        for (int i = 0; i < bones.Length; i++)
+        for (int i = 0; i < _bones.Length; i++)
         {
-            var mag = (pointOfImpact - bones[i].position).sqrMagnitude;
+            var mag = (pointOfImpact - _bones[i].position).sqrMagnitude;
             if (mag < closestDist)
             {
                 closestDist = mag;
-                closestBone = bones[i];
+                closestBone = _bones[i];
             }
         }
         return closestBone;

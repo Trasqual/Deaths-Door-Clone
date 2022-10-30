@@ -6,34 +6,34 @@ namespace _Main.Scripts.GamePlay.Player
 {
     public class PlayerInput : InputBase
     {
-        private Camera cam;
-        private InputActions inputActions;
+        private Camera _cam;
+        private InputActions _inputActions;
 
-        private Vector3 movementInput;
-        private Vector3 lookInput;
+        private Vector3 _movementInput;
+        private Vector3 _lookInput;
 
-        private bool isInputEnabled;
+        private bool _isInputEnabled;
 
         public bool IsAiming { get; private set; }
 
         private void Awake()
         {
-            cam = Camera.main;
+            _cam = Camera.main;
 
-            inputActions = new InputActions();
-            inputActions.PlayerControls.Enable();
+            _inputActions = new InputActions();
+            _inputActions.PlayerControls.Enable();
 
             SubscribeToInputActions();
         }
 
         private void SubscribeToInputActions()
         {
-            inputActions.PlayerControls.Roll.started += RollButtonPressed;
-            inputActions.PlayerControls.Aim.started += AimButtonPressed;
-            inputActions.PlayerControls.Aim.canceled += AimButtonReleased;
-            inputActions.PlayerControls.Attack.started += AttackButtonPressed;
-            inputActions.PlayerControls.Attack.canceled += AttackButtonReleased;
-            inputActions.PlayerControls.SwitchMeleeWeapon.performed += OnWeaponSwitchButtonPressed;
+            _inputActions.PlayerControls.Roll.started += RollButtonPressed;
+            _inputActions.PlayerControls.Aim.started += AimButtonPressed;
+            _inputActions.PlayerControls.Aim.canceled += AimButtonReleased;
+            _inputActions.PlayerControls.Attack.started += AttackButtonPressed;
+            _inputActions.PlayerControls.Attack.canceled += AttackButtonReleased;
+            _inputActions.PlayerControls.SwitchMeleeWeapon.performed += OnWeaponSwitchButtonPressed;
         }
 
         private void RollButtonPressed(InputAction.CallbackContext ctx)
@@ -78,60 +78,60 @@ namespace _Main.Scripts.GamePlay.Player
 
         private void ReadMovementInput()
         {
-            var readMovementVector = inputActions.PlayerControls.Movement.ReadValue<Vector2>();
-            movementInput = new Vector3(readMovementVector.x, 0f, readMovementVector.y);
+            var readMovementVector = _inputActions.PlayerControls.Movement.ReadValue<Vector2>();
+            _movementInput = new Vector3(readMovementVector.x, 0f, readMovementVector.y);
         }
 
         private void ReadLookInput()
         {
-            var readLookVector = inputActions.PlayerControls.Look.ReadValue<Vector2>();
-            if (inputActions.PlayerControls.Look.activeControl != null)
+            var readLookVector = _inputActions.PlayerControls.Look.ReadValue<Vector2>();
+            if (_inputActions.PlayerControls.Look.activeControl != null)
             {
-                if (inputActions.PlayerControls.Look.activeControl.device.displayName == "Mouse")
+                if (_inputActions.PlayerControls.Look.activeControl.device.displayName == "Mouse")
                 {
-                    lookInput = GetAxisFromMousePos(readLookVector);
+                    _lookInput = GetAxisFromMousePos(readLookVector);
                 }
                 else
                 {
-                    lookInput = new Vector3(readLookVector.x, 0f, readLookVector.y);
+                    _lookInput = new Vector3(readLookVector.x, 0f, readLookVector.y);
                 }
             }
             else
             {
-                lookInput = movementInput;
+                _lookInput = _movementInput;
             }
         }
 
         private Vector3 GetAxisFromMousePos(Vector2 mousePosition)
         {
-            var playerPos = cam.WorldToScreenPoint(transform.position);
+            var playerPos = _cam.WorldToScreenPoint(transform.position);
             playerPos.z = 0f;
             var dir = (Vector3)mousePosition - playerPos;
             dir.z = dir.y;
             dir.y = 0f;
             dir.Normalize();
-            dir = Quaternion.Euler(0f, cam.transform.rotation.y, 0f) * dir;
+            dir = Quaternion.Euler(0f, _cam.transform.rotation.y, 0f) * dir;
             return dir;
         }
 
         public bool IsInputEnabled()
         {
-            return isInputEnabled;
+            return _isInputEnabled;
         }
 
         public override Vector3 GetMovementInput()
         {
-            return movementInput;
+            return _movementInput;
         }
 
         public override Vector3 GetLookInput()
         {
-            return lookInput;
+            return _lookInput;
         }
 
         public void ToggleInput(bool isOn)
         {
-            isInputEnabled = isOn;
+            _isInputEnabled = isOn;
         }
     }
 }

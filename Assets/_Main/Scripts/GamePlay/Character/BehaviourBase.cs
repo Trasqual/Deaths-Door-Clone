@@ -5,14 +5,14 @@ using UnityEngine;
 [RequireComponent(typeof(StateMachine))]
 public abstract class BehaviourBase : MonoBehaviour
 {
-    [SerializeField] protected BehaviourData data;
+    [SerializeField] protected BehaviourData _data;
     
-    protected StateMachine stateMachine;
+    protected StateMachine _stateMachine;
     protected InputBase _input;
 
     protected virtual void Awake()
     {
-        stateMachine = GetComponent<StateMachine>();
+        _stateMachine = GetComponent<StateMachine>();
         _input = GetComponent<InputBase>();
     }
 }

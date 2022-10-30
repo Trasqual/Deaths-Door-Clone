@@ -3,46 +3,46 @@ using UnityEngine;
 
 public class HealthBarHandler : MonoBehaviour
 {
-    [SerializeField] GameObject healthBarGroup;
-    [SerializeField] HealthBarSet healthBar;
+    [SerializeField] private GameObject _healthBarGroup;
+    [SerializeField] private HealthBarSet _healthBar;
 
-    HealthComponentBase healthManager;
+    private HealthComponentBase _healthManager;
 
-    List<HealthBarSet> barSets = new List<HealthBarSet>();
+    private List<HealthBarSet> _barSets = new List<HealthBarSet>();
 
     private void Start()
     {
-        healthManager = GetComponentInParent<HealthComponentBase>();
-        healthManager.OnDamageTaken += UpdateHealthBar;
-        healthManager.OnDeath += DisableHealthBar;
+        _healthManager = GetComponentInParent<HealthComponentBase>();
+        _healthManager.OnDamageTaken += UpdateHealthBar;
+        _healthManager.OnDeath += DisableHealthBar;
         Initialize();
     }
 
     private void Initialize()
     {
-        for (int i = 0; i < healthManager.MaxHealth; i++)
+        for (int i = 0; i < _healthManager.MaxHealth; i++)
         {
-            barSets.Add(Instantiate(healthBar, transform.GetChild(0)));
+            _barSets.Add(Instantiate(_healthBar, transform.GetChild(0)));
         }
     }
 
     private void UpdateHealthBar(int value)
     {
-        for (int i = 0; i < barSets.Count; i++)
+        for (int i = 0; i < _barSets.Count; i++)
         {
             if (i < value)
             {
-                barSets[i].ActivateBar();
+                _barSets[i].ActivateBar();
             }
             else
             {
-                barSets[i].CloseBar();
+                _barSets[i].CloseBar();
             }
         }
     }
 
     private void DisableHealthBar()
     {
-        healthBarGroup.SetActive(false);
+        _healthBarGroup.SetActive(false);
     }
 }

@@ -6,28 +6,28 @@ namespace _Main.Scripts.GamePlay.Indicators.AimingIndicator
 {
     public class AimActionIndicator : ActionIndicatorBase
     {
-        [SerializeField] private GameObject indicatorVisual;
-        [SerializeField] private float indicatorDistance = 7f;
-        [SerializeField] private float indicatorMoveSpeed = 10f;
+        [SerializeField] private GameObject _indicatorVisual;
+        [SerializeField] private float _indicatorDistance = 7f;
+        [SerializeField] private float _indicatorMoveSpeed = 10f;
 
-        private Tweener resetTween;
+        private Tweener _resetTween;
 
         protected override void Activate()
         {
-            indicatorVisual.SetActive(true);
-            if (resetTween != null) resetTween.Kill();
+            _indicatorVisual.SetActive(true);
+            if (_resetTween != null) _resetTween.Kill();
         }
 
         protected override void Deactivate()
         {
-            indicatorVisual.SetActive(false);
+            _indicatorVisual.SetActive(false);
             transform.rotation = Quaternion.identity;
-            resetTween = transform.DOLocalMove(Vector3.zero, 0.5f);
+            _resetTween = transform.DOLocalMove(Vector3.zero, 0.5f);
         }
 
         private void Update()
         {
-            if (indicatorVisual.activeSelf)
+            if (_indicatorVisual.activeSelf)
             {
                 DoOnActionPerformed();
             }
@@ -40,8 +40,8 @@ namespace _Main.Scripts.GamePlay.Indicators.AimingIndicator
 
         private void SetPositionAndRotation()
         {
-            var target = transform.parent.position + (transform.parent.forward * indicatorDistance);
-            transform.position = Vector3.Lerp(transform.position, target, Time.deltaTime * indicatorMoveSpeed);
+            var target = transform.parent.position + (transform.parent.forward * _indicatorDistance);
+            transform.position = Vector3.Lerp(transform.position, target, Time.deltaTime * _indicatorMoveSpeed);
             transform.rotation = transform.parent.rotation;
         }
     }

@@ -4,29 +4,29 @@ namespace _Main.Scripts.GamePlay.MovementSystem
 {
     public abstract class MovementBase : MonoBehaviour
     {
-        protected bool canMove = true;
-        protected bool canRotate = true;
+        protected bool _canMove = true;
+        protected bool _canRotate = true;
 
         protected abstract bool IsMoving();
 
         public virtual void StartMovement()
         {
-            canMove = true;
+            _canMove = true;
         }
 
         public virtual void StopMovement()
         {
-            canMove = false;
+            _canMove = false;
         }
 
         public virtual void StartRotation()
         {
-            canRotate = true;
+            _canRotate = true;
         }
 
         public virtual void StopRotation()
         {
-            canRotate = false;
+            _canRotate = false;
         }
 
         public void StartMovementAndRotation()

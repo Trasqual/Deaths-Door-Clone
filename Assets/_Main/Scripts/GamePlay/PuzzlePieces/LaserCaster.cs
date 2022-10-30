@@ -7,7 +7,7 @@ public class LaserCaster : MonoBehaviour
     [SerializeField] protected LayerMask _mask;
 
     protected LaserBeam _spawnedBeam;
-    protected bool isActive = true;
+    protected bool _isActive = true;
 
     private void Start()
     {
@@ -16,7 +16,7 @@ public class LaserCaster : MonoBehaviour
 
     private void Update()
     {
-        if (isActive)
+        if (_isActive)
         {
             CastLaser();
         }
@@ -38,12 +38,12 @@ public class LaserCaster : MonoBehaviour
 
     public void Activate()
     {
-        isActive = true;
+        _isActive = true;
     }
 
     public void DeActivate()
     {
-        isActive = false;
+        _isActive = false;
         _spawnedBeam.UpdateBeam(new Vector3[] { transform.position, transform.position });
     }
 }

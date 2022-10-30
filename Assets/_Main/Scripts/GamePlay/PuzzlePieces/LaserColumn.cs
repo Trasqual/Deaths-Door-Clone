@@ -5,12 +5,12 @@ using UnityEngine;
 public class LaserColumn : MonoBehaviour
 {
     private Rotator _rotator;
-    private List<LaserCaster> laserCasters = new List<LaserCaster>();
+    private List<LaserCaster> _laserCasters = new List<LaserCaster>();
 
     private void Awake()
     {
         _rotator = GetComponent<Rotator>();
-        laserCasters = GetComponentsInChildren<LaserCaster>().ToList();
+        _laserCasters = GetComponentsInChildren<LaserCaster>().ToList();
     }
 
     private void Start()
@@ -21,7 +21,7 @@ public class LaserColumn : MonoBehaviour
     public void Activate()
     {
         _rotator.enabled = true;
-        foreach (var laserCaster in laserCasters)
+        foreach (var laserCaster in _laserCasters)
         {
             laserCaster.Activate();
         }
@@ -30,7 +30,7 @@ public class LaserColumn : MonoBehaviour
     public void DeActivate()
     {
         _rotator.enabled = false;
-        foreach (var laserCaster in laserCasters)
+        foreach (var laserCaster in _laserCasters)
         {
             laserCaster.DeActivate();
         }

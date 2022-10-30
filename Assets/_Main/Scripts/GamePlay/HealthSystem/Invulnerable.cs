@@ -23,17 +23,17 @@ public class Invulnerable : InvulnerableBase
 
     public override void StopInvulnerabilityCoroutine()
     {
-        if (InvulnerabilityCoroutine != null)
+        if (_invulnerabilityCoroutine != null)
         {
-            StopCoroutine(InvulnerabilityCoroutine);
+            StopCoroutine(_invulnerabilityCoroutine);
         }
     }
 
     public override void InvulnerableForDuration(float duration)
     {
         StopInvulnerabilityCoroutine();
-        InvulnerabilityCoroutine = SetInvulnerableForDuration(duration);
-        StartCoroutine(InvulnerabilityCoroutine);
+        _invulnerabilityCoroutine = SetInvulnerableForDuration(duration);
+        StartCoroutine(_invulnerabilityCoroutine);
         IsActive = true;
     }
 }

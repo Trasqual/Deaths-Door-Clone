@@ -5,28 +5,28 @@ namespace _Main.Scripts.GamePlay.AttackSystem.RangedAttacks
 {
     public class Projectile : MonoBehaviour, IDamageDealer
     {
-        [SerializeField] float maxTravelDistance = 15f;
-        [SerializeField] float projectileSpeed = 5f;
-        [SerializeField] float baseDamage = 1f;
+        [SerializeField] private float _maxTravelDistance = 15f;
+        [SerializeField] private float _projectileSpeed = 5f;
+        [SerializeField] private float _baseDamage = 1f;
         private float _dmgMultiplier = 1f;
-        private float _damage => baseDamage * _dmgMultiplier;
+        private float _damage => _baseDamage * _dmgMultiplier;
         private DamageDealerType _damageDealerType;
-        private Vector3 startPos;
+        private Vector3 _startPos;
         private IDamageable _caster;
 
-        Rigidbody rb;
+        private Rigidbody _rb;
         public Collider Col => GetComponent<Collider>();
 
         private void Start()
         {
-            rb = GetComponent<Rigidbody>();
-            rb.AddForce(transform.forward * projectileSpeed, ForceMode.Impulse);
-            startPos = transform.position;
+            _rb = GetComponent<Rigidbody>();
+            _rb.AddForce(transform.forward * _projectileSpeed, ForceMode.Impulse);
+            _startPos = transform.position;
         }
 
         private void FixedUpdate()
         {
-            if(Vector3.Distance(transform.position, startPos) >= maxTravelDistance)
+            if(Vector3.Distance(transform.position, _startPos) >= _maxTravelDistance)
             {
                 StartCoroutine(DestroySelf(0f));
             }
@@ -34,8 +34,8 @@ namespace _Main.Scripts.GamePlay.AttackSystem.RangedAttacks
 
         private void OnCollisionEnter(Collision collision)
         {
-            rb.collisionDetectionMode = CollisionDetectionMode.ContinuousSpeculative;
-            rb.isKinematic = true;
+            _rb.collisionDetectionMode = CollisionDetectionMode.ContinuousSpeculative;
+            _rb.isKinematic = true;
             Col.enabled = false;
             if(collision.collider.TryGetComponent(out ProjectileBoneStickingHandler boneStickHandler))
             {

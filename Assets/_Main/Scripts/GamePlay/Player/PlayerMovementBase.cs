@@ -7,55 +7,55 @@ namespace _Main.Scripts.GamePlay.Player
 {
     public class PlayerMovementBase : MovementBase
     {
-        [SerializeField] private float baseMovementSpeed = 5f;
-        [SerializeField] private float baseRotationSpeed = 20f;
-        [SerializeField] private float fallToDeathTime = 2f;
+        [SerializeField] private float _baseMovementSpeed = 5f;
+        [SerializeField] private float _baseRotationSpeed = 20f;
+        [SerializeField] private float _fallToDeathTime = 2f;
 
-        private Player player;
-        private AnimationMovementBase animationMovement;
+        private Player _player;
+        private AnimationMovementBase _animationMovement;
 
-        private bool applyGravity = true;
+        private bool _applyGravity = true;
 
-        private float fallTimer = 0f;
+        private float _fallTimer = 0f;
 
-        private IEnumerator moveOverTimeCo;
+        private IEnumerator _moveOverTimeCo;
 
         private void Start()
         {
-            player = GetComponent<Player>();
-            animationMovement = GetComponentInChildren<AnimationMovementBase>();
+            _player = GetComponent<Player>();
+            _animationMovement = GetComponentInChildren<AnimationMovementBase>();
         }
 
         private void Update()
         {
-            if (!player.Controller.isGrounded && applyGravity)
+            if (!_player.Controller.isGrounded && _applyGravity)
             {
-                fallTimer += Time.deltaTime;
-                if (fallTimer >= fallToDeathTime)
+                _fallTimer += Time.deltaTime;
+                if (_fallTimer >= _fallToDeathTime)
                 {
-                    canMove = false;
-                    applyGravity = false;
+                    _canMove = false;
+                    _applyGravity = false;
                     transform.position = new Vector3(-10f, 1f, 3.35f);
-                    fallTimer = 0f;
-                    DOVirtual.DelayedCall(1f, () => { canMove = true; applyGravity = true; });
+                    _fallTimer = 0f;
+                    DOVirtual.DelayedCall(1f, () => { _canMove = true; _applyGravity = true; });
                 }
             }
             else
             {
-                fallTimer = 0f;
+                _fallTimer = 0f;
             }
         }
 
         protected override bool IsMoving()
         {
-            return player.Controller.velocity.magnitude > 0f;
+            return _player.Controller.velocity.magnitude > 0f;
         }
 
 
 
         protected void MoveInDirection(Vector3 dir, float speed)
         {
-            player.Controller.Move(dir * Time.deltaTime * speed);
+            _player.Controller.Move(dir * Time.deltaTime * speed);
         }
 
         protected void RotateInDirection(Vector3 direction, float rotationSpeed)
@@ -68,22 +68,22 @@ namespace _Main.Scripts.GamePlay.Player
 
         private void ApplyGravity()
         {
-            player.Controller.Move(Physics.gravity * Time.deltaTime);
+            _player.Controller.Move(Physics.gravity * Time.deltaTime);
         }
 
         public override void Move(Vector3 dir, float movementSpeedMultiplier, float rotationSpeedMultiplier)
         {
-            if (canMove)
+            if (_canMove)
             {
-                MoveInDirection(dir, baseMovementSpeed * movementSpeedMultiplier);
+                MoveInDirection(dir, _baseMovementSpeed * movementSpeedMultiplier);
             }
 
-            if (canRotate)
+            if (_canRotate)
             {
-                RotateInDirection(dir, baseRotationSpeed * rotationSpeedMultiplier);
+                RotateInDirection(dir, _baseRotationSpeed * rotationSpeedMultiplier);
             }
 
-            if (applyGravity)
+            if (_applyGravity)
             {
                 ApplyGravity();
             }
@@ -91,25 +91,25 @@ namespace _Main.Scripts.GamePlay.Player
 
         public override void MoveOverTime(Vector3 endPos, float duration, float setDelay = 0f, bool useGravity = true, bool useAnimationMovement = false)
         {
-            if (moveOverTimeCo != null)
+            if (_moveOverTimeCo != null)
             {
-                StopCoroutine(moveOverTimeCo);
+                StopCoroutine(_moveOverTimeCo);
             }
             if (useAnimationMovement)
             {
-                moveOverTimeCo = MoveOverTimeWithAnimationCo(duration, useGravity);
-                StartCoroutine(moveOverTimeCo);
+                _moveOverTimeCo = MoveOverTimeWithAnimationCo(duration, useGravity);
+                StartCoroutine(_moveOverTimeCo);
             }
             else
             {
-                moveOverTimeCo = MoveOverTimeCo(endPos, duration, setDelay, useGravity);
-                StartCoroutine(moveOverTimeCo);
+                _moveOverTimeCo = MoveOverTimeCo(endPos, duration, setDelay, useGravity);
+                StartCoroutine(_moveOverTimeCo);
             }
         }
 
         private IEnumerator MoveOverTimeCo(Vector3 endPos, float duration, float setDelay = 0f, bool useGravity = true)
         {
-            applyGravity = useGravity;
+            _applyGravity = useGravity;
             yield return new WaitForSeconds(setDelay);
             var startPos = transform.position;
             var dir = endPos - startPos;
@@ -125,16 +125,16 @@ namespace _Main.Scripts.GamePlay.Player
                 }
                 yield return null;
             }
-            applyGravity = true;
+            _applyGravity = true;
         }
 
         private IEnumerator MoveOverTimeWithAnimationCo(float duration, bool useGravity)
         {
-            applyGravity = useGravity;
-            animationMovement.Activate();
+            _applyGravity = useGravity;
+            _animationMovement.Activate();
             yield return new WaitForSeconds(duration);
-            animationMovement.DeActivate();
-            applyGravity = true;
+            _animationMovement.DeActivate();
+            _applyGravity = true;
         }
     }
 }

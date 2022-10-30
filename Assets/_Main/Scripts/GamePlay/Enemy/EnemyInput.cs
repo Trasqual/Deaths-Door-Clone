@@ -4,22 +4,22 @@ using UnityEngine.AI;
 
 public class EnemyInput : InputBase
 {
-    [SerializeField] private EnemyTriggerDetector detecterPrefab;
-    private EnemyTriggerDetector detector;
-    private NavMeshAgent agent;
+    [SerializeField] private EnemyTriggerDetector _detecterPrefab;
+    private EnemyTriggerDetector _detector;
+    private NavMeshAgent _agent;
 
     private IDamageable _target;
     private Vector3 startPos;
 
     private void Awake()
     {
-        agent = GetComponent<NavMeshAgent>();
+        _agent = GetComponent<NavMeshAgent>();
 
-        if (detector == null)
+        if (_detector == null)
         {
-            detector = Instantiate(detecterPrefab, transform.position, Quaternion.identity, transform);
-            detector.OnTargetFound += OnTargetDetectedCallback;
-            detector.OnTargetLost += OnTargetLostCallback;
+            _detector = Instantiate(_detecterPrefab, transform.position, Quaternion.identity, transform);
+            _detector.OnTargetFound += OnTargetDetectedCallback;
+            _detector.OnTargetLost += OnTargetLostCallback;
         }
 
         startPos = transform.position;
@@ -41,7 +41,7 @@ public class EnemyInput : InputBase
     {
         if (_target != null)
         {
-            if (Vector3.Distance(transform.position, _target.GetTransform().position) > agent.stoppingDistance)
+            if (Vector3.Distance(transform.position, _target.GetTransform().position) > _agent.stoppingDistance)
             {
                 return _target.GetTransform().position;
             }
@@ -52,7 +52,7 @@ public class EnemyInput : InputBase
         }
         else
         {
-            if (Vector3.Distance(transform.position, startPos) > agent.stoppingDistance)
+            if (Vector3.Distance(transform.position, startPos) > _agent.stoppingDistance)
             {
                 return startPos;
             }
@@ -67,7 +67,7 @@ public class EnemyInput : InputBase
     {
         if (_target != null)
         {
-            if (Vector3.Distance(transform.position, _target.GetTransform().position) <= agent.stoppingDistance)
+            if (Vector3.Distance(transform.position, _target.GetTransform().position) <= _agent.stoppingDistance)
             {
                 OnAttackActionStarted?.Invoke();
             }

@@ -28,7 +28,7 @@ namespace _Main.Scripts.GamePlay.Player
             _playerMovement = GetComponent<PlayerMovementBase>();
             _playerHealthManager = GetComponent<HealthComponentBase>();
             _attackController = GetComponent<AttackControllerBase>();
-            stateMachine.Initialize(_input, _playerMovement, PlayerAnim.Animator);
+            _stateMachine.Initialize(_input, _playerMovement, PlayerAnim.Animator);
         }
 
         private void Start()
@@ -39,53 +39,53 @@ namespace _Main.Scripts.GamePlay.Player
             GainAimingBehaviour();
             GainDamageTakingBehaviour();
             GainDeathBehaviour();
-            stateMachine.SetInitialState(typeof(MovementState));
+            _stateMachine.SetInitialState(typeof(MovementState));
 
-            _attackController.SetSelectedMeleeAttack(stateMachine);
-            _attackController.SetSelectedRangedAttack(typeof(RangedAttackBase), stateMachine, _playerHealthManager);
+            _attackController.SetSelectedMeleeAttack(_stateMachine);
+            _attackController.SetSelectedRangedAttack(typeof(RangedAttackBase), _stateMachine, _playerHealthManager);
         }
 
         #region Behaviours
         public void GainMovementBehaviour()
         {
-            stateMachine.AddMovementState();
+            _stateMachine.AddMovementState();
         }
 
         public void LoseMovementBehaviour()
         {
-            stateMachine.RemoveState(typeof(MovementState));
+            _stateMachine.RemoveState(typeof(MovementState));
         }
 
         public void GainDodgeBehaviour()
         {
-            stateMachine.AddDodgeState(2F, .5F);
+            _stateMachine.AddDodgeState(2F, .5F);
         }
 
         public void LoseDodgeBehaviour()
         {
-            stateMachine.RemoveState(typeof(DodgeState));
+            _stateMachine.RemoveState(typeof(DodgeState));
         }
 
         public void GainAttackingBehaviour()
         {
-            stateMachine.AddAttackState(_attackController);
+            _stateMachine.AddAttackState(_attackController);
         }
 
         public void LoseAttackBehaviour()
         {
-            stateMachine.RemoveState(typeof(MeleeAttackState));
+            _stateMachine.RemoveState(typeof(MeleeAttackState));
         }
 
         public void GainAimingBehaviour()
         {
-            stateMachine.AddAimingState(10F, .2F, _attackController);
-            var aimingBehaviour = stateMachine.GetState(typeof(AimingState));
+            _stateMachine.AddAimingState(10F, .2F, _attackController);
+            var aimingBehaviour = _stateMachine.GetState(typeof(AimingState));
 
             if (aimingBehaviour)
             {
-                var playerData = (PlayerBehaviourData) data;
-                var targetGroupHandler = Instantiate(playerData.cameraTargetGroup, transform);
-                var aimIndicator = Instantiate(playerData.aimingIndicator, transform);
+                var playerData = (PlayerBehaviourData) _data;
+                var targetGroupHandler = Instantiate(playerData.CameraTargetGroup, transform);
+                var aimIndicator = Instantiate(playerData.AimingIndicator, transform);
                 var aimBehaviourAction = (IAction)aimingBehaviour;
                 targetGroupHandler.Init(aimBehaviourAction);
                 aimIndicator.Init(aimBehaviourAction);
@@ -97,36 +97,36 @@ namespace _Main.Scripts.GamePlay.Player
 
         public void LoseAimingBehaviour()
         {
-            stateMachine.RemoveState(typeof(AimingState));
+            _stateMachine.RemoveState(typeof(AimingState));
             Destroy(GetComponentInChildren<CameraTargetGroup>().gameObject);
             Destroy(GetComponentInChildren<AimActionIndicator>().gameObject);
         }
 
         public void GainDamageTakingBehaviour()
         {
-            stateMachine.AddDamageTakenState(data.DamageTakenDuration);
+            _stateMachine.AddDamageTakenState(_data.DamageTakenDuration);
         }
 
         public void GainDeathBehaviour()
         {
-            stateMachine.AddDeathState();
+            _stateMachine.AddDeathState();
         }
         #endregion
 
         #region Actions(Melee/Ranged/Roll)
         private void Attack()
         {
-            stateMachine.ChangeState(typeof(MeleeAttackState));
+            _stateMachine.ChangeState(typeof(MeleeAttackState));
         }
 
         private void StartAiming()
         {
-            stateMachine.ChangeState(typeof(AimingState));
+            _stateMachine.ChangeState(typeof(AimingState));
         }
 
         private void PerformRoll()
         {
-            stateMachine.ChangeState(typeof(DodgeState));
+            _stateMachine.ChangeState(typeof(DodgeState));
         }
         #endregion
 
@@ -134,7 +134,7 @@ namespace _Main.Scripts.GamePlay.Player
         
         private void SwitchMeleeWeapon(float switchInput)
         {
-            _attackController.SwitchMeleeWeapon(switchInput, stateMachine);
+            _attackController.SwitchMeleeWeapon(switchInput, _stateMachine);
         }
 
         #endregion
@@ -142,13 +142,13 @@ namespace _Main.Scripts.GamePlay.Player
         #region Health(TakeDamage/Death)
         protected void TakeDamage(int i)
         {
-            stateMachine.ChangeState(typeof(DamageTakenState));
+            _stateMachine.ChangeState(typeof(DamageTakenState));
         }
 
         protected void Die()
         {
             Controller.enabled = false;
-            stateMachine.ChangeState(typeof(DeathState));
+            _stateMachine.ChangeState(typeof(DeathState));
         }
         #endregion
 

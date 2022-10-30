@@ -7,8 +7,8 @@ using UnityEngine;
 
 public abstract class AttackControllerBase : MonoBehaviour
 {
-    [SerializeField] protected List<AttackBase> rangedAttacks = new List<AttackBase>();
-    [SerializeField] protected List<AttackBase> meleeAttacks = new List<AttackBase>();
+    [SerializeField] protected List<AttackBase> _rangedAttacks = new List<AttackBase>();
+    [SerializeField] protected List<AttackBase> _meleeAttacks = new List<AttackBase>();
     
     public Action<AttackBase> OnSelectedMeleeAttackChanged;
     public Action<AttackBase> OnSelectedRangedAttackChanged;

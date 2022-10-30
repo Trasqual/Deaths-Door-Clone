@@ -4,9 +4,9 @@ namespace _Main.Scripts.GamePlay.StateMachine
 {
     public interface IAnimation
     {
-        int HashCode { get; }
-        Animator Animator { get; }
-        void PlayAnimation();
-        void StopAnimation();
+        public int HashCode { get; }
+        public Animator Animator { get; }
+        public void PlayAnimation();
+        public void StopAnimation();
     }
 }
