@@ -3,7 +3,7 @@ using DG.Tweening;
 using System;
 using UnityEngine;
 
-public class LockPiece : MonoBehaviour, IDamagable
+public class LockPiece : MonoBehaviour, IDamageable
 {
     public Action<LockPiece> OnLockPieceBroken;
 

@@ -12,6 +12,7 @@ public class DamageTakenState : StateBase, ITransition, IAnimation
     private MovementBase _movementBase;
     private float _duration;
     private bool _durationComplete;
+    private Tween _durationTween;
 
     public void Initialize(MovementBase movementBase, Animator animator, float damageTakenDuration)
     {
@@ -20,14 +21,16 @@ public class DamageTakenState : StateBase, ITransition, IAnimation
         _duration = damageTakenDuration;
         _transition = this;
         _transition.AddTransition(typeof(MovementState), () => _durationComplete, () => false);
+        _transition.AddTransition(typeof(DeathState), () => true, () => true);
     }
 
     public override void EnterState()
     {
+        _durationTween?.Kill();
         _movementBase.StopMovementAndRotation();
         _durationComplete = false;
         PlayAnimation();
-        DOVirtual.DelayedCall(_duration, () =>
+        _durationTween = DOVirtual.DelayedCall(_duration, () =>
         {
             _durationComplete = true;
             OnComplete?.Invoke();
@@ -46,7 +49,7 @@ public class DamageTakenState : StateBase, ITransition, IAnimation
 
     public override void CancelState()
     {
-
+        _durationTween.Kill();
     }
 
     #region Transition

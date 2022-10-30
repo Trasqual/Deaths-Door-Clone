@@ -12,6 +12,7 @@ namespace _Main.Scripts.GamePlay.AttackSystem.RangedAttacks
         private float _damage => baseDamage * _dmgMultiplier;
         private DamageDealerType _damageDealerType;
         private Vector3 startPos;
+        private IDamageable _caster;
 
         Rigidbody rb;
         public Collider Col => GetComponent<Collider>();
@@ -46,17 +47,23 @@ namespace _Main.Scripts.GamePlay.AttackSystem.RangedAttacks
             {
                 transform.SetParent(collision.transform);
             }            
-            if (collision.collider.TryGetComponent(out IDamagable damagable))
+            if (collision.collider.TryGetComponent(out IDamageable damagable))
             {
                 DealDamage(Mathf.RoundToInt(_damage), damagable, _damageDealerType);
+            }
+            var detector = collision.collider.GetComponentInChildren<DetectorBase<IDamageable>>();
+            if (detector != null)
+            {
+                detector.Detect(_caster);
             }
             StartCoroutine(DestroySelf(3f));
         }
 
-        public void Init(float dmgMultiplier, DamageDealerType damageDealerType)
+        public void Init(float dmgMultiplier, DamageDealerType damageDealerType, IDamageable caster)
         {
             SetDmgMultiplier(dmgMultiplier);
             SetDamageDealerType(damageDealerType);
+            SetCaster(caster);
         }
 
         public void SetDamageDealerType(DamageDealerType damageDealerType)
@@ -69,13 +76,18 @@ namespace _Main.Scripts.GamePlay.AttackSystem.RangedAttacks
             _dmgMultiplier = amount;
         }
 
+        public void SetCaster(IDamageable caster)
+        {
+            _caster = caster;
+        }
+
         IEnumerator DestroySelf(float duration)
         {
             yield return new WaitForSeconds(duration);
             Destroy(gameObject);
         }
 
-        public void DealDamage(int damage, IDamagable damagable, DamageDealerType damageDealerType)
+        public void DealDamage(int damage, IDamageable damagable, DamageDealerType damageDealerType)
         {
             damagable.TakeDamage(damage, damageDealerType);
         }

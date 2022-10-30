@@ -1,5 +1,4 @@
 using _Main.Scripts.GamePlay.InputSystem;
-using _Main.Scripts.GamePlay.Player;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -9,7 +8,7 @@ public class EnemyInput : InputBase
     private EnemyTriggerDetector detector;
     private NavMeshAgent agent;
 
-    private Player player;
+    private IDamageable _target;
     private Vector3 startPos;
 
     private void Awake()
@@ -28,9 +27,9 @@ public class EnemyInput : InputBase
 
     public override Vector3 GetLookInput()
     {
-        if (player != null)
+        if (_target != null)
         {
-            return (player.transform.position - transform.position).normalized;
+            return (_target.GetTransform().position - transform.position).normalized;
         }
         else
         {
@@ -40,11 +39,11 @@ public class EnemyInput : InputBase
 
     public override Vector3 GetMovementInput()
     {
-        if (player != null)
+        if (_target != null)
         {
-            if (Vector3.Distance(transform.position, player.transform.position) > agent.stoppingDistance)
+            if (Vector3.Distance(transform.position, _target.GetTransform().position) > agent.stoppingDistance)
             {
-                return player.transform.position;
+                return _target.GetTransform().position;
             }
             else
             {
@@ -66,22 +65,22 @@ public class EnemyInput : InputBase
 
     private void Update()
     {
-        if (player != null)
+        if (_target != null)
         {
-            if (Vector3.Distance(transform.position, player.transform.position) <= agent.stoppingDistance)
+            if (Vector3.Distance(transform.position, _target.GetTransform().position) <= agent.stoppingDistance)
             {
                 OnAttackActionStarted?.Invoke();
             }
         }
     }
 
-    private void OnTargetDetectedCallback(Player target)
+    private void OnTargetDetectedCallback(IDamageable target)
     {
-        player = target;
+        _target = target;
     }
 
     private void OnTargetLostCallback()
     {
-        player = null;
+        _target = null;
     }
 }

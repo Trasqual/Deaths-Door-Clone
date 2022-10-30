@@ -19,9 +19,15 @@ public class TriggerDetectorBase<T> : DetectorBase<T>
             if (other.TryGetComponent(out T target))
             {
                 _target = target;
-                OnTargetFound?.Invoke(_target);
+                Detect(_target);
             }
         }
+    }
+
+    public override void Detect(T target)
+    {
+        OnTargetFound?.Invoke(target);
+        Debug.Log(target);
     }
 
     protected virtual void LoseTarget()

@@ -1,17 +1,16 @@
-using _Main.Scripts.GamePlay.Player;
 using UnityEngine;
 
-public class EnemyTriggerDetector : TriggerDetectorBase<Player>
+public class EnemyTriggerDetector : TriggerDetectorBase<IDamageable>
 {
     [SerializeField] LayerMask lineOfSightCheckMask;
     protected override void OnTriggerStay(Collider other)
     {
         if (_target == null)
         {
-            if (other.TryGetComponent(out Player target) && InLineOfSight(target))
+            if (other.TryGetComponent(out IDamageable target) && InLineOfSight(target))
             {
                 _target = target;
-                OnTargetFound?.Invoke(_target);
+                Detect(_target);
             }
         }
     }
@@ -20,20 +19,20 @@ public class EnemyTriggerDetector : TriggerDetectorBase<Player>
     {
         if (_target != null)
         {
-            if (Vector3.Distance(transform.position, _target.transform.position) > resetRange)
+            if (Vector3.Distance(transform.position, _target.GetTransform().position) > resetRange)
             {
                 LoseTarget();
             }
         }
     }
 
-    private bool InLineOfSight(Player target)
+    private bool InLineOfSight(IDamageable target)
     {
         RaycastHit hit;
-        var dir = target.transform.position - transform.position;
+        var dir = target.GetTransform().position - transform.position;
         if (Physics.Raycast(transform.position + transform.up, dir, out hit, resetRange, lineOfSightCheckMask, QueryTriggerInteraction.Ignore))
         {
-            if (hit.transform != target.transform)
+            if (hit.transform != target.GetTransform())
             {
                 return false;
             }

@@ -17,7 +17,7 @@ public class DamageDealingLaserCaster : LaserCaster, IDamageDealer
         if (hit.transform != null)
         {
             _spawnedBeam.UpdateBeam(new Vector3[] { transform.position, (hit.point - transform.forward * 0.1f) });
-            if (hit.transform.TryGetComponent(out IDamagable damagable))
+            if (hit.transform.TryGetComponent(out IDamageable damagable))
             {
                 if (hit.transform != prevHitTarget)
                 {
@@ -41,7 +41,7 @@ public class DamageDealingLaserCaster : LaserCaster, IDamageDealer
         }
     }
 
-    private IEnumerator DotCo(IDamagable damagable)
+    private IEnumerator DotCo(IDamageable damagable)
     {
         while (true)
         {
@@ -58,7 +58,7 @@ public class DamageDealingLaserCaster : LaserCaster, IDamageDealer
         }
     }
 
-    public void DealDamage(int damage, IDamagable damagable, DamageDealerType damageDealerType)
+    public void DealDamage(int damage, IDamageable damagable, DamageDealerType damageDealerType)
     {
         damagable.TakeDamage(damage, _damageDealerType);
     }

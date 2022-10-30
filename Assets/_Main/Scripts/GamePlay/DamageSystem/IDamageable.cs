@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public interface IDamagable
+public interface IDamageable
 {
     public Transform GetTransform();
     public DamageDealerType GetEffectedByType();

@@ -42,7 +42,7 @@ namespace _Main.Scripts.GamePlay.Player
             stateMachine.SetInitialState(typeof(MovementState));
 
             _attackController.SetSelectedMeleeAttack(stateMachine);
-            _attackController.SetSelectedRangedAttack(typeof(BowAttack), stateMachine);
+            _attackController.SetSelectedRangedAttack(typeof(RangedAttackBase), stateMachine, _playerHealthManager);
         }
 
         #region Behaviours

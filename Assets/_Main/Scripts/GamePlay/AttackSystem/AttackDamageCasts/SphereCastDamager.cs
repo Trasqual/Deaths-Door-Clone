@@ -12,7 +12,7 @@ public class SphereCastDamager
         var colliders = Physics.SphereCastAll(startPos, radius, direction, range);
         foreach (var collider in colliders)
         {
-            if (collider.transform.TryGetComponent(out IDamagable damagable))
+            if (collider.transform.TryGetComponent(out IDamageable damagable))
             {
                 damagable.TakeDamage(damage, dmgDealerType);
             }

@@ -11,10 +11,10 @@ namespace _Main.Scripts.GamePlay.AttackSystem.RangedAttacks
             col = GetComponentInParent<Collider>();
         }
 
-        public void Shoot(Projectile projectilePrefab, float dmgMultiplier, DamageDealerType damageDealerType)
+        public void Shoot(Projectile projectilePrefab, float dmgMultiplier, DamageDealerType damageDealerType, IDamageable caster)
         {
             var projectile = Instantiate(projectilePrefab, transform.position, transform.rotation);
-            projectile.Init(dmgMultiplier, damageDealerType);
+            projectile.Init(dmgMultiplier, damageDealerType, caster);
             Physics.IgnoreCollision(col, projectile.Col);
         }
     }

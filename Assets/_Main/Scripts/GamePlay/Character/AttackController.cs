@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using _Main.Scripts.GamePlay.ActionSystem;
 using _Main.Scripts.GamePlay.AttackSystem;
+using _Main.Scripts.GamePlay.AttackSystem.RangedAttacks;
 using _Main.Scripts.GamePlay.StateMachine;
 using UnityEngine;
 
@@ -33,10 +34,10 @@ public class AttackController : AttackControllerBase
         OnSelectedMeleeAttackChanged?.Invoke(SelectedMeleeAttack);
     }
 
-    public override void SetSelectedRangedAttack(Type rangedAttackType, StateMachine stateMachine)
+    public override void SetSelectedRangedAttack(Type rangedAttackType, StateMachine stateMachine, IDamageable caster)
     {
-        SelectedRangedAttack = SelectAttackFromList(rangedAttackType, rangedAttacks);
-        SelectedRangedAttack.Init(stateMachine.GetState(typeof(AimingState)) as IAction);
+        SelectedRangedAttack = (RangedAttackBase)SelectAttackFromList(rangedAttackType, rangedAttacks);
+        SelectedRangedAttack.Init(stateMachine.GetState(typeof(AimingState)) as IAction, caster);
         OnSelectedRangedAttackChanged?.Invoke(SelectedRangedAttack);
     }
 

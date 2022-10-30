@@ -1,8 +1,9 @@
+using _Main.Scripts.GamePlay.ActionSystem;
 using UnityEngine;
 
 namespace _Main.Scripts.GamePlay.AttackSystem.RangedAttacks
 {
-    public class BowAttack : AttackBase
+    public class RangedAttackBase : AttackBase
     {
         [Header("Visuals")]
         [SerializeField] private GameObject bow;
@@ -13,6 +14,7 @@ namespace _Main.Scripts.GamePlay.AttackSystem.RangedAttacks
         [SerializeField] private Shooter shooter;
 
         [Header("Attack Params")]
+        [SerializeField] IDamageable _caster;
         [SerializeField] DamageDealerType damageDealerType;
         [SerializeField] private float initialChargeDelay = 0.5f;
         [SerializeField] private float maxChargeTime = 3f;
@@ -23,6 +25,12 @@ namespace _Main.Scripts.GamePlay.AttackSystem.RangedAttacks
         private float dmgMultiplier;
 
         private bool isActive;
+
+        public void Init(IAction action, IDamageable caster)
+        {
+            base.Init(action);
+            _caster = caster;
+        }
 
         protected override void DoOnActionStart()
         {
@@ -79,7 +87,7 @@ namespace _Main.Scripts.GamePlay.AttackSystem.RangedAttacks
         {
             //shooter.transform.position = bow.transform.position;
             //shooter.transform.forward = transform.forward;
-            shooter.Shoot(chargeDuration > 0 ? chargedProjectilePrefab : projectilePrefab, dmgMultiplier, damageDealerType);
+            shooter.Shoot(chargeDuration > 0 ? chargedProjectilePrefab : projectilePrefab, dmgMultiplier, damageDealerType, _caster);
         }
     }
 }
