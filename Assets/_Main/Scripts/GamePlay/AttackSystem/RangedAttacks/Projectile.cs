@@ -5,11 +5,13 @@ namespace _Main.Scripts.GamePlay.AttackSystem.RangedAttacks
 {
     public class Projectile : MonoBehaviour, IDamageDealer
     {
+        [SerializeField] float maxTravelDistance = 15f;
         [SerializeField] float projectileSpeed = 5f;
         [SerializeField] float baseDamage = 1f;
         private float _dmgMultiplier = 1f;
         private float _damage => baseDamage * _dmgMultiplier;
         private DamageDealerType _damageDealerType;
+        private Vector3 startPos;
 
         Rigidbody rb;
         public Collider Col => GetComponent<Collider>();
@@ -18,7 +20,15 @@ namespace _Main.Scripts.GamePlay.AttackSystem.RangedAttacks
         {
             rb = GetComponent<Rigidbody>();
             rb.AddForce(transform.forward * projectileSpeed, ForceMode.Impulse);
-            StartCoroutine(DestroySelf());
+            startPos = transform.position;
+        }
+
+        private void FixedUpdate()
+        {
+            if(Vector3.Distance(transform.position, startPos) >= maxTravelDistance)
+            {
+                StartCoroutine(DestroySelf(0f));
+            }
         }
 
         private void OnCollisionEnter(Collision collision)
@@ -40,6 +50,7 @@ namespace _Main.Scripts.GamePlay.AttackSystem.RangedAttacks
             {
                 DealDamage(Mathf.RoundToInt(_damage), damagable, _damageDealerType);
             }
+            StartCoroutine(DestroySelf(3f));
         }
 
         public void Init(float dmgMultiplier, DamageDealerType damageDealerType)
@@ -58,9 +69,9 @@ namespace _Main.Scripts.GamePlay.AttackSystem.RangedAttacks
             _dmgMultiplier = amount;
         }
 
-        IEnumerator DestroySelf()
+        IEnumerator DestroySelf(float duration)
         {
-            yield return new WaitForSeconds(3f);
+            yield return new WaitForSeconds(duration);
             Destroy(gameObject);
         }
 

@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 1835174666019548362}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.2, y: 0.04, z: 0.75}
+  m_LocalScale: {x: 0.4, y: 0.04, z: 0.75}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1835174666943779967}
@@ -160,5 +160,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9fdee3a7d042da4a9c5a73580a27579, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxTravelDistance: 15
   projectileSpeed: 60
   baseDamage: 2
