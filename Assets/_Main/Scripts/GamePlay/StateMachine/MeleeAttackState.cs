@@ -11,17 +11,16 @@ namespace _Main.Scripts.GamePlay.StateMachine
 {
     public class MeleeAttackState : StateBase, IAction, ITransition, IAnimationOverridable
     {
-        public Action OnComplete;
-
         public bool IsAttacking { get; private set; }
         public bool IsStateLocked { get; private set; }
 
-        private Tween _stateLockTween;
+        private Tween stateLockTween;
 
         private InputBase _input;
         private MovementBase _movementBase;
         private AttackControllerBase _attackController;
         private AttackBase _selectedMeleeAttack;
+        public Action OnComplete;
 
         private bool IsOnAttackCooldown;
 
@@ -139,7 +138,7 @@ namespace _Main.Scripts.GamePlay.StateMachine
 
         private void OnAttackPerformed()
         {
-            _stateLockTween?.Kill();
+            stateLockTween?.Kill();
             IsStateLocked = false;
 
             PlayAnimation();
@@ -148,7 +147,7 @@ namespace _Main.Scripts.GamePlay.StateMachine
             _movementBase.MoveOverTime(transform.position + transform.forward * info.attackMovementAmount, info.attackMovementDuration, info.attackMovementDelay, info.useGravity, info.useAnimationMovement);
 
             IsStateLocked = info.useAnimationMovement;
-            _stateLockTween = DOVirtual.DelayedCall(info.attackCD, () => IsStateLocked = false);
+            stateLockTween = DOVirtual.DelayedCall(info.attackCD, () => IsStateLocked = false);
         }
 
         private void OnAttackCompleted()
@@ -197,7 +196,7 @@ namespace _Main.Scripts.GamePlay.StateMachine
 
         public void SetAnimatorOverrideController()
         {
-            Animator.runtimeAnimatorController = _attackController.SelectedMeleeAttack.CurrentComboAnimationData.OverrideController;
+            Animator.runtimeAnimatorController = _attackController.SelectedMeleeAttack.CurrentComboAnimationData.overrideController;
             var animData = (MeleeAttackAnimationData)_selectedMeleeAttack.CurrentComboAnimationData;
             Animator.SetFloat(SpeedMultHashCode, animData.animationSpeedMultiplier);
         }

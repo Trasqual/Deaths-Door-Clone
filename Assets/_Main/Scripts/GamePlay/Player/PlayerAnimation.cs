@@ -12,21 +12,21 @@ namespace _Main.Scripts.GamePlay.Player
 
         public void PlayAttackAnim(int comboCount)
         {
-            _animator.SetTrigger(AttackHash);
+            animator.SetTrigger(AttackHash);
         }
         public void PlayAimAnim(bool isAiming, bool isCanceled)
         {
-            _animator.SetBool(IsAimingHash, isAiming);
-            _animator.SetBool(IsCanceledHash, isCanceled);
+            animator.SetBool(IsAimingHash, isAiming);
+            animator.SetBool(IsCanceledHash, isCanceled);
         }
         public void PlayRollAnim()
         {
-            _animator.SetTrigger(RollHash);
+            animator.SetTrigger(RollHash);
         }
 
         public void PlayDamageTakenAnim()
         {
-            _animator.SetTrigger("takeDamage");
+            animator.SetTrigger("takeDamage");
         }
     }
 }

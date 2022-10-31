@@ -17,8 +17,8 @@ namespace _Main.Scripts.GamePlay.StateMachine
         private Animator _animator = null;
 
         [Header("Debugging")]
-        [SerializeField] private string _currentStateName;
-        [SerializeField] private List<StateBase> _states = new List<StateBase>();
+        [SerializeField] private string currentStateName;
+        [SerializeField] private List<StateBase> states = new List<StateBase>();
 
         public void Initialize(InputBase input, MovementBase movementBase, Animator animator)
         {
@@ -30,13 +30,13 @@ namespace _Main.Scripts.GamePlay.StateMachine
         public void SetInitialState(Type state)
         {
             if (CurrentState != null) return;
-            if (_states.Count == 0) return;
+            if (states.Count == 0) return;
 
             var foundState = GetState(state);
-            DefaultState = foundState ? foundState : _states[0];
+            DefaultState = foundState ? foundState : states[0];
             CurrentState = DefaultState;
             CurrentState.EnterState();
-            _currentStateName = CurrentState.ToString();
+            currentStateName = CurrentState.ToString();
         }
 
         public void AddMovementState()
@@ -45,7 +45,7 @@ namespace _Main.Scripts.GamePlay.StateMachine
 
             var movementState = gameObject.AddComponent<MovementState>();
             movementState.Initialize(_inputBase, _movementBase, _animator);
-            _states.Add(movementState);
+            states.Add(movementState);
         }
 
         public void AddDodgeState(float speedMultiplier, float duration)
@@ -54,7 +54,7 @@ namespace _Main.Scripts.GamePlay.StateMachine
 
             var dodgeState = gameObject.AddComponent<DodgeState>();
             dodgeState.Initialize(_inputBase, _movementBase, _animator, speedMultiplier, duration);
-            _states.Add(dodgeState);
+            states.Add(dodgeState);
             dodgeState.OnComplete += OnCompleteState;
         }
 
@@ -64,7 +64,7 @@ namespace _Main.Scripts.GamePlay.StateMachine
 
             var attackState = gameObject.AddComponent<MeleeAttackState>();
             attackState.Initialize(_inputBase, _movementBase, _animator, attackController);
-            _states.Add(attackState);
+            states.Add(attackState);
             attackState.OnComplete += OnCompleteState;
         }
 
@@ -73,7 +73,7 @@ namespace _Main.Scripts.GamePlay.StateMachine
             if (GetState(typeof(AimingState))) return;
             var aimingState = gameObject.AddComponent<AimingState>();
             aimingState.Initialize(_inputBase, _movementBase, _animator, aimSpeedMultiplier, recoilDelay, attackController);
-            _states.Add(aimingState);
+            states.Add(aimingState);
             aimingState.OnComplete += OnCompleteState;
         }
 
@@ -83,7 +83,7 @@ namespace _Main.Scripts.GamePlay.StateMachine
 
             var damageTaken = gameObject.AddComponent<DamageTakenState>();
             damageTaken.Initialize(_movementBase, _animator, duration);
-            _states.Add(damageTaken);
+            states.Add(damageTaken);
             damageTaken.OnComplete += OnCompleteState;
         }
 
@@ -93,12 +93,12 @@ namespace _Main.Scripts.GamePlay.StateMachine
 
             var deathState = gameObject.AddComponent<DeathState>();
             deathState.Initialize(_movementBase, _animator);
-            _states.Add(deathState);
+            states.Add(deathState);
         }
 
         public void RemoveState(Type targetState)
         {
-            if (_states.Count == 1)
+            if (states.Count == 1)
             {
                 Debug.LogWarning($"The operation is blocked! : StateMachine doesn't have more than one state.");
 
@@ -109,11 +109,11 @@ namespace _Main.Scripts.GamePlay.StateMachine
 
             if (foundState)
             {
-                _states.Remove(foundState);
+                states.Remove(foundState);
 
                 if (foundState == DefaultState)
                 {
-                    DefaultState = _states[0];
+                    DefaultState = states[0];
                 }
 
                 if (foundState == CurrentState)
@@ -150,7 +150,7 @@ namespace _Main.Scripts.GamePlay.StateMachine
 
         public StateBase GetState(Type type)
         {
-            return _states.FirstOrDefault(state => state.GetType() == type);
+            return states.FirstOrDefault(state => state.GetType() == type);
         }
 
         public void ChangeState(Type to)
@@ -179,7 +179,7 @@ namespace _Main.Scripts.GamePlay.StateMachine
 
                             CurrentState = toState;
                             CurrentState.EnterState();
-                            _currentStateName = CurrentState.ToString();
+                            currentStateName = CurrentState.ToString();
                         }
                     }
                 }

@@ -4,14 +4,14 @@ using UnityEngine;
 
 public abstract class HealthComponentBase : MonoBehaviour, IDamageable
 {
-    [SerializeField] public DamageDealerType EffectedByType;
-    [SerializeField] protected int _maxHealth = 4;
+    [SerializeField] public DamageDealerType effectedByType;
+    [SerializeField] protected int maxHealth = 4;
 
-    protected int _currentHealth = 4;
+    protected int CurrentHealth = 4;
 
     public bool IsDead { protected set; get; } = false;
 
-    public int MaxHealth => _maxHealth;
+    public int MaxHealth => maxHealth;
 
     #region Damageable Feature
 
@@ -20,22 +20,22 @@ public abstract class HealthComponentBase : MonoBehaviour, IDamageable
 
     public Transform GetTransform() => transform;
 
-    public DamageDealerType GetEffectedByType() => EffectedByType;
+    public DamageDealerType GetEffectedByType() => effectedByType;
 
 
     public virtual void TakeDamage(int amount, DamageDealerType damageDealerType)
     {
-        if (!Enums.CompareEnums(damageDealerType, EffectedByType)) return;
+        if (!Enums.CompareEnums(damageDealerType, effectedByType)) return;
 
-        _currentHealth -= amount;
+        CurrentHealth -= amount;
 
-        if (_currentHealth <= 0)
+        if (CurrentHealth <= 0)
         {
-            _currentHealth = 0;
+            CurrentHealth = 0;
             Die();
         }
 
-        OnDamageTaken?.Invoke(_currentHealth);
+        OnDamageTaken?.Invoke(CurrentHealth);
     }
     public virtual void Die()
     {

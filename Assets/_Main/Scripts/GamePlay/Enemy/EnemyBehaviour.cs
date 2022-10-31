@@ -21,9 +21,9 @@ public class EnemyBehaviour : BehaviourBase
         _anim = GetComponentInChildren<Animator>();
         AttackController = GetComponent<AttackControllerBase>();
 
-        _stateMachine.Initialize(_input, _movementBase, _anim);
+        stateMachine.Initialize(_input, _movementBase, _anim);
 
-        _agent.stoppingDistance = _data.AttackRange;
+        _agent.stoppingDistance = data.AttackRange;
     }
 
     private void Start()
@@ -33,50 +33,50 @@ public class EnemyBehaviour : BehaviourBase
         GainDamageTakenBehaviour();
         GainDeathBehaviour();
 
-        _stateMachine.SetInitialState(typeof(MovementState));
-        AttackController.SetSelectedMeleeAttack(_stateMachine);
+        stateMachine.SetInitialState(typeof(MovementState));
+        AttackController.SetSelectedMeleeAttack(stateMachine);
     }
 
     public void GainMovementBehaviour()
     {
-        _stateMachine.AddMovementState();
+        stateMachine.AddMovementState();
     }
 
     public void LoseMovementBehaviour()
     {
-        _stateMachine.RemoveState(typeof(MovementState));
+        stateMachine.RemoveState(typeof(MovementState));
     }
 
     public void GainAttackBehaviour()
     {
-        _stateMachine.AddAttackState(AttackController);
+        stateMachine.AddAttackState(AttackController);
     }
 
     public void GainDeathBehaviour()
     {
-        _stateMachine.AddDeathState();
+        stateMachine.AddDeathState();
     }
 
     public void GainDamageTakenBehaviour()
     {
-        _stateMachine.AddDamageTakenState(_data.DamageTakenDuration);
+        stateMachine.AddDamageTakenState(data.DamageTakenDuration);
     }
 
     private void Attack()
     {
-        _stateMachine.ChangeState(typeof(MeleeAttackState));
+        stateMachine.ChangeState(typeof(MeleeAttackState));
     }
 
     protected void TakeDamage(int i)
     {
-        _stateMachine.ChangeState(typeof(DamageTakenState));
+        stateMachine.ChangeState(typeof(DamageTakenState));
     }
 
     protected void Die()
     {
         _input.enabled = false;
         _agent.enabled = false;
-        _stateMachine.ChangeState(typeof(DeathState));
+        stateMachine.ChangeState(typeof(DeathState));
     }
 
     private void OnEnable()

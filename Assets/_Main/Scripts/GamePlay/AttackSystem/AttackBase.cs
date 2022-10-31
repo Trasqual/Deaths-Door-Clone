@@ -10,7 +10,7 @@ namespace _Main.Scripts.GamePlay.AttackSystem
         public Action OnAttackPerformed;
         public Action OnAttackCompleted;
 
-        [SerializeField] protected List<AttackData> _comboDatas = new List<AttackData>();
+        [SerializeField] protected List<AttackData> comboDatas = new List<AttackData>();
         public AttackAnimationDataBase CurrentComboAnimationData { get; protected set; }
 
         public virtual void Init(IAction action)

@@ -7,8 +7,8 @@ public class DamageDealingLaserCaster : LaserCaster, IDamageDealer
     [SerializeField] int _damage = 1;
     [SerializeField] float _dotTimer = 0.5f;
 
-    private Transform _prevHitTarget;
-    private IEnumerator _doT;
+    Transform prevHitTarget;
+    IEnumerator DoT;
 
     public override void CastLaser()
     {
@@ -19,25 +19,25 @@ public class DamageDealingLaserCaster : LaserCaster, IDamageDealer
             _spawnedBeam.UpdateBeam(new Vector3[] { transform.position, (hit.point - transform.forward * 0.1f) });
             if (hit.transform.TryGetComponent(out IDamageable damagable))
             {
-                if (hit.transform != _prevHitTarget)
+                if (hit.transform != prevHitTarget)
                 {
-                    _prevHitTarget = hit.transform;
+                    prevHitTarget = hit.transform;
                     KillDot();
-                    _doT = DotCo(damagable);
-                    StartCoroutine(_doT);
+                    DoT = DotCo(damagable);
+                    StartCoroutine(DoT);
                 }
             }
             else
             {
                 KillDot();
-                _prevHitTarget = null;
+                prevHitTarget = null;
             }
         }
         else
         {
             _spawnedBeam.UpdateBeam(new Vector3[] { transform.position, transform.position + transform.forward * _distance });
             KillDot();
-            _prevHitTarget = null;
+            prevHitTarget = null;
         }
     }
 
@@ -52,9 +52,9 @@ public class DamageDealingLaserCaster : LaserCaster, IDamageDealer
 
     private void KillDot()
     {
-        if (_doT != null)
+        if (DoT != null)
         {
-            StopCoroutine(_doT);
+            StopCoroutine(DoT);
         }
     }
 

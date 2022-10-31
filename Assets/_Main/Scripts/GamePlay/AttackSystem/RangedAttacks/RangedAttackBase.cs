@@ -6,25 +6,25 @@ namespace _Main.Scripts.GamePlay.AttackSystem.RangedAttacks
     public class RangedAttackBase : AttackBase
     {
         [Header("Visuals")]
-        [SerializeField] private GameObject _bow;
-        [SerializeField] private Projectile _projectilePrefab;
-        [SerializeField] private Projectile _chargedProjectilePrefab;
+        [SerializeField] private GameObject bow;
+        [SerializeField] private Projectile projectilePrefab;
+        [SerializeField] private Projectile chargedProjectilePrefab;
 
         [Header("Shooters")]
-        [SerializeField] private Shooter _shooter;
+        [SerializeField] private Shooter shooter;
 
         [Header("Attack Params")]
         [SerializeField] IDamageable _caster;
-        [SerializeField] DamageDealerType _damageDealerType;
-        [SerializeField] private float _initialChargeDelay = 0.5f;
-        [SerializeField] private float _maxChargeTime = 3f;
-        [SerializeField] private float _minDmgMultiplier = 1f;
-        [SerializeField] private float _maxDmgMultiplier = 2f;
-        private float _chargeDelayDuration;
-        private float _chargeDuration;
-        private float _dmgMultiplier;
+        [SerializeField] DamageDealerType damageDealerType;
+        [SerializeField] private float initialChargeDelay = 0.5f;
+        [SerializeField] private float maxChargeTime = 3f;
+        [SerializeField] private float minDmgMultiplier = 1f;
+        [SerializeField] private float maxDmgMultiplier = 2f;
+        private float chargeDelayDuration;
+        private float chargeDuration;
+        private float dmgMultiplier;
 
-        private bool _isActive;
+        private bool isActive;
 
         public void Init(IAction action, IDamageable caster)
         {
@@ -34,33 +34,33 @@ namespace _Main.Scripts.GamePlay.AttackSystem.RangedAttacks
 
         protected override void DoOnActionStart()
         {
-            _bow.SetActive(true);
-            CurrentComboAnimationData = _comboDatas[0].AttackAnimationData;
-            _isActive = true;
+            bow.SetActive(true);
+            CurrentComboAnimationData = comboDatas[0].AttackAnimationData;
+            isActive = true;
         }
 
         protected override void DoOnActionEnd()
         {
-            _isActive = false;
+            isActive = false;
             Shoot();
-            _chargeDelayDuration = 0f;
-            _chargeDuration = 0f;
-            _dmgMultiplier = 1f;
-            _bow.SetActive(false);
+            chargeDelayDuration = 0f;
+            chargeDuration = 0f;
+            dmgMultiplier = 1f;
+            bow.SetActive(false);
         }
 
         protected override void DoOnActionCanceled()
         {
-            _isActive = false;
-            _chargeDelayDuration = 0f;
-            _chargeDuration = 0f;
-            _dmgMultiplier = 1f;
-            _bow.SetActive(false);
+            isActive = false;
+            chargeDelayDuration = 0f;
+            chargeDuration = 0f;
+            dmgMultiplier = 1f;
+            bow.SetActive(false);
         }
 
         private void Update()
         {
-            if (_isActive)
+            if (isActive)
             {
                 ChargeAttack();
             }
@@ -68,17 +68,17 @@ namespace _Main.Scripts.GamePlay.AttackSystem.RangedAttacks
 
         private void ChargeAttack()
         {
-            if (_chargeDelayDuration <= _initialChargeDelay)
+            if (chargeDelayDuration <= initialChargeDelay)
             {
-                _chargeDelayDuration += Time.deltaTime;
+                chargeDelayDuration += Time.deltaTime;
             }
             else
             {
-                if (_chargeDuration <= _maxChargeTime)
+                if (chargeDuration <= maxChargeTime)
                 {
-                    _chargeDuration += Time.deltaTime;
-                    var t = Mathf.InverseLerp(0f, _maxChargeTime, _chargeDuration);
-                    _dmgMultiplier = Mathf.Lerp(_minDmgMultiplier, _maxDmgMultiplier, t);
+                    chargeDuration += Time.deltaTime;
+                    var t = Mathf.InverseLerp(0f, maxChargeTime, chargeDuration);
+                    dmgMultiplier = Mathf.Lerp(minDmgMultiplier, maxDmgMultiplier, t);
                 }
             }
         }
@@ -87,7 +87,7 @@ namespace _Main.Scripts.GamePlay.AttackSystem.RangedAttacks
         {
             //shooter.transform.position = bow.transform.position;
             //shooter.transform.forward = transform.forward;
-            _shooter.Shoot(_chargeDuration > 0 ? _chargedProjectilePrefab : _projectilePrefab, _dmgMultiplier, _damageDealerType, _caster);
+            shooter.Shoot(chargeDuration > 0 ? chargedProjectilePrefab : projectilePrefab, dmgMultiplier, damageDealerType, _caster);
         }
     }
 }

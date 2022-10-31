@@ -10,8 +10,6 @@ namespace _Main.Scripts.GamePlay.StateMachine
 {
     public class AimingState : StateBase, IAction, ITransition, IAnimationOverridable
     {
-        public Action OnComplete;
-
         public bool IsAiming { get; private set; }
 
         private InputBase _input;
@@ -20,6 +18,7 @@ namespace _Main.Scripts.GamePlay.StateMachine
         private float _recoilDelay;
         private Tween _recoilDelayTween;
         private AttackControllerBase _attackController;
+        public Action OnComplete;
 
         public void Initialize(InputBase input, MovementBase movementBase, Animator animator, float aimSpeedMultiplier, float recoilDelay, AttackControllerBase attackController)
         {
@@ -115,7 +114,7 @@ namespace _Main.Scripts.GamePlay.StateMachine
 
         public void SetAnimatorOverrideController()
         {
-            Animator.runtimeAnimatorController = _attackController.SelectedRangedAttack.CurrentComboAnimationData.OverrideController;
+            Animator.runtimeAnimatorController = _attackController.SelectedRangedAttack.CurrentComboAnimationData.overrideController;
         }
 
         public void ResetAnimatorController()

@@ -2,17 +2,17 @@ using UnityEngine;
 
 public class PlayerAnimationMovement : AnimationMovementBase
 {
-    private CharacterController _characterController;
+    CharacterController characterController;
 
     protected override void Start()
     {
         base.Start();
-        _characterController = GetComponentInParent<CharacterController>();
+        characterController = GetComponentInParent<CharacterController>();
     }
 
     protected override void OnAnimatorMove()
     {
         if (!isActive) return;
-        _characterController.Move(_anim.deltaPosition);
+        characterController.Move(anim.deltaPosition);
     }
 }

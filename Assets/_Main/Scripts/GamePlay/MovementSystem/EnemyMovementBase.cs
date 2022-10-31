@@ -5,38 +5,38 @@ using UnityEngine.AI;
 
 public class EnemyMovementBase : MovementBase
 {
-    private NavMeshAgent _agent;
-    private AnimationMovementBase _animationMovement;
-    private IEnumerator _moveOverTimeCo;
+    private NavMeshAgent agent;
+    private AnimationMovementBase animationMovement;
+    private IEnumerator moveOverTimeCo;
 
     private void Awake()
     {
-        _agent = GetComponent<NavMeshAgent>();
-        _animationMovement = GetComponentInChildren<AnimationMovementBase>();
+        agent = GetComponent<NavMeshAgent>();
+        animationMovement = GetComponentInChildren<AnimationMovementBase>();
     }
 
     protected void MoveInDirection(Vector3 dir, float speed)
     {
-        _agent.speed = speed;
-        _agent.Move(transform.position + dir);
+        agent.speed = speed;
+        agent.Move(transform.position + dir);
     }
 
     public override void Move(Vector3 dir, float movementSpeedMultiplier, float rotationSpeedMultiplier)
     {
-        if(_agent.isActiveAndEnabled)
-        _agent.SetDestination(dir);
+        if(agent.isActiveAndEnabled)
+        agent.SetDestination(dir);
     }
 
     public override void MoveOverTime(Vector3 endPos, float duration, float setDelay = 0f, bool useGravity = true, bool useAnimationMovement = false)
     {
-        if (_moveOverTimeCo != null)
+        if (moveOverTimeCo != null)
         {
-            StopCoroutine(_moveOverTimeCo);
+            StopCoroutine(moveOverTimeCo);
         }
         if (useAnimationMovement)
         {
-            _moveOverTimeCo = MoveOverTimeWithAnimationCo(duration, useGravity);
-            StartCoroutine(_moveOverTimeCo);
+            moveOverTimeCo = MoveOverTimeWithAnimationCo(duration, useGravity);
+            StartCoroutine(moveOverTimeCo);
         }
         //else
         //{
@@ -58,20 +58,20 @@ public class EnemyMovementBase : MovementBase
             MoveInDirection(dir.normalized, (dir.magnitude / duration));
             yield return null;
         }
-        _agent.speed = 4f;
+        agent.speed = 4f;
     }
 
     private IEnumerator MoveOverTimeWithAnimationCo(float duration, bool useGravity)
     {
-        _animationMovement.Activate();
-        _agent.enabled = false;
+        animationMovement.Activate();
+        agent.enabled = false;
         yield return new WaitForSeconds(duration);
-        _animationMovement.DeActivate();
-        _agent.enabled = true;
+        animationMovement.DeActivate();
+        agent.enabled = true;
     }
 
     protected override bool IsMoving()
     {
-        return !_agent.isStopped;
+        return !agent.isStopped;
     }
 }

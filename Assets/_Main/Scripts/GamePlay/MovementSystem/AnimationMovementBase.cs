@@ -2,13 +2,13 @@ using UnityEngine;
 
 public class AnimationMovementBase : MonoBehaviour
 {
-    protected Animator _anim;
+    protected Animator anim;
 
     protected bool isActive;
 
     protected virtual void Start()
     {
-        _anim = GetComponent<Animator>();
+        anim = GetComponent<Animator>();
     }
 
     protected virtual void OnAnimatorMove()

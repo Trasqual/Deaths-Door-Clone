@@ -2,14 +2,14 @@ using UnityEngine;
 
 public class TriggerDetectorBase<T> : DetectorBase<T>
 {
-    [SerializeField] protected float _range = 8f;
-    [SerializeField] protected float _resetRange = 15f;
+    [SerializeField] protected float range = 8f;
+    [SerializeField] protected float resetRange = 15f;
 
     protected T _target;
 
     protected virtual void Awake()
     {
-        GetComponent<SphereCollider>().radius = _range;
+        GetComponent<SphereCollider>().radius = range;
     }
 
     protected virtual void OnTriggerStay(Collider other)
@@ -39,7 +39,7 @@ public class TriggerDetectorBase<T> : DetectorBase<T>
 #if UNITY_EDITOR
     private void OnValidate()
     {
-        GetComponent<SphereCollider>().radius = _range;
+        GetComponent<SphereCollider>().radius = range;
     }
 #endif
 }

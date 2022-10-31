@@ -12,13 +12,13 @@ public class AttackController : AttackControllerBase
     {
         if (stateMachine.CurrentState is MeleeAttackState) return;
         SelectedAttackIndex += (int)Mathf.Sign(switchInput);
-        if (SelectedAttackIndex > _meleeAttacks.Count - 1)
+        if (SelectedAttackIndex > meleeAttacks.Count - 1)
         {
             SelectedAttackIndex = 0;
         }
         if (SelectedAttackIndex < 0)
         {
-            SelectedAttackIndex = _meleeAttacks.Count - 1;
+            SelectedAttackIndex = meleeAttacks.Count - 1;
         }
         SetSelectedMeleeAttack(stateMachine);
     }
@@ -29,21 +29,21 @@ public class AttackController : AttackControllerBase
         {
             SelectedMeleeAttack.Release(stateMachine.GetState(typeof(MeleeAttackState)) as IAction);
         }
-        SelectedMeleeAttack = _meleeAttacks[SelectedAttackIndex];
+        SelectedMeleeAttack = meleeAttacks[SelectedAttackIndex];
         SelectedMeleeAttack.Init(stateMachine.GetState(typeof(MeleeAttackState)) as IAction);
         OnSelectedMeleeAttackChanged?.Invoke(SelectedMeleeAttack);
     }
 
     public override void SetSelectedRangedAttack(Type rangedAttackType, StateMachine stateMachine, IDamageable caster)
     {
-        SelectedRangedAttack = (RangedAttackBase)SelectAttackFromList(rangedAttackType, _rangedAttacks);
+        SelectedRangedAttack = (RangedAttackBase)SelectAttackFromList(rangedAttackType, rangedAttacks);
         SelectedRangedAttack.Init(stateMachine.GetState(typeof(AimingState)) as IAction, caster);
         OnSelectedRangedAttackChanged?.Invoke(SelectedRangedAttack);
     }
 
     public override void SetSelectedMeleeAttack(Type meleeAttackType, StateMachine stateMachine)
     {
-        SelectedMeleeAttack = SelectAttackFromList(meleeAttackType, _meleeAttacks);
+        SelectedMeleeAttack = SelectAttackFromList(meleeAttackType, meleeAttacks);
         SelectedMeleeAttack.Init(stateMachine.GetState(typeof(MeleeAttackState)) as IAction);
         OnSelectedMeleeAttackChanged?.Invoke(SelectedMeleeAttack);
     }

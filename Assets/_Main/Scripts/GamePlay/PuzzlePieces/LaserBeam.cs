@@ -2,20 +2,20 @@ using UnityEngine;
 
 public class LaserBeam : MonoBehaviour
 {
-    [SerializeField] private Transform _sparkParticle;
-    private LineRenderer _lr;
+    [SerializeField] Transform sparkParticle;
+    LineRenderer lr;
 
     private void Start()
     {
-        _lr = GetComponent<LineRenderer>();
-        _lr.positionCount = 2;
+        lr = GetComponent<LineRenderer>();
+        lr.positionCount = 2;
     }
 
     public void UpdateBeam(Vector3[] positions)
     {
-        _lr.SetPositions(positions);
-        _lr.widthMultiplier = Random.Range(1f, 1.2f);
-        _sparkParticle.position = _lr.GetPosition(1);
-        _sparkParticle.LookAt(_lr.GetPosition(0));
+        lr.SetPositions(positions);
+        lr.widthMultiplier = Random.Range(1f, 1.2f);
+        sparkParticle.position = lr.GetPosition(1);
+        sparkParticle.LookAt(lr.GetPosition(0));
     }
 }

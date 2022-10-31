@@ -8,19 +8,19 @@ public class UnlockableDoor : MonoBehaviour
 {
     public Action OnDoorOpened;
 
-    [SerializeField] private Animator _anim;
+    [SerializeField] Animator _anim;
 
-    [SerializeField] private List<Renderer> _indicators = new List<Renderer>();
+    [SerializeField] List<Renderer> indicators = new List<Renderer>();
 
-    private Dictionary<LockPiece, Renderer> _lockPiecesAndIndicators = new Dictionary<LockPiece, Renderer>();
+    Dictionary<LockPiece, Renderer> lockPiecesAndIndicators = new Dictionary<LockPiece, Renderer>();
 
-    private List<LockPiece> _brokenLockPieces = new List<LockPiece>();
+    List<LockPiece> brokenLockPieces = new List<LockPiece>();
 
-    private bool _isClosed;
+    bool isClosed;
 
     public void Initialize(List<LockPiece> lockPieces)
     {
-        if (lockPieces.Count != _indicators.Count)
+        if (lockPieces.Count != indicators.Count)
         {
             Debug.Log("Indicator count doesn't match lock piece count. Control the lists.");
         }
@@ -28,7 +28,7 @@ public class UnlockableDoor : MonoBehaviour
         {
             for (int i = 0; i < lockPieces.Count; i++)
             {
-                _lockPiecesAndIndicators[lockPieces[i]] = _indicators[i];
+                lockPiecesAndIndicators[lockPieces[i]] = indicators[i];
                 lockPieces[i].OnLockPieceBroken += ProcessBrokenLockPiece;
             }
         }
@@ -36,11 +36,11 @@ public class UnlockableDoor : MonoBehaviour
 
     private void ProcessBrokenLockPiece(LockPiece lockPiece)
     {
-        if (_brokenLockPieces.Contains(lockPiece)) return;
-        _brokenLockPieces.Add(lockPiece);
-        _lockPiecesAndIndicators[lockPiece].material.SetColor("_Color", Color.green);
+        if (brokenLockPieces.Contains(lockPiece)) return;
+        brokenLockPieces.Add(lockPiece);
+        lockPiecesAndIndicators[lockPiece].material.SetColor("_Color", Color.green);
         lockPiece.OnLockPieceBroken -= ProcessBrokenLockPiece;
-        if (_brokenLockPieces.Count >= _indicators.Count)
+        if (brokenLockPieces.Count >= indicators.Count)
         {
             OpenDoor();
         }
@@ -54,7 +54,7 @@ public class UnlockableDoor : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (_isClosed) return;
+        if (isClosed) return;
         if (other.TryGetComponent(out Player player))
         {
             CloseDoor();

@@ -17,5 +17,5 @@ MonoBehaviour:
   RotationSpeed: 5
   DodgeSpeed: 5
   Health: 4
-  DamageTakenDuration: 0
+  DamageTakenDuration: 0.5
   AttackRange: 2

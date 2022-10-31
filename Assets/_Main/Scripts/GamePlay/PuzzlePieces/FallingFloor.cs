@@ -6,12 +6,12 @@ namespace _Main.Scripts.GamePlay.Puzzles
     [SelectionBase]
     public class FallingFloor : MonoBehaviour
     {
-        [SerializeField] private float _timeBeforeFall = 1f;
-        [SerializeField] private float _fallDuration = 3f;
-        [SerializeField] private float _resetTime = 2f;
-        [SerializeField] private float _shakeIntensity = 0.05f;
-        [SerializeField] private float _fallDistance = 30f;
-        [SerializeField] private float _dissolveTime = 1f;
+        [SerializeField] private float timeBeforeFall = 1f;
+        [SerializeField] private float fallDuration = 3f;
+        [SerializeField] private float resetTime = 2f;
+        [SerializeField] private float shakeIntensity = 0.05f;
+        [SerializeField] private float fallDistance = 30f;
+        [SerializeField] private float dissolveTime = 1f;
 
         [SerializeField] private Transform _visual;
         private MeshRenderer _visualRenderer;
@@ -40,11 +40,11 @@ namespace _Main.Scripts.GamePlay.Puzzles
             _isActive = true;
 
             Sequence s = DOTween.Sequence();
-            s.Append(_visual.DOShakePosition(_timeBeforeFall, _shakeIntensity, 10, 60).OnComplete(() => _col.enabled = false));
-            s.Append(_visual.DOMoveY(-_fallDistance, _fallDuration).SetRelative());
+            s.Append(_visual.DOShakePosition(timeBeforeFall, shakeIntensity, 10, 60).OnComplete(() => _col.enabled = false));
+            s.Append(_visual.DOMoveY(-fallDistance, fallDuration).SetRelative());
             _visualRenderer.material.SetFloat("_EdgeThickness", 0f);
-            s.Join(DOVirtual.Float(0f, 1f, _dissolveTime, (x) => _visualRenderer.material.SetFloat("_DissolveValue", x)));
-            s.AppendInterval(_resetTime);
+            s.Join(DOVirtual.Float(0f, 1f, dissolveTime, (x) => _visualRenderer.material.SetFloat("_DissolveValue", x)));
+            s.AppendInterval(resetTime);
             s.OnComplete(() =>
             {
                 ResetFloor();
@@ -55,7 +55,7 @@ namespace _Main.Scripts.GamePlay.Puzzles
         {
             _visual.localPosition = _visualStartPos;
             _visualRenderer.material.SetFloat("_EdgeThickness", 0.02f);
-            DOVirtual.Float(1f, 0f, _dissolveTime, (x) => _visualRenderer.material.SetFloat("_DissolveValue", x)).OnComplete(() => _visualRenderer.material.SetFloat("_EdgeThickness", 0f));
+            DOVirtual.Float(1f, 0f, dissolveTime, (x) => _visualRenderer.material.SetFloat("_DissolveValue", x)).OnComplete(() => _visualRenderer.material.SetFloat("_EdgeThickness", 0f));
             _col.enabled = true;
             _isActive = false;
         }

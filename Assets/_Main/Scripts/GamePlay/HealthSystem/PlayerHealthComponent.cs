@@ -17,17 +17,17 @@ namespace _Main.Scripts.GamePlay.HealthSystem
         
             _invulnerable.InvulnerableForDuration(.5F);
         
-            if (!Enums.CompareEnums(damageDealerType, EffectedByType)) return;
+            if (!Enums.CompareEnums(damageDealerType, effectedByType)) return;
 
-            _currentHealth -= amount;
+            CurrentHealth -= amount;
 
-            if (_currentHealth <= 0)
+            if (CurrentHealth <= 0)
             {
-                _currentHealth = 0;
+                CurrentHealth = 0;
                 Die();
             }
 
-            OnDamageTaken?.Invoke(_currentHealth);
+            OnDamageTaken?.Invoke(CurrentHealth);
         }
 
         public override void Die()

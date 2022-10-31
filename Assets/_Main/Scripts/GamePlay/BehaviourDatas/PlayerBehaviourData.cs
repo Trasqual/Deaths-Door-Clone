@@ -7,7 +7,7 @@ namespace _Main.Scripts.GamePlay.Player
     [CreateAssetMenu]
     public class PlayerBehaviourData : BehaviourData
     {
-        public AimActionIndicator AimingIndicator;
-        public CameraTargetGroup CameraTargetGroup;
+        public AimActionIndicator aimingIndicator;
+        public CameraTargetGroup cameraTargetGroup;
     }
 }

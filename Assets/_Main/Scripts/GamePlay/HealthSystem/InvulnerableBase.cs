@@ -3,7 +3,7 @@ using UnityEngine;
 
 public abstract class InvulnerableBase : MonoBehaviour
 {
-    protected IEnumerator _invulnerabilityCoroutine;
+    protected IEnumerator InvulnerabilityCoroutine;
     
     public bool IsActive { protected set; get; } = false;
 

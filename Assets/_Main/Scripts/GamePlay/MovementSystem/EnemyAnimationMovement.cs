@@ -11,6 +11,6 @@ public class EnemyAnimationMovement : AnimationMovementBase
     protected override void OnAnimatorMove()
     {
         if (!isActive) return;
-        transform.parent.position += _anim.deltaPosition;
+        transform.parent.position += anim.deltaPosition;
     }
 }

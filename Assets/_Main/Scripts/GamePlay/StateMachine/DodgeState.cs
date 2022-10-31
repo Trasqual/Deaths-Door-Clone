@@ -9,14 +9,13 @@ namespace _Main.Scripts.GamePlay.StateMachine
 {
     public class DodgeState : StateBase, ITransition, IAnimation
     {
-        public Action OnComplete;
-
         private InputBase _input = null;
         private MovementBase _movementBase = null;
         private float _speedMultiplier = 0F;
         private float _duration = 0F;
         private Vector3 _direction;
         private bool _isDodgeComplete = false;
+        public Action OnComplete;
 
         public void Initialize(InputBase inputBase, MovementBase movementBase, Animator animator, float speedMultiplier, float duration)
         {
