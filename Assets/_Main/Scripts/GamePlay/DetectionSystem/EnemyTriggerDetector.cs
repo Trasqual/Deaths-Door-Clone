@@ -10,6 +10,7 @@ public class EnemyTriggerDetector : TriggerDetectorBase<IDamageable>
             if (other.TryGetComponent(out IDamageable target) && InLineOfSight(target))
             {
                 _target = target;
+                _target.OnDeath += LoseTarget;
                 Detect(_target);
             }
         }
@@ -24,6 +25,12 @@ public class EnemyTriggerDetector : TriggerDetectorBase<IDamageable>
                 LoseTarget();
             }
         }
+    }
+
+    protected override void LoseTarget()
+    {
+        _target.OnDeath -= LoseTarget;
+        base.LoseTarget();
     }
 
     private bool InLineOfSight(IDamageable target)

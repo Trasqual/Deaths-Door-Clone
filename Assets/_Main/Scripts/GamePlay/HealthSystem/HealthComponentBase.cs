@@ -9,14 +9,14 @@ public abstract class HealthComponentBase : MonoBehaviour, IDamageable
 
     protected int CurrentHealth = 4;
 
-    public bool IsDead { protected set; get; } = false;
+    private bool isDead;
 
     public int MaxHealth => maxHealth;
 
     #region Damageable Feature
 
     public Action<int> OnDamageTaken;
-    public Action OnDeath;
+    public Action OnDeath { get; set; }
 
     public Transform GetTransform() => transform;
 
@@ -39,9 +39,11 @@ public abstract class HealthComponentBase : MonoBehaviour, IDamageable
     }
     public virtual void Die()
     {
-        IsDead = true;
+        isDead = true;
         OnDeath?.Invoke();
     }
+
+    public bool IsDead() => isDead;
 
     #endregion
 }

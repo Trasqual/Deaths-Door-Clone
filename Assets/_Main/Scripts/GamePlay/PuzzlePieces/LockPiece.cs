@@ -11,6 +11,8 @@ public class LockPiece : MonoBehaviour, IDamageable
 
     private bool _isUnlocked;
 
+    public Action OnDeath { get; set; }
+
     public void TakeDamage(int amount, DamageDealerType damageDealerType)
     {
         if (Enums.CompareEnums(damageDealerType, _effectedByType))
@@ -30,4 +32,9 @@ public class LockPiece : MonoBehaviour, IDamageable
     public Transform GetTransform() => transform;
 
     public DamageDealerType GetEffectedByType() => _effectedByType;
+
+    public bool IsDead()
+    {
+        throw new NotImplementedException();
+    }
 }

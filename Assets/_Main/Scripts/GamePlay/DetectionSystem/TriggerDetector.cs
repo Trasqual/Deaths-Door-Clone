@@ -27,7 +27,6 @@ public class TriggerDetectorBase<T> : DetectorBase<T>
     public override void Detect(T target)
     {
         OnTargetFound?.Invoke(target);
-        Debug.Log(target);
     }
 
     protected virtual void LoseTarget()
