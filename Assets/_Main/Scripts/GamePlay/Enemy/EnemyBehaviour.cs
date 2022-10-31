@@ -69,7 +69,7 @@ public class EnemyBehaviour : BehaviourBase
 
     protected void TakeDamage(int i)
     {
-        stateMachine.ChangeState(typeof(DamageTakenState));
+        //stateMachine.ChangeState(typeof(DamageTakenState));
     }
 
     protected void Die()
