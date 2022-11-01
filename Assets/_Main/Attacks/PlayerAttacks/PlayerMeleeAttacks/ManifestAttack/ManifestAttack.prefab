@@ -4309,7 +4309,7 @@ GameObject:
   - component: {fileID: 8719883805134122464}
   - component: {fileID: 2888374250863949598}
   m_Layer: 0
-  m_Name: SwordAttack
+  m_Name: ManifestAttack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

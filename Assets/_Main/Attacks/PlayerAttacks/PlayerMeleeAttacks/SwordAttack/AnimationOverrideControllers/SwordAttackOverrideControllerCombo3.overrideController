@@ -6,8 +6,10 @@ AnimatorOverrideController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: SwordAttackOverrideControllerCombo1
+  m_Name: SwordAttackOverrideControllerCombo3
   m_Controller: {fileID: 9100000, guid: 3b903a866eedbdf4fa29b32edcbfbe1b, type: 2}
   m_Clips:
   - m_OriginalClip: {fileID: 7400000, guid: 90c5f7c547aeca54bbe88c0f64099fd8, type: 2}
-    m_OverrideClip: {fileID: 7400000, guid: 2a17cfe44af36e84d805d088e95cf381, type: 2}
+    m_OverrideClip: {fileID: 6289438140839061981, guid: 1d3f73d7f619c9846ba0d64668731774, type: 3}
+  - m_OriginalClip: {fileID: 7400000, guid: 708431a3c8618cc4d9877102ff5bfcec, type: 2}
+    m_OverrideClip: {fileID: 4189676145174806922, guid: 90f6d4658381d08459f28236340b4346, type: 3}

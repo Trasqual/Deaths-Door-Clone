@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 46b1d65c0912f9649a6e317348ae1b21, type: 3}
-  m_Name: SwordAttackDataCombo1
+  m_Name: SwordAttackDataCombo3
   m_EditorClassIdentifier: 
-  overrideController: {fileID: 22100000, guid: 8e89a1f6501727c43a4c6e50d627f30e, type: 2}
+  overrideController: {fileID: 22100000, guid: 1c87fd3dd48b04c4aaa12417ef6e4a52, type: 2}
   fadeToAnimationName: MeleeAttack
-  attackDamageDelay: 1.05
-  attackMovementDelay: 1.06
-  attackMovementAmount: 0.5
-  attackMovementDuration: 0.1
-  attackCD: 1.65
+  attackDamageDelay: 0.5
+  attackMovementDelay: 0.3
+  attackMovementAmount: 1.3
+  attackMovementDuration: 0.2
+  attackCD: 1.2
   animationSpeedMultiplier: 1
   useGravity: 1
   useAnimationMovement: 0
