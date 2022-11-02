@@ -5,17 +5,23 @@ namespace _Main.Scripts.GamePlay.HealthSystem
     public class PlayerHealthComponent : HealthComponentBase
     {
         private InvulnerableBase _invulnerable = null;
+        private BehaviourData _behaviourData = null;
 
         private void Awake()
         {
             _invulnerable = gameObject.AddComponent<Invulnerable>();
         }
 
+        public void Init(BehaviourData data)
+        {
+            _behaviourData = data;
+        }
+
         public override void TakeDamage(int amount, DamageDealerType damageDealerType)
         {
             if (_invulnerable.IsActive) return;
         
-            _invulnerable.InvulnerableForDuration(.5F);
+            _invulnerable.InvulnerableForDuration(_behaviourData.InvulnerabilityDurationAfterTakingDamage);
         
             if (!Enums.CompareEnums(damageDealerType, effectedByType)) return;
 

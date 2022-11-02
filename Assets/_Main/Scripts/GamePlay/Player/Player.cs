@@ -1,15 +1,17 @@
 using _Main.Scripts.GamePlay.ActionSystem;
 using _Main.Scripts.GamePlay.AttackSystem.RangedAttacks;
+using _Main.Scripts.GamePlay.HealthSystem;
 using _Main.Scripts.GamePlay.Indicators.AimingIndicator;
 using _Main.Scripts.GamePlay.InputSystem;
 using _Main.Scripts.GamePlay.StateMachine;
 using _Main.Scripts.Others;
+using DG.Tweening;
 using UnityEngine;
 
 namespace _Main.Scripts.GamePlay.Player
 {
     [RequireComponent(typeof(PlayerMovementBase),
-        typeof(PlayerAnimation), 
+        typeof(PlayerAnimation),
         typeof(HealthComponentBase))]
     public class Player : BehaviourBase
     {
@@ -17,22 +19,26 @@ namespace _Main.Scripts.GamePlay.Player
         public PlayerAnimation PlayerAnim { get; private set; }
 
         private PlayerMovementBase _playerMovement = null;
-        private HealthComponentBase _playerHealthManager = null;
+        private PlayerHealthComponent _playerHealthManager = null;
         private AttackControllerBase _attackController = null;
-        
+
+        private bool canDodge = true;
+
         protected override void Awake()
         {
             base.Awake();
             Controller = GetComponent<CharacterController>();
             PlayerAnim = GetComponent<PlayerAnimation>();
             _playerMovement = GetComponent<PlayerMovementBase>();
-            _playerHealthManager = GetComponent<HealthComponentBase>();
+            _playerHealthManager = GetComponent<PlayerHealthComponent>();
             _attackController = GetComponent<AttackControllerBase>();
             stateMachine.Initialize(_input, _playerMovement, PlayerAnim.Animator);
         }
 
         private void Start()
         {
+            _playerHealthManager.Init(data);
+
             GainMovementBehaviour();
             GainDodgeBehaviour();
             GainAttackingBehaviour();
@@ -58,7 +64,12 @@ namespace _Main.Scripts.GamePlay.Player
 
         public void GainDodgeBehaviour()
         {
-            stateMachine.AddDodgeState(2F, .5F);
+            if (canDodge)
+            {
+                canDodge = false;
+                stateMachine.AddDodgeState(data.DodgeSpeedMultiplier, data.DodgeDuration);
+                DOVirtual.DelayedCall(data.DodgeCD, () => canDodge = true);
+            }
         }
 
         public void LoseDodgeBehaviour()
@@ -83,7 +94,7 @@ namespace _Main.Scripts.GamePlay.Player
 
             if (aimingBehaviour)
             {
-                var playerData = (PlayerBehaviourData) data;
+                var playerData = (PlayerBehaviourData)data;
                 var targetGroupHandler = Instantiate(playerData.cameraTargetGroup, transform);
                 var aimIndicator = Instantiate(playerData.aimingIndicator, transform);
                 var aimBehaviourAction = (IAction)aimingBehaviour;
@@ -104,7 +115,7 @@ namespace _Main.Scripts.GamePlay.Player
 
         public void GainDamageTakingBehaviour()
         {
-            stateMachine.AddDamageTakenState(data.DamageTakenDuration);
+            stateMachine.AddDamageTakenState(data.DamageTakenStateDuration);
         }
 
         public void GainDeathBehaviour()
@@ -131,7 +142,7 @@ namespace _Main.Scripts.GamePlay.Player
         #endregion
 
         #region WeaponSelection(Melee/Ranged)
-        
+
         private void SwitchMeleeWeapon(float switchInput)
         {
             _attackController.SwitchMeleeWeapon(switchInput, stateMachine);

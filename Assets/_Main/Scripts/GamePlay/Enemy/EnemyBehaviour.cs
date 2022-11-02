@@ -59,7 +59,7 @@ public class EnemyBehaviour : BehaviourBase
 
     public void GainDamageTakenBehaviour()
     {
-        stateMachine.AddDamageTakenState(data.DamageTakenDuration);
+        stateMachine.AddDamageTakenState(data.DamageTakenStateDuration);
     }
 
     private void Attack()

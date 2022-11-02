@@ -32,6 +32,7 @@ public class DamageTakenState : StateBase, ITransition, IAnimation
         PlayAnimation();
         _durationTween = DOVirtual.DelayedCall(_duration, () =>
         {
+            StopAnimation();
             _durationComplete = true;
             OnComplete?.Invoke();
         });
@@ -80,12 +81,12 @@ public class DamageTakenState : StateBase, ITransition, IAnimation
 
     public void PlayAnimation()
     {
-        Animator.SetTrigger(HashCode);
+        Animator.SetBool(HashCode, true);
     }
 
     public void StopAnimation()
     {
-
+        Animator.SetBool(HashCode, false);
     }
 
     #endregion
