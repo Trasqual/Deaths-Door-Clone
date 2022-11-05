@@ -168,7 +168,8 @@ MonoBehaviour:
   chargedProjectilePrefab: {fileID: 1835174666943779962, guid: eff954a0ea67f13409301d2029b90f78, type: 3}
   shooter: {fileID: 0}
   damageDealerType: 1
-  initialChargeDelay: 0.5
-  maxChargeTime: 3
+  windUpTime: 0.5
+  initialChargeDelay: 0
+  maxChargeTime: 1
   minDmgMultiplier: 1
   maxDmgMultiplier: 2

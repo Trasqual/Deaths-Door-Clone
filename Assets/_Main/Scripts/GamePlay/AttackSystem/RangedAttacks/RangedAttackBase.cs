@@ -16,13 +16,10 @@ namespace _Main.Scripts.GamePlay.AttackSystem.RangedAttacks
         [Header("Attack Params")]
         [SerializeField] IDamageable _caster;
         [SerializeField] DamageDealerType damageDealerType;
-        [SerializeField] private float initialChargeDelay = 0.5f;
-        [SerializeField] private float maxChargeTime = 3f;
-        [SerializeField] private float minDmgMultiplier = 1f;
-        [SerializeField] private float maxDmgMultiplier = 2f;
-        private float chargeDelayDuration;
-        private float chargeDuration;
+        [SerializeField] private float windUpTime = 1f;
+        [SerializeField] private float maxChargeTime = 2f;
         private float dmgMultiplier;
+        private float windUpCounter;
 
         private bool isActive;
 
@@ -42,9 +39,11 @@ namespace _Main.Scripts.GamePlay.AttackSystem.RangedAttacks
         protected override void DoOnActionEnd()
         {
             isActive = false;
-            Shoot();
-            chargeDelayDuration = 0f;
-            chargeDuration = 0f;
+
+            if (windUpCounter >= windUpTime)
+                Shoot();
+
+            windUpCounter = 0f;
             dmgMultiplier = 1f;
             bow.SetActive(false);
         }
@@ -52,8 +51,7 @@ namespace _Main.Scripts.GamePlay.AttackSystem.RangedAttacks
         protected override void DoOnActionCanceled()
         {
             isActive = false;
-            chargeDelayDuration = 0f;
-            chargeDuration = 0f;
+            windUpCounter = 0f;
             dmgMultiplier = 1f;
             bow.SetActive(false);
         }
@@ -68,26 +66,17 @@ namespace _Main.Scripts.GamePlay.AttackSystem.RangedAttacks
 
         private void ChargeAttack()
         {
-            if (chargeDelayDuration <= initialChargeDelay)
+            windUpCounter += Time.deltaTime;
+
+            if(windUpCounter >= maxChargeTime)
             {
-                chargeDelayDuration += Time.deltaTime;
-            }
-            else
-            {
-                if (chargeDuration <= maxChargeTime)
-                {
-                    chargeDuration += Time.deltaTime;
-                    var t = Mathf.InverseLerp(0f, maxChargeTime, chargeDuration);
-                    dmgMultiplier = Mathf.Lerp(minDmgMultiplier, maxDmgMultiplier, t);
-                }
+                dmgMultiplier = 2f;
             }
         }
 
         private void Shoot()
         {
-            //shooter.transform.position = bow.transform.position;
-            //shooter.transform.forward = transform.forward;
-            shooter.Shoot(chargeDuration > 0 ? chargedProjectilePrefab : projectilePrefab, dmgMultiplier, damageDealerType, _caster);
+            shooter.Shoot(windUpCounter >= maxChargeTime ? chargedProjectilePrefab : projectilePrefab, dmgMultiplier, damageDealerType, _caster);
         }
     }
 }
