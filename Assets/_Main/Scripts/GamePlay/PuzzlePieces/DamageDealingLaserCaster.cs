@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class DamageDealingLaserCaster : LaserCaster, IDamageDealer
+public class DamageDealingLaserCaster : LaserCaster
 {
     [SerializeField] DamageDealerType _damageDealerType;
     [SerializeField] int _damage = 1;
@@ -45,7 +45,7 @@ public class DamageDealingLaserCaster : LaserCaster, IDamageDealer
     {
         while (true)
         {
-            DealDamage(_damage, damagable, _damageDealerType);
+            damagable.TakeDamage(_damage, _damageDealerType);
             yield return new WaitForSeconds(_dotTimer);
         }
     }
@@ -56,10 +56,5 @@ public class DamageDealingLaserCaster : LaserCaster, IDamageDealer
         {
             StopCoroutine(DoT);
         }
-    }
-
-    public void DealDamage(int damage, IDamageable damagable, DamageDealerType damageDealerType)
-    {
-        damagable.TakeDamage(damage, _damageDealerType);
     }
 }
