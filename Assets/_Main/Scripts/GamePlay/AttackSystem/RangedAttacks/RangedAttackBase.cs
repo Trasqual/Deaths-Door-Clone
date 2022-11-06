@@ -76,6 +76,7 @@ namespace _Main.Scripts.GamePlay.AttackSystem.RangedAttacks
 
         private void Shoot()
         {
+            OnAttackCompleted?.Invoke();
             shooter.Shoot(windUpCounter >= maxChargeTime ? chargedProjectilePrefab : projectilePrefab, dmgMultiplier, damageDealerType, _caster);
         }
     }

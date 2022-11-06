@@ -23,9 +23,9 @@ public abstract class HealthComponentBase: MonoBehaviour, IDamageable
     public DamageDealerType GetEffectedByType() => effectedByType;
 
 
-    public virtual void TakeDamage(int amount, DamageDealerType damageDealerType)
+    public virtual bool TakeDamage(int amount, DamageDealerType damageDealerType)
     {
-        if (!Enums.CompareEnums(damageDealerType, effectedByType)) return;
+        if (!Enums.CompareEnums(damageDealerType, effectedByType)) return false;
 
         CurrentHealth -= amount;
 
@@ -36,6 +36,8 @@ public abstract class HealthComponentBase: MonoBehaviour, IDamageable
         }
 
         OnDamageTaken?.Invoke(CurrentHealth);
+
+        return true;
     }
     public virtual void Die()
     {

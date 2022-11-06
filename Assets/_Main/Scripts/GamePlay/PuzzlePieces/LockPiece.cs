@@ -13,12 +13,14 @@ public class LockPiece : MonoBehaviour, IDamageable
 
     public Action OnDeath { get; set; }
 
-    public void TakeDamage(int amount, DamageDealerType damageDealerType)
+    public bool TakeDamage(int amount, DamageDealerType damageDealerType)
     {
         if (Enums.CompareEnums(damageDealerType, _effectedByType))
         {
             Die();
+            return true;
         }
+        return false;
     }
 
     public void Die()

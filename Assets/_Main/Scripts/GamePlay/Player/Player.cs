@@ -1,4 +1,5 @@
 using _Main.Scripts.GamePlay.ActionSystem;
+using _Main.Scripts.GamePlay.AttackSystem;
 using _Main.Scripts.GamePlay.AttackSystem.RangedAttacks;
 using _Main.Scripts.GamePlay.HealthSystem;
 using _Main.Scripts.GamePlay.Indicators.AimingIndicator;
@@ -20,6 +21,10 @@ namespace _Main.Scripts.GamePlay.Player
         private PlayerMovementBase _playerMovement = null;
         private PlayerHealthComponent _playerHealthManager = null;
         private AttackControllerBase _attackController = null;
+        private AmmoCounter _ammoCounter = null;
+
+        private AttackBase SelectedMeleeAttack = null;
+        private AttackBase SelectedRangedAttack = null;
 
         private bool canDodge = true;
 
@@ -31,7 +36,11 @@ namespace _Main.Scripts.GamePlay.Player
             _playerMovement = GetComponent<PlayerMovementBase>();
             _playerHealthManager = GetComponent<PlayerHealthComponent>();
             _attackController = GetComponent<AttackControllerBase>();
+            _ammoCounter = GetComponent<AmmoCounter>();
             stateMachine.Initialize(_input, _playerMovement, PlayerAnim.Animator);
+
+            _attackController.OnSelectedMeleeAttackChanged += OnMeleeAttackChangedCallback;
+            _attackController.OnSelectedRangedAttackChanged += OnRangedAttackChangedCallback;
         }
 
         private void Start()
@@ -130,7 +139,8 @@ namespace _Main.Scripts.GamePlay.Player
 
         private void StartAiming()
         {
-            stateMachine.ChangeState(typeof(AimingState));
+            if (_ammoCounter.CurrentAmmo > 0)
+                stateMachine.ChangeState(typeof(AimingState));
         }
 
         private void PerformRoll()
@@ -144,6 +154,32 @@ namespace _Main.Scripts.GamePlay.Player
         private void SwitchMeleeWeapon(float switchInput)
         {
             _attackController.SwitchMeleeWeapon(switchInput, stateMachine);
+        }
+
+        private void OnMeleeAttackChangedCallback(AttackBase meleeAttack)
+        {
+            if (SelectedMeleeAttack != null)
+                SelectedMeleeAttack.OnAttackLanded -= OnMeleeAttackLanded;
+            SelectedMeleeAttack = meleeAttack;
+            SelectedMeleeAttack.OnAttackLanded += OnMeleeAttackLanded;
+        }
+
+        private void OnRangedAttackChangedCallback(AttackBase rangedAttack)
+        {
+            if (SelectedRangedAttack != null)
+                SelectedRangedAttack.OnAttackCompleted -= OnRangedAttackCompleted;
+            SelectedRangedAttack = rangedAttack;
+            SelectedRangedAttack.OnAttackCompleted += OnRangedAttackCompleted;
+        }
+
+        private void OnMeleeAttackLanded(int hitCount)
+        {
+            _ammoCounter.GainAmmo(hitCount);
+        }
+
+        private void OnRangedAttackCompleted()
+        {
+            _ammoCounter.UseAmmo();
         }
 
         #endregion

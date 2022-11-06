@@ -18,13 +18,13 @@ namespace _Main.Scripts.GamePlay.HealthSystem
             _behaviourData = baseData;
         }
 
-        public override void TakeDamage(int amount, DamageDealerType damageDealerType)
+        public override bool TakeDamage(int amount, DamageDealerType damageDealerType)
         {
-            if (_invulnerable.IsActive) return;
+            if (_invulnerable.IsActive) return false;
         
             _invulnerable.InvulnerableForDuration(_behaviourData.InvulnerabilityDurationAfterTakingDamage);
         
-            if (!Enums.CompareEnums(damageDealerType, effectedByType)) return;
+            if (!Enums.CompareEnums(damageDealerType, effectedByType)) return false;
 
             CurrentHealth -= amount;
 
@@ -35,6 +35,8 @@ namespace _Main.Scripts.GamePlay.HealthSystem
             }
 
             OnDamageTaken?.Invoke(CurrentHealth);
+
+            return true;
         }
 
         public override void Die()
