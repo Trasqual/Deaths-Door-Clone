@@ -3,9 +3,10 @@ using _Main.Scripts.GamePlay.StateMachine;
 using UnityEngine;
 
 [RequireComponent(typeof(StateMachine))]
-public abstract class BehaviourBase : MonoBehaviour
+public abstract class BehaviourBase<T> : MonoBehaviour
+where T : BehaviourBaseData
 {
-    [SerializeField] protected BehaviourData data;
+    [SerializeField] protected T data;
     
     protected StateMachine stateMachine;
     protected InputBase _input;

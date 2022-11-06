@@ -2,7 +2,6 @@ using _Main.Scripts.GamePlay.ActionSystem;
 using _Main.Scripts.GamePlay.AttackSystem.RangedAttacks;
 using _Main.Scripts.GamePlay.HealthSystem;
 using _Main.Scripts.GamePlay.Indicators.AimingIndicator;
-using _Main.Scripts.GamePlay.InputSystem;
 using _Main.Scripts.GamePlay.StateMachine;
 using _Main.Scripts.Others;
 using DG.Tweening;
@@ -13,7 +12,7 @@ namespace _Main.Scripts.GamePlay.Player
     [RequireComponent(typeof(PlayerMovementBase),
         typeof(PlayerAnimation),
         typeof(HealthComponentBase))]
-    public class Player : BehaviourBase
+    public class Player : BehaviourBase<PlayerBehaviourData>
     {
         public CharacterController Controller { get; private set; }
         public PlayerAnimation PlayerAnim { get; private set; }
@@ -94,9 +93,8 @@ namespace _Main.Scripts.GamePlay.Player
 
             if (aimingBehaviour)
             {
-                var playerData = (PlayerBehaviourData)data;
-                var targetGroupHandler = Instantiate(playerData.cameraTargetGroup, transform);
-                var aimIndicator = Instantiate(playerData.aimingIndicator, transform);
+                var targetGroupHandler = Instantiate(data.cameraTargetGroup, transform);
+                var aimIndicator = Instantiate(data.aimingIndicator, transform);
                 var aimBehaviourAction = (IAction)aimingBehaviour;
                 targetGroupHandler.Init(aimBehaviourAction);
                 aimIndicator.Init(aimBehaviourAction);

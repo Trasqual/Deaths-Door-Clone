@@ -1,3 +1,4 @@
+using _Main.Scripts.GamePlay.Player;
 using _Main.Scripts.Utilities;
 
 namespace _Main.Scripts.GamePlay.HealthSystem
@@ -5,16 +6,16 @@ namespace _Main.Scripts.GamePlay.HealthSystem
     public class PlayerHealthComponent : HealthComponentBase
     {
         private InvulnerableBase _invulnerable = null;
-        private BehaviourData _behaviourData = null;
+        private PlayerBehaviourData _behaviourData = null;
 
         private void Awake()
         {
             _invulnerable = gameObject.AddComponent<Invulnerable>();
         }
 
-        public void Init(BehaviourData data)
+        public void Init(PlayerBehaviourData baseData)
         {
-            _behaviourData = data;
+            _behaviourData = baseData;
         }
 
         public override void TakeDamage(int amount, DamageDealerType damageDealerType)

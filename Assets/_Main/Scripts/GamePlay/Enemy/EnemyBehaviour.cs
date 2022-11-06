@@ -3,7 +3,7 @@ using _Main.Scripts.GamePlay.StateMachine;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class EnemyBehaviour : BehaviourBase
+public class EnemyBehaviour : BehaviourBase<EnemyBehaviourData>
 {
     private NavMeshAgent _agent;
     private HealthComponentBase _healthManager;
@@ -30,7 +30,6 @@ public class EnemyBehaviour : BehaviourBase
     {
         GainMovementBehaviour();
         GainAttackBehaviour();
-        GainDamageTakenBehaviour();
         GainDeathBehaviour();
 
         stateMachine.SetInitialState(typeof(MovementState));
@@ -55,11 +54,6 @@ public class EnemyBehaviour : BehaviourBase
     public void GainDeathBehaviour()
     {
         stateMachine.AddDeathState();
-    }
-
-    public void GainDamageTakenBehaviour()
-    {
-        stateMachine.AddDamageTakenState(data.DamageTakenStateDuration);
     }
 
     private void Attack()

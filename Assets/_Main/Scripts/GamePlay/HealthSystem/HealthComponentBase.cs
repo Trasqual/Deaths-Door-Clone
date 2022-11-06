@@ -2,7 +2,7 @@ using _Main.Scripts.Utilities;
 using System;
 using UnityEngine;
 
-public abstract class HealthComponentBase : MonoBehaviour, IDamageable
+public abstract class HealthComponentBase: MonoBehaviour, IDamageable
 {
     [SerializeField] public DamageDealerType effectedByType;
     [SerializeField] protected int maxHealth = 4;
