@@ -11,6 +11,8 @@ where T : BehaviourBaseData
     protected StateMachine stateMachine;
     protected InputBase _input;
 
+    public T Data => data;
+
     protected virtual void Awake()
     {
         stateMachine = GetComponent<StateMachine>();
