@@ -16,7 +16,9 @@ public abstract class AttackControllerBase : MonoBehaviour
     public AttackBase SelectedMeleeAttack { get; protected set; }
 
     protected int SelectedAttackIndex = 0;
-    
+
+    public List<AttackBase> GetMeleeAttacks() => meleeAttacks;
+
     public abstract void SetSelectedMeleeAttack(StateMachine stateMachine);
     public abstract void SetSelectedRangedAttack(Type rangedAttackType, StateMachine stateMachine, IDamageable caster);
     public abstract void SetSelectedMeleeAttack(Type meleeAttackType, StateMachine stateMachine);

@@ -10,7 +10,4 @@ public class EnemyBehaviourData : BehaviourBaseData
 
     [TitleGroup("Health")]
     public int Health = 4;
-
-    [TitleGroup("Attack")]
-    public float AttackRange = 1.5f;
 }

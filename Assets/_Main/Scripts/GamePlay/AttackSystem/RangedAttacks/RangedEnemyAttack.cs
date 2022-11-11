@@ -17,7 +17,7 @@ public class RangedEnemyAttack : RangedAttackBase
         DOVirtual.DelayedCall(shootDelay, () =>
         {
             base.Shoot();
-            shooter.Shoot(projectilePrefab, dmgMultiplier, damageDealerType, _caster);
+            shooter.Shoot(projectilePrefab, CurrentComboDamageData.damage, damageDealerType, _caster);
         });
     }
 }

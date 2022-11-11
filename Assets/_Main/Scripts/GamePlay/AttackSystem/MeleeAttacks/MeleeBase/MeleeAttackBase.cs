@@ -18,6 +18,7 @@ public class MeleeAttackBase : AttackBase
     protected virtual void Awake()
     {
         CurrentComboAnimationData = comboDatas[0].AttackAnimationData;
+        CurrentComboDamageData = comboDatas[0].AttackDamageData;
     }
 
     #region IActionCallbacks(FromMeleeAttackState)
@@ -47,14 +48,14 @@ public class MeleeAttackBase : AttackBase
             DealDamage();
             SetCurrentComboCount();
             StartCountdowns();
-            AssignComboAnimationData();
+            AssignComboData();
         }
         else //if this attack doesn't have any combo, attack once and exit attack state
         {
             OnAttackPerformed?.Invoke();
             DealDamage();
             StartCountdowns();
-            AssignComboAnimationData();
+            AssignComboData();
         }
     }
 
@@ -73,7 +74,7 @@ public class MeleeAttackBase : AttackBase
         canAttack = true;
         canCombo = false;
         currentComboCount = 0;
-        AssignComboAnimationData();
+        AssignComboData();
     }
     #endregion
 
@@ -88,9 +89,10 @@ public class MeleeAttackBase : AttackBase
     }
 
     //Setup Current Combo's animation data
-    protected virtual void AssignComboAnimationData()
+    protected virtual void AssignComboData()
     {
         CurrentComboAnimationData = comboDatas[currentComboCount].AttackAnimationData;
+        CurrentComboDamageData = comboDatas[currentComboCount].AttackDamageData;
     }
 
     //Setup cooldown timer for next combo attack and countdown timer for possible combo duration
@@ -120,7 +122,7 @@ public class MeleeAttackBase : AttackBase
         var animData = (MeleeAttackAnimationData)comboDatas[currentComboCount].AttackAnimationData;
         damageDelay = DOVirtual.DelayedCall(animData.attackDamageDelay, () =>
         {
-            var damageData = (SphereAttackDamageData)comboDatas[currentComboCount].AttackDamageData;
+            var damageData = (SphereAttackDamageData)CurrentComboDamageData;
             new SphereCastDamager(transform.root.position + transform.root.up + transform.root.forward, damageData.radius, transform.root.forward, damageData.range, damageData.damage, damageData.dmgDealerType, out int damagedTargets);
             OnAttackLanded?.Invoke(damagedTargets);
         });
@@ -133,7 +135,7 @@ public class MeleeAttackBase : AttackBase
         attackDelay?.Kill();
         canCombo = false;
         currentComboCount = 0;
-        AssignComboAnimationData();
+        AssignComboData();
         OnAttackCompleted?.Invoke();
     }
 

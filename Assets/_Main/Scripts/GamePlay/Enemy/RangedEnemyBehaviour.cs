@@ -1,9 +1,4 @@
-using _Main.Scripts.GamePlay.AttackSystem.RangedAttacks;
 using _Main.Scripts.GamePlay.StateMachine;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
 public class RangedEnemyBehaviour : EnemyBehaviourBase
 {
@@ -12,6 +7,7 @@ public class RangedEnemyBehaviour : EnemyBehaviourBase
         base.Start();
         GainAimingBehaviour();
         AttackController.SetSelectedRangedAttack(typeof(RangedEnemyAttack), stateMachine, _healthManager);
+        _agent.stoppingDistance = AttackController.SelectedRangedAttack.CurrentComboDamageData.attackRange;
     }
 
     public void GainAimingBehaviour()

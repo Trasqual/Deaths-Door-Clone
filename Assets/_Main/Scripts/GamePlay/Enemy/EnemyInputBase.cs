@@ -13,15 +13,15 @@ public abstract class EnemyInputBase : InputBase
     [SerializeField] protected EnemyTriggerDetector detecterPrefab;
     protected EnemyTriggerDetector detector;
     protected NavMeshAgent agent;
+    protected AttackController attackController;
 
     protected IDamageable _target;
     protected Vector3 startPos;
-    protected float originalStoppingDistance;
 
     protected virtual void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
-
+        attackController = GetComponent<AttackController>();
         if (detector == null)
         {
             detector = Instantiate(detecterPrefab, transform.position, Quaternion.identity, transform);
@@ -30,11 +30,6 @@ public abstract class EnemyInputBase : InputBase
         }
 
         startPos = transform.position;
-    }
-
-    protected virtual void Start()
-    {
-        originalStoppingDistance = agent.stoppingDistance;
     }
 
     public override Vector3 GetLookInput()
@@ -51,31 +46,7 @@ public abstract class EnemyInputBase : InputBase
 
     public override Vector3 GetMovementInput()
     {
-        if (_target != null)
-        {
-            agent.stoppingDistance = originalStoppingDistance;
-            if (Vector3.Distance(transform.position, _target.GetTransform().position) > agent.stoppingDistance)
-            {
-                return _target.GetTransform().position;
-            }
-            else
-            {
-                return Vector3.zero;
-            }
-        }
-        else
-        {
-            agent.stoppingDistance = 0.5f;
-            var returnPos = shouldPatrol ? GetPatrolPosition() : startPos;
-            if (Vector3.Distance(transform.position, returnPos) > agent.stoppingDistance)
-            {
-                return returnPos;
-            }
-            else
-            {
-                return Vector3.zero;
-            }
-        }
+        return Vector3.zero;
     }
 
     protected virtual Vector3 GetPatrolPosition()

@@ -7,9 +7,7 @@ namespace _Main.Scripts.GamePlay.AttackSystem.RangedAttacks
     {
         [SerializeField] float maxTravelDistance = 15f;
         [SerializeField] float projectileSpeed = 5f;
-        [SerializeField] float baseDamage = 1f;
-        private float _dmgMultiplier = 1f;
-        private float _damage => baseDamage * _dmgMultiplier;
+        private float _damage;
         private DamageDealerType _damageDealerType;
         private Vector3 startPos;
         private IDamageable _caster;
@@ -59,21 +57,21 @@ namespace _Main.Scripts.GamePlay.AttackSystem.RangedAttacks
             StartCoroutine(DestroySelf(3f));
         }
 
-        public void Init(float dmgMultiplier, DamageDealerType damageDealerType, IDamageable caster)
+        public void Init(float damage, DamageDealerType damageDealerType, IDamageable caster)
         {
-            SetDmgMultiplier(dmgMultiplier);
+            SetDamage(damage);
             SetDamageDealerType(damageDealerType);
             SetCaster(caster);
+        }
+
+        public void SetDamage(float damage)
+        {
+            _damage = damage;
         }
 
         public void SetDamageDealerType(DamageDealerType damageDealerType)
         {
             _damageDealerType = damageDealerType;
-        }
-
-        public void SetDmgMultiplier(float amount)
-        {
-            _dmgMultiplier = amount;
         }
 
         public void SetCaster(IDamageable caster)

@@ -12,6 +12,7 @@ public class PlayerBowAttack : RangedAttackBase
     [SerializeField] private float windUpTime = 1f;
     [SerializeField] private float maxChargeTime = 2f;
     private float windUpCounter;
+    private float dmgMultiplier = 1f;
 
     protected override void DoOnActionStart()
     {
@@ -60,6 +61,6 @@ public class PlayerBowAttack : RangedAttackBase
     protected override void Shoot()
     {
         base.Shoot();
-        shooter.Shoot(windUpCounter >= maxChargeTime ? chargedProjectilePrefab : projectilePrefab, dmgMultiplier, damageDealerType, _caster);
+        shooter.Shoot(windUpCounter >= maxChargeTime ? chargedProjectilePrefab : projectilePrefab, CurrentComboDamageData.damage * dmgMultiplier, damageDealerType, _caster);
     }
 }

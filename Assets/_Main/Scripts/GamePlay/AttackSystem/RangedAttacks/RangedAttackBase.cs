@@ -13,9 +13,14 @@ namespace _Main.Scripts.GamePlay.AttackSystem.RangedAttacks
         [Header("Attack Params")]
         [SerializeField] protected IDamageable _caster;
         [SerializeField] protected DamageDealerType damageDealerType;
-        protected float dmgMultiplier = 1;
 
         protected bool isActive;
+
+        private void Awake()
+        {
+            CurrentComboAnimationData = comboDatas[0].AttackAnimationData;
+            CurrentComboDamageData = comboDatas[0].AttackDamageData;
+        }
 
         public void Init(IAction action, IDamageable caster)
         {
@@ -25,7 +30,6 @@ namespace _Main.Scripts.GamePlay.AttackSystem.RangedAttacks
 
         protected override void DoOnActionStart()
         {
-            CurrentComboAnimationData = comboDatas[0].AttackAnimationData;
             isActive = true;
         }
 

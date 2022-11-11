@@ -13,6 +13,7 @@ namespace _Main.Scripts.GamePlay.AttackSystem
 
         [SerializeField] protected List<AttackData> comboDatas = new List<AttackData>();
         public AttackAnimationDataBase CurrentComboAnimationData { get; protected set; }
+        public AttackDamageDataBase CurrentComboDamageData { get; protected set; }
 
         public virtual void Init(IAction action)
         {

@@ -5,10 +5,10 @@ using UnityEngine.AI;
 
 public class EnemyBehaviourBase : BehaviourBase<EnemyBehaviourData>
 {
-    private NavMeshAgent _agent;
+    protected NavMeshAgent _agent;
     protected HealthComponentBase _healthManager;
-    private MovementBase _movementBase;
-    private Animator _anim;
+    protected MovementBase _movementBase;
+    protected Animator _anim;
 
     public AttackControllerBase AttackController { get; private set; }
 
@@ -22,8 +22,6 @@ public class EnemyBehaviourBase : BehaviourBase<EnemyBehaviourData>
         AttackController = GetComponent<AttackControllerBase>();
 
         stateMachine.Initialize(_input, _movementBase, _anim);
-
-        _agent.stoppingDistance = data.AttackRange;
     }
 
     protected virtual void Start()
@@ -32,7 +30,6 @@ public class EnemyBehaviourBase : BehaviourBase<EnemyBehaviourData>
         GainDeathBehaviour();
 
         stateMachine.SetInitialState(typeof(MovementState));
-
     }
 
     public void GainMovementBehaviour()
