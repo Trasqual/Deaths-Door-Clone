@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1835174666019548361}
   - component: {fileID: 1835174666019548367}
   - component: {fileID: 1835174666019548360}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: ArrowModel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -95,7 +95,7 @@ GameObject:
   - component: {fileID: 1835174666943779960}
   - component: {fileID: 1835174666943779962}
   - component: {fileID: 4534708077127016273}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: RangedEnemyProjectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
