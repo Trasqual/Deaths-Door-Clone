@@ -10691,6 +10691,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 2066595214915987770, guid: 1c568c6317c9c4f92b0ed02ce2e54745, type: 3}
+      propertyPath: GeneralAttackCooldown
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 2195987234098174322, guid: 1c568c6317c9c4f92b0ed02ce2e54745, type: 3}
       propertyPath: m_Layer
       value: 6

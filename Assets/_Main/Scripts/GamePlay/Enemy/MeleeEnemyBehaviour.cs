@@ -1,4 +1,5 @@
 using _Main.Scripts.GamePlay.StateMachine;
+using UnityEngine;
 
 public class MeleeEnemyBehaviour : EnemyBehaviourBase
 {
@@ -20,23 +21,26 @@ public class MeleeEnemyBehaviour : EnemyBehaviourBase
         stateMachine.ChangeState(typeof(MeleeAttackState));
     }
 
-    private void SwitchMeleeWeapon(int switchInput)
+    private void SelectNextAttack(int switchInput)
     {
-        AttackController.SelectMeleeWeaponWithNo(switchInput, stateMachine);
-        _agent.stoppingDistance = AttackController.SelectedMeleeAttack.CurrentComboDamageData.attackRange;
+        if (switchInput != AttackController.GetMeleeAttacks().IndexOf(AttackController.SelectedMeleeAttack))
+        {
+            AttackController.SelectMeleeWeaponWithNo(switchInput, stateMachine);
+            _agent.stoppingDistance = AttackController.SelectedMeleeAttack.CurrentComboDamageData.attackRange;
+        }
     }
 
     protected override void OnEnable()
     {
         base.OnEnable();
         _input.OnAttackActionStarted += Attack;
-        _input.OnMeleeWeaponSwitchedWithID += SwitchMeleeWeapon;
+        _input.OnMeleeWeaponSwitchedWithID += SelectNextAttack;
     }
 
     protected override void OnDisable()
     {
         base.OnDisable();
         _input.OnAttackActionStarted -= Attack;
-        _input.OnMeleeWeaponSwitchedWithID -= SwitchMeleeWeapon;
+        _input.OnMeleeWeaponSwitchedWithID -= SelectNextAttack;
     }
 }

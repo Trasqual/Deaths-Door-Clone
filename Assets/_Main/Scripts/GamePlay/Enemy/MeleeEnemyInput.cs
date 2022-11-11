@@ -26,20 +26,16 @@ public class MeleeEnemyInput : EnemyInputBase
         for (int i = 0; i < attackController.GetMeleeAttacks().Count; i++)
         {
             var meleeAttack = (MeleeAttackBase)attackController.GetMeleeAttacks()[i];
-            if (meleeAttack.IsOnCooldown) continue;
             var dif = Mathf.Abs(meleeAttack.CurrentComboDamageData.attackRange - distance);
             if (dif < curLowest)
             {
                 curLowest = dif;
-                selectedAttackNo = i;
+                if (!meleeAttack.IsOnCooldown)
+                    selectedAttackNo = i;
             }
         }
-        if (_selectedAttackNo != selectedAttackNo)
-        {
-            Debug.Log(_selectedAttackNo);
-            _selectedAttackNo = selectedAttackNo;
-            OnMeleeWeaponSwitchedWithID?.Invoke(_selectedAttackNo);
-        }
+        _selectedAttackNo = selectedAttackNo;
+        OnMeleeWeaponSwitchedWithID?.Invoke(_selectedAttackNo);
     }
 
     public override Vector3 GetMovementInput()
