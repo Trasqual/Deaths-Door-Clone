@@ -22,7 +22,6 @@ public abstract class HealthComponentBase: MonoBehaviour, IDamageable
 
     public DamageDealerType GetEffectedByType() => effectedByType;
 
-
     public virtual bool TakeDamage(int amount, DamageDealerType damageDealerType)
     {
         if (!Enums.CompareEnums(damageDealerType, effectedByType)) return false;

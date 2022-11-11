@@ -1,8 +1,11 @@
+using _Main.Scripts.Utilities;
 using UnityEngine;
 
 public class EnemyTriggerDetector : TriggerDetectorBase<IDamageable>
 {
     [SerializeField] LayerMask lineOfSightCheckMask;
+    [SerializeField] DamageDealerType damageDealerType;
+
     protected override void OnTriggerStay(Collider other)
     {
         if (_target == null)
@@ -25,6 +28,12 @@ public class EnemyTriggerDetector : TriggerDetectorBase<IDamageable>
                 LoseTarget();
             }
         }
+    }
+
+    public override void Detect(IDamageable target)
+    {
+        if (Enums.CompareEnums(target.GetEffectedByType(), damageDealerType))
+        OnTargetFound?.Invoke(target);
     }
 
     protected override void LoseTarget()

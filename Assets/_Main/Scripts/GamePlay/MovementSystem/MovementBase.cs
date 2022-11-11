@@ -7,6 +7,7 @@ namespace _Main.Scripts.GamePlay.MovementSystem
         protected bool canMove = true;
         protected bool canRotate = true;
 
+        public virtual Vector3 GetVelocity() => Vector3.zero;
         protected abstract bool IsMoving();
 
         public virtual void StartMovement()

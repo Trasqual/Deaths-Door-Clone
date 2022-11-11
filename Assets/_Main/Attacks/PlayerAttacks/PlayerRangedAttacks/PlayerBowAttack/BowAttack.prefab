@@ -124,7 +124,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5838724912294293134}
-  - component: {fileID: 5838724912294293133}
+  - component: {fileID: 638880442221846409}
   m_Layer: 0
   m_Name: BowAttack
   m_TagString: Untagged
@@ -148,7 +148,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5838724912294293133
+--- !u!114 &638880442221846409
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -157,19 +157,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 5838724912294293135}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e16b5a3419ae0ef44ac87b2c01cf461a, type: 3}
+  m_Script: {fileID: 11500000, guid: 8ae01e71c45f8c847a828847b83aaeb8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   comboDatas:
   - AttackAnimationData: {fileID: 11400000, guid: b7d21024a0a156c4989f58e7e1874788, type: 2}
     AttackDamageData: {fileID: 0}
-  bow: {fileID: 1347074738}
   projectilePrefab: {fileID: 5961490733113688068, guid: 6964731e038ee0d40a3250aec92442e7, type: 3}
-  chargedProjectilePrefab: {fileID: 1835174666943779962, guid: eff954a0ea67f13409301d2029b90f78, type: 3}
   shooter: {fileID: 0}
   damageDealerType: 1
+  chargedProjectilePrefab: {fileID: 1835174666943779962, guid: eff954a0ea67f13409301d2029b90f78, type: 3}
+  bow: {fileID: 1347074738}
   windUpTime: 0.5
-  initialChargeDelay: 0
   maxChargeTime: 1
-  minDmgMultiplier: 1
-  maxDmgMultiplier: 2

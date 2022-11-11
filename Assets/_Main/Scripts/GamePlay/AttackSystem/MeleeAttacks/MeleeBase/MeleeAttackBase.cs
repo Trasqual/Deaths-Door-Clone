@@ -122,7 +122,6 @@ public class MeleeAttackBase : AttackBase
         {
             var damageData = (SphereAttackDamageData)comboDatas[currentComboCount].AttackDamageData;
             new SphereCastDamager(transform.root.position + transform.root.up + transform.root.forward, damageData.radius, transform.root.forward, damageData.range, damageData.damage, damageData.dmgDealerType, out int damagedTargets);
-            Debug.Log(damagedTargets);
             OnAttackLanded?.Invoke(damagedTargets);
         });
     }

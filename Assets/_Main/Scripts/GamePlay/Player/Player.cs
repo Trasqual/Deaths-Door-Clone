@@ -56,7 +56,7 @@ namespace _Main.Scripts.GamePlay.Player
             stateMachine.SetInitialState(typeof(MovementState));
 
             _attackController.SetSelectedMeleeAttack(stateMachine);
-            _attackController.SetSelectedRangedAttack(typeof(RangedAttackBase), stateMachine, _playerHealthManager);
+            _attackController.SetSelectedRangedAttack(typeof(PlayerBowAttack), stateMachine, _playerHealthManager);
         }
 
         #region Behaviours

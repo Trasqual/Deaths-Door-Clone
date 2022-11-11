@@ -44,7 +44,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 15
+  m_Radius: 10
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &6205231293218319960
 MonoBehaviour:
@@ -58,8 +58,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b1f847f36ca2114cb62c1f11729e52e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  range: 15
-  resetRange: 20
+  range: 10
+  resetRange: 15
   lineOfSightCheckMask:
     serializedVersion: 2
     m_Bits: 63
+  damageDealerType: 2

@@ -20,6 +20,13 @@ namespace _Main.Scripts.GamePlay.Player
 
         private IEnumerator moveOverTimeCo;
 
+        private Vector3 velocity;
+
+        public override Vector3 GetVelocity()
+        {
+           return velocity;
+        }
+
         private void Start()
         {
             player = GetComponent<Player>();
@@ -56,6 +63,7 @@ namespace _Main.Scripts.GamePlay.Player
         protected void MoveInDirection(Vector3 dir, float speed)
         {
             player.Controller.Move(dir * Time.deltaTime * speed);
+            velocity = player.Controller.velocity;
         }
 
         protected void RotateInDirection(Vector3 direction, float rotationSpeed)

@@ -4,12 +4,19 @@ using UnityEngine.AI;
 
 public abstract class EnemyInputBase : InputBase
 {
+    [SerializeField] protected bool shouldPatrol = false;
+    [SerializeField] protected float patrolRange = 6f;
+    [SerializeField] protected float patrolDuration = 3f;
+    protected float patrolTimer = 0f;
+    protected Vector3 patrolPosition;
+
     [SerializeField] protected EnemyTriggerDetector detecterPrefab;
     protected EnemyTriggerDetector detector;
     protected NavMeshAgent agent;
 
     protected IDamageable _target;
     protected Vector3 startPos;
+    protected float originalStoppingDistance;
 
     protected virtual void Awake()
     {
@@ -23,6 +30,11 @@ public abstract class EnemyInputBase : InputBase
         }
 
         startPos = transform.position;
+    }
+
+    protected virtual void Start()
+    {
+        originalStoppingDistance = agent.stoppingDistance;
     }
 
     public override Vector3 GetLookInput()
@@ -41,6 +53,7 @@ public abstract class EnemyInputBase : InputBase
     {
         if (_target != null)
         {
+            agent.stoppingDistance = originalStoppingDistance;
             if (Vector3.Distance(transform.position, _target.GetTransform().position) > agent.stoppingDistance)
             {
                 return _target.GetTransform().position;
@@ -52,9 +65,11 @@ public abstract class EnemyInputBase : InputBase
         }
         else
         {
-            if (Vector3.Distance(transform.position, startPos) > agent.stoppingDistance)
+            agent.stoppingDistance = 0.5f;
+            var returnPos = shouldPatrol ? GetPatrolPosition() : startPos;
+            if (Vector3.Distance(transform.position, returnPos) > agent.stoppingDistance)
             {
-                return startPos;
+                return returnPos;
             }
             else
             {
@@ -63,14 +78,26 @@ public abstract class EnemyInputBase : InputBase
         }
     }
 
+    protected virtual Vector3 GetPatrolPosition()
+    {
+        patrolTimer += Time.deltaTime;
+        if (patrolTimer >= patrolDuration)
+        {
+            var randPos = Random.insideUnitCircle * patrolRange;
+            patrolPosition = startPos + new Vector3(randPos.x, 0f, randPos.y);
+            patrolTimer = 0f;
+        }
+        return patrolPosition;
+    }
+
     protected abstract void Update();
 
-    protected void OnTargetDetectedCallback(IDamageable target)
+    protected virtual void OnTargetDetectedCallback(IDamageable target)
     {
         _target = target;
     }
 
-    protected void OnTargetLostCallback()
+    protected virtual void OnTargetLostCallback()
     {
         _target = null;
     }

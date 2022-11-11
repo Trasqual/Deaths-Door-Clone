@@ -11,7 +11,7 @@ public class RangedEnemyBehaviour : EnemyBehaviourBase
     {
         base.Start();
         GainAimingBehaviour();
-        AttackController.SetSelectedRangedAttack(typeof(RangedAttackBase), stateMachine, _healthManager);
+        AttackController.SetSelectedRangedAttack(typeof(RangedEnemyAttack), stateMachine, _healthManager);
     }
 
     public void GainAimingBehaviour()

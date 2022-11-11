@@ -142,6 +142,7 @@ namespace _Main.Scripts.GamePlay.StateMachine
             IsStateLocked = false;
 
             PlayAnimation();
+            if (_input.GetLookInput() != Vector3.zero)
             transform.rotation = Quaternion.LookRotation(_input.GetLookInput());
             var info = (MeleeAttackAnimationData)_selectedMeleeAttack.CurrentComboAnimationData;
             _movementBase.MoveOverTime(transform.position + transform.forward * info.attackMovementAmount, info.attackMovementDuration, info.attackMovementDelay, info.useGravity, info.useAnimationMovement);

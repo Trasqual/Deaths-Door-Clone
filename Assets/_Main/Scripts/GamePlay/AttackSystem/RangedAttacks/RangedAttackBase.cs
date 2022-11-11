@@ -5,23 +5,17 @@ namespace _Main.Scripts.GamePlay.AttackSystem.RangedAttacks
 {
     public class RangedAttackBase : AttackBase
     {
-        [Header("Visuals")]
-        [SerializeField] private GameObject bow;
-        [SerializeField] private Projectile projectilePrefab;
-        [SerializeField] private Projectile chargedProjectilePrefab;
+        [SerializeField] protected Projectile projectilePrefab;        
 
         [Header("Shooters")]
-        [SerializeField] private Shooter shooter;
+        [SerializeField] protected Shooter shooter;
 
         [Header("Attack Params")]
-        [SerializeField] IDamageable _caster;
-        [SerializeField] DamageDealerType damageDealerType;
-        [SerializeField] private float windUpTime = 1f;
-        [SerializeField] private float maxChargeTime = 2f;
-        private float dmgMultiplier;
-        private float windUpCounter;
+        [SerializeField] protected IDamageable _caster;
+        [SerializeField] protected DamageDealerType damageDealerType;
+        protected float dmgMultiplier = 1;
 
-        private bool isActive;
+        protected bool isActive;
 
         public void Init(IAction action, IDamageable caster)
         {
@@ -31,7 +25,6 @@ namespace _Main.Scripts.GamePlay.AttackSystem.RangedAttacks
 
         protected override void DoOnActionStart()
         {
-            bow.SetActive(true);
             CurrentComboAnimationData = comboDatas[0].AttackAnimationData;
             isActive = true;
         }
@@ -39,45 +32,16 @@ namespace _Main.Scripts.GamePlay.AttackSystem.RangedAttacks
         protected override void DoOnActionEnd()
         {
             isActive = false;
-
-            if (windUpCounter >= windUpTime)
-                Shoot();
-
-            windUpCounter = 0f;
-            dmgMultiplier = 1f;
-            bow.SetActive(false);
         }
 
         protected override void DoOnActionCanceled()
         {
             isActive = false;
-            windUpCounter = 0f;
-            dmgMultiplier = 1f;
-            bow.SetActive(false);
         }
 
-        private void Update()
-        {
-            if (isActive)
-            {
-                ChargeAttack();
-            }
-        }
-
-        private void ChargeAttack()
-        {
-            windUpCounter += Time.deltaTime;
-
-            if(windUpCounter >= maxChargeTime)
-            {
-                dmgMultiplier = 2f;
-            }
-        }
-
-        private void Shoot()
+        protected virtual void Shoot()
         {
             OnAttackCompleted?.Invoke();
-            shooter.Shoot(windUpCounter >= maxChargeTime ? chargedProjectilePrefab : projectilePrefab, dmgMultiplier, damageDealerType, _caster);
         }
     }
 }

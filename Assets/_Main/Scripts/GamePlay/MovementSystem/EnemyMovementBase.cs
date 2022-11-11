@@ -9,6 +9,8 @@ public class EnemyMovementBase : MovementBase
     private AnimationMovementBase animationMovement;
     private IEnumerator moveOverTimeCo;
 
+    public override Vector3 GetVelocity() => agent.velocity;
+
     private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -23,8 +25,10 @@ public class EnemyMovementBase : MovementBase
 
     public override void Move(Vector3 dir, float movementSpeedMultiplier, float rotationSpeedMultiplier)
     {
-        if(agent.isActiveAndEnabled)
+        if (!agent.isActiveAndEnabled) return;
         agent.SetDestination(dir);
+        if (dir != Vector3.zero)
+            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(dir), Time.deltaTime * rotationSpeedMultiplier);
     }
 
     public override void MoveOverTime(Vector3 endPos, float duration, float setDelay = 0f, bool useGravity = true, bool useAnimationMovement = false)
