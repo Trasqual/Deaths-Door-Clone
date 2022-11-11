@@ -25,7 +25,9 @@ public class MeleeEnemyInput : EnemyInputBase
         int selectedAttackNo = 0;
         for (int i = 0; i < attackController.GetMeleeAttacks().Count; i++)
         {
-            var dif = Mathf.Abs(attackController.GetMeleeAttacks()[i].CurrentComboDamageData.attackRange - distance);
+            var meleeAttack = (MeleeAttackBase)attackController.GetMeleeAttacks()[i];
+            if (meleeAttack.IsOnCooldown) continue;
+            var dif = Mathf.Abs(meleeAttack.CurrentComboDamageData.attackRange - distance);
             if (dif < curLowest)
             {
                 curLowest = dif;
@@ -34,8 +36,9 @@ public class MeleeEnemyInput : EnemyInputBase
         }
         if (_selectedAttackNo != selectedAttackNo)
         {
+            Debug.Log(_selectedAttackNo);
             _selectedAttackNo = selectedAttackNo;
-            OnMeleeWeaponSwitched?.Invoke(_selectedAttackNo);
+            OnMeleeWeaponSwitchedWithID?.Invoke(_selectedAttackNo);
         }
     }
 

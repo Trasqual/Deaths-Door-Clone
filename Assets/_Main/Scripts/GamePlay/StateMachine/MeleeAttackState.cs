@@ -22,8 +22,6 @@ namespace _Main.Scripts.GamePlay.StateMachine
         private AttackBase _selectedMeleeAttack;
         public Action OnComplete;
 
-        private bool IsOnAttackCooldown;
-
         public void Initialize(InputBase input, MovementBase movementBase, Animator animator, AttackControllerBase attackController)
         {
             _input = input;
@@ -43,7 +41,8 @@ namespace _Main.Scripts.GamePlay.StateMachine
         #region StateMethods
         public override void EnterState()
         {
-            if (IsOnAttackCooldown)
+            var meleeAttack = (MeleeAttackBase)_selectedMeleeAttack;
+            if (meleeAttack.IsOnCooldown)
             {
                 OnComplete?.Invoke();
                 return;
@@ -65,11 +64,10 @@ namespace _Main.Scripts.GamePlay.StateMachine
             UnSubscribeToCurrentAttack();
             IsAttacking = false;
             _movementBase.StopMovementAndRotation();
-            if (!IsOnAttackCooldown)
+            var meleeAttack = (MeleeAttackBase)_selectedMeleeAttack;
+            if (!meleeAttack.IsOnCooldown)
             {
-                IsOnAttackCooldown = true;
-                var meleeAttack = (MeleeAttackBase)_selectedMeleeAttack;
-                DOVirtual.DelayedCall(meleeAttack.GeneralAttackCooldown, () => IsOnAttackCooldown = false);
+                meleeAttack.StartCD();
                 StopAnimation();
             }
         }
@@ -78,7 +76,7 @@ namespace _Main.Scripts.GamePlay.StateMachine
         {
             UnSubscribeToInputActions();
             UnSubscribeToCurrentAttack();
-            ResetAnimatorController();  
+            ResetAnimatorController();
             IsAttacking = false;
             _movementBase.StopMovementAndRotation();
             StopAnimation();
@@ -143,7 +141,7 @@ namespace _Main.Scripts.GamePlay.StateMachine
 
             PlayAnimation();
             if (_input.GetLookInput() != Vector3.zero)
-            transform.rotation = Quaternion.LookRotation(_input.GetLookInput());
+                transform.rotation = Quaternion.LookRotation(_input.GetLookInput());
             var info = (MeleeAttackAnimationData)_selectedMeleeAttack.CurrentComboAnimationData;
             _movementBase.MoveOverTime(transform.position + transform.forward * info.attackMovementAmount, info.attackMovementDuration, info.attackMovementDelay, info.useGravity, info.useAnimationMovement);
 

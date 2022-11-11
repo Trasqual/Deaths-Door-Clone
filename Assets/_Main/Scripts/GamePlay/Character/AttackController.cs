@@ -8,7 +8,7 @@ using UnityEngine;
 
 public class AttackController : AttackControllerBase
 {
-    public override void SwitchMeleeWeapon(float switchInput, StateMachine stateMachine)
+    public override void ScrollMeleeWeapon(float switchInput, StateMachine stateMachine)
     {
         if (stateMachine.CurrentState is MeleeAttackState) return;
         SelectedAttackIndex += (int)Mathf.Sign(switchInput);
@@ -20,6 +20,13 @@ public class AttackController : AttackControllerBase
         {
             SelectedAttackIndex = meleeAttacks.Count - 1;
         }
+        SetSelectedMeleeAttack(stateMachine);
+    }
+
+    public override void SelectMeleeWeaponWithNo(int weaponNo, StateMachine stateMachine)
+    {
+        if (stateMachine.CurrentState is MeleeAttackState) return;
+        SelectedAttackIndex = weaponNo;
         SetSelectedMeleeAttack(stateMachine);
     }
     

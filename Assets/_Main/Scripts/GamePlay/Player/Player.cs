@@ -153,7 +153,7 @@ namespace _Main.Scripts.GamePlay.Player
 
         private void SwitchMeleeWeapon(float switchInput)
         {
-            _attackController.SwitchMeleeWeapon(switchInput, stateMachine);
+            _attackController.ScrollMeleeWeapon(switchInput, stateMachine);
         }
 
         private void OnMeleeAttackChangedCallback(AttackBase meleeAttack)

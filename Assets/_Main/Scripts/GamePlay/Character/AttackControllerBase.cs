@@ -22,6 +22,7 @@ public abstract class AttackControllerBase : MonoBehaviour
     public abstract void SetSelectedMeleeAttack(StateMachine stateMachine);
     public abstract void SetSelectedRangedAttack(Type rangedAttackType, StateMachine stateMachine, IDamageable caster);
     public abstract void SetSelectedMeleeAttack(Type meleeAttackType, StateMachine stateMachine);
-    public abstract void SwitchMeleeWeapon(float switchInput, StateMachine stateMachine);
+    public abstract void ScrollMeleeWeapon(float switchInput, StateMachine stateMachine);
+    public abstract void SelectMeleeWeaponWithNo(int weaponNo, StateMachine stateMachine);
     public abstract AttackBase SelectAttackFromList(Type attackType, List<AttackBase> attacks);
 }

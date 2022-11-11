@@ -20,9 +20,9 @@ public class MeleeEnemyBehaviour : EnemyBehaviourBase
         stateMachine.ChangeState(typeof(MeleeAttackState));
     }
 
-    private void SwitchMeleeWeapon(float switchInput)
+    private void SwitchMeleeWeapon(int switchInput)
     {
-        AttackController.SwitchMeleeWeapon(switchInput, stateMachine);
+        AttackController.SelectMeleeWeaponWithNo(switchInput, stateMachine);
         _agent.stoppingDistance = AttackController.SelectedMeleeAttack.CurrentComboDamageData.attackRange;
     }
 
@@ -30,13 +30,13 @@ public class MeleeEnemyBehaviour : EnemyBehaviourBase
     {
         base.OnEnable();
         _input.OnAttackActionStarted += Attack;
-        _input.OnMeleeWeaponSwitched += SwitchMeleeWeapon;
+        _input.OnMeleeWeaponSwitchedWithID += SwitchMeleeWeapon;
     }
 
     protected override void OnDisable()
     {
         base.OnDisable();
         _input.OnAttackActionStarted -= Attack;
-        _input.OnMeleeWeaponSwitched -= SwitchMeleeWeapon;
+        _input.OnMeleeWeaponSwitchedWithID -= SwitchMeleeWeapon;
     }
 }

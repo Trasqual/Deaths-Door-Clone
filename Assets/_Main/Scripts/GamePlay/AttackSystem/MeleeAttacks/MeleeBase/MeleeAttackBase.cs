@@ -15,6 +15,8 @@ public class MeleeAttackBase : AttackBase
     Tween comboDelay;
     Tween damageDelay;
 
+    public bool IsOnCooldown { get; private set; }
+
     protected virtual void Awake()
     {
         CurrentComboAnimationData = comboDatas[0].AttackAnimationData;
@@ -137,6 +139,12 @@ public class MeleeAttackBase : AttackBase
         currentComboCount = 0;
         AssignComboData();
         OnAttackCompleted?.Invoke();
+    }
+
+    public void StartCD()
+    {
+        IsOnCooldown = true;
+        DOVirtual.DelayedCall(GeneralAttackCooldown, () => IsOnCooldown = false);
     }
 
     private void OnDrawGizmosSelected()
