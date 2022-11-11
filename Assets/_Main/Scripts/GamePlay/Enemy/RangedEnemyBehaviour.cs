@@ -16,7 +16,7 @@ public class RangedEnemyBehaviour : EnemyBehaviourBase
 
     public void GainAimingBehaviour()
     {
-        stateMachine.AddAimingState(10f, .2f, AttackController);
+        stateMachine.AddAimingState(10f, .5f, AttackController);
     }
 
     private void StartAiming()

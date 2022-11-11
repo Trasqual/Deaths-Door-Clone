@@ -108,7 +108,7 @@ MonoBehaviour:
   patrolRange: 6
   patrolDuration: 3
   detecterPrefab: {fileID: 6205231293218319960, guid: d3074fb2f0bfefd4996e4fa2027d58f7, type: 3}
-  aimCorrectionAssist: 50
+  aimCorrectionAssist: 14
 --- !u!114 &5555801275014295632
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -162,7 +162,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rangedAttacks:
-  - {fileID: 7842546307242344429}
+  - {fileID: 3328310882775935594}
   meleeAttacks: []
 --- !u!114 &2203000190164788784
 MonoBehaviour:
@@ -317,22 +317,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3957035176315132043}
     m_Modifications:
-    - target: {fileID: 1347074738, guid: 82651ce296c15844abb5671145ffe17c, type: 3}
-      propertyPath: m_Layer
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 2133976770, guid: 82651ce296c15844abb5671145ffe17c, type: 3}
-      propertyPath: m_Layer
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 5838724912294293133, guid: 82651ce296c15844abb5671145ffe17c, type: 3}
+    - target: {fileID: 4820781577462907085, guid: 82651ce296c15844abb5671145ffe17c, type: 3}
       propertyPath: shooter
       value: 
       objectReference: {fileID: 7842546307823310665}
-    - target: {fileID: 5838724912294293133, guid: 82651ce296c15844abb5671145ffe17c, type: 3}
-      propertyPath: damageDealerType
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 5838724912294293134, guid: 82651ce296c15844abb5671145ffe17c, type: 3}
       propertyPath: m_RootOrder
       value: 5
@@ -381,37 +369,19 @@ PrefabInstance:
       propertyPath: m_Name
       value: RangedEnemyMagicAttack
       objectReference: {fileID: 0}
-    - target: {fileID: 5838724912294293135, guid: 82651ce296c15844abb5671145ffe17c, type: 3}
-      propertyPath: m_Layer
-      value: 6
-      objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 5838724912294293133, guid: 82651ce296c15844abb5671145ffe17c, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 82651ce296c15844abb5671145ffe17c, type: 3}
---- !u!1 &4454344873550005288 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5838724912294293135, guid: 82651ce296c15844abb5671145ffe17c, type: 3}
+--- !u!114 &3328310882775935594 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4820781577462907085, guid: 82651ce296c15844abb5671145ffe17c, type: 3}
   m_PrefabInstance: {fileID: 7842546306903026343}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &7842546307242344429
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4454344873550005288}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 871a8adc067b1d5449f0df06439c8e05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  comboDatas:
-  - AttackAnimationData: {fileID: 11400000, guid: cab563445814cc746b1a3072ffd66b39, type: 2}
-    AttackDamageData: {fileID: 0}
-  projectilePrefab: {fileID: 1835174666943779962, guid: 1d43bf6cc3f259641b21449434b46708, type: 3}
-  shooter: {fileID: 7842546307823310665}
-  damageDealerType: 2
-  shootDelay: 0.5
 --- !u!1001 &7842546307815148872
 PrefabInstance:
   m_ObjectHideFlags: 0

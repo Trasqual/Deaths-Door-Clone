@@ -1,5 +1,4 @@
 using _Main.Scripts.GamePlay.StateMachine;
-using UnityEngine;
 
 public class MeleeEnemyBehaviour : EnemyBehaviourBase
 {

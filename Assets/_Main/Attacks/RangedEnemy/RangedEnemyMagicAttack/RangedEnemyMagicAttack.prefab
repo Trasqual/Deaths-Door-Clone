@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1347074739}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Bow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -43,7 +43,7 @@ GameObject:
   - component: {fileID: 2133976771}
   - component: {fileID: 2133976774}
   - component: {fileID: 2133976773}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BowModel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -124,8 +124,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5838724912294293134}
-  - component: {fileID: 5838724912294293133}
-  m_Layer: 0
+  - component: {fileID: 4820781577462907085}
+  m_Layer: 6
   m_Name: RangedEnemyMagicAttack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -148,7 +148,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5838724912294293133
+--- !u!114 &4820781577462907085
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -157,16 +157,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 5838724912294293135}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e16b5a3419ae0ef44ac87b2c01cf461a, type: 3}
+  m_Script: {fileID: 11500000, guid: 871a8adc067b1d5449f0df06439c8e05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   comboDatas:
   - AttackAnimationData: {fileID: 11400000, guid: cab563445814cc746b1a3072ffd66b39, type: 2}
     AttackDamageData: {fileID: 0}
-  bow: {fileID: 1347074738}
-  projectilePrefab: {fileID: 5961490733113688068, guid: 6964731e038ee0d40a3250aec92442e7, type: 3}
-  chargedProjectilePrefab: {fileID: 1835174666943779962, guid: eff954a0ea67f13409301d2029b90f78, type: 3}
+  projectilePrefab: {fileID: 1835174666943779962, guid: 1d43bf6cc3f259641b21449434b46708, type: 3}
   shooter: {fileID: 0}
   damageDealerType: 2
-  windUpTime: 0.5
-  maxChargeTime: 1
+  shootDelay: 0.5
