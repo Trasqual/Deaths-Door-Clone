@@ -24,7 +24,7 @@ namespace _Main.Scripts.GamePlay.Player
 
         public override Vector3 GetVelocity()
         {
-           return velocity;
+            return velocity;
         }
 
         private void Start()
@@ -97,25 +97,17 @@ namespace _Main.Scripts.GamePlay.Player
             }
         }
 
-        public override void MoveOverTime(Vector3 endPos, float duration, float setDelay = 0f, bool useGravity = true, bool useAnimationMovement = false)
+        public override void MoveOverTime(Vector3 endPos, float duration, float setDelay = 0f, bool useGravity = true, float jumpHeight = 0f, AnimationCurve curve = null)
         {
             if (moveOverTimeCo != null)
             {
                 StopCoroutine(moveOverTimeCo);
             }
-            if (useAnimationMovement)
-            {
-                moveOverTimeCo = MoveOverTimeWithAnimationCo(duration, useGravity);
-                StartCoroutine(moveOverTimeCo);
-            }
-            else
-            {
-                moveOverTimeCo = MoveOverTimeCo(endPos, duration, setDelay, useGravity);
-                StartCoroutine(moveOverTimeCo);
-            }
+            moveOverTimeCo = MoveOverTimeCo(endPos, duration, setDelay, useGravity, jumpHeight, curve);
+            StartCoroutine(moveOverTimeCo);
         }
 
-        private IEnumerator MoveOverTimeCo(Vector3 endPos, float duration, float setDelay = 0f, bool useGravity = true)
+        private IEnumerator MoveOverTimeCo(Vector3 endPos, float duration, float setDelay = 0f, bool useGravity = true, float jumpHeight = 0f, AnimationCurve curve = null)
         {
             applyGravity = useGravity;
             yield return new WaitForSeconds(setDelay);
@@ -126,22 +118,21 @@ namespace _Main.Scripts.GamePlay.Player
             while (timePassed < duration)
             {
                 timePassed += Time.deltaTime;
-                MoveInDirection(dir.normalized, (dir.magnitude / duration));
+                if (curve == null)
+                {
+                    MoveInDirection( dir.normalized, (dir.magnitude / duration));
+                }
+                else
+                {
+                    MoveInDirection((dir + new Vector3(0f, jumpHeight * curve.Evaluate(timePassed / duration), 0f)).normalized, (dir + new Vector3(0f, jumpHeight * curve.Evaluate(timePassed / duration), 0f)).magnitude / duration);
+                }
+
                 if (useGravity)
                 {
                     ApplyGravity();
                 }
                 yield return null;
             }
-            applyGravity = true;
-        }
-
-        private IEnumerator MoveOverTimeWithAnimationCo(float duration, bool useGravity)
-        {
-            applyGravity = useGravity;
-            animationMovement.Activate();
-            yield return new WaitForSeconds(duration);
-            animationMovement.DeActivate();
             applyGravity = true;
         }
     }

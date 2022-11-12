@@ -16,9 +16,42 @@ MonoBehaviour:
   fadeToAnimationName: MeleeAttack
   attackDamageDelay: 1.5
   attackMovementDelay: 0
-  attackMovementAmount: 0
-  attackMovementDuration: 3
+  attackMovementAmount: 8
+  attackMovementDuration: 1.5
   attackCD: 3
   animationSpeedMultiplier: 1
   useGravity: 0
-  useAnimationMovement: 1
+  jumpHeight: 5
+  yCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.5
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: -2.2508047
+      outSlope: -2.2508047
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.10066879
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
