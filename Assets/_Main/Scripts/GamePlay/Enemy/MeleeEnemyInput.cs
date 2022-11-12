@@ -2,8 +2,6 @@ using UnityEngine;
 
 public class MeleeEnemyInput : EnemyInputBase
 {
-    private int _selectedAttackNo = 0;
-
     protected override void Update()
     {
         if (_target != null)
@@ -21,21 +19,14 @@ public class MeleeEnemyInput : EnemyInputBase
 
     private void SetCurrentAttack(float distance)
     {
-        var curLowest = Mathf.Infinity;
-        int selectedAttackNo = 0;
-        for (int i = 0; i < attackController.GetMeleeAttacks().Count; i++)
+        if (distance >= attackController.GetMeleeAttacks()[1].CurrentComboDamageData.attackRange * .8f && !attackController.GetMeleeAttacks()[1].IsOnCooldown)
         {
-            var meleeAttack = (MeleeAttackBase)attackController.GetMeleeAttacks()[i];
-            var dif = Mathf.Abs(meleeAttack.CurrentComboDamageData.attackRange - distance);
-            if (dif < curLowest)
-            {
-                curLowest = dif;
-                if (!meleeAttack.IsOnCooldown)
-                    selectedAttackNo = i;
-            }
+            OnMeleeWeaponSwitchedWithID?.Invoke(1);
         }
-        _selectedAttackNo = selectedAttackNo;
-        OnMeleeWeaponSwitchedWithID?.Invoke(_selectedAttackNo);
+        else
+        {
+            OnMeleeWeaponSwitchedWithID?.Invoke(0);
+        }
     }
 
     public override Vector3 GetMovementInput()
