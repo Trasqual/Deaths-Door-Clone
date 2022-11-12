@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3431650071269915943}
-  - component: {fileID: 3431650071269915936}
+  - component: {fileID: 9050452001250258064}
   m_Layer: 0
   m_Name: SwordAttack
   m_TagString: Untagged
@@ -33,7 +33,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3431650071269915936
+--- !u!114 &9050452001250258064
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -42,7 +42,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3431650071269915942}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f37ca1e0b863f1b4490667f45ffd3f47, type: 3}
+  m_Script: {fileID: 11500000, guid: 68a9d6cd02409924eac705b50503b610, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   comboDatas:
@@ -53,6 +53,7 @@ MonoBehaviour:
   - AttackAnimationData: {fileID: 11400000, guid: 593766b0372e21a47b0795d5cf527f2a, type: 2}
     AttackDamageData: {fileID: 11400000, guid: 2968a9591c222854f860bef3566d42ea, type: 2}
   GeneralAttackCooldown: 0.5
+  swordVisual: {fileID: 7593972712279667791}
 --- !u!1001 &3431650071309978019
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -63,6 +64,10 @@ PrefabInstance:
     - target: {fileID: 5115137534758780396, guid: 24f6c39cf6d6ed047a673490e9df04cf, type: 3}
       propertyPath: m_Name
       value: OBJ_Sword_02 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5115137534758780396, guid: 24f6c39cf6d6ed047a673490e9df04cf, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7161326570637218849, guid: 24f6c39cf6d6ed047a673490e9df04cf, type: 3}
       propertyPath: m_RootOrder
@@ -113,5 +118,10 @@ PrefabInstance:
 --- !u!4 &5547747667461135746 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7161326570637218849, guid: 24f6c39cf6d6ed047a673490e9df04cf, type: 3}
+  m_PrefabInstance: {fileID: 3431650071309978019}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &7593972712279667791 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5115137534758780396, guid: 24f6c39cf6d6ed047a673490e9df04cf, type: 3}
   m_PrefabInstance: {fileID: 3431650071309978019}
   m_PrefabAsset: {fileID: 0}
