@@ -112,7 +112,7 @@ namespace _Main.Scripts.GamePlay.Player
             applyGravity = useGravity;
             yield return new WaitForSeconds(setDelay);
             var startPos = transform.position;
-            var dir = endPos - startPos;
+            var dir = Vector3.zero;
             var timePassed = 0f;
 
             while (timePassed < duration)
@@ -120,12 +120,13 @@ namespace _Main.Scripts.GamePlay.Player
                 timePassed += Time.deltaTime;
                 if (curve == null)
                 {
-                    MoveInDirection( dir.normalized, (dir.magnitude / duration));
+                    dir = endPos - startPos;
                 }
                 else
                 {
-                    MoveInDirection((dir + new Vector3(0f, jumpHeight * curve.Evaluate(timePassed / duration), 0f)).normalized, (dir + new Vector3(0f, jumpHeight * curve.Evaluate(timePassed / duration), 0f)).magnitude / duration);
+                    dir = new Vector3(endPos.x, endPos.y + jumpHeight * curve.Evaluate(timePassed / duration), endPos.z) - new Vector3(startPos.x, transform.position.y, startPos.z);
                 }
+                MoveInDirection(dir.normalized, (dir.magnitude / duration));
 
                 if (useGravity)
                 {
