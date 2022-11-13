@@ -67,11 +67,6 @@ namespace _Main.Scripts.GamePlay.StateMachine
             UnSubscribeToCurrentAttack();
             IsAttacking = false;
             _movementBase.StopMovementAndRotation();
-            var meleeAttack = (MeleeAttackBase)_selectedMeleeAttack;
-            if (!meleeAttack.IsOnCooldown)
-            {
-                meleeAttack.StartCD();
-            }
             if (!attackCD)
             {
                 attackCD = true;

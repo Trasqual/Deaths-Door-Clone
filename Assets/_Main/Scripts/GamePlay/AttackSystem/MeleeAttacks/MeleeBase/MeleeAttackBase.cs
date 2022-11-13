@@ -137,12 +137,16 @@ public class MeleeAttackBase : AttackBase
         currentComboCount = 0;
         AssignComboData();
         OnAttackCompleted?.Invoke();
+        StartCD();
     }
 
     public void StartCD()
     {
-        IsOnCooldown = true;
-        DOVirtual.DelayedCall(GeneralAttackCooldown, () => IsOnCooldown = false);
+        if (!IsOnCooldown)
+        {
+            IsOnCooldown = true;
+            DOVirtual.DelayedCall(GeneralAttackCooldown, () => IsOnCooldown = false);
+        }
     }
 
     private void OnDrawGizmosSelected()
