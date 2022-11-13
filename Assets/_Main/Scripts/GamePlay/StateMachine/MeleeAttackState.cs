@@ -13,6 +13,7 @@ namespace _Main.Scripts.GamePlay.StateMachine
     {
         public bool IsAttacking { get; private set; }
         public bool IsStateLocked { get; private set; }
+        public float AttackStateCD { get; private set; } = 1f;
 
         private Tween stateLockTween;
 
@@ -21,6 +22,8 @@ namespace _Main.Scripts.GamePlay.StateMachine
         private AttackControllerBase _attackController;
         private AttackBase _selectedMeleeAttack;
         public Action OnComplete;
+
+        private bool attackCD;
 
         public void Initialize(InputBase input, MovementBase movementBase, Animator animator, AttackControllerBase attackController)
         {
@@ -42,7 +45,7 @@ namespace _Main.Scripts.GamePlay.StateMachine
         public override void EnterState()
         {
             var meleeAttack = (MeleeAttackBase)_selectedMeleeAttack;
-            if (meleeAttack.IsOnCooldown)
+            if (meleeAttack.IsOnCooldown || attackCD)
             {
                 OnComplete?.Invoke();
                 return;
@@ -68,6 +71,11 @@ namespace _Main.Scripts.GamePlay.StateMachine
             if (!meleeAttack.IsOnCooldown)
             {
                 meleeAttack.StartCD();
+            }
+            if (!attackCD)
+            {
+                attackCD = true;
+                DOVirtual.DelayedCall(AttackStateCD, () => attackCD = false);
                 StopAnimation();
             }
         }
