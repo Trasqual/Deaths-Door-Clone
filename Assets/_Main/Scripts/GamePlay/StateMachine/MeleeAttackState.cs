@@ -16,6 +16,7 @@ namespace _Main.Scripts.GamePlay.StateMachine
         public float AttackStateCD { get; private set; } = 1f;
 
         private Tween stateLockTween;
+        private Tween animResetTween;
 
         private InputBase _input;
         private MovementBase _movementBase;
@@ -77,12 +78,12 @@ namespace _Main.Scripts.GamePlay.StateMachine
 
         public override void CancelState()
         {
+            animResetTween?.Kill();
             UnSubscribeToInputActions();
             UnSubscribeToCurrentAttack();
             ResetAnimatorController();
             IsAttacking = false;
             _movementBase.StopMovementAndRotation();
-            StopAnimation();
             OnActionCanceled?.Invoke();
         }
         #endregion
@@ -148,7 +149,7 @@ namespace _Main.Scripts.GamePlay.StateMachine
             var info = (MeleeAttackAnimationData)_selectedMeleeAttack.CurrentComboAnimationData;
             _movementBase.MoveOverTime(transform.position + transform.forward * info.attackMovementAmount, info.attackMovementDuration, info.attackMovementDelay, info.useGravity, info.jumpHeight, info.yCurve);
 
-            IsStateLocked = info.yCurve != null;
+            IsStateLocked = !info.useGravity;
             stateLockTween = DOVirtual.DelayedCall(info.attackCD, () => IsStateLocked = false);
         }
 
@@ -218,7 +219,7 @@ namespace _Main.Scripts.GamePlay.StateMachine
         public void StopAnimation()
         {
             Animator.CrossFadeInFixedTime(HashCode, 0.1f);
-            DOVirtual.DelayedCall(0.15f, ResetAnimatorController);
+            animResetTween = DOVirtual.DelayedCall(0.15f, ResetAnimatorController);
         }
 
         #endregion

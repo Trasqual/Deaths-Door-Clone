@@ -35,12 +35,12 @@ namespace _Main.Scripts.GamePlay.StateMachine
 
         public override void EnterState()
         {
-                _movementBase.StartMovementAndRotation();
-                PlayAnimation();
-                _direction = _input.GetMovementInput() == Vector3.zero ? transform.forward : _input.GetMovementInput().normalized;
-                transform.forward = _direction;
-                _isDodgeComplete = false;
-                DOVirtual.DelayedCall(_duration, OnDodgeComplete);
+            _movementBase.StartMovementAndRotation();
+            PlayAnimation();
+            _direction = _input.GetMovementInput() == Vector3.zero ? transform.forward : _input.GetMovementInput().normalized;
+            transform.forward = _direction;
+            _isDodgeComplete = false;
+            DOVirtual.DelayedCall(_duration, OnDodgeComplete);
         }
 
         private void OnDodgeComplete()

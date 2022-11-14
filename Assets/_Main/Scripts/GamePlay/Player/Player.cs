@@ -72,12 +72,9 @@ namespace _Main.Scripts.GamePlay.Player
 
         public void GainDodgeBehaviour()
         {
-            if (canDodge)
-            {
-                canDodge = false;
-                stateMachine.AddDodgeState(data.DodgeSpeedMultiplier, data.DodgeDuration);
-                DOVirtual.DelayedCall(data.DodgeCD, () => canDodge = true);
-            }
+
+            stateMachine.AddDodgeState(data.DodgeSpeedMultiplier, data.DodgeDuration);
+
         }
 
         public void LoseDodgeBehaviour()
@@ -145,7 +142,12 @@ namespace _Main.Scripts.GamePlay.Player
 
         private void PerformRoll()
         {
-            stateMachine.ChangeState(typeof(DodgeState));
+            if (canDodge)
+            {
+                canDodge = false;
+                stateMachine.ChangeState(typeof(DodgeState));
+                DOVirtual.DelayedCall(data.DodgeCD, () => canDodge = true);
+            }
         }
         #endregion
 
