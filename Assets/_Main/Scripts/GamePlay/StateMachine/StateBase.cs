@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace _Main.Scripts.GamePlay.StateMachine
+namespace _Main.Scripts.GamePlay.StateMachineSystem
 {
     public abstract class StateBase : MonoBehaviour
     {

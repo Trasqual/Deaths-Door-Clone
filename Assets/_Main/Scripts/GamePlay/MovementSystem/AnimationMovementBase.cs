@@ -1,28 +1,31 @@
 using UnityEngine;
 
-public class AnimationMovementBase : MonoBehaviour
+namespace _Main.Scripts.GamePlay.MovementSystem
 {
-    protected Animator anim;
-
-    protected bool isActive;
-
-    protected virtual void Start()
+    public class AnimationMovementBase : MonoBehaviour
     {
-        anim = GetComponent<Animator>();
-    }
+        protected Animator anim;
 
-    protected virtual void OnAnimatorMove()
-    {
-        if (!isActive) return;
-    }
+        protected bool isActive;
 
-    public virtual void Activate()
-    {
-        isActive = true;
-    }
+        protected virtual void Start()
+        {
+            anim = GetComponent<Animator>();
+        }
 
-    public virtual void DeActivate()
-    {
-        isActive = false;
+        protected virtual void OnAnimatorMove()
+        {
+            if (!isActive) return;
+        }
+
+        public virtual void Activate()
+        {
+            isActive = true;
+        }
+
+        public virtual void DeActivate()
+        {
+            isActive = false;
+        }
     }
 }

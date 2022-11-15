@@ -1,16 +1,17 @@
 
-using UnityEngine;
-
-public class EnemyAnimationMovement : AnimationMovementBase
+namespace _Main.Scripts.GamePlay.MovementSystem
 {
-    protected override void Start()
+    public class EnemyAnimationMovement : AnimationMovementBase
     {
-        base.Start();
-    }
+        protected override void Start()
+        {
+            base.Start();
+        }
 
-    protected override void OnAnimatorMove()
-    {
-        if (!isActive) return;
-        transform.parent.position += anim.deltaPosition;
+        protected override void OnAnimatorMove()
+        {
+            if (!isActive) return;
+            transform.parent.position += anim.deltaPosition;
+        }
     }
 }

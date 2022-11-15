@@ -1,21 +1,24 @@
 using UnityEngine;
 
-public class LaserBeam : MonoBehaviour
+namespace _Main.Scripts.GamePlay.PuzzleSystem
 {
-    [SerializeField] Transform sparkParticle;
-    LineRenderer lr;
-
-    private void Start()
+    public class LaserBeam : MonoBehaviour
     {
-        lr = GetComponent<LineRenderer>();
-        lr.positionCount = 2;
-    }
+        [SerializeField] Transform sparkParticle;
+        LineRenderer lr;
 
-    public void UpdateBeam(Vector3[] positions)
-    {
-        lr.SetPositions(positions);
-        lr.widthMultiplier = Random.Range(1f, 1.2f);
-        sparkParticle.position = lr.GetPosition(1);
-        sparkParticle.LookAt(lr.GetPosition(0));
+        private void Start()
+        {
+            lr = GetComponent<LineRenderer>();
+            lr.positionCount = 2;
+        }
+
+        public void UpdateBeam(Vector3[] positions)
+        {
+            lr.SetPositions(positions);
+            lr.widthMultiplier = Random.Range(1f, 1.2f);
+            sparkParticle.position = lr.GetPosition(1);
+            sparkParticle.LookAt(lr.GetPosition(0));
+        }
     }
 }

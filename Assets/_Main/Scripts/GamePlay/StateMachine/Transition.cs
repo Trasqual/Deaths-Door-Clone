@@ -1,6 +1,6 @@
 using System;
 
-namespace _Main.Scripts.GamePlay.StateMachine
+namespace _Main.Scripts.GamePlay.StateMachineSystem
 {
     public class Transition
     {

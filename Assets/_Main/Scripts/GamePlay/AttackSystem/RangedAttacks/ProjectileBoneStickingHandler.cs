@@ -1,25 +1,26 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class ProjectileBoneStickingHandler : MonoBehaviour
+namespace _Main.Scripts.GamePlay.AttackSystem
 {
-    [SerializeField] Transform[] bones;
-
-    public Transform GetClosestBone(Vector3 pointOfImpact)
+    public class ProjectileBoneStickingHandler : MonoBehaviour
     {
-        Transform closestBone = null;
-        var closestDist = float.MaxValue;
+        [SerializeField] Transform[] bones;
 
-        for (int i = 0; i < bones.Length; i++)
+        public Transform GetClosestBone(Vector3 pointOfImpact)
         {
-            var mag = (pointOfImpact - bones[i].position).sqrMagnitude;
-            if (mag < closestDist)
+            Transform closestBone = null;
+            var closestDist = float.MaxValue;
+
+            for (int i = 0; i < bones.Length; i++)
             {
-                closestDist = mag;
-                closestBone = bones[i];
+                var mag = (pointOfImpact - bones[i].position).sqrMagnitude;
+                if (mag < closestDist)
+                {
+                    closestDist = mag;
+                    closestBone = bones[i];
+                }
             }
+            return closestBone;
         }
-        return closestBone;
     }
 }

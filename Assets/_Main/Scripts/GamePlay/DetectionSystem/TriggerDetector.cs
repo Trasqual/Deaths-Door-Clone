@@ -1,44 +1,47 @@
 using UnityEngine;
 
-public class TriggerDetectorBase<T> : DetectorBase<T>
+namespace _Main.Scripts.GamePlay.DetectionSystem
 {
-    [SerializeField] protected float range = 8f;
-    [SerializeField] protected float resetRange = 15f;
-
-    protected T _target;
-
-    protected virtual void Awake()
+    public class TriggerDetectorBase<T> : DetectorBase<T>
     {
-        GetComponent<SphereCollider>().radius = range;
-    }
+        [SerializeField] protected float range = 8f;
+        [SerializeField] protected float resetRange = 15f;
 
-    protected virtual void OnTriggerStay(Collider other)
-    {
-        if (_target == null)
+        protected T _target;
+
+        protected virtual void Awake()
         {
-            if (other.TryGetComponent(out T target))
+            GetComponent<SphereCollider>().radius = range;
+        }
+
+        protected virtual void OnTriggerStay(Collider other)
+        {
+            if (_target == null)
             {
-                _target = target;
-                Detect(_target);
+                if (other.TryGetComponent(out T target))
+                {
+                    _target = target;
+                    Detect(_target);
+                }
             }
         }
-    }
 
-    public override void Detect(T target)
-    {
-        OnTargetFound?.Invoke(target);
-    }
+        public override void Detect(T target)
+        {
+            OnTargetFound?.Invoke(target);
+        }
 
-    protected virtual void LoseTarget()
-    {
-        OnTargetLost?.Invoke();
-        _target = default;
-    }
+        protected virtual void LoseTarget()
+        {
+            OnTargetLost?.Invoke();
+            _target = default;
+        }
 
 #if UNITY_EDITOR
-    private void OnValidate()
-    {
-        GetComponent<SphereCollider>().radius = range;
-    }
+        private void OnValidate()
+        {
+            GetComponent<SphereCollider>().radius = range;
+        }
 #endif
+    }
 }

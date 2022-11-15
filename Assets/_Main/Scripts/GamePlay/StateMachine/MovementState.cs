@@ -4,7 +4,7 @@ using _Main.Scripts.GamePlay.InputSystem;
 using _Main.Scripts.GamePlay.MovementSystem;
 using UnityEngine;
 
-namespace _Main.Scripts.GamePlay.StateMachine
+namespace _Main.Scripts.GamePlay.StateMachineSystem
 {
     public class MovementState : StateBase, ITransition, IAnimation
     {

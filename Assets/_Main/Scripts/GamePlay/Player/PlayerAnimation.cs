@@ -1,7 +1,6 @@
-using _Main.Scripts.GamePlay.AnimationSystem;
 using UnityEngine;
 
-namespace _Main.Scripts.GamePlay.Player
+namespace _Main.Scripts.GamePlay.AnimationSystem
 {
     public class PlayerAnimation : AnimationBase
     {

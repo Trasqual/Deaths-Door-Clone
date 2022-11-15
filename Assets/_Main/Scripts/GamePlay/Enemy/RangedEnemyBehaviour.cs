@@ -1,34 +1,38 @@
-using _Main.Scripts.GamePlay.StateMachine;
+using _Main.Scripts.GamePlay.AttackSystem;
+using _Main.Scripts.GamePlay.StateMachineSystem;
 
-public class RangedEnemyBehaviour : EnemyBehaviourBase
+namespace _Main.Scripts.GamePlay.BehaviourSystem
 {
-    protected override void Start()
+    public class RangedEnemyBehaviour : EnemyBehaviourBase
     {
-        base.Start();
-        GainAimingBehaviour();
-        AttackController.SetSelectedRangedAttack(typeof(RangedEnemyAttack), stateMachine, _healthManager);
-        _agent.stoppingDistance = AttackController.SelectedRangedAttack.CurrentComboDamageData.attackRange;
-    }
+        protected override void Start()
+        {
+            base.Start();
+            GainAimingBehaviour();
+            AttackController.SetSelectedRangedAttack(typeof(RangedEnemyAttack), stateMachine, _healthManager);
+            _agent.stoppingDistance = AttackController.SelectedRangedAttack.CurrentComboDamageData.attackRange;
+        }
 
-    public void GainAimingBehaviour()
-    {
-        stateMachine.AddAimingState(10f, .5f, AttackController);
-    }
+        public void GainAimingBehaviour()
+        {
+            stateMachine.AddAimingState(10f, .5f, AttackController);
+        }
 
-    private void StartAiming()
-    {
-        stateMachine.ChangeState(typeof(AimingState));
-    }
+        private void StartAiming()
+        {
+            stateMachine.ChangeState(typeof(AimingState));
+        }
 
-    protected override void OnEnable()
-    {
-        base.OnEnable();
-        _input.OnAimActionStarted += StartAiming;
-    }
+        protected override void OnEnable()
+        {
+            base.OnEnable();
+            _input.OnAimActionStarted += StartAiming;
+        }
 
-    protected override void OnDisable()
-    {
-        base.OnDisable();
-        _input.OnAimActionStarted -= StartAiming;
+        protected override void OnDisable()
+        {
+            base.OnDisable();
+            _input.OnAimActionStarted -= StartAiming;
+        }
     }
 }

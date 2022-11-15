@@ -1,4 +1,4 @@
-using _Main.Scripts.GamePlay.Player;
+using _Main.Scripts.GamePlay.BehaviourSystem;
 using _Main.Scripts.Utilities;
 
 namespace _Main.Scripts.GamePlay.HealthSystem

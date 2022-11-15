@@ -1,75 +1,80 @@
-using _Main.Scripts.GamePlay.InputSystem;
+using _Main.Scripts.GamePlay.AttackSystem;
+using _Main.Scripts.GamePlay.DetectionSystem;
+using _Main.Scripts.GamePlay.HealthSystem;
 using UnityEngine;
 using UnityEngine.AI;
 
-public abstract class EnemyInputBase : InputBase
+namespace _Main.Scripts.GamePlay.InputSystem
 {
-    [SerializeField] protected bool shouldPatrol = false;
-    [SerializeField] protected float patrolRange = 6f;
-    [SerializeField] protected float patrolDuration = 3f;
-    protected float patrolTimer = 0f;
-    protected Vector3 patrolPosition;
-
-    [SerializeField] protected EnemyTriggerDetector detecterPrefab;
-    protected EnemyTriggerDetector detector;
-    protected NavMeshAgent agent;
-    protected AttackController attackController;
-
-    protected IDamageable _target;
-    protected Vector3 startPos;
-
-    protected virtual void Awake()
+    public abstract class EnemyInputBase : InputBase
     {
-        agent = GetComponent<NavMeshAgent>();
-        attackController = GetComponent<AttackController>();
-        if (detector == null)
+        [SerializeField] protected bool shouldPatrol = false;
+        [SerializeField] protected float patrolRange = 6f;
+        [SerializeField] protected float patrolDuration = 3f;
+        protected float patrolTimer = 0f;
+        protected Vector3 patrolPosition;
+
+        [SerializeField] protected EnemyTriggerDetector detecterPrefab;
+        protected EnemyTriggerDetector detector;
+        protected NavMeshAgent agent;
+        protected AttackController attackController;
+
+        protected IDamageable _target;
+        protected Vector3 startPos;
+
+        protected virtual void Awake()
         {
-            detector = Instantiate(detecterPrefab, transform.position, Quaternion.identity, transform);
-            detector.OnTargetFound += OnTargetDetectedCallback;
-            detector.OnTargetLost += OnTargetLostCallback;
+            agent = GetComponent<NavMeshAgent>();
+            attackController = GetComponent<AttackController>();
+            if (detector == null)
+            {
+                detector = Instantiate(detecterPrefab, transform.position, Quaternion.identity, transform);
+                detector.OnTargetFound += OnTargetDetectedCallback;
+                detector.OnTargetLost += OnTargetLostCallback;
+            }
+
+            startPos = transform.position;
         }
 
-        startPos = transform.position;
-    }
-
-    public override Vector3 GetLookInput()
-    {
-        if (_target != null)
+        public override Vector3 GetLookInput()
         {
-            return (_target.GetTransform().position - transform.position).normalized;
+            if (_target != null)
+            {
+                return (_target.GetTransform().position - transform.position).normalized;
+            }
+            else
+            {
+                return (startPos - transform.position).normalized;
+            }
         }
-        else
+
+        public override Vector3 GetMovementInput()
         {
-            return (startPos - transform.position).normalized;
+            return Vector3.zero;
         }
-    }
 
-    public override Vector3 GetMovementInput()
-    {
-        return Vector3.zero;
-    }
-
-    protected virtual Vector3 GetPatrolPosition()
-    {
-        patrolTimer += Time.deltaTime;
-        if (patrolTimer >= patrolDuration)
+        protected virtual Vector3 GetPatrolPosition()
         {
-            var randPos = Random.insideUnitCircle * patrolRange;
-            patrolPosition = startPos + new Vector3(randPos.x, 0f, randPos.y);
-            patrolTimer = 0f;
+            patrolTimer += Time.deltaTime;
+            if (patrolTimer >= patrolDuration)
+            {
+                var randPos = Random.insideUnitCircle * patrolRange;
+                patrolPosition = startPos + new Vector3(randPos.x, 0f, randPos.y);
+                patrolTimer = 0f;
+            }
+            return patrolPosition;
         }
-        return patrolPosition;
-    }
 
-    protected abstract void Update();
+        protected abstract void Update();
 
-    protected virtual void OnTargetDetectedCallback(IDamageable target)
-    {
-        _target = target;
-    }
+        protected virtual void OnTargetDetectedCallback(IDamageable target)
+        {
+            _target = target;
+        }
 
-    protected virtual void OnTargetLostCallback()
-    {
-        _target = null;
+        protected virtual void OnTargetLostCallback()
+        {
+            _target = null;
+        }
     }
 }

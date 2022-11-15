@@ -1,21 +1,24 @@
 using _Main.Scripts.GamePlay.InputSystem;
-using _Main.Scripts.GamePlay.StateMachine;
+using _Main.Scripts.GamePlay.StateMachineSystem;
 using UnityEngine;
 
-[RequireComponent(typeof(StateMachine))]
-public abstract class BehaviourBase<T> : MonoBehaviour
-where T : BehaviourBaseData
+namespace _Main.Scripts.GamePlay.BehaviourSystem
 {
-    [SerializeField] protected T data;
-    
-    protected StateMachine stateMachine;
-    protected InputBase _input;
-
-    public T Data => data;
-
-    protected virtual void Awake()
+    [RequireComponent(typeof(StateMachine))]
+    public abstract class BehaviourBase<T> : MonoBehaviour
+where T : BehaviourBaseData
     {
-        stateMachine = GetComponent<StateMachine>();
-        _input = GetComponent<InputBase>();
-    }
+        [SerializeField] protected T data;
+
+        protected StateMachine stateMachine;
+        protected InputBase _input;
+
+        public T Data => data;
+
+        protected virtual void Awake()
+        {
+            stateMachine = GetComponent<StateMachine>();
+            _input = GetComponent<InputBase>();
+        }
+    } 
 }

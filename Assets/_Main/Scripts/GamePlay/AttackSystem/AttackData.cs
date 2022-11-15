@@ -1,6 +1,9 @@
-[System.Serializable]
-public struct AttackData
+namespace _Main.Scripts.GamePlay.AttackSystem
 {
-    public AttackAnimationDataBase AttackAnimationData;
-    public AttackDamageDataBase AttackDamageData;
+    [System.Serializable]
+	public struct AttackData
+	{
+		public AttackAnimationDataBase AttackAnimationData;
+		public AttackDamageDataBase AttackDamageData;
+	} 
 }

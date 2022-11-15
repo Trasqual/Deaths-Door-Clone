@@ -1,14 +1,16 @@
 using _Main.Scripts.GamePlay.ActionSystem;
+using _Main.Scripts.GamePlay.AmmunitionSystem;
+using _Main.Scripts.GamePlay.AnimationSystem;
 using _Main.Scripts.GamePlay.AttackSystem;
-using _Main.Scripts.GamePlay.AttackSystem.RangedAttacks;
 using _Main.Scripts.GamePlay.HealthSystem;
-using _Main.Scripts.GamePlay.Indicators.AimingIndicator;
-using _Main.Scripts.GamePlay.StateMachine;
+using _Main.Scripts.GamePlay.Indicators;
+using _Main.Scripts.GamePlay.MovementSystem;
+using _Main.Scripts.GamePlay.StateMachineSystem;
 using _Main.Scripts.Others;
 using DG.Tweening;
 using UnityEngine;
 
-namespace _Main.Scripts.GamePlay.Player
+namespace _Main.Scripts.GamePlay.BehaviourSystem
 {
     [RequireComponent(typeof(PlayerMovementBase),
         typeof(PlayerAnimation),

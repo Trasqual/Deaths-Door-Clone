@@ -1,66 +1,68 @@
-using _Main.Scripts.GamePlay.AttackSystem.RangedAttacks;
 using UnityEngine;
 
-public class PlayerBowAttack : RangedAttackBase
+namespace _Main.Scripts.GamePlay.AttackSystem
 {
-    [SerializeField] private Projectile chargedProjectilePrefab;
-
-    [Header("Visuals")]
-    [SerializeField] private GameObject bow;
-
-    [Header("Attack Params")]
-    [SerializeField] private float windUpTime = 1f;
-    [SerializeField] private float maxChargeTime = 2f;
-    private float windUpCounter;
-    private float dmgMultiplier = 1f;
-
-    protected override void DoOnActionStart()
+    public class PlayerBowAttack : RangedAttackBase
     {
-        base.DoOnActionStart();
-        bow.SetActive(true);
-    }
+        [SerializeField] private Projectile chargedProjectilePrefab;
 
-    protected override void DoOnActionEnd()
-    {
-        base.DoOnActionEnd();
+        [Header("Visuals")]
+        [SerializeField] private GameObject bow;
 
-        if (windUpCounter >= windUpTime)
-            Shoot();
+        [Header("Attack Params")]
+        [SerializeField] private float windUpTime = 1f;
+        [SerializeField] private float maxChargeTime = 2f;
+        private float windUpCounter;
+        private float dmgMultiplier = 1f;
 
-        windUpCounter = 0f;
-        dmgMultiplier = 1f;
-        bow.SetActive(false);
-    }
-
-    protected override void DoOnActionCanceled()
-    {
-        base.DoOnActionCanceled();
-        windUpCounter = 0f;
-        dmgMultiplier = 1f;
-        bow.SetActive(false);
-    }
-
-    private void Update()
-    {
-        if (isActive)
+        protected override void DoOnActionStart()
         {
-            ChargeAttack();
+            base.DoOnActionStart();
+            bow.SetActive(true);
         }
-    }
 
-    private void ChargeAttack()
-    {
-        windUpCounter += Time.deltaTime;
-
-        if (windUpCounter >= maxChargeTime)
+        protected override void DoOnActionEnd()
         {
-            dmgMultiplier = 2f;
-        }
-    }
+            base.DoOnActionEnd();
 
-    protected override void Shoot()
-    {
-        base.Shoot();
-        shooter.Shoot(windUpCounter >= maxChargeTime ? chargedProjectilePrefab : projectilePrefab, CurrentComboDamageData.damage * dmgMultiplier, damageDealerType, _caster);
+            if (windUpCounter >= windUpTime)
+                Shoot();
+
+            windUpCounter = 0f;
+            dmgMultiplier = 1f;
+            bow.SetActive(false);
+        }
+
+        protected override void DoOnActionCanceled()
+        {
+            base.DoOnActionCanceled();
+            windUpCounter = 0f;
+            dmgMultiplier = 1f;
+            bow.SetActive(false);
+        }
+
+        private void Update()
+        {
+            if (isActive)
+            {
+                ChargeAttack();
+            }
+        }
+
+        private void ChargeAttack()
+        {
+            windUpCounter += Time.deltaTime;
+
+            if (windUpCounter >= maxChargeTime)
+            {
+                dmgMultiplier = 2f;
+            }
+        }
+
+        protected override void Shoot()
+        {
+            base.Shoot();
+            shooter.Shoot(windUpCounter >= maxChargeTime ? chargedProjectilePrefab : projectilePrefab, CurrentComboDamageData.damage * dmgMultiplier, damageDealerType, _caster);
+        }
     }
 }

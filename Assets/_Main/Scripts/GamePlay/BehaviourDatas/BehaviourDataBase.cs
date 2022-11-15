@@ -1,8 +1,10 @@
-using Sirenix.OdinInspector;
 using UnityEngine;
 
-public class BehaviourBaseData : ScriptableObject
+namespace _Main.Scripts.GamePlay.BehaviourSystem
 {
-    [TitleGroup("Base")]
-    public string Name  = "";
+    public class BehaviourBaseData : ScriptableObject
+    {
+        [Header("Base")]
+        public string Name = "";
+    }
 }

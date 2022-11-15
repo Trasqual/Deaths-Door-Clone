@@ -1,73 +1,78 @@
+using _Main.Scripts.GamePlay.AttackSystem;
+using _Main.Scripts.GamePlay.HealthSystem;
 using _Main.Scripts.GamePlay.MovementSystem;
-using _Main.Scripts.GamePlay.StateMachine;
+using _Main.Scripts.GamePlay.StateMachineSystem;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class EnemyBehaviourBase : BehaviourBase<EnemyBehaviourData>
+namespace _Main.Scripts.GamePlay.BehaviourSystem
 {
-    protected NavMeshAgent _agent;
-    protected HealthComponentBase _healthManager;
-    protected MovementBase _movementBase;
-    protected Animator _anim;
-
-    public AttackControllerBase AttackController { get; private set; }
-
-    protected override void Awake()
+    public class EnemyBehaviourBase : BehaviourBase<EnemyBehaviourData>
     {
-        base.Awake();
-        _healthManager = GetComponent<HealthComponentBase>();
-        _agent = GetComponent<NavMeshAgent>();
-        _movementBase = GetComponent<MovementBase>();
-        _anim = GetComponentInChildren<Animator>();
-        AttackController = GetComponent<AttackControllerBase>();
+        protected NavMeshAgent _agent;
+        protected HealthComponentBase _healthManager;
+        protected MovementBase _movementBase;
+        protected Animator _anim;
 
-        stateMachine.Initialize(_input, _movementBase, _anim);
-    }
+        public AttackControllerBase AttackController { get; private set; }
 
-    protected virtual void Start()
-    {
-        GainMovementBehaviour();
-        GainDeathBehaviour();
+        protected override void Awake()
+        {
+            base.Awake();
+            _healthManager = GetComponent<HealthComponentBase>();
+            _agent = GetComponent<NavMeshAgent>();
+            _movementBase = GetComponent<MovementBase>();
+            _anim = GetComponentInChildren<Animator>();
+            AttackController = GetComponent<AttackControllerBase>();
 
-        stateMachine.SetInitialState(typeof(MovementState));
-    }
+            stateMachine.Initialize(_input, _movementBase, _anim);
+        }
 
-    public void GainMovementBehaviour()
-    {
-        stateMachine.AddMovementState();
-    }
+        protected virtual void Start()
+        {
+            GainMovementBehaviour();
+            GainDeathBehaviour();
 
-    public void LoseMovementBehaviour()
-    {
-        stateMachine.RemoveState(typeof(MovementState));
-    }
+            stateMachine.SetInitialState(typeof(MovementState));
+        }
 
-    public void GainDeathBehaviour()
-    {
-        stateMachine.AddDeathState();
-    }
+        public void GainMovementBehaviour()
+        {
+            stateMachine.AddMovementState();
+        }
 
-    protected void TakeDamage(int i)
-    {
-        //stateMachine.ChangeState(typeof(DamageTakenState));
-    }
+        public void LoseMovementBehaviour()
+        {
+            stateMachine.RemoveState(typeof(MovementState));
+        }
 
-    protected void Die()
-    {
-        _input.enabled = false;
-        _agent.enabled = false;
-        stateMachine.ChangeState(typeof(DeathState));
-    }
+        public void GainDeathBehaviour()
+        {
+            stateMachine.AddDeathState();
+        }
 
-    protected virtual void OnEnable()
-    {
-        _healthManager.OnDamageTaken += TakeDamage;
-        _healthManager.OnDeath += Die;
-    }
+        protected void TakeDamage(int i)
+        {
+            //stateMachine.ChangeState(typeof(DamageTakenState));
+        }
 
-    protected virtual void OnDisable()
-    {
-        _healthManager.OnDamageTaken -= TakeDamage;
-        _healthManager.OnDeath -= Die;
+        protected void Die()
+        {
+            _input.enabled = false;
+            _agent.enabled = false;
+            stateMachine.ChangeState(typeof(DeathState));
+        }
+
+        protected virtual void OnEnable()
+        {
+            _healthManager.OnDamageTaken += TakeDamage;
+            _healthManager.OnDeath += Die;
+        }
+
+        protected virtual void OnDisable()
+        {
+            _healthManager.OnDamageTaken -= TakeDamage;
+            _healthManager.OnDeath -= Die;
+        }
     }
 }

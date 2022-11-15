@@ -1,9 +1,12 @@
 using System;
 using UnityEngine;
 
-public abstract class DetectorBase<T> : MonoBehaviour
+namespace _Main.Scripts.GamePlay.DetectionSystem
 {
-    public Action<T> OnTargetFound;
-    public Action OnTargetLost;
-    public abstract void Detect(T target);
+    public abstract class DetectorBase<T> : MonoBehaviour
+    {
+        public Action<T> OnTargetFound;
+        public Action OnTargetLost;
+        public abstract void Detect(T target);
+    }
 }

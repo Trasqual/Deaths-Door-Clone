@@ -1,12 +1,13 @@
 using System;
 using System.Collections.Generic;
 using _Main.Scripts.GamePlay.ActionSystem;
+using _Main.Scripts.GamePlay.AttackSystem;
 using _Main.Scripts.GamePlay.InputSystem;
 using _Main.Scripts.GamePlay.MovementSystem;
 using DG.Tweening;
 using UnityEngine;
 
-namespace _Main.Scripts.GamePlay.StateMachine
+namespace _Main.Scripts.GamePlay.StateMachineSystem
 {
     public class AimingState : StateBase, IAction, ITransition, IAnimationOverridable
     {

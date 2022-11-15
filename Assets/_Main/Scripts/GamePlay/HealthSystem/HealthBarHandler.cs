@@ -1,48 +1,51 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HealthBarHandler : MonoBehaviour
+namespace _Main.Scripts.GamePlay.HealthSystem
 {
-    [SerializeField] GameObject healthBarGroup;
-    [SerializeField] HealthBarSet healthBar;
-
-    HealthComponentBase healthManager;
-
-    List<HealthBarSet> barSets = new List<HealthBarSet>();
-
-    private void Start()
+    public class HealthBarHandler : MonoBehaviour
     {
-        healthManager = GetComponentInParent<HealthComponentBase>();
-        healthManager.OnDamageTaken += UpdateHealthBar;
-        healthManager.OnDeath += DisableHealthBar;
-        Initialize();
-    }
+        [SerializeField] GameObject healthBarGroup;
+        [SerializeField] HealthBarSet healthBar;
 
-    private void Initialize()
-    {
-        for (int i = 0; i < healthManager.MaxHealth; i++)
+        HealthComponentBase healthManager;
+
+        List<HealthBarSet> barSets = new List<HealthBarSet>();
+
+        private void Start()
         {
-            barSets.Add(Instantiate(healthBar, transform.GetChild(0)));
+            healthManager = GetComponentInParent<HealthComponentBase>();
+            healthManager.OnDamageTaken += UpdateHealthBar;
+            healthManager.OnDeath += DisableHealthBar;
+            Initialize();
         }
-    }
 
-    private void UpdateHealthBar(int value)
-    {
-        for (int i = 0; i < barSets.Count; i++)
+        private void Initialize()
         {
-            if (i < value)
+            for (int i = 0; i < healthManager.MaxHealth; i++)
             {
-                barSets[i].ActivateBar();
-            }
-            else
-            {
-                barSets[i].CloseBar();
+                barSets.Add(Instantiate(healthBar, transform.GetChild(0)));
             }
         }
-    }
 
-    private void DisableHealthBar()
-    {
-        healthBarGroup.SetActive(false);
+        private void UpdateHealthBar(int value)
+        {
+            for (int i = 0; i < barSets.Count; i++)
+            {
+                if (i < value)
+                {
+                    barSets[i].ActivateBar();
+                }
+                else
+                {
+                    barSets[i].CloseBar();
+                }
+            }
+        }
+
+        private void DisableHealthBar()
+        {
+            healthBarGroup.SetActive(false);
+        }
     }
 }

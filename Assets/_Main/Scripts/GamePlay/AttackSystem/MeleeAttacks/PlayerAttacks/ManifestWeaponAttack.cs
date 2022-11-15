@@ -1,5 +1,7 @@
-
-public class ManifestWeaponAttack : MeleeAttackBase
+namespace _Main.Scripts.GamePlay.AttackSystem
 {
+    public class ManifestWeaponAttack : MeleeAttackBase
+    {
 
+    }
 }

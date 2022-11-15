@@ -1,7 +1,8 @@
 using _Main.Scripts.GamePlay.ActionSystem;
+using _Main.Scripts.GamePlay.HealthSystem;
 using UnityEngine;
 
-namespace _Main.Scripts.GamePlay.AttackSystem.RangedAttacks
+namespace _Main.Scripts.GamePlay.AttackSystem
 {
     public class RangedAttackBase : AttackBase
     {

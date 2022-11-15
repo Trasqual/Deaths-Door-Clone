@@ -1,6 +1,10 @@
 using UnityEngine;
-[CreateAssetMenu(menuName = "AttackDamageData/RangedAttackDamageData")]
-public class RangedAttackDamageData : AttackDamageDataBase
-{
 
+namespace _Main.Scripts.GamePlay.AttackSystem
+{
+	[CreateAssetMenu(menuName = "AttackDamageData/RangedAttackDamageData")]
+	public class RangedAttackDamageData : AttackDamageDataBase
+	{
+
+	}
 }

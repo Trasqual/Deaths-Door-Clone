@@ -1,28 +1,27 @@
-using _Main.Scripts.GamePlay.Indicators.AimingIndicator;
+using _Main.Scripts.GamePlay.Indicators;
 using _Main.Scripts.Others;
-using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace _Main.Scripts.GamePlay.Player
+namespace _Main.Scripts.GamePlay.BehaviourSystem
 {
     [CreateAssetMenu]
     public class PlayerBehaviourData : BehaviourBaseData
     {
-        [TitleGroup("Locomotion")]
+        [Header("Locomotion")]
         public float MovementSpeed  = 5F;
         public float RotationSpeed = 5F;
 
-        [TitleGroup("Dodge")]
+        [Header("Dodge")]
         public float DodgeSpeedMultiplier  = 2F;
         public float DodgeDuration  = 0.5F;
         public float DodgeCD  = 2F;
 
-        [TitleGroup("Health")]
+        [Header("Health")]
         public int Health = 4;
         public float DamageTakenStateDuration = 0.5f;
         public float InvulnerabilityDurationAfterTakingDamage = 1f;
 
-        [TitleGroup("Attack")]
+        [Header("Attack")]
         public float AttackRange = 1.5f;
         
         public AimActionIndicator aimingIndicator;

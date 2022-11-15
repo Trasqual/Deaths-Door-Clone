@@ -1,7 +1,7 @@
 using _Main.Scripts.GamePlay.ActionSystem;
 using UnityEngine;
 
-namespace _Main.Scripts.GamePlay.Indicators.ActionIndicator
+namespace _Main.Scripts.GamePlay.Indicators
 {
     public abstract class ActionIndicatorBase : MonoBehaviour
     {

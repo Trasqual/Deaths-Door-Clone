@@ -5,7 +5,7 @@ using _Main.Scripts.GamePlay.MovementSystem;
 using DG.Tweening;
 using UnityEngine;
 
-namespace _Main.Scripts.GamePlay.StateMachine
+namespace _Main.Scripts.GamePlay.StateMachineSystem
 {
     public class DodgeState : StateBase, ITransition, IAnimation
     {

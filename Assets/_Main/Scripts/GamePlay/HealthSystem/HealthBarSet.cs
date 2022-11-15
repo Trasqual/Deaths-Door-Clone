@@ -1,16 +1,19 @@
 using UnityEngine;
 
-public class HealthBarSet : MonoBehaviour
+namespace _Main.Scripts.GamePlay.HealthSystem
 {
-    [SerializeField] GameObject bar;
-
-    public void CloseBar()
+    public class HealthBarSet : MonoBehaviour
     {
-        bar.SetActive(false);
-    }
+        [SerializeField] GameObject bar;
 
-    public void ActivateBar()
-    {
-        bar.SetActive(true);
+        public void CloseBar()
+        {
+            bar.SetActive(false);
+        }
+
+        public void ActivateBar()
+        {
+            bar.SetActive(true);
+        }
     }
 }

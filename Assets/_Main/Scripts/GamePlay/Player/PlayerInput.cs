@@ -1,8 +1,7 @@
-using _Main.Scripts.GamePlay.InputSystem;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace _Main.Scripts.GamePlay.Player
+namespace _Main.Scripts.GamePlay.InputSystem
 {
     public class PlayerInput : InputBase
     {

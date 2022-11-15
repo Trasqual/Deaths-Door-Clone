@@ -1,7 +1,7 @@
 using DG.Tweening;
 using UnityEngine;
 
-namespace _Main.Scripts.GamePlay.Puzzles
+namespace _Main.Scripts.GamePlay.PuzzleSystem
 {
     [SelectionBase]
     public class FallingFloor : MonoBehaviour

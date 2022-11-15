@@ -1,60 +1,64 @@
+using _Main.Scripts.GamePlay.HealthSystem;
 using System.Collections;
 using UnityEngine;
 
-public class DamageDealingLaserCaster : LaserCaster
+namespace _Main.Scripts.GamePlay.PuzzleSystem
 {
-    [SerializeField] DamageDealerType _damageDealerType;
-    [SerializeField] int _damage = 1;
-    [SerializeField] float _dotTimer = 0.5f;
-
-    Transform prevHitTarget;
-    IEnumerator DoT;
-
-    public override void CastLaser()
+    public class DamageDealingLaserCaster : LaserCaster
     {
-        Ray ray = new Ray(transform.position, transform.forward);
-        Physics.Raycast(ray, out RaycastHit hit, _distance, _mask, QueryTriggerInteraction.Ignore);
-        if (hit.transform != null)
+        [SerializeField] DamageDealerType _damageDealerType;
+        [SerializeField] int _damage = 1;
+        [SerializeField] float _dotTimer = 0.5f;
+
+        Transform prevHitTarget;
+        IEnumerator DoT;
+
+        public override void CastLaser()
         {
-            _spawnedBeam.UpdateBeam(new Vector3[] { transform.position, (hit.point - transform.forward * 0.1f) });
-            if (hit.transform.TryGetComponent(out IDamageable damagable))
+            Ray ray = new Ray(transform.position, transform.forward);
+            Physics.Raycast(ray, out RaycastHit hit, _distance, _mask, QueryTriggerInteraction.Ignore);
+            if (hit.transform != null)
             {
-                if (hit.transform != prevHitTarget)
+                _spawnedBeam.UpdateBeam(new Vector3[] { transform.position, hit.point - transform.forward * 0.1f });
+                if (hit.transform.TryGetComponent(out IDamageable damagable))
                 {
-                    prevHitTarget = hit.transform;
+                    if (hit.transform != prevHitTarget)
+                    {
+                        prevHitTarget = hit.transform;
+                        KillDot();
+                        DoT = DotCo(damagable);
+                        StartCoroutine(DoT);
+                    }
+                }
+                else
+                {
                     KillDot();
-                    DoT = DotCo(damagable);
-                    StartCoroutine(DoT);
+                    prevHitTarget = null;
                 }
             }
             else
             {
+                _spawnedBeam.UpdateBeam(new Vector3[] { transform.position, transform.position + transform.forward * _distance });
                 KillDot();
                 prevHitTarget = null;
             }
         }
-        else
-        {
-            _spawnedBeam.UpdateBeam(new Vector3[] { transform.position, transform.position + transform.forward * _distance });
-            KillDot();
-            prevHitTarget = null;
-        }
-    }
 
-    private IEnumerator DotCo(IDamageable damagable)
-    {
-        while (true)
+        private IEnumerator DotCo(IDamageable damagable)
         {
-            damagable.TakeDamage(_damage, _damageDealerType);
-            yield return new WaitForSeconds(_dotTimer);
+            while (true)
+            {
+                damagable.TakeDamage(_damage, _damageDealerType);
+                yield return new WaitForSeconds(_dotTimer);
+            }
         }
-    }
 
-    private void KillDot()
-    {
-        if (DoT != null)
+        private void KillDot()
         {
-            StopCoroutine(DoT);
+            if (DoT != null)
+            {
+                StopCoroutine(DoT);
+            }
         }
     }
 }

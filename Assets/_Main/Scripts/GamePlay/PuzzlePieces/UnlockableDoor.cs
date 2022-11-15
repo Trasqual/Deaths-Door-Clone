@@ -1,68 +1,70 @@
-using _Main.Scripts.GamePlay.Player;
-using DG.Tweening;
+using _Main.Scripts.GamePlay.BehaviourSystem;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UnlockableDoor : MonoBehaviour
+namespace _Main.Scripts.GamePlay.PuzzleSystem
 {
-    public Action OnDoorOpened;
-
-    [SerializeField] Animator _anim;
-
-    [SerializeField] List<Renderer> indicators = new List<Renderer>();
-
-    Dictionary<LockPiece, Renderer> lockPiecesAndIndicators = new Dictionary<LockPiece, Renderer>();
-
-    List<LockPiece> brokenLockPieces = new List<LockPiece>();
-
-    bool isClosed;
-
-    public void Initialize(List<LockPiece> lockPieces)
+    public class UnlockableDoor : MonoBehaviour
     {
-        if (lockPieces.Count != indicators.Count)
+        public Action OnDoorOpened;
+
+        [SerializeField] Animator _anim;
+
+        [SerializeField] List<Renderer> indicators = new List<Renderer>();
+
+        Dictionary<LockPiece, Renderer> lockPiecesAndIndicators = new Dictionary<LockPiece, Renderer>();
+
+        List<LockPiece> brokenLockPieces = new List<LockPiece>();
+
+        bool isClosed;
+
+        public void Initialize(List<LockPiece> lockPieces)
         {
-            Debug.Log("Indicator count doesn't match lock piece count. Control the lists.");
-        }
-        else
-        {
-            for (int i = 0; i < lockPieces.Count; i++)
+            if (lockPieces.Count != indicators.Count)
             {
-                lockPiecesAndIndicators[lockPieces[i]] = indicators[i];
-                lockPieces[i].OnLockPieceBroken += ProcessBrokenLockPiece;
+                Debug.Log("Indicator count doesn't match lock piece count. Control the lists.");
+            }
+            else
+            {
+                for (int i = 0; i < lockPieces.Count; i++)
+                {
+                    lockPiecesAndIndicators[lockPieces[i]] = indicators[i];
+                    lockPieces[i].OnLockPieceBroken += ProcessBrokenLockPiece;
+                }
             }
         }
-    }
 
-    private void ProcessBrokenLockPiece(LockPiece lockPiece)
-    {
-        if (brokenLockPieces.Contains(lockPiece)) return;
-        brokenLockPieces.Add(lockPiece);
-        lockPiecesAndIndicators[lockPiece].material.SetColor("_Color", Color.green);
-        lockPiece.OnLockPieceBroken -= ProcessBrokenLockPiece;
-        if (brokenLockPieces.Count >= indicators.Count)
+        private void ProcessBrokenLockPiece(LockPiece lockPiece)
         {
-            OpenDoor();
+            if (brokenLockPieces.Contains(lockPiece)) return;
+            brokenLockPieces.Add(lockPiece);
+            lockPiecesAndIndicators[lockPiece].material.SetColor("_Color", Color.green);
+            lockPiece.OnLockPieceBroken -= ProcessBrokenLockPiece;
+            if (brokenLockPieces.Count >= indicators.Count)
+            {
+                OpenDoor();
+            }
         }
-    }
 
-    private void OpenDoor()
-    {
-        _anim.SetBool("character_nearby", true);
-        OnDoorOpened?.Invoke();
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (isClosed) return;
-        if (other.TryGetComponent(out Player player))
+        private void OpenDoor()
         {
-            CloseDoor();
+            _anim.SetBool("character_nearby", true);
+            OnDoorOpened?.Invoke();
         }
-    }
 
-    private void CloseDoor()
-    {
-        _anim.SetBool("character_nearby", false);
+        private void OnTriggerExit(Collider other)
+        {
+            if (isClosed) return;
+            if (other.TryGetComponent(out Player player))
+            {
+                CloseDoor();
+            }
+        }
+
+        private void CloseDoor()
+        {
+            _anim.SetBool("character_nearby", false);
+        }
     }
 }

@@ -1,8 +1,11 @@
 
-[System.Flags]
-public enum DamageDealerType
+namespace _Main.Scripts.GamePlay.HealthSystem
 {
-    Player = 1,
-    AI = 1 << 1,
-    Environment = 1 << 2,
+    [System.Flags]
+    public enum DamageDealerType
+    {
+        Player = 1,
+        AI = 1 << 1,
+        Environment = 1 << 2,
+    } 
 }

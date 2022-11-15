@@ -1,4 +1,7 @@
-public class EnemyHealthComponent : HealthComponentBase
+namespace _Main.Scripts.GamePlay.HealthSystem
 {
-    // TODO
+    public class EnemyHealthComponent : HealthComponentBase
+    {
+        // TODO
+    }
 }

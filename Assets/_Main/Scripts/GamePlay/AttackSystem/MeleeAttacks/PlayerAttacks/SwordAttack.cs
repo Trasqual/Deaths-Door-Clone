@@ -1,18 +1,21 @@
 using UnityEngine;
 
-public class SwordAttack : MeleeAttackBase
+namespace _Main.Scripts.GamePlay.AttackSystem
 {
-    [SerializeField] GameObject swordVisual;
-
-    protected override void DoOnActionStart()
+    public class SwordAttack : MeleeAttackBase
     {
-        base.DoOnActionStart();
-        swordVisual.SetActive(true);
-    }
+        [SerializeField] GameObject swordVisual;
 
-    protected override void EndAttack()
-    {
-        base.EndAttack();
-        swordVisual.SetActive(false);
+        protected override void DoOnActionStart()
+        {
+            base.DoOnActionStart();
+            swordVisual.SetActive(true);
+        }
+
+        protected override void EndAttack()
+        {
+            base.EndAttack();
+            swordVisual.SetActive(false);
+        }
     }
 }

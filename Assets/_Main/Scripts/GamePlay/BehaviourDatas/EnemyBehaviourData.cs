@@ -1,13 +1,16 @@
-using Sirenix.OdinInspector;
 using UnityEngine;
 
-[CreateAssetMenu]
-public class EnemyBehaviourData : BehaviourBaseData
+namespace _Main.Scripts.GamePlay.BehaviourSystem
 {
-    [TitleGroup("Locomotion")]
-    public float MovementSpeed  = 5F;
-    public float RotationSpeed = 5F;
 
-    [TitleGroup("Health")]
-    public int Health = 4;
+    [CreateAssetMenu]
+    public class EnemyBehaviourData : BehaviourBaseData
+    {
+        [Header("Locomotion")]
+        public float MovementSpeed = 5F;
+        public float RotationSpeed = 5F;
+
+        [Header("Health")]
+        public int Health = 4;
+    } 
 }

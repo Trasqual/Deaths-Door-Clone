@@ -1,4 +1,3 @@
-using DG.Tweening;
 
 namespace _Main.Scripts.GamePlay.AttackSystem.MeleeAttacks
 {

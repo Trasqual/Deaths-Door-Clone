@@ -1,15 +1,18 @@
 using System.Collections;
 using UnityEngine;
 
-public abstract class InvulnerableBase : MonoBehaviour
+namespace _Main.Scripts.GamePlay.HealthSystem
 {
-    protected IEnumerator InvulnerabilityCoroutine;
-    
-    public bool IsActive { protected set; get; } = false;
+    public abstract class InvulnerableBase : MonoBehaviour
+    {
+        protected IEnumerator InvulnerabilityCoroutine;
 
-    public abstract void SetInvulnerable();
-    public abstract void SetVulnerable();
-    public abstract IEnumerator SetInvulnerableForDuration(float duration);
-    public abstract void StopInvulnerabilityCoroutine();
-    public abstract void InvulnerableForDuration(float duration);
+        public bool IsActive { protected set; get; } = false;
+
+        public abstract void SetInvulnerable();
+        public abstract void SetVulnerable();
+        public abstract IEnumerator SetInvulnerableForDuration(float duration);
+        public abstract void StopInvulnerabilityCoroutine();
+        public abstract void InvulnerableForDuration(float duration);
+    }
 }

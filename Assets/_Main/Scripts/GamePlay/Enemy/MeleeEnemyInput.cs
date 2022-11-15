@@ -1,59 +1,62 @@
 using UnityEngine;
 
-public class MeleeEnemyInput : EnemyInputBase
+namespace _Main.Scripts.GamePlay.InputSystem
 {
-    protected override void Update()
+    public class MeleeEnemyInput : EnemyInputBase
     {
-        if (_target != null)
+        protected override void Update()
         {
-            float distance = Vector3.Distance(transform.position, _target.GetTransform().position);
-
-            SetCurrentAttack(distance);
-
-            if (distance <= agent.stoppingDistance)
+            if (_target != null)
             {
-                OnAttackActionStarted?.Invoke();
+                float distance = Vector3.Distance(transform.position, _target.GetTransform().position);
+
+                SetCurrentAttack(distance);
+
+                if (distance <= agent.stoppingDistance)
+                {
+                    OnAttackActionStarted?.Invoke();
+                }
             }
         }
-    }
 
-    private void SetCurrentAttack(float distance)
-    {
-        if (distance >= attackController.GetMeleeAttacks()[1].CurrentComboDamageData.attackRange * .8f && !attackController.GetMeleeAttacks()[1].IsOnCooldown)
+        private void SetCurrentAttack(float distance)
         {
-            OnMeleeWeaponSwitchedWithID?.Invoke(1);
-        }
-        else
-        {
-            OnMeleeWeaponSwitchedWithID?.Invoke(0);
-        }
-    }
-
-    public override Vector3 GetMovementInput()
-    {
-        if (_target != null)
-        {
-            agent.stoppingDistance = attackController.SelectedMeleeAttack.CurrentComboDamageData.attackRange;
-            if (Vector3.Distance(transform.position, _target.GetTransform().position) > agent.stoppingDistance)
+            if (distance >= attackController.GetMeleeAttacks()[1].CurrentComboDamageData.attackRange * .8f && !attackController.GetMeleeAttacks()[1].IsOnCooldown)
             {
-                return _target.GetTransform().position;
+                OnMeleeWeaponSwitchedWithID?.Invoke(1);
             }
             else
             {
-                return Vector3.zero;
+                OnMeleeWeaponSwitchedWithID?.Invoke(0);
             }
         }
-        else
+
+        public override Vector3 GetMovementInput()
         {
-            agent.stoppingDistance = 0.5f;
-            var returnPos = shouldPatrol ? GetPatrolPosition() : startPos;
-            if (Vector3.Distance(transform.position, returnPos) > agent.stoppingDistance)
+            if (_target != null)
             {
-                return returnPos;
+                agent.stoppingDistance = attackController.SelectedMeleeAttack.CurrentComboDamageData.attackRange;
+                if (Vector3.Distance(transform.position, _target.GetTransform().position) > agent.stoppingDistance)
+                {
+                    return _target.GetTransform().position;
+                }
+                else
+                {
+                    return Vector3.zero;
+                }
             }
             else
             {
-                return Vector3.zero;
+                agent.stoppingDistance = 0.5f;
+                var returnPos = shouldPatrol ? GetPatrolPosition() : startPos;
+                if (Vector3.Distance(transform.position, returnPos) > agent.stoppingDistance)
+                {
+                    return returnPos;
+                }
+                else
+                {
+                    return Vector3.zero;
+                }
             }
         }
     }

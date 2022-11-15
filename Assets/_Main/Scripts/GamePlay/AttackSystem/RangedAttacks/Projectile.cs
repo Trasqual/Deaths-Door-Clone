@@ -1,7 +1,9 @@
+using _Main.Scripts.GamePlay.DetectionSystem;
+using _Main.Scripts.GamePlay.HealthSystem;
 using System.Collections;
 using UnityEngine;
 
-namespace _Main.Scripts.GamePlay.AttackSystem.RangedAttacks
+namespace _Main.Scripts.GamePlay.AttackSystem
 {
     public class Projectile : MonoBehaviour
     {

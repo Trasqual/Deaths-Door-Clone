@@ -1,5 +1,5 @@
 
-namespace _Main.Scripts.GamePlay.AttackSystem.RangedAttacks
+namespace _Main.Scripts.GamePlay.AttackSystem
 {
     public interface IStickable
     {

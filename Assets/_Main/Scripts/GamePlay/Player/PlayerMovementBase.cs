@@ -1,9 +1,9 @@
-using _Main.Scripts.GamePlay.MovementSystem;
+using _Main.Scripts.GamePlay.BehaviourSystem;
 using DG.Tweening;
 using System.Collections;
 using UnityEngine;
 
-namespace _Main.Scripts.GamePlay.Player
+namespace _Main.Scripts.GamePlay.MovementSystem
 {
     public class PlayerMovementBase : MovementBase
     {
@@ -12,7 +12,6 @@ namespace _Main.Scripts.GamePlay.Player
         [SerializeField] private float fallToDeathTime = 2f;
 
         private Player player;
-        private AnimationMovementBase animationMovement;
 
         private bool applyGravity = true;
 
@@ -30,7 +29,6 @@ namespace _Main.Scripts.GamePlay.Player
         private void Start()
         {
             player = GetComponent<Player>();
-            animationMovement = GetComponentInChildren<AnimationMovementBase>();
         }
 
         private void Update()

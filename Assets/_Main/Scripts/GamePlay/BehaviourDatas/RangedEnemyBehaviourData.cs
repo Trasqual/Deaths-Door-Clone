@@ -1,9 +1,11 @@
-using Sirenix.OdinInspector;
 using UnityEngine;
 
-[CreateAssetMenu]
-public class RangedEnemyBehaviourData : EnemyBehaviourData
+namespace _Main.Scripts.GamePlay.BehaviourSystem
 {
-    [TitleGroup("RangedAttack")]
-    public float CastSpeed = 1f;
+	[CreateAssetMenu]
+	public class RangedEnemyBehaviourData : EnemyBehaviourData
+	{
+		[Header("RangedAttack")]
+		public float CastSpeed = 1f;
+	}
 }

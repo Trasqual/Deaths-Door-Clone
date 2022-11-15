@@ -1,32 +1,35 @@
 using UnityEngine;
 
-public class AmmoCounter : MonoBehaviour
+namespace _Main.Scripts.GamePlay.AmmunitionSystem
 {
-    [SerializeField] private int maxAmmo = 4;
-
-    public int CurrentAmmo { get; private set; }
-
-    private void Awake()
+    public class AmmoCounter : MonoBehaviour
     {
-        CurrentAmmo = maxAmmo;
-    }
+        [SerializeField] private int maxAmmo = 4;
 
-    public void GainAmmo(int count)
-    {
-        CurrentAmmo += count;
-        CurrentAmmo = Mathf.Min(maxAmmo, CurrentAmmo);
-    }
+        public int CurrentAmmo { get; private set; }
 
-    public void UseAmmo()
-    {
-        if (CurrentAmmo > 0)
-            CurrentAmmo--;
+        private void Awake()
+        {
+            CurrentAmmo = maxAmmo;
+        }
 
-        CurrentAmmo = Mathf.Max(0, CurrentAmmo);
-    }
+        public void GainAmmo(int count)
+        {
+            CurrentAmmo += count;
+            CurrentAmmo = Mathf.Min(maxAmmo, CurrentAmmo);
+        }
 
-    public void UpgradeAmmoCapacity(int amount)
-    {
-        maxAmmo += amount;
+        public void UseAmmo()
+        {
+            if (CurrentAmmo > 0)
+                CurrentAmmo--;
+
+            CurrentAmmo = Mathf.Max(0, CurrentAmmo);
+        }
+
+        public void UpgradeAmmoCapacity(int amount)
+        {
+            maxAmmo += amount;
+        }
     }
 }

@@ -1,8 +1,7 @@
-using _Main.Scripts.GamePlay.Indicators.ActionIndicator;
 using DG.Tweening;
 using UnityEngine;
 
-namespace _Main.Scripts.GamePlay.Indicators.AimingIndicator
+namespace _Main.Scripts.GamePlay.Indicators
 {
     public class AimActionIndicator : ActionIndicatorBase
     {
