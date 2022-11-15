@@ -6113,7 +6113,7 @@ GameObject:
   - component: {fileID: 459668137}
   - component: {fileID: 459668141}
   m_Layer: 7
-  m_Name: NavMeshLinked
+  m_Name: NavMeshLinkedObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

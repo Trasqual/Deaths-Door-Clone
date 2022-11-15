@@ -15,5 +15,5 @@ MonoBehaviour:
   attackRange: 2
   damage: 1
   dmgDealerType: 1
-  radius: 1
-  range: 1
+  radius: 2
+  range: 0

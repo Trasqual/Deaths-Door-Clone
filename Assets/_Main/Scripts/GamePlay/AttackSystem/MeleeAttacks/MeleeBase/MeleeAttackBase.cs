@@ -124,7 +124,7 @@ namespace _Main.Scripts.GamePlay.AttackSystem
             damageDelay = DOVirtual.DelayedCall(animData.attackDamageDelay, () =>
             {
                 var damageData = (SphereAttackDamageData)CurrentComboDamageData;
-                new SphereCastDamager(transform.root.position + transform.root.up + transform.root.forward, damageData.radius, transform.root.forward, damageData.range, damageData.damage, damageData.dmgDealerType, out int damagedTargets);
+                damageData.DealDamage(transform.root, out int damagedTargets);
                 OnAttackLanded?.Invoke(damagedTargets);
             });
         }
