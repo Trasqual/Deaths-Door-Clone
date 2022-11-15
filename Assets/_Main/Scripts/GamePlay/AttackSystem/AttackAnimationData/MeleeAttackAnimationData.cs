@@ -15,5 +15,10 @@ namespace _Main.Scripts.GamePlay.AttackSystem
         public bool useGravity = true;
         public float jumpHeight = 0f;
         public AnimationCurve yCurve;
+
+        public virtual Vector3 GetAttackEndPosition(Transform caster)
+        {
+            return caster.position + caster.forward * attackMovementAmount;
+        }
     } 
 }

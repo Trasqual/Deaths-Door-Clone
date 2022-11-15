@@ -116,7 +116,7 @@ namespace _Main.Scripts.GamePlay.MovementSystem
             while (timePassed < duration)
             {
                 timePassed += Time.deltaTime;
-                if (curve == null)
+                if (useGravity)
                 {
                     dir = endPos - startPos;
                 }

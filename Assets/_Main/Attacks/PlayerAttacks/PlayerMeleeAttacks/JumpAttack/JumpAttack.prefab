@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   comboDatas:
-  - AttackAnimationData: {fileID: 11400000, guid: 9c933bd0c16290e44a526e2d52863597, type: 2}
+  - AttackAnimationData: {fileID: 11400000, guid: d5fe9b3ca7e922249ba1344317f74c0c, type: 2}
     AttackDamageData: {fileID: 11400000, guid: 7797fcd65944b2a4383071b9750c6d86, type: 2}
   GeneralAttackCooldown: 0.5
 --- !u!1 &8209032664343286225

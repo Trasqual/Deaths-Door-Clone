@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c488f67d8698f54384e9555943a234b, type: 3}
   m_Name: Combo3DamageData
   m_EditorClassIdentifier: 
-  radius: 2
-  range: 2
+  attackRange: 2
   damage: 1
   dmgDealerType: 1
+  radius: 1
+  range: 1

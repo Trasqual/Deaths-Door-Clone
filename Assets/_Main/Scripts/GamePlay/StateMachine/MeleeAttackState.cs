@@ -147,7 +147,7 @@ namespace _Main.Scripts.GamePlay.StateMachineSystem
             if (_input.GetLookInput() != Vector3.zero)
                 transform.rotation = Quaternion.LookRotation(_input.GetLookInput());
             var info = (MeleeAttackAnimationData)_selectedMeleeAttack.CurrentComboAnimationData;
-            _movementBase.MoveOverTime(transform.position + transform.forward * info.attackMovementAmount, info.attackMovementDuration, info.attackMovementDelay, info.useGravity, info.jumpHeight, info.yCurve);
+            _movementBase.MoveOverTime(info.GetAttackEndPosition(transform), info.attackMovementDuration, info.attackMovementDelay, info.useGravity, info.jumpHeight, info.yCurve);
 
             IsStateLocked = !info.useGravity;
             stateLockTween = DOVirtual.DelayedCall(info.attackCD, () => IsStateLocked = false);

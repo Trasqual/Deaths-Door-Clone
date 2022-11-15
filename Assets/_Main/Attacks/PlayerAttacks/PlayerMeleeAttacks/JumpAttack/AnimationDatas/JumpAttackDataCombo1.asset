@@ -21,7 +21,7 @@ MonoBehaviour:
   attackCD: 3
   animationSpeedMultiplier: 1
   useGravity: 0
-  jumpHeight: 5
+  jumpHeight: 20
   yCurve:
     serializedVersion: 2
     m_Curve:
@@ -44,7 +44,7 @@ MonoBehaviour:
       inWeight: 0.3184453
       outWeight: 0.47111636
     - serializedVersion: 3
-      time: 0.7
+      time: 0.79436034
       value: 0.97148514
       inSlope: 0
       outSlope: 0
@@ -53,8 +53,8 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.70001
-      value: 0
+      time: 0.7962014
+      value: -0.0040283203
       inSlope: 0
       outSlope: 0
       tangentMode: 0
