@@ -1,8 +1,8 @@
 using UnityEngine;
 
-namespace _Main.Scripts.GamePlay.HealthSystem
+namespace _Main.Scripts.GamePlay.UI
 {
-    public class HealthBarSet : MonoBehaviour
+    public class VisualizableBar : MonoBehaviour
     {
         [SerializeField] GameObject bar;
 
