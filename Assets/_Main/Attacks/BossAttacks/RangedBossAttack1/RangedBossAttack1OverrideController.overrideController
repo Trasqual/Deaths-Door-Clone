@@ -1,0 +1,15 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: RangedBossAttack1OverrideController
+  m_Controller: {fileID: 9100000, guid: 3b903a866eedbdf4fa29b32edcbfbe1b, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: -203655887218126122, guid: e01aebb054cc9c34185d7076160e9af1, type: 3}
+    m_OverrideClip: {fileID: -203655887218126122, guid: 55d6ef368a166f640b2888c04300b8c1, type: 3}
+  - m_OriginalClip: {fileID: -203655887218126122, guid: 8f6cc7b74b66df344b2deff899ad42cc, type: 3}
+    m_OverrideClip: {fileID: -203655887218126122, guid: 4864766eb19fc3f42b81f22b6d2682c3, type: 3}

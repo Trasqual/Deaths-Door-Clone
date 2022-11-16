@@ -11,7 +11,7 @@ namespace _Main.Scripts.GamePlay.MovementSystem
         [SerializeField] private float baseRotationSpeed = 20f;
         [SerializeField] private float fallToDeathTime = 2f;
 
-        private Player player;
+        private PlayerBehaviour player;
 
         private bool applyGravity = true;
 
@@ -28,7 +28,7 @@ namespace _Main.Scripts.GamePlay.MovementSystem
 
         private void Start()
         {
-            player = GetComponent<Player>();
+            player = GetComponent<PlayerBehaviour>();
         }
 
         private void Update()

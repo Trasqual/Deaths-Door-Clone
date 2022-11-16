@@ -87,7 +87,7 @@ GameObject:
   - component: {fileID: 480093024513758286}
   - component: {fileID: 2966836371010889793}
   m_Layer: 0
-  m_Name: BarSet
+  m_Name: HealthBarSet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

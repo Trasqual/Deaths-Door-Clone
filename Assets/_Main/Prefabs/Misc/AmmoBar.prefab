@@ -37,8 +37,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: -0.125}
-  m_SizeDelta: {x: 1, y: 0.25}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0.75, y: 0.25}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &7963138934107453190
 Canvas:
@@ -118,11 +118,11 @@ MonoBehaviour:
     m_Right: 0
     m_Top: 0
     m_Bottom: 0
-  m_ChildAlignment: 3
-  m_Spacing: 0
+  m_ChildAlignment: 4
+  m_Spacing: -0.05
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 1
-  m_ChildControlWidth: 0
+  m_ChildControlWidth: 1
   m_ChildControlHeight: 0
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
@@ -174,7 +174,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   barGroup: {fileID: 7963138934107453194}
-  bar: {fileID: 2966836371010889793, guid: 77d98dc4b7656c44ab95d6d4280c2bcd, type: 3}
+  bar: {fileID: 2966836371010889793, guid: 6b0d0b817419abe42a015bd7e0c7442c, type: 3}
 --- !u!114 &7963138935509246224
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -56,7 +56,7 @@ namespace _Main.Scripts.GamePlay.PuzzleSystem
         private void OnTriggerExit(Collider other)
         {
             if (isClosed) return;
-            if (other.TryGetComponent(out Player player))
+            if (other.TryGetComponent(out PlayerBehaviour player))
             {
                 CloseDoor();
             }

@@ -15,7 +15,7 @@ namespace _Main.Scripts.GamePlay.BehaviourSystem
     [RequireComponent(typeof(PlayerMovementBase),
         typeof(PlayerAnimation),
         typeof(HealthComponentBase))]
-    public class Player : BehaviourBase<PlayerBehaviourData>
+    public class PlayerBehaviour : BehaviourBase<PlayerBehaviourData>
     {
         public CharacterController Controller { get; private set; }
         public PlayerAnimation PlayerAnim { get; private set; }
