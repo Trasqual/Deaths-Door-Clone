@@ -1,3 +1,4 @@
+using _Main.Scripts.GamePlay.AttackSystem;
 using _Main.Scripts.GamePlay.BehaviourSystem;
 using _Main.Scripts.GamePlay.HealthSystem;
 using _Main.Scripts.GamePlay.MovementSystem;
@@ -6,7 +7,7 @@ using UnityEngine;
 
 namespace _Main.Scripts.GamePlay.InputSystem
 {
-    public class RangedEnemyInput : EnemyInputBase
+    public class BossEnemyInput : EnemyInputBase
     {
         [SerializeField] private float aimCorrectionAssist = 14f;
         private RangedEnemyBehaviourData enemyBehaviourData;
@@ -38,6 +39,7 @@ namespace _Main.Scripts.GamePlay.InputSystem
         {
             if (_target != null)
             {
+                agent.stoppingDistance = attackController.SelectedRangedAttack.CurrentComboDamageData.attackRange;
                 if (Vector3.Distance(transform.position, _target.GetTransform().position) > agent.stoppingDistance)
                 {
                     return _target.GetTransform().position;
@@ -49,6 +51,7 @@ namespace _Main.Scripts.GamePlay.InputSystem
             }
             else
             {
+                agent.stoppingDistance = 0.5f;
                 var returnPos = shouldPatrol ? GetPatrolPosition() : startPos;
                 if (Vector3.Distance(transform.position, returnPos) > agent.stoppingDistance)
                 {
@@ -65,7 +68,7 @@ namespace _Main.Scripts.GamePlay.InputSystem
         {
             if (_target != null)
             {
-                if (Vector3.Distance(transform.position, _target.GetTransform().position) <= attackController.SelectedRangedAttack.CurrentComboDamageData.attackRange && !isAiming)
+                if (Vector3.Distance(transform.position, _target.GetTransform().position) <= agent.stoppingDistance && !isAiming)
                 {
                     isAiming = true;
                     OnAimActionStarted?.Invoke();

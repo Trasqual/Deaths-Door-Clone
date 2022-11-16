@@ -12,7 +12,7 @@ namespace _Main.Scripts.GamePlay.InputSystem
 
                 SetCurrentAttack(distance);
 
-                if (distance <= agent.stoppingDistance)
+                if (distance <= attackController.SelectedMeleeAttack.CurrentComboDamageData.attackRange)
                 {
                     OnAttackActionStarted?.Invoke();
                 }
@@ -35,7 +35,6 @@ namespace _Main.Scripts.GamePlay.InputSystem
         {
             if (_target != null)
             {
-                agent.stoppingDistance = attackController.SelectedMeleeAttack.CurrentComboDamageData.attackRange;
                 if (Vector3.Distance(transform.position, _target.GetTransform().position) > agent.stoppingDistance)
                 {
                     return _target.GetTransform().position;
@@ -47,7 +46,6 @@ namespace _Main.Scripts.GamePlay.InputSystem
             }
             else
             {
-                agent.stoppingDistance = 0.5f;
                 var returnPos = shouldPatrol ? GetPatrolPosition() : startPos;
                 if (Vector3.Distance(transform.position, returnPos) > agent.stoppingDistance)
                 {
