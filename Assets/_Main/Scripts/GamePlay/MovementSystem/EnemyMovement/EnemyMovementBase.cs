@@ -1,3 +1,4 @@
+using _Main.Scripts.GamePlay.BehaviourSystem;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
@@ -7,7 +8,7 @@ namespace _Main.Scripts.GamePlay.MovementSystem
     public class EnemyMovementBase : MovementBase
     {
         private NavMeshAgent agent;
-        private AnimationMovementBase animationMovement;
+        private EnemyBehaviourData enemyBehaviourData;
         private IEnumerator moveOverTimeCo;
 
         public override Vector3 GetVelocity() => agent.velocity;
@@ -15,7 +16,28 @@ namespace _Main.Scripts.GamePlay.MovementSystem
         private void Awake()
         {
             agent = GetComponent<NavMeshAgent>();
-            animationMovement = GetComponentInChildren<AnimationMovementBase>();
+            enemyBehaviourData = GetComponent<EnemyBehaviourBase>().Data;
+        }
+
+        public override void StopMovement()
+        {
+            agent.isStopped = true;
+            agent.ResetPath();
+        }
+
+        public override void StartMovement()
+        {
+            agent.isStopped = false;
+        }
+
+        public override void StopRotation()
+        {
+            agent.updateRotation = false;
+        }
+
+        public override void StartRotation()
+        {
+            agent.updateRotation = true;
         }
 
         protected void MoveInDirection(Vector3 dir, float speed)
@@ -28,8 +50,10 @@ namespace _Main.Scripts.GamePlay.MovementSystem
         {
             if (!agent.isActiveAndEnabled) return;
             agent.SetDestination(dir);
+            agent.speed = enemyBehaviourData.MovementSpeed * movementSpeedMultiplier;
+
             if (dir != Vector3.zero)
-                transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(dir), Time.deltaTime * rotationSpeedMultiplier);
+                transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(dir - transform.position), Time.deltaTime * enemyBehaviourData.RotationSpeed * rotationSpeedMultiplier);
         }
 
         public override void MoveOverTime(Vector3 endPos, float duration, float setDelay = 0f, bool useGravity = true, float jumpHeight = 0f, AnimationCurve curve = null)

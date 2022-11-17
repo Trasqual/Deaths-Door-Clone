@@ -11,7 +11,6 @@ namespace _Main.Scripts.GamePlay.BehaviourSystem
 
             GainAttackBehaviour();
             AttackController.SetSelectedMeleeAttack(stateMachine);
-            _agent.stoppingDistance = AttackController.SelectedMeleeAttack.CurrentComboDamageData.attackRange;
 
             GainAimingBehaviour();
             AttackController.SetSelectedRangedAttack(typeof(RangedEnemyAttack), stateMachine, _healthManager);
@@ -37,7 +36,6 @@ namespace _Main.Scripts.GamePlay.BehaviourSystem
             if (switchInput != AttackController.GetMeleeAttacks().IndexOf(AttackController.SelectedMeleeAttack))
             {
                 AttackController.SelectMeleeWeaponWithNo(switchInput, stateMachine);
-                _agent.stoppingDistance = AttackController.SelectedMeleeAttack.CurrentComboDamageData.attackRange;
             }
         }
 

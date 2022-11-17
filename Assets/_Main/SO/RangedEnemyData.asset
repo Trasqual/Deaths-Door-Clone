@@ -13,8 +13,7 @@ MonoBehaviour:
   m_Name: RangedEnemyData
   m_EditorClassIdentifier: 
   Name: Basic Ranged Enemy
-  MovementSpeed: 5
-  RotationSpeed: 5
+  MovementSpeed: 2
+  RotationSpeed: 40
   Health: 4
-  AttackRange: 10
   CastSpeed: 1.5

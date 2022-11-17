@@ -62,5 +62,5 @@ MonoBehaviour:
   resetRange: 15
   lineOfSightCheckMask:
     serializedVersion: 2
-    m_Bits: 63
+    m_Bits: 191
   damageDealerType: 2

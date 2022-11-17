@@ -26,11 +26,11 @@ namespace _Main.Scripts.GamePlay.InputSystem
             if (_target != null)
             {
                 var targetsVelocity = _targetMovement ? _targetMovement.GetVelocity() : Vector3.zero;
-                return (_target.GetTransform().position + targetsVelocity * Time.deltaTime * aimCorrectionAssist - transform.position).normalized;
+                return _target.GetTransform().position + aimCorrectionAssist * Time.deltaTime * targetsVelocity;
             }
             else
             {
-                return (startPos - transform.position).normalized;
+                return startPos;
             }
         }
 
@@ -38,7 +38,7 @@ namespace _Main.Scripts.GamePlay.InputSystem
         {
             if (_target != null)
             {
-                if (Vector3.Distance(transform.position, _target.GetTransform().position) > agent.stoppingDistance)
+                if (Vector3.Distance(transform.position, _target.GetTransform().position) > attackController.SelectedRangedAttack.CurrentComboDamageData.attackRange)
                 {
                     return _target.GetTransform().position;
                 }

@@ -10,12 +10,11 @@ namespace _Main.Scripts.GamePlay.BehaviourSystem
             base.Start();
             GainAimingBehaviour();
             AttackController.SetSelectedRangedAttack(typeof(RangedEnemyAttack), stateMachine, _healthManager);
-            _agent.stoppingDistance = AttackController.SelectedRangedAttack.CurrentComboDamageData.attackRange;
         }
 
         public void GainAimingBehaviour()
         {
-            stateMachine.AddAimingState(10f, .5f, AttackController);
+            stateMachine.AddAimingState(1f, .5f, AttackController);
         }
 
         private void StartAiming()
