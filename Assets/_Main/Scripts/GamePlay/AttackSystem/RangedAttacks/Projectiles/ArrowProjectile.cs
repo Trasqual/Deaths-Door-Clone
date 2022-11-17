@@ -5,17 +5,11 @@ using UnityEngine;
 
 namespace _Main.Scripts.GamePlay.AttackSystem
 {
-    public class Projectile : MonoBehaviour
+    public class ArrowProjectile : Projectile
     {
-        [SerializeField] float maxTravelDistance = 15f;
-        [SerializeField] float projectileSpeed = 5f;
-        private float _damage;
-        private DamageDealerType _damageDealerType;
-        private Vector3 startPos;
-        private IDamageable _caster;
+        protected Vector3 startPos;
 
         Rigidbody rb;
-        public Collider Col => GetComponent<Collider>();
 
         private void Start()
         {
@@ -26,7 +20,7 @@ namespace _Main.Scripts.GamePlay.AttackSystem
 
         private void FixedUpdate()
         {
-            if(Vector3.Distance(transform.position, startPos) >= maxTravelDistance)
+            if (Vector3.Distance(transform.position, startPos) >= maxTravelDistance)
             {
                 StartCoroutine(DestroySelf(0f));
             }
@@ -37,7 +31,7 @@ namespace _Main.Scripts.GamePlay.AttackSystem
             rb.collisionDetectionMode = CollisionDetectionMode.ContinuousSpeculative;
             rb.isKinematic = true;
             Col.enabled = false;
-            if(collision.collider.TryGetComponent(out ProjectileBoneStickingHandler boneStickHandler))
+            if (collision.collider.TryGetComponent(out ProjectileBoneStickingHandler boneStickHandler))
             {
                 var newParent = boneStickHandler.GetClosestBone(collision.contacts[0].point);
                 transform.SetParent(newParent);
@@ -45,8 +39,8 @@ namespace _Main.Scripts.GamePlay.AttackSystem
             }
             else
             {
-                transform.SetParent(collision.transform);
-            }            
+                rb.isKinematic = true;
+            }
             if (collision.collider.TryGetComponent(out IDamageable damagable))
             {
                 damagable.TakeDamage(Mathf.RoundToInt(_damage), _damageDealerType);
@@ -59,32 +53,12 @@ namespace _Main.Scripts.GamePlay.AttackSystem
             StartCoroutine(DestroySelf(3f));
         }
 
-        public void Init(float damage, DamageDealerType damageDealerType, IDamageable caster)
-        {
-            SetDamage(damage);
-            SetDamageDealerType(damageDealerType);
-            SetCaster(caster);
-        }
-
-        public void SetDamage(float damage)
-        {
-            _damage = damage;
-        }
-
-        public void SetDamageDealerType(DamageDealerType damageDealerType)
-        {
-            _damageDealerType = damageDealerType;
-        }
-
-        public void SetCaster(IDamageable caster)
-        {
-            _caster = caster;
-        }
-
         IEnumerator DestroySelf(float duration)
         {
             yield return new WaitForSeconds(duration);
             Destroy(gameObject);
         }
     }
+
+
 }
