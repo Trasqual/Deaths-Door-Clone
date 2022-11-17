@@ -27,11 +27,11 @@ namespace _Main.Scripts.GamePlay.InputSystem
             if (_target != null)
             {
                 var targetsVelocity = _targetMovement ? _targetMovement.GetVelocity() : Vector3.zero;
-                return (_target.GetTransform().position + targetsVelocity * Time.deltaTime * aimCorrectionAssist - transform.position).normalized;
+                return _target.GetTransform().position + aimCorrectionAssist * Time.deltaTime * targetsVelocity;
             }
             else
             {
-                return (startPos - transform.position).normalized;
+                return startPos;
             }
         }
 

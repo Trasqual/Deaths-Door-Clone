@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: Basic Melee Enemy
   MovementSpeed: 4
-  RotationSpeed: 40
+  RotationSpeed: 2
   Health: 4

@@ -19,27 +19,6 @@ namespace _Main.Scripts.GamePlay.MovementSystem
             enemyBehaviourData = GetComponent<EnemyBehaviourBase>().Data;
         }
 
-        public override void StopMovement()
-        {
-            agent.isStopped = true;
-            agent.ResetPath();
-        }
-
-        public override void StartMovement()
-        {
-            agent.isStopped = false;
-        }
-
-        public override void StopRotation()
-        {
-            agent.updateRotation = false;
-        }
-
-        public override void StartRotation()
-        {
-            agent.updateRotation = true;
-        }
-
         protected void MoveInDirection(Vector3 dir, float speed)
         {
             agent.speed = speed;
