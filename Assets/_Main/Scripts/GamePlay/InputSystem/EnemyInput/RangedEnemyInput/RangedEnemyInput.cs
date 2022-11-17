@@ -38,7 +38,7 @@ namespace _Main.Scripts.GamePlay.InputSystem
         {
             if (_target != null)
             {
-                if (Vector3.Distance(transform.position, _target.GetTransform().position) > attackController.SelectedRangedAttack.CurrentComboDamageData.attackRange)
+                if (Vector3.Distance(transform.position, _target.GetTransform().position) > attackController.SelectedRangedAttack.CurrentComboDamageData.attackRange || !TargetIsInLineOfSight())
                 {
                     return _target.GetTransform().position;
                 }
@@ -65,7 +65,7 @@ namespace _Main.Scripts.GamePlay.InputSystem
         {
             if (_target != null)
             {
-                if (Vector3.Distance(transform.position, _target.GetTransform().position) <= attackController.SelectedRangedAttack.CurrentComboDamageData.attackRange && !isAiming)
+                if ( CanAttack() && !isAiming)
                 {
                     isAiming = true;
                     OnAimActionStarted?.Invoke();
@@ -76,6 +76,34 @@ namespace _Main.Scripts.GamePlay.InputSystem
                     });
                 }
             }
+        }
+
+        private bool CanAttack()
+        {
+            var targetTransform = _target.GetTransform();
+            bool distanceCondition = Vector3.Distance(transform.position, targetTransform.position) <= attackController.SelectedRangedAttack.CurrentComboDamageData.attackRange;
+
+            return distanceCondition && TargetIsInLineOfSight();
+        }
+
+        private bool TargetIsInLineOfSight()
+        {
+            bool lineOfSightCondition = false;
+
+            var targetTransform = _target.GetTransform();
+
+            var rayOrigin = transform.position + transform.up;
+            var rayDirection = targetTransform.position - transform.position;
+            Ray ray = new Ray(rayOrigin, rayDirection);
+
+            if (Physics.Raycast(ray, out RaycastHit hit, 15f))
+            {
+                if (hit.transform == targetTransform)
+                {
+                    lineOfSightCondition = true;
+                }
+            }
+            return lineOfSightCondition;
         }
 
         protected override void OnTargetDetectedCallback(IDamageable target)

@@ -31,7 +31,7 @@ namespace _Main.Scripts.GamePlay.MovementSystem
             agent.SetDestination(dir);
             agent.speed = enemyBehaviourData.MovementSpeed * movementSpeedMultiplier;
 
-            if (dir != Vector3.zero)
+            if (dir != Vector3.zero && movementSpeedMultiplier == 0f)
                 transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(dir - transform.position), Time.deltaTime * enemyBehaviourData.RotationSpeed * rotationSpeedMultiplier);
         }
 
