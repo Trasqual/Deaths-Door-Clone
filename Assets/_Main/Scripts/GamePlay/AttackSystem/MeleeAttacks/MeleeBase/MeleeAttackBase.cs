@@ -5,7 +5,6 @@ namespace _Main.Scripts.GamePlay.AttackSystem
 {
     public class MeleeAttackBase : AttackBase
     {
-        public float GeneralAttackCooldown = 0.5f;
         bool canAttack = true;
         Tween attackDelay;
 

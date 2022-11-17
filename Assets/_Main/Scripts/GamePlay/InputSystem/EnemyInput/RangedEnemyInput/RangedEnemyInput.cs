@@ -38,7 +38,7 @@ namespace _Main.Scripts.GamePlay.InputSystem
         {
             if (_target != null)
             {
-                if (Vector3.Distance(transform.position, _target.GetTransform().position) > attackController.SelectedRangedAttack.CurrentComboDamageData.attackRange || !TargetIsInLineOfSight())
+                if (!TargetIsInAttackRange() || !TargetIsInLineOfSight())
                 {
                     return _target.GetTransform().position;
                 }
@@ -65,7 +65,7 @@ namespace _Main.Scripts.GamePlay.InputSystem
         {
             if (_target != null)
             {
-                if ( CanAttack() && !isAiming)
+                if (CanAttack() && !isAiming)
                 {
                     isAiming = true;
                     OnAimActionStarted?.Invoke();
@@ -80,10 +80,12 @@ namespace _Main.Scripts.GamePlay.InputSystem
 
         private bool CanAttack()
         {
-            var targetTransform = _target.GetTransform();
-            bool distanceCondition = Vector3.Distance(transform.position, targetTransform.position) <= attackController.SelectedRangedAttack.CurrentComboDamageData.attackRange;
+            return TargetIsInAttackRange() && TargetIsInLineOfSight();
+        }
 
-            return distanceCondition && TargetIsInLineOfSight();
+        private bool TargetIsInAttackRange()
+        {
+            return Vector3.Distance(transform.position, _target.GetTransform().position) <= attackController.SelectedRangedAttack.CurrentComboDamageData.attackRange;
         }
 
         private bool TargetIsInLineOfSight()

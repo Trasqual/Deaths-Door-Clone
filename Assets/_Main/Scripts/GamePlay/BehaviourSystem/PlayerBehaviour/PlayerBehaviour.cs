@@ -12,7 +12,7 @@ using UnityEngine;
 
 namespace _Main.Scripts.GamePlay.BehaviourSystem
 {
-    [RequireComponent(typeof(PlayerMovementBase),
+    [RequireComponent(typeof(PlayerMovement),
         typeof(PlayerAnimation),
         typeof(HealthComponentBase))]
     public class PlayerBehaviour : BehaviourBase<PlayerBehaviourData>
@@ -20,7 +20,7 @@ namespace _Main.Scripts.GamePlay.BehaviourSystem
         public CharacterController Controller { get; private set; }
         public PlayerAnimation PlayerAnim { get; private set; }
 
-        private PlayerMovementBase _playerMovement = null;
+        private PlayerMovement _playerMovement = null;
         private PlayerHealthComponent _playerHealthManager = null;
         private AttackControllerBase _attackController = null;
         private AmmoCounter _ammoCounter = null;
@@ -35,7 +35,7 @@ namespace _Main.Scripts.GamePlay.BehaviourSystem
             base.Awake();
             Controller = GetComponent<CharacterController>();
             PlayerAnim = GetComponent<PlayerAnimation>();
-            _playerMovement = GetComponent<PlayerMovementBase>();
+            _playerMovement = GetComponent<PlayerMovement>();
             _playerHealthManager = GetComponent<PlayerHealthComponent>();
             _attackController = GetComponent<AttackControllerBase>();
             _ammoCounter = GetComponent<AmmoCounter>();
@@ -138,7 +138,7 @@ namespace _Main.Scripts.GamePlay.BehaviourSystem
 
         private void StartAiming()
         {
-            if (_ammoCounter.CurrentAmmo > 0)
+            if (_ammoCounter.CurrentAmmo > 0 && !_attackController.SelectedRangedAttack.IsOnCooldown)
                 stateMachine.ChangeState(typeof(AimingState));
         }
 

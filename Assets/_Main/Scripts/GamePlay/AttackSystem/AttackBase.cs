@@ -15,6 +15,7 @@ namespace _Main.Scripts.GamePlay.AttackSystem
         public AttackAnimationDataBase CurrentComboAnimationData { get; protected set; }
         public AttackDamageDataBase CurrentComboDamageData { get; protected set; }
 
+        public float GeneralAttackCooldown = 0.5f;
         public bool IsOnCooldown { get; protected set; }
 
         public virtual void Init(IAction action)

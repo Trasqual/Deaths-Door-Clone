@@ -1,12 +1,13 @@
 using _Main.Scripts.GamePlay.ActionSystem;
 using _Main.Scripts.GamePlay.HealthSystem;
+using DG.Tweening;
 using UnityEngine;
 
 namespace _Main.Scripts.GamePlay.AttackSystem
 {
     public class RangedAttackBase : AttackBase
     {
-        [SerializeField] protected Projectile projectilePrefab;        
+        [SerializeField] protected Projectile projectilePrefab;
 
         [Header("Shooters")]
         [SerializeField] protected Shooter shooter;
@@ -47,6 +48,8 @@ namespace _Main.Scripts.GamePlay.AttackSystem
         protected virtual void Shoot()
         {
             OnAttackCompleted?.Invoke();
+            IsOnCooldown = true;
+            DOVirtual.DelayedCall(GeneralAttackCooldown, () => IsOnCooldown = false);
         }
     }
 }

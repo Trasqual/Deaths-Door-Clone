@@ -32209,7 +32209,7 @@ GameObject:
   - component: {fileID: 4769724932818011274}
   - component: {fileID: 4769724932818011273}
   - component: {fileID: 8068519071792017055}
-  - component: {fileID: 4769724932818011278}
+  - component: {fileID: 8068519071792017056}
   - component: {fileID: 4769724932818011277}
   - component: {fileID: 4769724932818011276}
   - component: {fileID: 4769724932818011279}
@@ -32222,7 +32222,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4769724932818011271
 Transform:
   m_ObjectHideFlags: 0
@@ -32302,22 +32302,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9326b20b4cb1ecc448e2e6c1f93a273b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &4769724932818011278
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4769724932818011270}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e147f0a75a26907438f3770a53a11d51, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  shouldPatrol: 0
-  patrolRange: 6
-  patrolDuration: 3
-  detecterPrefab: {fileID: 6205231293218319960, guid: 2210e2af46d598d49ae5500a99ba40a0, type: 3}
 --- !u!114 &4769724932818011279
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -32662,6 +32646,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: acbebbe310c02b64d830c4ef48715785, type: 2}
+--- !u!114 &8068519071792017056
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4769724932818011270}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f39e2c6ef0ade3429b97c30263f0514, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shouldPatrol: 0
+  patrolRange: 6
+  patrolDuration: 3
+  detecterPrefab: {fileID: 0}
+  aimCorrectionAssist: 14
 --- !u!1001 &8154898536763638157
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -32719,7 +32720,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8154898536230699931, guid: 1c568c6317c9c4f92b0ed02ce2e54745, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1c568c6317c9c4f92b0ed02ce2e54745, type: 3}

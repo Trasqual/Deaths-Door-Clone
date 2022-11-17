@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace _Main.Scripts.GamePlay.MovementSystem
 {
-    public class PlayerMovementBase : MovementBase
+    public class PlayerMovement : MovementBase
     {
         [SerializeField] private float baseMovementSpeed = 5f;
         [SerializeField] private float baseRotationSpeed = 20f;

@@ -163,6 +163,7 @@ MonoBehaviour:
   comboDatas:
   - AttackAnimationData: {fileID: 11400000, guid: cab563445814cc746b1a3072ffd66b39, type: 2}
     AttackDamageData: {fileID: 11400000, guid: 572804dbee447144a854ff6da2279d3d, type: 2}
+  GeneralAttackCooldown: 3
   projectilePrefab: {fileID: 1835174666943779962, guid: 1d43bf6cc3f259641b21449434b46708, type: 3}
   shooter: {fileID: 0}
   damageDealerType: 2

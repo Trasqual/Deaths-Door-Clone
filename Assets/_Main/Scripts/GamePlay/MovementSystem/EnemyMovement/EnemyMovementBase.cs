@@ -2,6 +2,7 @@ using _Main.Scripts.GamePlay.BehaviourSystem;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
+using static UnityEngine.GridBrushBase;
 
 namespace _Main.Scripts.GamePlay.MovementSystem
 {
@@ -25,14 +26,26 @@ namespace _Main.Scripts.GamePlay.MovementSystem
             agent.Move(agent.speed * Time.deltaTime * dir);
         }
 
-        public override void Move(Vector3 dir, float movementSpeedMultiplier, float rotationSpeedMultiplier)
+        protected void RotateInDirection(Vector3 direction, float rotationSpeed)
+        {
+            if (direction != Vector3.zero)
+            {
+                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(direction), Time.deltaTime * rotationSpeed);
+            }
+        }
+
+        public override void Move(Vector3 targetPos, float movementSpeedMultiplier, float rotationSpeedMultiplier)
         {
             if (!agent.isActiveAndEnabled) return;
-            agent.SetDestination(dir);
-            agent.speed = enemyBehaviourData.MovementSpeed * movementSpeedMultiplier;
+            if (canMove)
+            {
+                agent.speed = enemyBehaviourData.MovementSpeed * movementSpeedMultiplier;
+                agent.SetDestination(targetPos);
+            }
 
-            if (dir != Vector3.zero && movementSpeedMultiplier == 0f)
-                transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(dir - transform.position), Time.deltaTime * enemyBehaviourData.RotationSpeed * rotationSpeedMultiplier);
+            var dir = targetPos - transform.position;
+            if (dir != Vector3.zero && movementSpeedMultiplier == 0)
+                RotateInDirection(dir, enemyBehaviourData.RotationSpeed * rotationSpeedMultiplier);
         }
 
         public override void MoveOverTime(Vector3 endPos, float duration, float setDelay = 0f, bool useGravity = true, float jumpHeight = 0f, AnimationCurve curve = null)
