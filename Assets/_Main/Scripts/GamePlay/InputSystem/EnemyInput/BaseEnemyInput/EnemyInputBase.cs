@@ -40,11 +40,11 @@ namespace _Main.Scripts.GamePlay.InputSystem
         {
             if (_target != null)
             {
-                return (_target.GetTransform().position - transform.position).normalized;
+                return _target.GetTransform().position;
             }
             else
             {
-                return (startPos - transform.position).normalized;
+                return startPos;
             }
         }
 
@@ -75,6 +75,31 @@ namespace _Main.Scripts.GamePlay.InputSystem
         protected virtual void OnTargetLostCallback()
         {
             _target = null;
+        }
+
+        protected virtual bool TargetIsInAttackRange()
+        {
+            return Vector3.Distance(transform.position, _target.GetTransform().position) <= attackController.SelectedRangedAttack.CurrentComboDamageData.attackRange;
+        }
+
+        protected virtual bool TargetIsInLineOfSight()
+        {
+            bool lineOfSightCondition = false;
+
+            var targetTransform = _target.GetTransform();
+
+            var rayOrigin = transform.position + transform.up;
+            var rayDirection = targetTransform.position - transform.position;
+            Ray ray = new Ray(rayOrigin, rayDirection);
+
+            if (Physics.Raycast(ray, out RaycastHit hit, 15f))
+            {
+                if (hit.transform == targetTransform)
+                {
+                    lineOfSightCondition = true;
+                }
+            }
+            return lineOfSightCondition;
         }
     }
 }

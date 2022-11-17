@@ -35,7 +35,7 @@ namespace _Main.Scripts.GamePlay.InputSystem
         {
             if (_target != null)
             {
-                if (Vector3.Distance(transform.position, _target.GetTransform().position) > agent.stoppingDistance)
+                if (!TargetIsInAttackRange())
                 {
                     return _target.GetTransform().position;
                 }

@@ -83,30 +83,6 @@ namespace _Main.Scripts.GamePlay.InputSystem
             return TargetIsInAttackRange() && TargetIsInLineOfSight();
         }
 
-        private bool TargetIsInAttackRange()
-        {
-            return Vector3.Distance(transform.position, _target.GetTransform().position) <= attackController.SelectedRangedAttack.CurrentComboDamageData.attackRange;
-        }
-
-        private bool TargetIsInLineOfSight()
-        {
-            bool lineOfSightCondition = false;
-
-            var targetTransform = _target.GetTransform();
-
-            var rayOrigin = transform.position + transform.up;
-            var rayDirection = targetTransform.position - transform.position;
-            Ray ray = new Ray(rayOrigin, rayDirection);
-
-            if (Physics.Raycast(ray, out RaycastHit hit, 15f))
-            {
-                if (hit.transform == targetTransform)
-                {
-                    lineOfSightCondition = true;
-                }
-            }
-            return lineOfSightCondition;
-        }
 
         protected override void OnTargetDetectedCallback(IDamageable target)
         {
