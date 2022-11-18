@@ -164,10 +164,10 @@ MonoBehaviour:
   - AttackAnimationData: {fileID: 11400000, guid: b7d21024a0a156c4989f58e7e1874788, type: 2}
     AttackDamageData: {fileID: 11400000, guid: f27ab7c17642e2c4d9085f376462416b, type: 2}
   GeneralAttackCooldown: 0
-  projectilePrefab: {fileID: 5961490733113688068, guid: 6964731e038ee0d40a3250aec92442e7, type: 3}
+  projectilePrefab: {fileID: -3083987725241498108, guid: 6964731e038ee0d40a3250aec92442e7, type: 3}
   shooter: {fileID: 0}
   damageDealerType: 1
-  chargedProjectilePrefab: {fileID: 1835174666943779962, guid: eff954a0ea67f13409301d2029b90f78, type: 3}
+  chargedProjectilePrefab: {fileID: -5082554600118517408, guid: eff954a0ea67f13409301d2029b90f78, type: 3}
   bow: {fileID: 1347074738}
   windUpTime: 0.5
   maxChargeTime: 1

@@ -93,8 +93,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1835174666943779967}
   - component: {fileID: 1835174666943779960}
-  - component: {fileID: 1835174666943779962}
   - component: {fileID: 4534708077127016273}
+  - component: {fileID: 7572329361994496401}
   m_Layer: 6
   m_Name: RangedEnemyProjectile
   m_TagString: Untagged
@@ -134,21 +134,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 116
   m_CollisionDetection: 2
---- !u!114 &1835174666943779962
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1835174666943779963}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a9fdee3a7d042da4a9c5a73580a27579, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxTravelDistance: 15
-  projectileSpeed: 60
-  baseDamage: 1
 --- !u!135 &4534708077127016273
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -162,3 +147,17 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.375
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &7572329361994496401
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1835174666943779963}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9d12ec32cdfe3a43bf51f67482c468d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxTravelDistance: 15
+  projectileSpeed: 60

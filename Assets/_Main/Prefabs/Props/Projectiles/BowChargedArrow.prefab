@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 1835174666943779967}
   - component: {fileID: 1835174666943779960}
   - component: {fileID: 1835174666943779961}
-  - component: {fileID: 1835174666943779962}
+  - component: {fileID: -5082554600118517408}
   m_Layer: 0
   m_Name: BowChargedArrow
   m_TagString: Untagged
@@ -148,7 +148,7 @@ CapsuleCollider:
   m_Height: 0.53
   m_Direction: 2
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1835174666943779962
+--- !u!114 &-5082554600118517408
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -157,9 +157,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 1835174666943779963}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a9fdee3a7d042da4a9c5a73580a27579, type: 3}
+  m_Script: {fileID: 11500000, guid: a9d12ec32cdfe3a43bf51f67482c468d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   maxTravelDistance: 15
   projectileSpeed: 60
-  baseDamage: 1
