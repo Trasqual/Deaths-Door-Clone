@@ -22,26 +22,16 @@ namespace _Main.Scripts.GamePlay.BehaviourSystem
             stateMachine.ChangeState(typeof(MeleeAttackState));
         }
 
-        private void SelectNextAttack(int switchInput)
-        {
-            if (switchInput != _attackController.GetMeleeAttacks().IndexOf(_attackController.SelectedMeleeAttack))
-            {
-                _attackController.SetSelectedMeleeAttack(switchInput);
-            }
-        }
-
         protected override void OnEnable()
         {
             base.OnEnable();
             _input.OnAttackActionStarted += Attack;
-            _input.OnMeleeWeaponSwitchedWithID += SelectNextAttack;
         }
 
         protected override void OnDisable()
         {
             base.OnDisable();
             _input.OnAttackActionStarted -= Attack;
-            _input.OnMeleeWeaponSwitchedWithID -= SelectNextAttack;
         }
     }
 }

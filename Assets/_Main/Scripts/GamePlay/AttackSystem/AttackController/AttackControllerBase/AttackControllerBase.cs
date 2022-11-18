@@ -8,6 +8,9 @@ namespace _Main.Scripts.GamePlay.AttackSystem
 {
     public abstract class AttackControllerBase : MonoBehaviour
     {
+        public Action OnMeleeAttackStateSet;
+        public Action OnRangedAttackStateSet;
+
         [SerializeField] protected List<AttackBase> rangedAttacks = new List<AttackBase>();
         [SerializeField] protected List<AttackBase> meleeAttacks = new List<AttackBase>();
 
@@ -28,12 +31,14 @@ namespace _Main.Scripts.GamePlay.AttackSystem
         public void SetMeleeAttackState(MeleeAttackState meleeState)
         {
             meleeAttackState = meleeState;
+            OnMeleeAttackStateSet?.Invoke();
         }
 
         public void SetRangedAttackState(AimingState rangedState, IDamageable caster)
         {
             aimingState = rangedState;
             _caster = caster;
+            OnRangedAttackStateSet?.Invoke();
         }
 
         public abstract void ScrollMeleeWeapon(float switchInput);

@@ -1,4 +1,6 @@
 
+using UnityEngine;
+
 namespace _Main.Scripts.GamePlay.AttackSystem
 {
     public class MeleeEnemyAttackSelector : EnemyAttackSelectorBase
@@ -13,11 +15,6 @@ namespace _Main.Scripts.GamePlay.AttackSystem
             _regularAttack = _attackController.GetMeleeAttacks()[0];
 
             _jumpAttack = _attackController.GetMeleeAttacks()[1];
-        }
-
-        private void Start()
-        {
-            Invoke(nameof(InitialSelection), 0.5f);
         }
 
         private void InitialSelection()
@@ -40,6 +37,17 @@ namespace _Main.Scripts.GamePlay.AttackSystem
             {
                 SelectedAttack = _attackController.SelectedMeleeAttack;
             }
+            Debug.Log(SelectedAttack);
+        }
+
+        private void OnEnable()
+        {
+            _attackController.OnMeleeAttackStateSet += InitialSelection;
+        }
+
+        private void OnDisable()
+        {
+            _attackController.OnMeleeAttackStateSet -= InitialSelection;
         }
     }
 }

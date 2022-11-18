@@ -37,6 +37,7 @@ namespace _Main.Scripts.GamePlay.DetectionSystem
         {
             if (Enums.CompareEnums(target.GetEffectedByType(), damageDealerType))
                 OnTargetFound?.Invoke(target);
+            Debug.Log(target.GetTransform().name);
         }
 
         protected override void LoseTarget()
