@@ -107,7 +107,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shouldPatrol: 0
   patrolRange: 6
-  patrolDuration: 3
+  patrolDuration: 5
 --- !u!114 &8154898536230699920
 MonoBehaviour:
   m_ObjectHideFlags: 0

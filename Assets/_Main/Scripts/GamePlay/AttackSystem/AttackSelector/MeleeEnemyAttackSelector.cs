@@ -1,6 +1,4 @@
 
-using UnityEngine;
-
 namespace _Main.Scripts.GamePlay.AttackSystem
 {
     public class MeleeEnemyAttackSelector : EnemyAttackSelectorBase
@@ -20,7 +18,6 @@ namespace _Main.Scripts.GamePlay.AttackSystem
         private void InitialSelection()
         {
             _attackController.SetSelectedMeleeAttack(0);
-            SelectedAttack = _attackController.SelectedMeleeAttack;
         }
 
         protected override void SelectAttack()
@@ -33,20 +30,24 @@ namespace _Main.Scripts.GamePlay.AttackSystem
             {
                 _attackController.SetSelectedMeleeAttack(0);
             }
-            if (SelectedAttack != _attackController.SelectedMeleeAttack)
-            {
-                SelectedAttack = _attackController.SelectedMeleeAttack;
-            }
-            Debug.Log(SelectedAttack);
         }
 
-        private void OnEnable()
+        private void SetSelectedAttack(AttackBase selectedAttack)
         {
+            if (SelectedAttack != selectedAttack)
+                SelectedAttack = selectedAttack;
+        }
+
+        protected override void OnEnable()
+        {
+            base.OnEnable();
+            _attackController.OnSelectedMeleeAttackChanged += SetSelectedAttack;
             _attackController.OnMeleeAttackStateSet += InitialSelection;
         }
 
-        private void OnDisable()
+        protected override void OnDisable()
         {
+            base.OnDisable();
             _attackController.OnMeleeAttackStateSet -= InitialSelection;
         }
     }

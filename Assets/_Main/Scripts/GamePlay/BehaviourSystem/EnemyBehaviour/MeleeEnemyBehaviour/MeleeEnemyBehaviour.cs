@@ -8,7 +8,6 @@ namespace _Main.Scripts.GamePlay.BehaviourSystem
         {
             base.Start();
             GainAttackBehaviour();
-            _attackController.SetSelectedMeleeAttack();
         }
 
         public void GainAttackBehaviour()

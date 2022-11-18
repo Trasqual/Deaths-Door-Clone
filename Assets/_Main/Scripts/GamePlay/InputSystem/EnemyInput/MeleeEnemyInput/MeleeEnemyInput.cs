@@ -8,26 +8,10 @@ namespace _Main.Scripts.GamePlay.InputSystem
         {
             if (attackSelector.Target != null)
             {
-                float distance = Vector3.Distance(transform.position, attackSelector.Target.position);
-
-                SetCurrentAttack(distance);
-
-                if (distance <= attackController.SelectedMeleeAttack.CurrentComboDamageData.attackRange)
+                if (TargetIsInAttackRange())
                 {
                     OnAttackActionStarted?.Invoke();
                 }
-            }
-        }
-
-        private void SetCurrentAttack(float distance)
-        {
-            if (distance >= attackController.GetMeleeAttacks()[1].CurrentComboDamageData.attackRange * .8f && !attackController.GetMeleeAttacks()[1].IsOnCooldown)
-            {
-                OnMeleeWeaponSwitchedWithID?.Invoke(1);
-            }
-            else
-            {
-                OnMeleeWeaponSwitchedWithID?.Invoke(0);
             }
         }
 
@@ -60,7 +44,7 @@ namespace _Main.Scripts.GamePlay.InputSystem
 
         protected override bool TargetIsInAttackRange()
         {
-            return Vector3.Distance(transform.position, attackSelector.Target.position) <= attackController.SelectedMeleeAttack.CurrentComboDamageData.attackRange;
+            return Vector3.Distance(transform.position, attackSelector.Target.position) <= attackSelector.SelectedAttack.CurrentComboDamageData.attackRange;
         }
     }
 }

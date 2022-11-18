@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-using _Main.Scripts.GamePlay.HealthSystem;
 using UnityEngine;
 
 namespace _Main.Scripts.GamePlay.AttackSystem
@@ -25,7 +22,6 @@ namespace _Main.Scripts.GamePlay.AttackSystem
 
         public override void SetSelectedMeleeAttack(int weaponNo)
         {
-            if (SelectedMeleeAttackIndex == weaponNo) return;
             SelectedMeleeAttackIndex = weaponNo;
             SetSelectedMeleeAttack();
         }
@@ -59,7 +55,6 @@ namespace _Main.Scripts.GamePlay.AttackSystem
 
         public override void SetSelectedRangedAttack(int weaponNo)
         {
-            if (SelectedRangedAttackIndex == weaponNo) return;
             SelectedRangedAttackIndex = weaponNo;
             SetSelectedRangedAttack();
         }

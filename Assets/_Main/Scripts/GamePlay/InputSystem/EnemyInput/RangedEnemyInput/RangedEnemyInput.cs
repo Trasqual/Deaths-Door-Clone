@@ -20,6 +20,23 @@ namespace _Main.Scripts.GamePlay.InputSystem
             enemyBehaviourData = (RangedEnemyBehaviourData)data;
         }
 
+        protected override void Update()
+        {
+            if (attackSelector.Target != null)
+            {
+                if (CanAttack() && !isAiming)
+                {
+                    isAiming = true;
+                    OnAimActionStarted?.Invoke();
+                    DOVirtual.DelayedCall(enemyBehaviourData.CastSpeed, () =>
+                    {
+                        OnAimActionEnded?.Invoke();
+                        isAiming = false;
+                    });
+                }
+            }
+        }
+
         public override Vector3 GetLookInput()
         {
             if (attackSelector.Target != null)
@@ -63,23 +80,6 @@ namespace _Main.Scripts.GamePlay.InputSystem
                 else
                 {
                     return Vector3.zero;
-                }
-            }
-        }
-
-        protected override void Update()
-        {
-            if (attackSelector.Target != null)
-            {
-                if (CanAttack() && !isAiming)
-                {
-                    isAiming = true;
-                    OnAimActionStarted?.Invoke();
-                    DOVirtual.DelayedCall(enemyBehaviourData.CastSpeed, () =>
-                    {
-                        OnAimActionEnded?.Invoke();
-                        isAiming = false;
-                    });
                 }
             }
         }

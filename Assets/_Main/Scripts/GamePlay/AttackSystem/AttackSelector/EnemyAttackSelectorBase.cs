@@ -46,13 +46,13 @@ namespace _Main.Scripts.GamePlay.AttackSystem
             _targetTransform = null;
         }
 
-        private void OnEnable()
+        protected virtual void OnEnable()
         {
             _detector.OnTargetFound += OnTargetFoundCallback;
             _detector.OnTargetLost += OnTargetLostCallback;
         }
 
-        private void OnDisable()
+        protected virtual void OnDisable()
         {
             _detector.OnTargetFound -= OnTargetFoundCallback;
             _detector.OnTargetLost -= OnTargetLostCallback;
