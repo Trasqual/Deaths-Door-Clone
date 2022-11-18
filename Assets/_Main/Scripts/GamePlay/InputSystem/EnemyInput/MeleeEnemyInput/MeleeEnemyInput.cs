@@ -57,5 +57,10 @@ namespace _Main.Scripts.GamePlay.InputSystem
                 }
             }
         }
+
+        protected override bool TargetIsInAttackRange()
+        {
+            return Vector3.Distance(transform.position, _target.GetTransform().position) <= attackController.SelectedMeleeAttack.CurrentComboDamageData.attackRange;
+        }
     }
 }

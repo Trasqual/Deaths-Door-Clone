@@ -40,11 +40,11 @@ namespace _Main.Scripts.GamePlay.InputSystem
         {
             if (_target != null)
             {
-                return _target.GetTransform().position;
+                return (_target.GetTransform().position - transform.position).normalized;
             }
             else
             {
-                return startPos;
+                return (startPos - transform.position).normalized;
             }
         }
 
@@ -79,7 +79,7 @@ namespace _Main.Scripts.GamePlay.InputSystem
 
         protected virtual bool TargetIsInAttackRange()
         {
-            return Vector3.Distance(transform.position, _target.GetTransform().position) <= attackController.SelectedRangedAttack.CurrentComboDamageData.attackRange;
+            return false;
         }
 
         protected virtual bool TargetIsInLineOfSight()
