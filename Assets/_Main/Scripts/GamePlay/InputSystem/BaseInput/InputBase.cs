@@ -12,6 +12,7 @@ namespace _Main.Scripts.GamePlay.InputSystem
         public Action OnAttackActionEnded;
         public Action<float> OnMeleeWeaponSwitched;
         public Action<int> OnMeleeWeaponSwitchedWithID;
+        public Action<int> OnRangedWeaponSwitchedWithID;
 
         public abstract Vector3 GetMovementInput();
 

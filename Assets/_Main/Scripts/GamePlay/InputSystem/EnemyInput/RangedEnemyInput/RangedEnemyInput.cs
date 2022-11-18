@@ -91,7 +91,7 @@ namespace _Main.Scripts.GamePlay.InputSystem
 
         protected override bool TargetIsInAttackRange()
         {
-            return Vector3.Distance(transform.position, attackSelector.Target.position) <= attackController.SelectedRangedAttack.CurrentComboDamageData.attackRange;
+            return Vector3.Distance(transform.position, attackSelector.Target.position) <= attackSelector.SelectedAttack.CurrentComboDamageData.attackRange;
         }
     }
 }

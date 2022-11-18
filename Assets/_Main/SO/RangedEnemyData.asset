@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: Basic Ranged Enemy
   MovementSpeed: 2
-  RotationSpeed: 40
+  RotationSpeed: 10
   Health: 4
   CastSpeed: 1.5

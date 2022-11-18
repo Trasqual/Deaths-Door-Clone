@@ -7,23 +7,26 @@ namespace _Main.Scripts.GamePlay.AttackSystem
 {
     public class AttackController : AttackControllerBase
     {
+        #region MeleeAttackSelection
+
         public override void ScrollMeleeWeapon(float switchInput)
         {
-            SelectedAttackIndex += (int)Mathf.Sign(switchInput);
-            if (SelectedAttackIndex > meleeAttacks.Count - 1)
+            SelectedMeleeAttackIndex += (int)Mathf.Sign(switchInput);
+            if (SelectedMeleeAttackIndex > meleeAttacks.Count - 1)
             {
-                SelectedAttackIndex = 0;
+                SelectedMeleeAttackIndex = 0;
             }
-            if (SelectedAttackIndex < 0)
+            if (SelectedMeleeAttackIndex < 0)
             {
-                SelectedAttackIndex = meleeAttacks.Count - 1;
+                SelectedMeleeAttackIndex = meleeAttacks.Count - 1;
             }
             SetSelectedMeleeAttack();
         }
 
-        public override void SelectMeleeWeaponWithNo(int weaponNo)
+        public override void SetSelectedMeleeAttack(int weaponNo)
         {
-            SelectedAttackIndex = weaponNo;
+            if (SelectedMeleeAttackIndex == weaponNo) return;
+            SelectedMeleeAttackIndex = weaponNo;
             SetSelectedMeleeAttack();
         }
 
@@ -33,35 +36,45 @@ namespace _Main.Scripts.GamePlay.AttackSystem
             {
                 SelectedMeleeAttack.Release(meleeAttackState);
             }
-            SelectedMeleeAttack = meleeAttacks[SelectedAttackIndex];
+            SelectedMeleeAttack = meleeAttacks[SelectedMeleeAttackIndex];
             SelectedMeleeAttack.Init(meleeAttackState);
             OnSelectedMeleeAttackChanged?.Invoke(SelectedMeleeAttack);
         }
+        #endregion
 
-        public override void SetSelectedRangedAttack(Type rangedAttackType, IDamageable caster)
+        #region RangedAttackSelection
+        public override void ScrollRangedWeapon(float switchInput)
         {
-            SelectedRangedAttack = (RangedAttackBase)SelectAttackFromList(rangedAttackType, rangedAttacks);
-            SelectedRangedAttack.Init(aimingState, caster);
-            OnSelectedRangedAttackChanged?.Invoke(SelectedRangedAttack);
-        }
-
-        public override void SetSelectedMeleeAttack(Type meleeAttackType)
-        {
-            SelectedMeleeAttack = SelectAttackFromList(meleeAttackType, meleeAttacks);
-            SelectedMeleeAttack.Init(meleeAttackState);
-            OnSelectedMeleeAttackChanged?.Invoke(SelectedMeleeAttack);
-        }
-
-        public override AttackBase SelectAttackFromList(Type attackType, List<AttackBase> attacks)
-        {
-            foreach (var attack in attacks)
+            SelectedRangedAttackIndex += (int)Mathf.Sign(switchInput);
+            if (SelectedRangedAttackIndex > rangedAttacks.Count - 1)
             {
-                if (attack.GetType() == attackType)
-                {
-                    return attack;
-                }
+                SelectedRangedAttackIndex = 0;
             }
-            return null;
+            if (SelectedRangedAttackIndex < 0)
+            {
+                SelectedRangedAttackIndex = rangedAttacks.Count - 1;
+            }
+            SetSelectedRangedAttack();
         }
+
+        public override void SetSelectedRangedAttack(int weaponNo)
+        {
+            if (SelectedRangedAttackIndex == weaponNo) return;
+            SelectedRangedAttackIndex = weaponNo;
+            SetSelectedRangedAttack();
+        }
+
+        public override void SetSelectedRangedAttack()
+        {
+            if (SelectedRangedAttack != null)
+            {
+                SelectedRangedAttack.Release(aimingState);
+            }
+            SelectedRangedAttack = rangedAttacks[SelectedRangedAttackIndex];
+            var rangedAttack = (RangedAttackBase)SelectedRangedAttack;
+            rangedAttack.Init(aimingState, _caster);
+            OnSelectedRangedAttackChanged?.Invoke(SelectedMeleeAttack);
+        }
+        #endregion
     }
 }

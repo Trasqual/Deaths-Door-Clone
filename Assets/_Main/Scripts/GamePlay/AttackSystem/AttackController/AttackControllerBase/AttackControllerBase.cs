@@ -13,12 +13,14 @@ namespace _Main.Scripts.GamePlay.AttackSystem
 
         public Action<AttackBase> OnSelectedMeleeAttackChanged;
         public Action<AttackBase> OnSelectedRangedAttackChanged;
-        public RangedAttackBase SelectedRangedAttack { get; protected set; }
+        public AttackBase SelectedRangedAttack { get; protected set; }
         public AttackBase SelectedMeleeAttack { get; protected set; }
-        public MeleeAttackState meleeAttackState;
-        public AimingState aimingState;
+        protected MeleeAttackState meleeAttackState;
+        protected AimingState aimingState;
+        protected IDamageable _caster;
 
-        protected int SelectedAttackIndex = 0;
+        protected int SelectedMeleeAttackIndex = 0;
+        protected int SelectedRangedAttackIndex = 0;
 
         public List<AttackBase> GetMeleeAttacks() => meleeAttacks;
         public List<AttackBase> GetRangedAttacks() => rangedAttacks;
@@ -28,16 +30,18 @@ namespace _Main.Scripts.GamePlay.AttackSystem
             meleeAttackState = meleeState;
         }
 
-        public void SetRangedAttackState(AimingState rangedState)
+        public void SetRangedAttackState(AimingState rangedState, IDamageable caster)
         {
             aimingState = rangedState;
+            _caster = caster;
         }
 
-        public abstract void SetSelectedMeleeAttack();
-        public abstract void SetSelectedRangedAttack(Type rangedAttackType, IDamageable caster);
-        public abstract void SetSelectedMeleeAttack(Type meleeAttackType);
         public abstract void ScrollMeleeWeapon(float switchInput);
-        public abstract void SelectMeleeWeaponWithNo(int weaponNo);
-        public abstract AttackBase SelectAttackFromList(Type attackType, List<AttackBase> attacks);
+        public abstract void SetSelectedMeleeAttack();
+        public abstract void SetSelectedMeleeAttack(int weaponNo);
+
+        public abstract void ScrollRangedWeapon(float switchInput);
+        public abstract void SetSelectedRangedAttack();
+        public abstract void SetSelectedRangedAttack(int weaponNo);
     }
 }

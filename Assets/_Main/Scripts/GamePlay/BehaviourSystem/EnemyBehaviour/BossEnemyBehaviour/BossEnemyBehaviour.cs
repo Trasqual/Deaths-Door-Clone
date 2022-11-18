@@ -13,7 +13,6 @@ namespace _Main.Scripts.GamePlay.BehaviourSystem
             _attackController.SetSelectedMeleeAttack();
 
             GainAimingBehaviour();
-            _attackController.SetSelectedRangedAttack(typeof(RangedEnemyAttack), _healthManager);
         }
 
         public void GainAttackBehaviour()
@@ -25,7 +24,6 @@ namespace _Main.Scripts.GamePlay.BehaviourSystem
         public void GainAimingBehaviour()
         {
             stateMachine.AddAimingState(10f, .5f, _attackController);
-            _attackController.SetRangedAttackState(stateMachine.GetState(typeof(AimingState)) as AimingState);
         }
 
         private void Attack()
@@ -37,7 +35,7 @@ namespace _Main.Scripts.GamePlay.BehaviourSystem
         {
             if (switchInput != _attackController.GetMeleeAttacks().IndexOf(_attackController.SelectedMeleeAttack))
             {
-                _attackController.SelectMeleeWeaponWithNo(switchInput);
+                _attackController.SetSelectedMeleeAttack(switchInput);
             }
         }
 

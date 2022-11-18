@@ -26,7 +26,7 @@ namespace _Main.Scripts.GamePlay.BehaviourSystem
         {
             if (switchInput != _attackController.GetMeleeAttacks().IndexOf(_attackController.SelectedMeleeAttack))
             {
-                _attackController.SelectMeleeWeaponWithNo(switchInput);
+                _attackController.SetSelectedMeleeAttack(switchInput);
             }
         }
 

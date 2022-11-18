@@ -37,10 +37,14 @@ namespace _Main.Scripts.GamePlay.MovementSystem
         public override void Move(Vector3 targetPos, float movementSpeedMultiplier, float rotationSpeedMultiplier)
         {
             if (!agent.isActiveAndEnabled) return;
-            if (canMove)
+            if (canMove && movementSpeedMultiplier != 0)
             {
                 agent.speed = enemyBehaviourData.MovementSpeed * movementSpeedMultiplier;
                 agent.SetDestination(targetPos);
+            }
+            else
+            {
+                agent.SetDestination(transform.position);
             }
 
             if (targetPos != Vector3.zero && movementSpeedMultiplier == 0)

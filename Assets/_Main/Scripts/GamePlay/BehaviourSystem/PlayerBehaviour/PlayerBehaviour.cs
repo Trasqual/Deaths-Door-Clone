@@ -58,7 +58,7 @@ namespace _Main.Scripts.GamePlay.BehaviourSystem
             stateMachine.SetInitialState(typeof(MovementState));
 
             _attackController.SetSelectedMeleeAttack();
-            _attackController.SetSelectedRangedAttack(typeof(PlayerBowAttack), _playerHealthManager);
+            _attackController.SetSelectedRangedAttack();
         }
 
         #region Behaviours
@@ -102,7 +102,7 @@ namespace _Main.Scripts.GamePlay.BehaviourSystem
 
             if (aimingBehaviour)
             {
-                _attackController.SetRangedAttackState(aimingBehaviour as AimingState);
+                _attackController.SetRangedAttackState(aimingBehaviour as AimingState, _playerHealthManager);
                 var targetGroupHandler = Instantiate(data.cameraTargetGroup, transform);
                 var aimIndicator = Instantiate(data.aimingIndicator, transform);
                 var aimBehaviourAction = (IAction)aimingBehaviour;
