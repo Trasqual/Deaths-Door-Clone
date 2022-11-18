@@ -8,12 +8,13 @@ namespace _Main.Scripts.GamePlay.BehaviourSystem
         {
             base.Start();
             GainAttackBehaviour();
-            AttackController.SetSelectedMeleeAttack(stateMachine);
+            _attackController.SetSelectedMeleeAttack();
         }
 
         public void GainAttackBehaviour()
         {
-            stateMachine.AddAttackState(AttackController);
+            stateMachine.AddAttackState(_attackController);
+            _attackController.SetMeleeAttackState(stateMachine.GetState(typeof(MeleeAttackState)) as MeleeAttackState);
         }
 
         private void Attack()
@@ -23,9 +24,9 @@ namespace _Main.Scripts.GamePlay.BehaviourSystem
 
         private void SelectNextAttack(int switchInput)
         {
-            if (switchInput != AttackController.GetMeleeAttacks().IndexOf(AttackController.SelectedMeleeAttack))
+            if (switchInput != _attackController.GetMeleeAttacks().IndexOf(_attackController.SelectedMeleeAttack))
             {
-                AttackController.SelectMeleeWeaponWithNo(switchInput, stateMachine);
+                _attackController.SelectMeleeWeaponWithNo(switchInput);
             }
         }
 

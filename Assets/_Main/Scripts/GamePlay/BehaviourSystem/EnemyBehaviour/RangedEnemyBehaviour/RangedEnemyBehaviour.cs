@@ -9,12 +9,13 @@ namespace _Main.Scripts.GamePlay.BehaviourSystem
         {
             base.Start();
             GainAimingBehaviour();
-            AttackController.SetSelectedRangedAttack(typeof(RangedEnemyAttack), stateMachine, _healthManager);
+            _attackController.SetSelectedRangedAttack(typeof(RangedEnemyAttack), _healthManager);
         }
 
         public void GainAimingBehaviour()
         {
-            stateMachine.AddAimingState(1f, .5f, AttackController);
+            stateMachine.AddAimingState(1f, .5f, _attackController);
+            _attackController.SetRangedAttackState(stateMachine.GetState(typeof(AimingState)) as AimingState);
         }
 
         private void StartAiming()

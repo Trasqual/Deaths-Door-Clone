@@ -6,9 +6,9 @@ namespace _Main.Scripts.GamePlay.InputSystem
     {
         protected override void Update()
         {
-            if (_target != null)
+            if (attackSelector.Target != null)
             {
-                float distance = Vector3.Distance(transform.position, _target.GetTransform().position);
+                float distance = Vector3.Distance(transform.position, attackSelector.Target.position);
 
                 SetCurrentAttack(distance);
 
@@ -33,11 +33,11 @@ namespace _Main.Scripts.GamePlay.InputSystem
 
         public override Vector3 GetMovementInput()
         {
-            if (_target != null)
+            if (attackSelector.Target != null)
             {
                 if (!TargetIsInAttackRange())
                 {
-                    return _target.GetTransform().position;
+                    return attackSelector.Target.position;
                 }
                 else
                 {
@@ -60,7 +60,7 @@ namespace _Main.Scripts.GamePlay.InputSystem
 
         protected override bool TargetIsInAttackRange()
         {
-            return Vector3.Distance(transform.position, _target.GetTransform().position) <= attackController.SelectedMeleeAttack.CurrentComboDamageData.attackRange;
+            return Vector3.Distance(transform.position, attackSelector.Target.position) <= attackController.SelectedMeleeAttack.CurrentComboDamageData.attackRange;
         }
     }
 }

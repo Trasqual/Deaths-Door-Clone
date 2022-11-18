@@ -1,17 +1,14 @@
 using System;
 using System.Collections.Generic;
-using _Main.Scripts.GamePlay.ActionSystem;
 using _Main.Scripts.GamePlay.HealthSystem;
-using _Main.Scripts.GamePlay.StateMachineSystem;
 using UnityEngine;
 
 namespace _Main.Scripts.GamePlay.AttackSystem
 {
     public class AttackController : AttackControllerBase
     {
-        public override void ScrollMeleeWeapon(float switchInput, StateMachine stateMachine)
+        public override void ScrollMeleeWeapon(float switchInput)
         {
-            if (stateMachine.CurrentState is MeleeAttackState) return;
             SelectedAttackIndex += (int)Mathf.Sign(switchInput);
             if (SelectedAttackIndex > meleeAttacks.Count - 1)
             {
@@ -21,38 +18,37 @@ namespace _Main.Scripts.GamePlay.AttackSystem
             {
                 SelectedAttackIndex = meleeAttacks.Count - 1;
             }
-            SetSelectedMeleeAttack(stateMachine);
+            SetSelectedMeleeAttack();
         }
 
-        public override void SelectMeleeWeaponWithNo(int weaponNo, StateMachine stateMachine)
+        public override void SelectMeleeWeaponWithNo(int weaponNo)
         {
-            if (stateMachine.CurrentState is MeleeAttackState) return;
             SelectedAttackIndex = weaponNo;
-            SetSelectedMeleeAttack(stateMachine);
+            SetSelectedMeleeAttack();
         }
 
-        public override void SetSelectedMeleeAttack(StateMachine stateMachine)
+        public override void SetSelectedMeleeAttack()
         {
             if (SelectedMeleeAttack != null)
             {
-                SelectedMeleeAttack.Release(stateMachine.GetState(typeof(MeleeAttackState)) as IAction);
+                SelectedMeleeAttack.Release(meleeAttackState);
             }
             SelectedMeleeAttack = meleeAttacks[SelectedAttackIndex];
-            SelectedMeleeAttack.Init(stateMachine.GetState(typeof(MeleeAttackState)) as IAction);
+            SelectedMeleeAttack.Init(meleeAttackState);
             OnSelectedMeleeAttackChanged?.Invoke(SelectedMeleeAttack);
         }
 
-        public override void SetSelectedRangedAttack(Type rangedAttackType, StateMachine stateMachine, IDamageable caster)
+        public override void SetSelectedRangedAttack(Type rangedAttackType, IDamageable caster)
         {
             SelectedRangedAttack = (RangedAttackBase)SelectAttackFromList(rangedAttackType, rangedAttacks);
-            SelectedRangedAttack.Init(stateMachine.GetState(typeof(AimingState)) as IAction, caster);
+            SelectedRangedAttack.Init(aimingState, caster);
             OnSelectedRangedAttackChanged?.Invoke(SelectedRangedAttack);
         }
 
-        public override void SetSelectedMeleeAttack(Type meleeAttackType, StateMachine stateMachine)
+        public override void SetSelectedMeleeAttack(Type meleeAttackType)
         {
             SelectedMeleeAttack = SelectAttackFromList(meleeAttackType, meleeAttacks);
-            SelectedMeleeAttack.Init(stateMachine.GetState(typeof(MeleeAttackState)) as IAction);
+            SelectedMeleeAttack.Init(meleeAttackState);
             OnSelectedMeleeAttackChanged?.Invoke(SelectedMeleeAttack);
         }
 

@@ -57,8 +57,8 @@ namespace _Main.Scripts.GamePlay.BehaviourSystem
             GainDeathBehaviour();
             stateMachine.SetInitialState(typeof(MovementState));
 
-            _attackController.SetSelectedMeleeAttack(stateMachine);
-            _attackController.SetSelectedRangedAttack(typeof(PlayerBowAttack), stateMachine, _playerHealthManager);
+            _attackController.SetSelectedMeleeAttack();
+            _attackController.SetSelectedRangedAttack(typeof(PlayerBowAttack), _playerHealthManager);
         }
 
         #region Behaviours
@@ -87,6 +87,7 @@ namespace _Main.Scripts.GamePlay.BehaviourSystem
         public void GainAttackingBehaviour()
         {
             stateMachine.AddAttackState(_attackController);
+            _attackController.SetMeleeAttackState(stateMachine.GetState(typeof(MeleeAttackState)) as MeleeAttackState);
         }
 
         public void LoseAttackBehaviour()
@@ -101,6 +102,7 @@ namespace _Main.Scripts.GamePlay.BehaviourSystem
 
             if (aimingBehaviour)
             {
+                _attackController.SetRangedAttackState(aimingBehaviour as AimingState);
                 var targetGroupHandler = Instantiate(data.cameraTargetGroup, transform);
                 var aimIndicator = Instantiate(data.aimingIndicator, transform);
                 var aimBehaviourAction = (IAction)aimingBehaviour;
@@ -157,7 +159,8 @@ namespace _Main.Scripts.GamePlay.BehaviourSystem
 
         private void SwitchMeleeWeapon(float switchInput)
         {
-            _attackController.ScrollMeleeWeapon(switchInput, stateMachine);
+            if (stateMachine.CurrentState is MeleeAttackState) return;
+            _attackController.ScrollMeleeWeapon(switchInput);
         }
 
         private void OnMeleeAttackChangedCallback(AttackBase meleeAttack)

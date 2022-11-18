@@ -10,20 +10,22 @@ namespace _Main.Scripts.GamePlay.BehaviourSystem
             base.Start();
 
             GainAttackBehaviour();
-            AttackController.SetSelectedMeleeAttack(stateMachine);
+            _attackController.SetSelectedMeleeAttack();
 
             GainAimingBehaviour();
-            AttackController.SetSelectedRangedAttack(typeof(RangedEnemyAttack), stateMachine, _healthManager);
+            _attackController.SetSelectedRangedAttack(typeof(RangedEnemyAttack), _healthManager);
         }
 
         public void GainAttackBehaviour()
         {
-            stateMachine.AddAttackState(AttackController);
+            stateMachine.AddAttackState(_attackController);
+            _attackController.SetMeleeAttackState(stateMachine.GetState(typeof(MeleeAttackState)) as MeleeAttackState);
         }
 
         public void GainAimingBehaviour()
         {
-            stateMachine.AddAimingState(10f, .5f, AttackController);
+            stateMachine.AddAimingState(10f, .5f, _attackController);
+            _attackController.SetRangedAttackState(stateMachine.GetState(typeof(AimingState)) as AimingState);
         }
 
         private void Attack()
@@ -33,9 +35,9 @@ namespace _Main.Scripts.GamePlay.BehaviourSystem
 
         private void SelectNextAttack(int switchInput)
         {
-            if (switchInput != AttackController.GetMeleeAttacks().IndexOf(AttackController.SelectedMeleeAttack))
+            if (switchInput != _attackController.GetMeleeAttacks().IndexOf(_attackController.SelectedMeleeAttack))
             {
-                AttackController.SelectMeleeWeaponWithNo(switchInput, stateMachine);
+                _attackController.SelectMeleeWeaponWithNo(switchInput);
             }
         }
 

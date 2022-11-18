@@ -23,10 +23,10 @@ namespace _Main.Scripts.GamePlay.InputSystem
 
         public override Vector3 GetLookInput()
         {
-            if (_target != null)
+            if (attackSelector.Target != null)
             {
                 var targetsVelocity = _targetMovement ? _targetMovement.GetVelocity() : Vector3.zero;
-                return _target.GetTransform().position + aimCorrectionAssist * Time.deltaTime * targetsVelocity;
+                return attackSelector.Target.position + aimCorrectionAssist * Time.deltaTime * targetsVelocity;
             }
             else
             {
@@ -36,11 +36,11 @@ namespace _Main.Scripts.GamePlay.InputSystem
 
         public override Vector3 GetMovementInput()
         {
-            if (_target != null)
+            if (attackSelector.Target != null)
             {
                 if (!TargetIsInAttackRange() || !TargetIsInLineOfSight())
                 {
-                    return _target.GetTransform().position;
+                    return attackSelector.Target.position;
                 }
                 else
                 {
@@ -63,7 +63,7 @@ namespace _Main.Scripts.GamePlay.InputSystem
 
         protected override void Update()
         {
-            if (_target != null)
+            if (attackSelector.Target != null)
             {
                 if (CanAttack() && !isAiming)
                 {
@@ -81,21 +81,6 @@ namespace _Main.Scripts.GamePlay.InputSystem
         private bool CanAttack()
         {
             return TargetIsInAttackRange() && TargetIsInLineOfSight();
-        }
-
-        protected override void OnTargetDetectedCallback(IDamageable target)
-        {
-            _target = target;
-            if (_target.GetTransform().TryGetComponent(out MovementBase movement))
-            {
-                _targetMovement = movement;
-            }
-        }
-
-        protected override void OnTargetLostCallback()
-        {
-            _target = null;
-            _targetMovement = null;
         }
     }
 }

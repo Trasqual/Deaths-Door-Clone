@@ -12,7 +12,6 @@ namespace _Main.Scripts.GamePlay.AttackSystem
             var endPos = caster.position + caster.forward * attackMovementAmount;
             if (Physics.Raycast(endPos + Vector3.up * 10f, Vector3.down, out RaycastHit hit, 20f, groundMask, QueryTriggerInteraction.Ignore))
             {
-                Debug.Log(hit.transform.name);
                 endPos = hit.point;
             }
             return endPos;

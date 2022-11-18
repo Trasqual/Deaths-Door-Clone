@@ -14,7 +14,7 @@ namespace _Main.Scripts.GamePlay.BehaviourSystem
         protected MovementBase _movementBase;
         protected Animator _anim;
 
-        public AttackControllerBase AttackController { get; private set; }
+        public AttackControllerBase _attackController { get; private set; }
 
         protected override void Awake()
         {
@@ -23,7 +23,7 @@ namespace _Main.Scripts.GamePlay.BehaviourSystem
             _agent = GetComponent<NavMeshAgent>();
             _movementBase = GetComponent<MovementBase>();
             _anim = GetComponentInChildren<Animator>();
-            AttackController = GetComponent<AttackControllerBase>();
+            _attackController = GetComponent<AttackControllerBase>();
 
             stateMachine.Initialize(_input, _movementBase, _anim);
         }

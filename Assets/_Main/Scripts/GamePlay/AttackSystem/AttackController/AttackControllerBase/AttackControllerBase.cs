@@ -15,16 +15,29 @@ namespace _Main.Scripts.GamePlay.AttackSystem
         public Action<AttackBase> OnSelectedRangedAttackChanged;
         public RangedAttackBase SelectedRangedAttack { get; protected set; }
         public AttackBase SelectedMeleeAttack { get; protected set; }
+        public MeleeAttackState meleeAttackState;
+        public AimingState aimingState;
 
         protected int SelectedAttackIndex = 0;
 
         public List<AttackBase> GetMeleeAttacks() => meleeAttacks;
+        public List<AttackBase> GetRangedAttacks() => rangedAttacks;
 
-        public abstract void SetSelectedMeleeAttack(StateMachine stateMachine);
-        public abstract void SetSelectedRangedAttack(Type rangedAttackType, StateMachine stateMachine, IDamageable caster);
-        public abstract void SetSelectedMeleeAttack(Type meleeAttackType, StateMachine stateMachine);
-        public abstract void ScrollMeleeWeapon(float switchInput, StateMachine stateMachine);
-        public abstract void SelectMeleeWeaponWithNo(int weaponNo, StateMachine stateMachine);
+        public void SetMeleeAttackState(MeleeAttackState meleeState)
+        {
+            meleeAttackState = meleeState;
+        }
+
+        public void SetRangedAttackState(AimingState rangedState)
+        {
+            aimingState = rangedState;
+        }
+
+        public abstract void SetSelectedMeleeAttack();
+        public abstract void SetSelectedRangedAttack(Type rangedAttackType, IDamageable caster);
+        public abstract void SetSelectedMeleeAttack(Type meleeAttackType);
+        public abstract void ScrollMeleeWeapon(float switchInput);
+        public abstract void SelectMeleeWeaponWithNo(int weaponNo);
         public abstract AttackBase SelectAttackFromList(Type attackType, List<AttackBase> attacks);
     }
 }

@@ -43,9 +43,8 @@ namespace _Main.Scripts.GamePlay.MovementSystem
                 agent.SetDestination(targetPos);
             }
 
-            var dir = targetPos - transform.position;
-            if (dir != Vector3.zero && movementSpeedMultiplier == 0)
-                RotateInDirection(dir, enemyBehaviourData.RotationSpeed * rotationSpeedMultiplier);
+            if (targetPos != Vector3.zero && movementSpeedMultiplier == 0)
+                RotateInDirection(targetPos, enemyBehaviourData.RotationSpeed * rotationSpeedMultiplier);
         }
 
         public override void MoveOverTime(Vector3 endPos, float duration, float setDelay = 0f, bool useGravity = true, float jumpHeight = 0f, AnimationCurve curve = null)

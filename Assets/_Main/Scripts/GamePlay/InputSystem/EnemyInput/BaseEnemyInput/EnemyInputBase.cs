@@ -1,6 +1,4 @@
 using _Main.Scripts.GamePlay.AttackSystem;
-using _Main.Scripts.GamePlay.DetectionSystem;
-using _Main.Scripts.GamePlay.HealthSystem;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -14,33 +12,26 @@ namespace _Main.Scripts.GamePlay.InputSystem
         protected float patrolTimer = 0f;
         protected Vector3 patrolPosition;
 
-        [SerializeField] protected EnemyTriggerDetector detecterPrefab;
-        protected EnemyTriggerDetector detector;
         protected NavMeshAgent agent;
         protected AttackController attackController;
+        protected AttackSelectorBase attackSelector;
 
-        protected IDamageable _target;
         protected Vector3 startPos;
 
         protected virtual void Awake()
         {
             agent = GetComponent<NavMeshAgent>();
             attackController = GetComponent<AttackController>();
-            if (detector == null)
-            {
-                detector = Instantiate(detecterPrefab, transform.position, Quaternion.identity, transform);
-                detector.OnTargetFound += OnTargetDetectedCallback;
-                detector.OnTargetLost += OnTargetLostCallback;
-            }
+            attackSelector = GetComponent<AttackSelectorBase>();
 
             startPos = transform.position;
         }
 
         public override Vector3 GetLookInput()
         {
-            if (_target != null)
+            if (attackSelector.Target != null)
             {
-                return (_target.GetTransform().position - transform.position).normalized;
+                return (attackSelector.Target.position - transform.position).normalized;
             }
             else
             {
@@ -67,34 +58,23 @@ namespace _Main.Scripts.GamePlay.InputSystem
 
         protected abstract void Update();
 
-        protected virtual void OnTargetDetectedCallback(IDamageable target)
-        {
-            _target = target;
-        }
-
-        protected virtual void OnTargetLostCallback()
-        {
-            _target = null;
-        }
 
         protected virtual bool TargetIsInAttackRange()
         {
-            return false;
+            return Vector3.Distance(transform.position, attackSelector.Target.position) <= attackController.SelectedMeleeAttack.CurrentComboDamageData.attackRange;
         }
 
         protected virtual bool TargetIsInLineOfSight()
         {
             bool lineOfSightCondition = false;
 
-            var targetTransform = _target.GetTransform();
-
             var rayOrigin = transform.position + transform.up;
-            var rayDirection = targetTransform.position - transform.position;
+            var rayDirection = attackSelector.Target.position - transform.position;
             Ray ray = new Ray(rayOrigin, rayDirection);
 
             if (Physics.Raycast(ray, out RaycastHit hit, 15f))
             {
-                if (hit.transform == targetTransform)
+                if (hit.transform == attackSelector.Target)
                 {
                     lineOfSightCondition = true;
                 }

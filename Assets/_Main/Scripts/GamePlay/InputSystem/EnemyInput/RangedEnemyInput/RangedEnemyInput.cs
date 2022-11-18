@@ -1,5 +1,4 @@
 using _Main.Scripts.GamePlay.BehaviourSystem;
-using _Main.Scripts.GamePlay.HealthSystem;
 using _Main.Scripts.GamePlay.MovementSystem;
 using DG.Tweening;
 using UnityEngine;
@@ -23,24 +22,31 @@ namespace _Main.Scripts.GamePlay.InputSystem
 
         public override Vector3 GetLookInput()
         {
-            if (_target != null)
+            if (attackSelector.Target != null)
             {
+                if (_targetMovement == null)
+                {
+                    if (attackSelector.Target.TryGetComponent(out MovementBase movement))
+                    {
+                        _targetMovement = movement;
+                    }
+                }
                 var targetsVelocity = _targetMovement ? _targetMovement.GetVelocity() : Vector3.zero;
-                return _target.GetTransform().position + aimCorrectionAssist * Time.deltaTime * targetsVelocity;
+                return (attackSelector.Target.position + aimCorrectionAssist * Time.deltaTime * targetsVelocity - transform.position).normalized;
             }
             else
             {
-                return startPos;
+                return (startPos - transform.position).normalized;
             }
         }
 
         public override Vector3 GetMovementInput()
         {
-            if (_target != null)
+            if (attackSelector.Target != null)
             {
                 if (!TargetIsInAttackRange() || !TargetIsInLineOfSight())
                 {
-                    return _target.GetTransform().position;
+                    return attackSelector.Target.position;
                 }
                 else
                 {
@@ -63,7 +69,7 @@ namespace _Main.Scripts.GamePlay.InputSystem
 
         protected override void Update()
         {
-            if (_target != null)
+            if (attackSelector.Target != null)
             {
                 if (CanAttack() && !isAiming)
                 {
@@ -85,22 +91,7 @@ namespace _Main.Scripts.GamePlay.InputSystem
 
         protected override bool TargetIsInAttackRange()
         {
-            return Vector3.Distance(transform.position, _target.GetTransform().position) <= attackController.SelectedRangedAttack.CurrentComboDamageData.attackRange;
-        }
-
-        protected override void OnTargetDetectedCallback(IDamageable target)
-        {
-            _target = target;
-            if (_target.GetTransform().TryGetComponent(out MovementBase movement))
-            {
-                _targetMovement = movement;
-            }
-        }
-
-        protected override void OnTargetLostCallback()
-        {
-            _target = null;
-            _targetMovement = null;
+            return Vector3.Distance(transform.position, attackSelector.Target.position) <= attackController.SelectedRangedAttack.CurrentComboDamageData.attackRange;
         }
     }
 }
