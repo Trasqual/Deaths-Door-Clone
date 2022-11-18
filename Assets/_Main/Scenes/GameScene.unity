@@ -33155,14 +33155,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 8154898536230699923, guid: 1c568c6317c9c4f92b0ed02ce2e54745, type: 3}
-      propertyPath: shouldPatrol
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8154898536230699923, guid: 1c568c6317c9c4f92b0ed02ce2e54745, type: 3}
-      propertyPath: patrolDuration
-      value: 5
-      objectReference: {fileID: 0}
     - target: {fileID: 8154898536230699930, guid: 1c568c6317c9c4f92b0ed02ce2e54745, type: 3}
       propertyPath: m_RootOrder
       value: 6
