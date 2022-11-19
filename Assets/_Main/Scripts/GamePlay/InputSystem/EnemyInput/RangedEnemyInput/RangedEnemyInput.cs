@@ -1,5 +1,4 @@
 using _Main.Scripts.GamePlay.AttackSystem;
-using _Main.Scripts.GamePlay.BehaviourSystem;
 using _Main.Scripts.GamePlay.MovementSystem;
 using DG.Tweening;
 using UnityEngine;

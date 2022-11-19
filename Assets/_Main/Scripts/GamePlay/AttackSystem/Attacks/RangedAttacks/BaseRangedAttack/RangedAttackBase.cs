@@ -39,9 +39,6 @@ namespace _Main.Scripts.GamePlay.AttackSystem
         protected override void DoOnActionEnd()
         {
             isActive = false;
-            OnAttackCompleted?.Invoke();
-            IsOnCooldown = true;
-            DOVirtual.DelayedCall(GeneralAttackCooldown, () => IsOnCooldown = false);
         }
 
         protected override void DoOnActionCanceled()
@@ -51,7 +48,9 @@ namespace _Main.Scripts.GamePlay.AttackSystem
 
         protected virtual void Shoot()
         {
-
+            OnAttackCompleted?.Invoke();
+            IsOnCooldown = true;
+            DOVirtual.DelayedCall(GeneralAttackCooldown, () => IsOnCooldown = false);
         }
     }
 }

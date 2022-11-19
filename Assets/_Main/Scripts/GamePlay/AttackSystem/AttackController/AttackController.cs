@@ -68,7 +68,7 @@ namespace _Main.Scripts.GamePlay.AttackSystem
             SelectedRangedAttack = rangedAttacks[SelectedRangedAttackIndex];
             var rangedAttack = (RangedAttackBase)SelectedRangedAttack;
             rangedAttack.Init(aimingState, _caster);
-            OnSelectedRangedAttackChanged?.Invoke(SelectedMeleeAttack);
+            OnSelectedRangedAttackChanged?.Invoke(SelectedRangedAttack);
         }
         #endregion
     }

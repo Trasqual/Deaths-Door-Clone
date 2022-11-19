@@ -5,6 +5,7 @@ namespace _Main.Scripts.GamePlay.AttackSystem
     public class BossRangedAttack2 : RangedAttackBase
     {
         ProjectileBase projectile;
+        Tween shootDelayTween;
 
         protected override void DoOnActionStart()
         {
@@ -17,6 +18,9 @@ namespace _Main.Scripts.GamePlay.AttackSystem
             base.DoOnActionEnd();
             if (projectile != null)
                 projectile.KillProjectile();
+            OnAttackCompleted?.Invoke();
+            IsOnCooldown = true;
+            DOVirtual.DelayedCall(GeneralAttackCooldown, () => IsOnCooldown = false);
         }
 
         protected override void DoOnActionCanceled()
@@ -24,11 +28,12 @@ namespace _Main.Scripts.GamePlay.AttackSystem
             base.DoOnActionCanceled();
             if (projectile != null)
                 projectile.KillProjectile();
+            shootDelayTween?.Kill();
         }
 
         protected override void Shoot()
         {
-            DOVirtual.DelayedCall(shootDelay, () =>
+            shootDelayTween = DOVirtual.DelayedCall(shootDelay, () =>
             {
                 shooter.Shoot(projectilePrefab, CurrentComboDamageData.damage, damageDealerType, _caster, out projectile);
                 projectile.transform.SetParent(shooter.transform);
