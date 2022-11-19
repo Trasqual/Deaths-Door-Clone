@@ -13,13 +13,15 @@ namespace _Main.Scripts.GamePlay.AttackSystem
             }
         }
 
-        private void OnEnable()
+        protected override void OnEnable()
         {
+            base.OnEnable();
             _attackController.OnRangedAttackStateSet += SelectAttack;
         }
 
-        private void OnDisable()
+        protected override void OnDisable()
         {
+            base.OnDisable();
             _attackController.OnRangedAttackStateSet -= SelectAttack;
         }
     }
