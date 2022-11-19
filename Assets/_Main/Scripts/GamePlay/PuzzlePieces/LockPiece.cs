@@ -15,8 +15,9 @@ namespace _Main.Scripts.GamePlay.PuzzleSystem
         private bool _isUnlocked;
 
         public Action OnDeath { get; set; }
+        public Action<float> OnDamageTaken { get; set; }
 
-        public bool TakeDamage(int amount, DamageDealerType damageDealerType)
+        public bool TakeDamage(float amount, DamageDealerType damageDealerType)
         {
             if (Enums.CompareEnums(damageDealerType, _effectedByType))
             {

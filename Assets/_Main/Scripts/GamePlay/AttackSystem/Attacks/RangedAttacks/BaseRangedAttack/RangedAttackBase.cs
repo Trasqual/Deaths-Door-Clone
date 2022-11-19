@@ -7,7 +7,7 @@ namespace _Main.Scripts.GamePlay.AttackSystem
 {
     public class RangedAttackBase : AttackBase
     {
-        [SerializeField] protected Projectile projectilePrefab;
+        [SerializeField] protected ProjectileBase projectilePrefab;
 
         [Header("Shooters")]
         [SerializeField] protected Shooter shooter;

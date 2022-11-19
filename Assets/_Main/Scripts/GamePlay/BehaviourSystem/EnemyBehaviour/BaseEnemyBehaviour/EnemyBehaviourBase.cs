@@ -51,7 +51,7 @@ namespace _Main.Scripts.GamePlay.BehaviourSystem
             stateMachine.AddDeathState();
         }
 
-        protected void TakeDamage(int i)
+        protected void TakeDamage(float i)
         {
             //stateMachine.ChangeState(typeof(DamageTakenState));
         }

@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5421779414153024918}
   - component: {fileID: 5421779414153024919}
-  - component: {fileID: 7301988570312650860}
+  - component: {fileID: 1866470877727425321}
   m_Layer: 0
   m_Name: LaserBeam
   m_TagString: Untagged
@@ -134,7 +134,7 @@ LineRenderer:
     generateLightingData: 0
   m_UseWorldSpace: 1
   m_Loop: 0
---- !u!114 &7301988570312650860
+--- !u!114 &1866470877727425321
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -146,7 +146,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82da81cc9c604014c8c0cd95872c80cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sparkParticle: {fileID: 3033048103363831454}
+  _sparkParticle: {fileID: 3033048103363831454}
+  _maxDistance: 10
+  _mask:
+    serializedVersion: 2
+    m_Bits: 2147483647
 --- !u!1001 &3602450571684278904
 PrefabInstance:
   m_ObjectHideFlags: 0

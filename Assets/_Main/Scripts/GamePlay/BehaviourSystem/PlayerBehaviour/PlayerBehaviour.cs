@@ -192,7 +192,7 @@ namespace _Main.Scripts.GamePlay.BehaviourSystem
         #endregion
 
         #region Health(TakeDamage/Death)
-        protected void TakeDamage(int i)
+        protected void TakeDamage(float i)
         {
             stateMachine.ChangeState(typeof(DamageTakenState));
         }

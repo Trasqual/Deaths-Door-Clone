@@ -4,7 +4,7 @@ namespace _Main.Scripts.GamePlay.AttackSystem
 {
     public class PlayerBowAttack : RangedAttackBase
     {
-        [SerializeField] private Projectile chargedProjectilePrefab;
+        [SerializeField] private ProjectileBase chargedProjectilePrefab;
 
         [Header("Visuals")]
         [SerializeField] private GameObject bow;
@@ -62,7 +62,7 @@ namespace _Main.Scripts.GamePlay.AttackSystem
         protected override void Shoot()
         {
             base.Shoot();
-            shooter.Shoot(windUpCounter >= maxChargeTime ? chargedProjectilePrefab : projectilePrefab, CurrentComboDamageData.damage * dmgMultiplier, damageDealerType, _caster);
+            shooter.Shoot(windUpCounter >= maxChargeTime ? chargedProjectilePrefab : projectilePrefab, CurrentComboDamageData.damage * dmgMultiplier, damageDealerType, _caster, out ProjectileBase shotProjectile);
         }
     }
 }

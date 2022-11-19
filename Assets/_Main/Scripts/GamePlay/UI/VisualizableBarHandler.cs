@@ -34,7 +34,7 @@ namespace _Main.Scripts.GamePlay.UI
             }
         }
 
-        private void UpdateHealthBar(int value)
+        private void UpdateHealthBar(float value)
         {
             for (int i = 0; i < barSets.Count; i++)
             {

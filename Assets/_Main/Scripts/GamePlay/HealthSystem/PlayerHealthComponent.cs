@@ -26,7 +26,7 @@ namespace _Main.Scripts.GamePlay.HealthSystem
             visualizer.Initialize(this);
         }
 
-        public override bool TakeDamage(int amount, DamageDealerType damageDealerType)
+        public override bool TakeDamage(float amount, DamageDealerType damageDealerType)
         {
             if (_invulnerable.IsActive) return false;
 
@@ -56,7 +56,7 @@ namespace _Main.Scripts.GamePlay.HealthSystem
         }
 
         #region IVisualizable
-        public Action<int> OnValueChanged { get; set; }
+        public Action<float> OnValueChanged { get; set; }
         public Action OnMaxValueChanged { get; set; }
         public Action OnClose { get; set; }
 

@@ -9,7 +9,7 @@ namespace _Main.Scripts.GamePlay.HealthSystem
         [SerializeField] public DamageDealerType effectedByType;
         [SerializeField] protected int maxHealth = 4;
 
-        protected int CurrentHealth = 4;
+        protected float CurrentHealth = 4;
 
         private bool isDead;
 
@@ -17,14 +17,14 @@ namespace _Main.Scripts.GamePlay.HealthSystem
 
         #region Damageable Feature
 
-        public Action<int> OnDamageTaken;
+        public Action<float> OnDamageTaken { get; set; }
         public Action OnDeath { get; set; }
 
         public Transform GetTransform() => transform;
 
         public DamageDealerType GetEffectedByType() => effectedByType;
 
-        public virtual bool TakeDamage(int amount, DamageDealerType damageDealerType)
+        public virtual bool TakeDamage(float amount, DamageDealerType damageDealerType)
         {
             if (!Enums.CompareEnums(damageDealerType, effectedByType)) return false;
 

@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace _Main.Scripts.GamePlay.AttackSystem
 {
-    public class ArrowProjectile : Projectile
+    public class ArrowProjectile : BoltProjectileBase
     {
         protected Vector3 startPos;
 
@@ -20,7 +20,7 @@ namespace _Main.Scripts.GamePlay.AttackSystem
 
         private void FixedUpdate()
         {
-            if (Vector3.Distance(transform.position, startPos) >= maxTravelDistance)
+            if (Vector3.Distance(transform.position, startPos) >= _maxTravelDistance)
             {
                 StartCoroutine(DestroySelf(0f));
             }
@@ -53,10 +53,15 @@ namespace _Main.Scripts.GamePlay.AttackSystem
             StartCoroutine(DestroySelf(3f));
         }
 
+        public override void KillProjectile()
+        {
+            Destroy(gameObject);
+        }
+
         IEnumerator DestroySelf(float duration)
         {
             yield return new WaitForSeconds(duration);
-            Destroy(gameObject);
+            KillProjectile();
         }
     }
 

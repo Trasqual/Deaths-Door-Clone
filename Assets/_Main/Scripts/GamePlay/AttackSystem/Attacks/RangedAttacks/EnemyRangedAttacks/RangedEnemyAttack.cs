@@ -18,7 +18,7 @@ namespace _Main.Scripts.GamePlay.AttackSystem
             DOVirtual.DelayedCall(shootDelay, () =>
             {
                 base.Shoot();
-                shooter.Shoot(projectilePrefab, CurrentComboDamageData.damage, damageDealerType, _caster);
+                shooter.Shoot(projectilePrefab, CurrentComboDamageData.damage, damageDealerType, _caster, out ProjectileBase shotProjectile);
             });
         }
     }
