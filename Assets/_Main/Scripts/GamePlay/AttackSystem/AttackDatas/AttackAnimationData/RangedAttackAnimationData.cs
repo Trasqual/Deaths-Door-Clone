@@ -6,5 +6,6 @@ namespace _Main.Scripts.GamePlay.AttackSystem
 	[CreateAssetMenu(menuName = "AttackAnimationData/RangedAttackAnimationData")]
 	public class RangedAttackAnimationData : AttackAnimationDataBase
 	{
+		public float castTime = 3f;
 	} 
 }

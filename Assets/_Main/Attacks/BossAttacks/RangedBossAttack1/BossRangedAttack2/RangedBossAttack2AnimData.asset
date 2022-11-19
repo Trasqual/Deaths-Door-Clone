@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ece0457469a03964ea4ebe35cd6d975e, type: 3}
-  m_Name: RangedEnemyMagicAttackAnimationData
+  m_Name: RangedBossAttack2AnimData
   m_EditorClassIdentifier: 
-  overrideController: {fileID: 22100000, guid: 948372339e290994c903deb07c9a7dec, type: 2}
-  castTime: 1.5
+  overrideController: {fileID: 22100000, guid: 234526c5906a6d74f83c68f3bc49c45d, type: 2}
+  castTime: 3

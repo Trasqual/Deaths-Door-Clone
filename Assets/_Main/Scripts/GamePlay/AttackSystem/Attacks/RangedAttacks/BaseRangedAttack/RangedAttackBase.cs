@@ -15,6 +15,7 @@ namespace _Main.Scripts.GamePlay.AttackSystem
         [Header("Attack Params")]
         [SerializeField] protected IDamageable _caster;
         [SerializeField] protected DamageDealerType damageDealerType;
+        [SerializeField] protected float shootDelay = 0.5f;
 
         protected bool isActive;
 
@@ -38,6 +39,9 @@ namespace _Main.Scripts.GamePlay.AttackSystem
         protected override void DoOnActionEnd()
         {
             isActive = false;
+            OnAttackCompleted?.Invoke();
+            IsOnCooldown = true;
+            DOVirtual.DelayedCall(GeneralAttackCooldown, () => IsOnCooldown = false);
         }
 
         protected override void DoOnActionCanceled()
@@ -47,9 +51,7 @@ namespace _Main.Scripts.GamePlay.AttackSystem
 
         protected virtual void Shoot()
         {
-            OnAttackCompleted?.Invoke();
-            IsOnCooldown = true;
-            DOVirtual.DelayedCall(GeneralAttackCooldown, () => IsOnCooldown = false);
+
         }
     }
 }

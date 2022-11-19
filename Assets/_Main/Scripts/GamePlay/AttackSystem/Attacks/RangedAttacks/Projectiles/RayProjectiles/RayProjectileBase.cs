@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace _Main.Scripts.GamePlay.AttackSystem
@@ -20,6 +18,7 @@ namespace _Main.Scripts.GamePlay.AttackSystem
         public override void KillProjectile()
         {
             _beam.DeActivate();
+            Destroy(gameObject);
         }
 
         protected virtual void OnEnable()

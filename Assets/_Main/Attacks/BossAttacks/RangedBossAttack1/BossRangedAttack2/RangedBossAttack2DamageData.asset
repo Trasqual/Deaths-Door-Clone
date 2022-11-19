@@ -9,8 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ece0457469a03964ea4ebe35cd6d975e, type: 3}
-  m_Name: RangedEnemyMagicAttackAnimationData
+  m_Script: {fileID: 11500000, guid: 2f8641ce71d2cd244926322ad96e0b65, type: 3}
+  m_Name: RangedBossAttack2DamageData
   m_EditorClassIdentifier: 
-  overrideController: {fileID: 22100000, guid: 948372339e290994c903deb07c9a7dec, type: 2}
-  castTime: 1.5
+  attackRange: 10
+  damage: 1
+  dmgDealerType: 2

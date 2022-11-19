@@ -1,3 +1,4 @@
+using _Main.Scripts.GamePlay.AttackSystem;
 using _Main.Scripts.GamePlay.BehaviourSystem;
 using _Main.Scripts.GamePlay.MovementSystem;
 using DG.Tweening;
@@ -8,7 +9,6 @@ namespace _Main.Scripts.GamePlay.InputSystem
     public class RangedEnemyInput : EnemyInputBase
     {
         [SerializeField] private float aimCorrectionAssist = 14f;
-        private RangedEnemyBehaviourData enemyBehaviourData;
         private bool isAiming;
 
         private MovementBase _targetMovement;
@@ -16,8 +16,6 @@ namespace _Main.Scripts.GamePlay.InputSystem
         protected override void Awake()
         {
             base.Awake();
-            var data = GetComponent<EnemyBehaviourBase>().Data;
-            enemyBehaviourData = (RangedEnemyBehaviourData)data;
         }
 
         protected override void Update()
@@ -28,7 +26,8 @@ namespace _Main.Scripts.GamePlay.InputSystem
                 {
                     isAiming = true;
                     OnAimActionStarted?.Invoke();
-                    DOVirtual.DelayedCall(enemyBehaviourData.CastSpeed, () =>
+                    var rangedAnimData = (RangedAttackAnimationData)attackSelector.SelectedAttack.CurrentComboAnimationData;
+                    DOVirtual.DelayedCall(rangedAnimData.castTime, () =>
                     {
                         OnAimActionEnded?.Invoke();
                         isAiming = false;

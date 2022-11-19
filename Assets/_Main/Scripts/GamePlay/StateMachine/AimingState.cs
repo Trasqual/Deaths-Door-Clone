@@ -110,6 +110,7 @@ namespace _Main.Scripts.GamePlay.StateMachineSystem
         #region Animation
 
         public int HashCode { get; private set; } = Animator.StringToHash("isAiming");
+        public int RecoilHashCode { get; private set; } = Animator.StringToHash("recoil");
         public Animator Animator { get; private set; } = null;
         public RuntimeAnimatorController OriginalController { get; private set; } = null;
 
@@ -127,11 +128,16 @@ namespace _Main.Scripts.GamePlay.StateMachineSystem
         {
             SetAnimatorOverrideController();
             Animator.SetBool(HashCode, true);
+            Animator.SetBool(RecoilHashCode, true);
         }
 
         public void StopAnimation()
         {
-            ResetAnimatorController();
+            _recoilDelayTween = DOVirtual.DelayedCall(_recoilDelay, () =>
+            {
+                Animator.SetBool(RecoilHashCode, false);
+                ResetAnimatorController();
+            });
             Animator.SetBool(HashCode, false);
         }
 
