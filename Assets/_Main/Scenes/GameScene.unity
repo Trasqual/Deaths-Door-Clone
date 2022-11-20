@@ -12597,8 +12597,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   effectedByType: 6
   maxHealth: 4
-  visualizerPrefab: {fileID: 3732958952386999875, guid: 432f75352fcc81a4cbbbe00485bad8d7, type: 3}
   visualizerPosition: {x: 0, y: 2.25, z: 0}
+  <visualizerPrefab>k__BackingField: {fileID: 3732958952386999875, guid: 432f75352fcc81a4cbbbe00485bad8d7, type: 3}
 --- !u!114 &756532624
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12631,8 +12631,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxAmmo: 4
-  visualizerPrefab: {fileID: 7963138935509246225, guid: b60dca8cb8db56640a9a00a60a3c5d04, type: 3}
   visualizerPosition: {x: 0, y: 2, z: 0}
+  <visualizerPrefab>k__BackingField: {fileID: 7963138935509246225, guid: b60dca8cb8db56640a9a00a60a3c5d04, type: 3}
 --- !u!114 &756532626
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -32960,7 +32960,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5555801275014295643, guid: 7f82a06468c60864c8cf6b3b8ae0c042, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5555801275014295661, guid: 7f82a06468c60864c8cf6b3b8ae0c042, type: 3}
       propertyPath: rangedAttacks.Array.data[0]

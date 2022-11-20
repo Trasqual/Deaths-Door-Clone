@@ -7,7 +7,6 @@ namespace _Main.Scripts.GamePlay.AmmunitionSystem
     public class AmmoCounter : MonoBehaviour, IVisualizable
     {
         [SerializeField] private int maxAmmo = 4;
-        [SerializeField] private VisualizableBarHandler visualizerPrefab;
         [SerializeField] private Vector3 visualizerPosition;
 
         public int CurrentAmmo { get; private set; }
@@ -50,6 +49,8 @@ namespace _Main.Scripts.GamePlay.AmmunitionSystem
         public Action<float> OnValueChanged { get; set; }
         public Action OnMaxValueChanged { get; set; }
         public Action OnClose { get; set; }
+        [field: SerializeField] public VisualizableBarHandler visualizerPrefab { get; set; }
+
 
         public int GetMaxValue() => maxAmmo;
         #endregion

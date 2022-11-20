@@ -8,6 +8,7 @@ namespace _Main.Scripts.GamePlay.UI
         public Action<float> OnValueChanged { get; set; }
         public Action OnMaxValueChanged { get; set; }
         public Action OnClose { get; set; }
+        public VisualizableBarHandler visualizerPrefab { get; set; }
 
         public int GetMaxValue();
     }

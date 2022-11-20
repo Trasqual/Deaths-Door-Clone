@@ -12,7 +12,7 @@ namespace _Main.Scripts.GamePlay.BehaviourSystem
 
         public void GainAttackBehaviour()
         {
-            stateMachine.AddAttackState(_attackController);
+            stateMachine.AddAttackState(1f, _attackController);
             _attackController.SetMeleeAttackState(stateMachine.GetState(typeof(MeleeAttackState)) as MeleeAttackState);
         }
 

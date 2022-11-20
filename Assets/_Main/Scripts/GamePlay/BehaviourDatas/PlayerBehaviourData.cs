@@ -23,6 +23,7 @@ namespace _Main.Scripts.GamePlay.BehaviourSystem
 
         [Header("Attack")]
         public float AttackRange = 1.5f;
+        public float AttackStateCooldown = 1.5f;
         
         public AimActionIndicator aimingIndicator;
         public CameraTargetGroup cameraTargetGroup;

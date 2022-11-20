@@ -8,7 +8,6 @@ namespace _Main.Scripts.GamePlay.HealthSystem
 {
     public class PlayerHealthComponent : HealthComponentBase, IVisualizable
     {
-        [SerializeField] VisualizableBarHandler visualizerPrefab;
         [SerializeField] private Vector3 visualizerPosition;
 
         private InvulnerableBase _invulnerable = null;
@@ -22,7 +21,7 @@ namespace _Main.Scripts.GamePlay.HealthSystem
         public void Init(PlayerBehaviourData baseData)
         {
             _behaviourData = baseData;
-            var visualizer = Instantiate(visualizerPrefab, transform.TransformPoint(visualizerPosition), transform.rotation,transform);
+            var visualizer = Instantiate(visualizerPrefab, transform.TransformPoint(visualizerPosition), transform.rotation, transform);
             visualizer.Initialize(this);
         }
 
@@ -59,6 +58,7 @@ namespace _Main.Scripts.GamePlay.HealthSystem
         public Action<float> OnValueChanged { get; set; }
         public Action OnMaxValueChanged { get; set; }
         public Action OnClose { get; set; }
+        [field: SerializeField] public VisualizableBarHandler visualizerPrefab { get; set; }
 
         public int GetMaxValue() => maxHealth;
         #endregion

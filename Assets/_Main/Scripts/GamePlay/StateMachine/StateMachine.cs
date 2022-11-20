@@ -59,12 +59,12 @@ namespace _Main.Scripts.GamePlay.StateMachineSystem
             dodgeState.OnComplete += OnCompleteState;
         }
 
-        public void AddAttackState(AttackControllerBase attackController)
+        public void AddAttackState(float attackStateCD, AttackControllerBase attackController)
         {
             if (GetState(typeof(MeleeAttackState))) return;
 
             var attackState = gameObject.AddComponent<MeleeAttackState>();
-            attackState.Initialize(_inputBase, _movementBase, _animator, attackController);
+            attackState.Initialize(_inputBase, _movementBase, _animator, attackStateCD, attackController);
             states.Add(attackState);
             attackState.OnComplete += OnCompleteState;
         }

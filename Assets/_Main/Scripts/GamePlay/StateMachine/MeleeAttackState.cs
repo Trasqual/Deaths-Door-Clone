@@ -26,12 +26,13 @@ namespace _Main.Scripts.GamePlay.StateMachineSystem
 
         private bool attackCD;
 
-        public void Initialize(InputBase input, MovementBase movementBase, Animator animator, AttackControllerBase attackController)
+        public void Initialize(InputBase input, MovementBase movementBase, Animator animator, float attackStateCD, AttackControllerBase attackController)
         {
             _input = input;
             _movementBase = movementBase;
             _attackController = attackController;
             Animator = animator;
+            AttackStateCD = attackStateCD;
             _transition = this;
             _attackController.OnSelectedMeleeAttackChanged += OnMeleeAttackChanged;
             OriginalController = Animator.runtimeAnimatorController;
@@ -55,6 +56,7 @@ namespace _Main.Scripts.GamePlay.StateMachineSystem
             SubscribeToCurrentAttack();
             _movementBase.StopMovementAndRotation();
             OnAttackButtonPressed();
+            IsAttacking = true;
         }
 
         public override void UpdateState()
