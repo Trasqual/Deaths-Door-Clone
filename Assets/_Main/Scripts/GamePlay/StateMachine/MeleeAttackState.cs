@@ -68,7 +68,6 @@ namespace _Main.Scripts.GamePlay.StateMachineSystem
         {
             UnSubscribeToInputActions();
             UnSubscribeToCurrentAttack();
-            IsAttacking = false;
             _movementBase.StopMovementAndRotation();
             if (!attackCD)
             {
@@ -157,6 +156,7 @@ namespace _Main.Scripts.GamePlay.StateMachineSystem
 
         private void OnAttackCompleted()
         {
+            IsAttacking = false;
             OnComplete?.Invoke();
         }
 

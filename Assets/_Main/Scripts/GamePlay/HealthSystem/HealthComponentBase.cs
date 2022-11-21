@@ -24,6 +24,11 @@ namespace _Main.Scripts.GamePlay.HealthSystem
 
         public DamageDealerType GetEffectedByType() => effectedByType;
 
+        protected virtual void Awake()
+        {
+            CurrentHealth = MaxHealth;
+        }
+
         public virtual bool TakeDamage(float amount, DamageDealerType damageDealerType)
         {
             if (!Enums.CompareEnums(damageDealerType, effectedByType)) return false;

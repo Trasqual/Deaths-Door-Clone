@@ -13,8 +13,9 @@ namespace _Main.Scripts.GamePlay.HealthSystem
         private InvulnerableBase _invulnerable = null;
         private PlayerBehaviourData _behaviourData = null;
 
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
             _invulnerable = gameObject.AddComponent<Invulnerable>();
         }
 

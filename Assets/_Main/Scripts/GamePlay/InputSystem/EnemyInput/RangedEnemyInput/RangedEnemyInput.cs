@@ -86,10 +86,5 @@ namespace _Main.Scripts.GamePlay.InputSystem
         {
             return TargetIsInAttackRange() && TargetIsInLineOfSight();
         }
-
-        protected override bool TargetIsInAttackRange()
-        {
-            return Vector3.Distance(transform.position, attackSelector.Target.position) <= attackSelector.SelectedAttack.CurrentComboDamageData.attackRange;
-        }
     }
 }

@@ -1,4 +1,3 @@
-using _Main.Scripts.GamePlay.AttackSystem;
 using _Main.Scripts.GamePlay.StateMachineSystem;
 
 namespace _Main.Scripts.GamePlay.BehaviourSystem
@@ -9,10 +8,12 @@ namespace _Main.Scripts.GamePlay.BehaviourSystem
         {
             base.Start();
 
+            GainAimingBehaviour();
+            _attackController.SetSelectedRangedAttack();
+
             GainAttackBehaviour();
             _attackController.SetSelectedMeleeAttack();
 
-            GainAimingBehaviour();
         }
 
         public void GainAttackBehaviour()
@@ -23,20 +24,13 @@ namespace _Main.Scripts.GamePlay.BehaviourSystem
 
         public void GainAimingBehaviour()
         {
-            stateMachine.AddAimingState(10f, .5f, _attackController);
+            stateMachine.AddAimingState(1f, .5f, _attackController);
+            _attackController.SetRangedAttackState(stateMachine.GetState(typeof(AimingState)) as AimingState, _healthManager);
         }
 
         private void Attack()
         {
             stateMachine.ChangeState(typeof(MeleeAttackState));
-        }
-
-        private void SelectNextAttack(int switchInput)
-        {
-            if (switchInput != _attackController.GetMeleeAttacks().IndexOf(_attackController.SelectedMeleeAttack))
-            {
-                _attackController.SetSelectedMeleeAttack(switchInput);
-            }
         }
 
         private void StartAiming()
@@ -48,7 +42,6 @@ namespace _Main.Scripts.GamePlay.BehaviourSystem
         {
             base.OnEnable();
             _input.OnAttackActionStarted += Attack;
-            _input.OnMeleeWeaponSwitchedWithID += SelectNextAttack;
             _input.OnAimActionStarted += StartAiming;
 
         }
@@ -57,7 +50,6 @@ namespace _Main.Scripts.GamePlay.BehaviourSystem
         {
             base.OnDisable();
             _input.OnAttackActionStarted -= Attack;
-            _input.OnMeleeWeaponSwitchedWithID -= SelectNextAttack;
             _input.OnAimActionStarted -= StartAiming;
 
         }

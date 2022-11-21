@@ -62,7 +62,7 @@ namespace _Main.Scripts.GamePlay.InputSystem
 
         protected virtual bool TargetIsInAttackRange()
         {
-            return Vector3.Distance(transform.position, attackSelector.Target.position) <= attackController.SelectedMeleeAttack.CurrentComboDamageData.attackRange;
+            return Vector3.Distance(transform.position, attackSelector.Target.position) <= attackSelector.SelectedAttack.CurrentComboDamageData.attackRange;
         }
 
         protected virtual bool TargetIsInLineOfSight()

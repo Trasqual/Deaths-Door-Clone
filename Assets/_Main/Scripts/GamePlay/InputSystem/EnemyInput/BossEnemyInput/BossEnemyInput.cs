@@ -1,5 +1,4 @@
-using _Main.Scripts.GamePlay.BehaviourSystem;
-using _Main.Scripts.GamePlay.HealthSystem;
+using _Main.Scripts.GamePlay.AttackSystem;
 using _Main.Scripts.GamePlay.MovementSystem;
 using DG.Tweening;
 using UnityEngine;
@@ -9,7 +8,6 @@ namespace _Main.Scripts.GamePlay.InputSystem
     public class BossEnemyInput : EnemyInputBase
     {
         [SerializeField] private float aimCorrectionAssist = 14f;
-        private RangedEnemyBehaviourData enemyBehaviourData;
         private bool isAiming;
 
         private MovementBase _targetMovement;
@@ -17,20 +15,51 @@ namespace _Main.Scripts.GamePlay.InputSystem
         protected override void Awake()
         {
             base.Awake();
-            var data = GetComponent<EnemyBehaviourBase>().Data;
-            enemyBehaviourData = (RangedEnemyBehaviourData)data;
+        }
+
+        protected override void Update()
+        {
+            if (attackSelector.Target != null)
+            {
+                if (CanAttack())
+                {
+                    if (attackSelector.SelectedAttack is RangedAttackBase && !isAiming)
+                    {
+                        isAiming = true;
+                        OnAimActionStarted?.Invoke();
+                        var rangedAnimData = (RangedAttackAnimationData)attackSelector.SelectedAttack.CurrentComboAnimationData;
+                        DOVirtual.DelayedCall(rangedAnimData.castTime, () =>
+                        {
+                            OnAimActionEnded?.Invoke();
+                            isAiming = false;
+                        });
+                    }
+                    else
+                    {
+                        OnAttackActionStarted?.Invoke();
+                    }
+                }
+
+            }
         }
 
         public override Vector3 GetLookInput()
         {
             if (attackSelector.Target != null)
             {
+                if (_targetMovement == null)
+                {
+                    if (attackSelector.Target.TryGetComponent(out MovementBase movement))
+                    {
+                        _targetMovement = movement;
+                    }
+                }
                 var targetsVelocity = _targetMovement ? _targetMovement.GetVelocity() : Vector3.zero;
-                return attackSelector.Target.position + aimCorrectionAssist * Time.deltaTime * targetsVelocity;
+                return (attackSelector.Target.position + aimCorrectionAssist * Time.deltaTime * targetsVelocity - transform.position).normalized;
             }
             else
             {
-                return startPos;
+                return (startPos - transform.position).normalized;
             }
         }
 
@@ -57,23 +86,6 @@ namespace _Main.Scripts.GamePlay.InputSystem
                 else
                 {
                     return Vector3.zero;
-                }
-            }
-        }
-
-        protected override void Update()
-        {
-            if (attackSelector.Target != null)
-            {
-                if (CanAttack() && !isAiming)
-                {
-                    isAiming = true;
-                    OnAimActionStarted?.Invoke();
-                    DOVirtual.DelayedCall(enemyBehaviourData.CastSpeed, () =>
-                    {
-                        OnAimActionEnded?.Invoke();
-                        isAiming = false;
-                    });
                 }
             }
         }
