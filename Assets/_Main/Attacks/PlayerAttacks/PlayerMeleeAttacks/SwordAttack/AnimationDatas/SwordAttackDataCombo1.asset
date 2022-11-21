@@ -18,7 +18,14 @@ MonoBehaviour:
   attackMovementDelay: 0.1
   attackMovementAmount: 0.5
   attackMovementDuration: 0.1
-  attackCD: 0.5
-  animationSpeedMultiplier: 1
+  attackDuration: 0.35
+  comboWaitTime: 0.4
+  animationSpeedMultiplier: 2
   useGravity: 1
-  useAnimationMovement: 0
+  jumpHeight: 0
+  yCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4

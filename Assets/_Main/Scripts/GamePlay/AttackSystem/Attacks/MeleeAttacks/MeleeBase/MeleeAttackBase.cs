@@ -100,7 +100,7 @@ namespace _Main.Scripts.GamePlay.AttackSystem
         {
             canAttack = false;
             var info = (MeleeAttackAnimationData)CurrentComboAnimationData;
-            attackDelay = DOVirtual.DelayedCall(info.attackCD, () => //this should be slightly shorter than attack animation
+            attackDelay = DOVirtual.DelayedCall(info.attackDuration, () => //this should be slightly shorter than attack animation
             {
                 canAttack = true;
                 if (currentComboCount == 0)
@@ -110,7 +110,7 @@ namespace _Main.Scripts.GamePlay.AttackSystem
             });
             if (currentComboCount != 0)
             {
-                comboDelay = DOVirtual.DelayedCall(info.attackCD + 0.2f, () => //this should be as long as the attack animation
+                comboDelay = DOVirtual.DelayedCall(info.attackDuration + info.comboWaitTime, () => //this should be as long as the attack animation
                 {
                     EndAttack();
                 });

@@ -152,7 +152,7 @@ namespace _Main.Scripts.GamePlay.StateMachineSystem
             _movementBase.MoveOverTime(info.GetAttackEndPosition(transform), info.attackMovementDuration, info.attackMovementDelay, info.useGravity, info.jumpHeight, info.yCurve);
 
             IsStateLocked = !info.useGravity;
-            stateLockTween = DOVirtual.DelayedCall(info.attackCD, () => IsStateLocked = false);
+            stateLockTween = DOVirtual.DelayedCall(info.attackDuration, () => IsStateLocked = false);
         }
 
         private void OnAttackCompleted()
