@@ -1,0 +1,52 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &7909131335176812137
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7909131335176812136}
+  - component: {fileID: 1533516701862259769}
+  m_Layer: 6
+  m_Name: BossMeleeAttack
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7909131335176812136
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7909131335176812137}
+  m_LocalRotation: {x: -0.51725787, y: -0.44208884, z: 0.47794735, w: 0.55548906}
+  m_LocalPosition: {x: 0.008, y: 0.11, z: 0.058}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: -8.747, y: -85.706, z: 89.535}
+--- !u!114 &1533516701862259769
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7909131335176812137}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 090bd67a5891d2d44a68f2a76997e033, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  comboDatas:
+  - AttackAnimationData: {fileID: 11400000, guid: 9036805e56bb3a843bfe070a847bb1a9, type: 2}
+    AttackDamageData: {fileID: 11400000, guid: 6d42d4437037f9c49859ba0709a26517, type: 2}
+  - AttackAnimationData: {fileID: 11400000, guid: f395e2ba6a5f75943b5554a9e8fc6b36, type: 2}
+    AttackDamageData: {fileID: 11400000, guid: 6d42d4437037f9c49859ba0709a26517, type: 2}
+  GeneralAttackCooldown: 0.6
