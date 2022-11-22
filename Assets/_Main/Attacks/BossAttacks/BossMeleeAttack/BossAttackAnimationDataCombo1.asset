@@ -15,10 +15,10 @@ MonoBehaviour:
   overrideController: {fileID: 22100000, guid: 56f20105981bf8946b31310e7894cb95, type: 2}
   fadeToAnimationName: MeleeAttack
   attackDamageDelay: 1
-  attackMovementDelay: 1
-  attackMovementAmount: 0.5
-  attackMovementDuration: 0.1
-  attackDuration: 1
+  attackMovementDelay: 0
+  attackMovementAmount: 0
+  attackMovementDuration: 0
+  attackDuration: 2
   comboWaitTime: 0.4
   animationSpeedMultiplier: 1
   useGravity: 1

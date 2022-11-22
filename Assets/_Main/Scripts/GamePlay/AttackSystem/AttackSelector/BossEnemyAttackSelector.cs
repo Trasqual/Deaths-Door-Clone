@@ -5,14 +5,14 @@ namespace _Main.Scripts.GamePlay.AttackSystem
 {
     public class BossEnemyAttackSelector : EnemyAttackSelectorBase
     {
-        AttackBase threeShotRangedAttack;
+        AttackBase shootRangedAttack;
         AttackBase laserRayRangedAttack;
 
         protected override void Awake()
         {
             base.Awake();
 
-            threeShotRangedAttack = _attackController.GetRangedAttacks()[0];
+            shootRangedAttack = _attackController.GetRangedAttacks()[0];
             laserRayRangedAttack = _attackController.GetRangedAttacks()[1];
         }
 
@@ -25,12 +25,12 @@ namespace _Main.Scripts.GamePlay.AttackSystem
 
         protected override void SelectAttack()
         {
-            if (!IsAttackAvailable(laserRayRangedAttack) && IsAttackAvailable(threeShotRangedAttack))
+            if (!IsAttackAvailable(laserRayRangedAttack) && IsAttackAvailable(shootRangedAttack))
             {
                 _attackController.SetSelectedRangedAttack(0);
                 SelectedAttack = _attackController.GetRangedAttacks()[0];
             }
-            else if (IsAttackAvailable(laserRayRangedAttack) && !IsAttackAvailable(threeShotRangedAttack))
+            else if (IsAttackAvailable(laserRayRangedAttack))
             {
                 _attackController.SetSelectedRangedAttack(1);
                 SelectedAttack = _attackController.GetRangedAttacks()[1];
@@ -40,7 +40,6 @@ namespace _Main.Scripts.GamePlay.AttackSystem
                 _attackController.SetSelectedMeleeAttack(0);
                 SelectedAttack = _attackController.GetMeleeAttacks()[0];
             }
-            Debug.Log(SelectedAttack);
         }
 
         protected override void OnEnable()

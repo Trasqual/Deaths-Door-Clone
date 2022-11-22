@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f8641ce71d2cd244926322ad96e0b65, type: 3}
   m_Name: RangedBossAttack1DamageData
   m_EditorClassIdentifier: 
-  attackRange: 10
-  damage: 1
+  attackRange: 8
+  damage: 0
   dmgDealerType: 2

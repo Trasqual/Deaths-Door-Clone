@@ -4204,6 +4204,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: RangedEnemyDetector
       objectReference: {fileID: 0}
+    - target: {fileID: 4230420509262079606, guid: a5e0c23bccd2242ca92bdae93002636a, type: 3}
+      propertyPath: m_Radius
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4230420509262079607, guid: a5e0c23bccd2242ca92bdae93002636a, type: 3}
+      propertyPath: range
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 4230420509262079607, guid: a5e0c23bccd2242ca92bdae93002636a, type: 3}
       propertyPath: resetRange
       value: 100
@@ -14537,6 +14545,71 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 466816, guid: 5bceb99c9fa1f2a4bb9692e518bec46c, type: 3}
   m_PrefabInstance: {fileID: 949576154}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &952831187
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1265677684}
+    m_Modifications:
+    - target: {fileID: 4820781577462907085, guid: bf88b6d1735feb1408da84061c26d994, type: 3}
+      propertyPath: shooter
+      value: 
+      objectReference: {fileID: 775432518}
+    - target: {fileID: 4820781577462907085, guid: bf88b6d1735feb1408da84061c26d994, type: 3}
+      propertyPath: shootDelay
+      value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5838724912294293134, guid: bf88b6d1735feb1408da84061c26d994, type: 3}
+      propertyPath: m_RootOrder
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5838724912294293134, guid: bf88b6d1735feb1408da84061c26d994, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5838724912294293134, guid: bf88b6d1735feb1408da84061c26d994, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5838724912294293134, guid: bf88b6d1735feb1408da84061c26d994, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5838724912294293134, guid: bf88b6d1735feb1408da84061c26d994, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5838724912294293134, guid: bf88b6d1735feb1408da84061c26d994, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5838724912294293134, guid: bf88b6d1735feb1408da84061c26d994, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5838724912294293134, guid: bf88b6d1735feb1408da84061c26d994, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5838724912294293134, guid: bf88b6d1735feb1408da84061c26d994, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5838724912294293134, guid: bf88b6d1735feb1408da84061c26d994, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5838724912294293134, guid: bf88b6d1735feb1408da84061c26d994, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5838724912294293135, guid: bf88b6d1735feb1408da84061c26d994, type: 3}
+      propertyPath: m_Name
+      value: RangedBossAttack1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: bf88b6d1735feb1408da84061c26d994, type: 3}
 --- !u!1001 &954695472
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -17862,19 +17935,12 @@ PrefabInstance:
       propertyPath: m_Name
       value: RangedEnemyMagicAttack
       objectReference: {fileID: 0}
+    - target: {fileID: 5838724912294293135, guid: 82651ce296c15844abb5671145ffe17c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 82651ce296c15844abb5671145ffe17c, type: 3}
---- !u!114 &1130267596 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4820781577462907085, guid: 82651ce296c15844abb5671145ffe17c, type: 3}
-  m_PrefabInstance: {fileID: 1130267595}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 871a8adc067b1d5449f0df06439c8e05, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1138967381
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -29984,7 +30050,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5838724912294293134, guid: eeebc84ecd29c204ea2b28d28a288e8e, type: 3}
       propertyPath: m_RootOrder
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 5838724912294293134, guid: eeebc84ecd29c204ea2b28d28a288e8e, type: 3}
       propertyPath: m_LocalPosition.x
@@ -31208,6 +31274,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 458864, guid: 6c7bfc57a0f70db46b9b83dddca510e1, type: 3}
   m_PrefabInstance: {fileID: 2056518055}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2062642566 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4820781577462907085, guid: bf88b6d1735feb1408da84061c26d994, type: 3}
+  m_PrefabInstance: {fileID: 952831187}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 871a8adc067b1d5449f0df06439c8e05, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2077673694
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -32920,6 +32997,7 @@ GameObject:
   - component: {fileID: 4769724932818011274}
   - component: {fileID: 4769724932818011273}
   - component: {fileID: 8068519071792017055}
+  - component: {fileID: 8068519071792017057}
   - component: {fileID: 8068519071792017056}
   - component: {fileID: 4769724932818011277}
   - component: {fileID: 4769724932818011276}
@@ -32927,7 +33005,6 @@ GameObject:
   - component: {fileID: 4769724932818011312}
   - component: {fileID: 1277330544303100653}
   - component: {fileID: 8068519071792017054}
-  - component: {fileID: 8068519071792017057}
   m_Layer: 6
   m_Name: BossEnemy
   m_TagString: Untagged
@@ -33042,7 +33119,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rangedAttacks:
-  - {fileID: 1130267596}
+  - {fileID: 2062642566}
   - {fileID: 2025365755}
   meleeAttacks:
   - {fileID: 1382924507}
@@ -33459,7 +33536,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8154898536230699931, guid: 1c568c6317c9c4f92b0ed02ce2e54745, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1c568c6317c9c4f92b0ed02ce2e54745, type: 3}
