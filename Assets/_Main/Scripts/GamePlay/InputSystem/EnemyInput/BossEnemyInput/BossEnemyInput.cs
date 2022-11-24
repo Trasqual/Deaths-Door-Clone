@@ -12,6 +12,8 @@ namespace _Main.Scripts.GamePlay.InputSystem
 
         private MovementBase _targetMovement;
 
+        Tween castTimeTween;
+
         protected override void Awake()
         {
             base.Awake();
@@ -21,6 +23,7 @@ namespace _Main.Scripts.GamePlay.InputSystem
         {
             if (attackSelector.Target != null)
             {
+
                 if (CanAttack())
                 {
                     if (attackSelector.SelectedAttack is RangedAttackBase && !isAiming)
@@ -31,15 +34,15 @@ namespace _Main.Scripts.GamePlay.InputSystem
                         DOVirtual.DelayedCall(rangedAnimData.castTime, () =>
                         {
                             OnAimActionEnded?.Invoke();
-                            isAiming = false;
                         });
+
+                        DOVirtual.DelayedCall(rangedAnimData.castTime + rangedAnimData.recoilDelay + 0.1f, () => isAiming = false);
                     }
-                    else
+                    else if (attackSelector.SelectedAttack is MeleeAttackBase)
                     {
                         OnAttackActionStarted?.Invoke();
                     }
                 }
-
             }
         }
 

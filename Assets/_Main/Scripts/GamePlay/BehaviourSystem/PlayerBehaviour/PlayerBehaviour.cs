@@ -97,7 +97,7 @@ namespace _Main.Scripts.GamePlay.BehaviourSystem
 
         public void GainAimingBehaviour()
         {
-            stateMachine.AddAimingState(10F, .2F, _attackController);
+            stateMachine.AddAimingState(10F, _attackController);
             var aimingBehaviour = stateMachine.GetState(typeof(AimingState));
 
             if (aimingBehaviour)

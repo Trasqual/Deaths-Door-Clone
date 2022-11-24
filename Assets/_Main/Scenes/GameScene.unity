@@ -14558,7 +14558,7 @@ PrefabInstance:
       objectReference: {fileID: 775432518}
     - target: {fileID: 4820781577462907085, guid: bf88b6d1735feb1408da84061c26d994, type: 3}
       propertyPath: shootDelay
-      value: 0.6
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 5838724912294293134, guid: bf88b6d1735feb1408da84061c26d994, type: 3}
       propertyPath: m_RootOrder
@@ -33202,6 +33202,10 @@ PrefabInstance:
       propertyPath: shooter
       value: 
       objectReference: {fileID: 1991116917}
+    - target: {fileID: 638880442221846409, guid: 20ade7b9f75916a4e82d8df79c8b612c, type: 3}
+      propertyPath: windUpTime
+      value: 0.25
+      objectReference: {fileID: 0}
     - target: {fileID: 5838724912294293133, guid: 20ade7b9f75916a4e82d8df79c8b612c, type: 3}
       propertyPath: caster
       value: 

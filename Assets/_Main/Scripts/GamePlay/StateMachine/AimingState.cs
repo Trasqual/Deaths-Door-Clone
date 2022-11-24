@@ -16,19 +16,17 @@ namespace _Main.Scripts.GamePlay.StateMachineSystem
         private InputBase _input;
         private MovementBase _movementBase;
         private float _aimSpeedMultiplier;
-        private float _recoilDelay;
         private Tween _recoilDelayTween;
         private Tween _animationResetTween;
         private AttackControllerBase _attackController;
         public Action OnComplete;
 
-        public void Initialize(InputBase input, MovementBase movementBase, Animator animator, float aimSpeedMultiplier, float recoilDelay, AttackControllerBase attackController)
+        public void Initialize(InputBase input, MovementBase movementBase, Animator animator, float aimSpeedMultiplier, AttackControllerBase attackController)
         {
             _input = input;
             _movementBase = movementBase;
             Animator = animator;
             _aimSpeedMultiplier = aimSpeedMultiplier;
-            _recoilDelay = recoilDelay;
             _attackController = attackController;
             _transition = this;
             OriginalController = Animator.runtimeAnimatorController;
@@ -38,6 +36,7 @@ namespace _Main.Scripts.GamePlay.StateMachineSystem
             _transition.AddTransition(typeof(DodgeState), () => true, () => true);
             _transition.AddTransition(typeof(DeathState), () => true, () => true);
             _transition.AddTransition(typeof(DamageTakenState), () => true, () => true);
+            _transition.AddTransition(typeof(AimingState), () => !IsAiming, () => !IsAiming);
         }
 
         public override void EnterState()
@@ -46,6 +45,7 @@ namespace _Main.Scripts.GamePlay.StateMachineSystem
             PlayAnimation();
             _movementBase.StartMovementAndRotation();
             IsAiming = true;
+            _recoilDelayTween?.Kill();
         }
 
         public override void UpdateState()
@@ -58,7 +58,8 @@ namespace _Main.Scripts.GamePlay.StateMachineSystem
             if (!IsAiming) return;
             StopAnimation();
             OnActionEnd?.Invoke();
-            _recoilDelayTween = DOVirtual.DelayedCall(_recoilDelay, () =>
+            var curRangedData = (RangedAttackAnimationData)_attackController.SelectedRangedAttack.CurrentComboAnimationData;
+            _recoilDelayTween = DOVirtual.DelayedCall(curRangedData.recoilDelay, () =>
             {
                 IsAiming = false;
                 OnComplete?.Invoke();
@@ -132,7 +133,8 @@ namespace _Main.Scripts.GamePlay.StateMachineSystem
 
         public void StopAnimation()
         {
-            _animationResetTween = DOVirtual.DelayedCall(_recoilDelay, () =>
+            var curRangedData = (RangedAttackAnimationData)_attackController.SelectedRangedAttack.CurrentComboAnimationData;
+            _animationResetTween = DOVirtual.DelayedCall(curRangedData.recoilDelay, () =>
             {
                 ResetAnimatorController();
             });

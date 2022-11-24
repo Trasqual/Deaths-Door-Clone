@@ -69,11 +69,11 @@ namespace _Main.Scripts.GamePlay.StateMachineSystem
             attackState.OnComplete += OnCompleteState;
         }
 
-        public void AddAimingState(float aimSpeedMultiplier, float recoilDelay, AttackControllerBase attackController)
+        public void AddAimingState(float aimSpeedMultiplier, AttackControllerBase attackController)
         {
             if (GetState(typeof(AimingState))) return;
             var aimingState = gameObject.AddComponent<AimingState>();
-            aimingState.Initialize(_inputBase, _movementBase, _animator, aimSpeedMultiplier, recoilDelay, attackController);
+            aimingState.Initialize(_inputBase, _movementBase, _animator, aimSpeedMultiplier, attackController);
             states.Add(aimingState);
             aimingState.OnComplete += OnCompleteState;
         }

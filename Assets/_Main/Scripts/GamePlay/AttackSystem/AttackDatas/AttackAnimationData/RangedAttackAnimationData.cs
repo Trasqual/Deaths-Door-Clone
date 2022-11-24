@@ -7,5 +7,6 @@ namespace _Main.Scripts.GamePlay.AttackSystem
 	public class RangedAttackAnimationData : AttackAnimationDataBase
 	{
 		public float castTime = 3f;
+		public float recoilDelay = 0.5f;
 	} 
 }

@@ -49,8 +49,11 @@ namespace _Main.Scripts.GamePlay.AttackSystem
         protected virtual void Shoot()
         {
             OnAttackCompleted?.Invoke();
-            IsOnCooldown = true;
-            DOVirtual.DelayedCall(GeneralAttackCooldown, () => IsOnCooldown = false);
+            if (GeneralAttackCooldown != 0)
+            {
+                IsOnCooldown = true;
+                DOVirtual.DelayedCall(GeneralAttackCooldown, () => IsOnCooldown = false);
+            }
         }
     }
 }

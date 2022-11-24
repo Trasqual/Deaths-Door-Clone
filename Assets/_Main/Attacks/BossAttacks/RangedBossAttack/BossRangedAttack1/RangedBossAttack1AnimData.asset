@@ -13,3 +13,5 @@ MonoBehaviour:
   m_Name: RangedBossAttack1AnimData
   m_EditorClassIdentifier: 
   overrideController: {fileID: 22100000, guid: afd33e2964198dc4193644840708d203, type: 2}
+  castTime: 1
+  recoilDelay: 0.5

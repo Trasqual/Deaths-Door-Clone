@@ -24,7 +24,7 @@ namespace _Main.Scripts.GamePlay.BehaviourSystem
 
         public void GainAimingBehaviour()
         {
-            stateMachine.AddAimingState(1f, .5f, _attackController);
+            stateMachine.AddAimingState(1f, _attackController);
             _attackController.SetRangedAttackState(stateMachine.GetState(typeof(AimingState)) as AimingState, _healthManager);
         }
 

@@ -27,6 +27,8 @@ namespace _Main.Scripts.GamePlay.AttackSystem
 
             if (windUpCounter >= windUpTime)
                 Shoot();
+            else
+                OnAttackCompleted?.Invoke();
 
             windUpCounter = 0f;
             dmgMultiplier = 1f;
