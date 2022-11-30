@@ -36,7 +36,6 @@ namespace _Main.Scripts.GamePlay.StateMachineSystem
             _transition.AddTransition(typeof(DodgeState), () => true, () => true);
             _transition.AddTransition(typeof(DeathState), () => true, () => true);
             _transition.AddTransition(typeof(DamageTakenState), () => true, () => true);
-            _transition.AddTransition(typeof(AimingState), () => !IsAiming, () => !IsAiming);
         }
 
         public override void EnterState()
@@ -45,7 +44,6 @@ namespace _Main.Scripts.GamePlay.StateMachineSystem
             PlayAnimation();
             _movementBase.StartMovementAndRotation();
             IsAiming = true;
-            _recoilDelayTween?.Kill();
         }
 
         public override void UpdateState()
@@ -77,6 +75,8 @@ namespace _Main.Scripts.GamePlay.StateMachineSystem
             IsAiming = false;
             _recoilDelayTween.Kill();
             StopAnimation();
+            _animationResetTween?.Kill();
+            ResetAnimatorController();
             _movementBase.StopMovementAndRotation();
         }
 

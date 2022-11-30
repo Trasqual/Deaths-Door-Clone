@@ -12708,7 +12708,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3e98e99a838bfb468a95668914b67a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxAmmo: 4
+  maxAmmo: 50
   visualizerPosition: {x: 0, y: 2, z: 0}
   <visualizerPrefab>k__BackingField: {fileID: 7963138935509246225, guid: b60dca8cb8db56640a9a00a60a3c5d04, type: 3}
 --- !u!114 &756532626
@@ -33105,7 +33105,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectedByType: 5
-  maxHealth: 10
+  maxHealth: 30
 --- !u!114 &4769724932818011312
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -33199,18 +33199,6 @@ PrefabInstance:
     m_TransformParent: {fileID: 177286658}
     m_Modifications:
     - target: {fileID: 638880442221846409, guid: 20ade7b9f75916a4e82d8df79c8b612c, type: 3}
-      propertyPath: shooter
-      value: 
-      objectReference: {fileID: 1991116917}
-    - target: {fileID: 638880442221846409, guid: 20ade7b9f75916a4e82d8df79c8b612c, type: 3}
-      propertyPath: windUpTime
-      value: 0.25
-      objectReference: {fileID: 0}
-    - target: {fileID: 5838724912294293133, guid: 20ade7b9f75916a4e82d8df79c8b612c, type: 3}
-      propertyPath: caster
-      value: 
-      objectReference: {fileID: 756532615}
-    - target: {fileID: 5838724912294293133, guid: 20ade7b9f75916a4e82d8df79c8b612c, type: 3}
       propertyPath: shooter
       value: 
       objectReference: {fileID: 1991116917}

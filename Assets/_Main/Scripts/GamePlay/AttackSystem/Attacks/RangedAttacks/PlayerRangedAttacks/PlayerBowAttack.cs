@@ -27,8 +27,6 @@ namespace _Main.Scripts.GamePlay.AttackSystem
 
             if (windUpCounter >= windUpTime)
                 Shoot();
-            else
-                OnAttackCompleted?.Invoke();
 
             windUpCounter = 0f;
             dmgMultiplier = 1f;
@@ -64,6 +62,7 @@ namespace _Main.Scripts.GamePlay.AttackSystem
         protected override void Shoot()
         {
             base.Shoot();
+            OnAttackCompleted?.Invoke();
             shooter.Shoot(windUpCounter >= maxChargeTime ? chargedProjectilePrefab : projectilePrefab, CurrentComboDamageData.damage * dmgMultiplier, damageDealerType, _caster, out ProjectileBase shotProjectile);
         }
     }
