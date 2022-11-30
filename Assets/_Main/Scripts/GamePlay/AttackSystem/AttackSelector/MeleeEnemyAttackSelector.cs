@@ -26,7 +26,7 @@ namespace _Main.Scripts.GamePlay.AttackSystem
             {
                 _attackController.SetSelectedMeleeAttack(1);
             }
-            else
+            else if (!IsAttackAvailable(_jumpAttack))
             {
                 _attackController.SetSelectedMeleeAttack(0);
             }

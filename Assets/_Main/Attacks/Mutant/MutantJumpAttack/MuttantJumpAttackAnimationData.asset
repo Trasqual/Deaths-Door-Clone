@@ -17,8 +17,9 @@ MonoBehaviour:
   attackDamageDelay: 1.8
   attackMovementDelay: 0.3
   attackMovementAmount: 8
-  attackMovementDuration: 1.5
-  attackCD: 3
+  attackMovementDuration: 1
+  attackDuration: 1
+  comboWaitTime: 0.4
   animationSpeedMultiplier: 1
   useGravity: 0
   jumpHeight: 5
